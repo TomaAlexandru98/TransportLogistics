@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" asp-controller="Vehicles" asp-action="Index">
+                <i class="fas fa-wallet"></i>
+                Vehicles
+
+            </a>
+        </li>
+    </ul>
+}
+
+

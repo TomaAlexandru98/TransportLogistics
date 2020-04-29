@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\ASP.NET\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj": {}
+    "D:\\Internship\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\ASP.NET\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj": {
+    "D:\\Internship\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\ASP.NET\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj",
+        "projectUniqueName": "D:\\Internship\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj",
         "projectName": "TransportLogistics",
-        "projectPath": "D:\\Projects\\ASP.NET\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj",
-        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\ASP.NET\\TransportLogistics\\TransportLogistics\\TransportLogistics\\obj\\",
+        "projectPath": "D:\\Internship\\TransportLogistics\\TransportLogistics\\TransportLogistics\\TransportLogistics.csproj",
+        "packagesPath": "C:\\Users\\alema\\.nuget\\packages\\",
+        "outputPath": "D:\\Internship\\TransportLogistics\\TransportLogistics\\TransportLogistics\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alema\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,6 +57,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[3.1.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
@@ -80,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
