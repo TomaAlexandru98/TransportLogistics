@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.ApplicationLogic.Models
+namespace TransportLogistics.Data
 {
     public class DataEntity
     {
