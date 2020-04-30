@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportLogistics", "TransportLogistics\TransportLogistics.csproj", "{A2897958-7DD6-4C5C-AD01-0F758B2D8AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportLogistics.DataAccess", "TransportLogistics.DataAccess\TransportLogistics.DataAccess.csproj", "{6D6370E7-2732-4507-A854-307D960DFCD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportLogistics.DataAccess", "TransportLogistics.DataAccess\TransportLogistics.DataAccess.csproj", "{6D6370E7-2732-4507-A854-307D960DFCD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportLogistics.ApplicationLogic", "TransportLogistics.ApplicationLogic\TransportLogistics.ApplicationLogic.csproj", "{83B5E3C9-1825-462B-9422-0650845392E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportLogistics.ApplicationLogic", "TransportLogistics.ApplicationLogic\TransportLogistics.ApplicationLogic.csproj", "{83B5E3C9-1825-462B-9422-0650845392E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportLogistics.Data", "TransportLogistics.Data\TransportLogistics.Data.csproj", "{EAF76192-5255-41D9-AF0E-36E4A5045032}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{83B5E3C9-1825-462B-9422-0650845392E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83B5E3C9-1825-462B-9422-0650845392E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83B5E3C9-1825-462B-9422-0650845392E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF76192-5255-41D9-AF0E-36E4A5045032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF76192-5255-41D9-AF0E-36E4A5045032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF76192-5255-41D9-AF0E-36E4A5045032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF76192-5255-41D9-AF0E-36E4A5045032}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
