@@ -1,8 +1,0 @@
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\bin\Debug\netstandard2.0\TransportLogistics.DataAccess.deps.json
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\bin\Debug\netstandard2.0\TransportLogistics.DataAccess.dll
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\bin\Debug\netstandard2.0\TransportLogistics.DataAccess.pdb
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\obj\Debug\netstandard2.0\TransportLogistics.DataAccess.csprojAssemblyReference.cache
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\obj\Debug\netstandard2.0\TransportLogistics.DataAccess.AssemblyInfoInputs.cache
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\obj\Debug\netstandard2.0\TransportLogistics.DataAccess.AssemblyInfo.cs
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\obj\Debug\netstandard2.0\TransportLogistics.DataAccess.dll
-D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.DataAccess\obj\Debug\netstandard2.0\TransportLogistics.DataAccess.pdb
