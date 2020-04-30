@@ -17,7 +17,17 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
+.btn-car {
+    background-color: #06087d; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+    .btn-car:hover {
+        background-color: #4648c7;
+    }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
