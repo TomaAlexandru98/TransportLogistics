@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.Data;
 
 namespace TransportLogistics.ApplicationLogic.Models
 {
-    public class Trailer : DataEntity
+    public class Trailer : TrailerData
     {
-        public int MaximWeightKg { get; private set; }
+       
     }
 }
