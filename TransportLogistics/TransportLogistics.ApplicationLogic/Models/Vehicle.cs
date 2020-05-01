@@ -9,7 +9,7 @@ namespace TransportLogistics.ApplicationLogic.Models
         public string Name { get; private set; }
         public string Type { get; private set; }
         public string RegistrationNumber { get; private set; }
-        public List<Trailer> Trailers { get; private set; }
+        public ICollection<Trailer> CurrentTrailers { get; private set; }
         public int MaximCarryWeightKg { get; private set; }
     }
 }

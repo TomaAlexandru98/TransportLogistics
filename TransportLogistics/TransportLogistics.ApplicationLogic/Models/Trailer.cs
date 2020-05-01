@@ -6,6 +6,6 @@ namespace TransportLogistics.ApplicationLogic.Models
 {
     public class Trailer : DataEntity
     {
-        public int MaximWeightKg { get; private set; }
+        public int MaximWeightKg { get; protected set; }
     }
 }

@@ -6,6 +6,6 @@ namespace TransportLogistics.ApplicationLogic.Models
 {
     public class DataEntity
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
     }
 }

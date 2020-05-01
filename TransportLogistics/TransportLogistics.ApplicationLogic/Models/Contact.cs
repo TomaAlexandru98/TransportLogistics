@@ -6,7 +6,7 @@ namespace TransportLogistics.ApplicationLogic.Models
 {
     public class Contact : DataEntity
     {
-        public string PhoneNo { get; private set; }
-        public string Email { get; private set; }
+        public string PhoneNo { get; protected set; }
+        public string Email { get; protected set; }
     }
 }
