@@ -13,5 +13,6 @@ namespace TransportLogistics.Data
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+        public virtual VehicleData Vehicle { get; protected set; }
     }
 }
