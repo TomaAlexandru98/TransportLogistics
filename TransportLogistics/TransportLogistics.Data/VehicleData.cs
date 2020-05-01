@@ -6,10 +6,11 @@ namespace TransportLogistics.Data
 {
     public class VehicleData : DataEntity
     {
-        public string Name { get; private set; }
-        public string Type { get; private set; }
-        public string RegistrationNumber { get; private set; }
-        public List<TrailerData> Trailers { get; private set; }
-        public int MaximCarryWeightKg { get; private set; }
+        public string Name { get; protected set; }
+        public string Type { get; protected set; }
+        public string RegistrationNumber { get; protected set; }
+        public ICollection<TrailerData> CurrentTrailers { get; protected set; }
+        public int MaximCarryWeightKg { get; protected set; }
+        public string VIN { get; protected set; }
     }
 }
