@@ -4,8 +4,9 @@ using System.Text;
 
 namespace TransportLogistics.Data.Abstractions
 {
-    interface IVehiclesRepository
+    public interface IVehiclesRepository:IBaseRepository<VehicleData>
     {
-        IEnumerable<VehicleData> GetAll();
+        
+        
     }
 }
