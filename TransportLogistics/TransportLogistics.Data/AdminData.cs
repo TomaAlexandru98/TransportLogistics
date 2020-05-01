@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TransportLogistics.Data
 {
-    public class DataEntity
+    public class AdminData
     {
-        public Guid Id { get; set; }
+
     }
 }

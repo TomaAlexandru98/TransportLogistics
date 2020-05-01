@@ -8,4 +8,8 @@
     <ProjectReference Include="..\TransportLogistics.Data\TransportLogistics.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sevices\" />
+  </ItemGroup>
+
 </Project>
