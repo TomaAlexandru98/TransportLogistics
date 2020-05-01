@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.Data;
 
 namespace TransportLogistics.ApplicationLogic.Models
 {
-    public class Vehicle : DataEntity
+    public class Vehicle : VehicleData
     {
-        public string Name { get; private set; }
-        public string Type { get; private set; }
-        public string RegistrationNumber { get; private set; }
-        public ICollection<Trailer> CurrentTrailers { get; private set; }
-        public int MaximCarryWeightKg { get; private set; }
     }
 }

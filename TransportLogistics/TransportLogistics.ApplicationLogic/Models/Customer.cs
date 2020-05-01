@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.Data;
 
 namespace TransportLogistics.ApplicationLogic.Models
 {
-    public class Customer : DataEntity
+    public class Customer : CustomerData
     {
-        public ICollection<LocationAddress> LocationAddresses { get; private set; }
-        public string Name { get; protected set; }
-        public Contact ContactDetails { get; protected set; }
+        
     }
 
 }
