@@ -6,11 +6,11 @@ namespace TransportLogistics.Data
 {
     public class LocationAddressData : DataEntity
     {
-        public string Country { get; private set; }
-        public string City { get; private set; }
-        public string Street { get; private set; }
-        public int StreetNumber { get; private set; }
-        public string PostalCode { get; private set; }
+        public string Country { get; protected set; }
+        public string City { get; protected set; }
+        public string Street { get; protected set; }
+        public int StreetNumber { get; protected set; }
+        public string PostalCode { get; protected set; }
 
     }
 }
