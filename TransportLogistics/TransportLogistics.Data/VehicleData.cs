@@ -12,5 +12,10 @@ namespace TransportLogistics.Data
         public ICollection<TrailerData> CurrentTrailers { get; protected set; }
         public int MaximCarryWeightKg { get; protected set; }
         public string VIN { get; protected set; }
+        
+        protected VehicleData()
+        {
+
+        }
     }
 }

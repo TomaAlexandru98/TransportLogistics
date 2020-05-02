@@ -7,6 +7,8 @@ namespace TransportLogistics.ApplicationLogic.Models
 {
     public class Trailer : TrailerData
     {
-       
+     
+
+        
     }
 }

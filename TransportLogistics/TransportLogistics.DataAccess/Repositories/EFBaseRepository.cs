@@ -14,6 +14,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFBaseRepository(TransportLogisticsDbContext dbContext)
         {
             this.dbContext = dbContext;
+           
         }
 
         public T Add(T itemToAdd)
