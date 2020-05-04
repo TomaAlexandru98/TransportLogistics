@@ -12,11 +12,11 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFCustomerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         { }
 
-        public IEnumerable<Customer> FindByName(string nameToFind)
+        public IEnumerable<Customer> FindByLastName(string nameToFind)
         {
             var customersList = dbContext.Customers
                                 .Where(customer =>
-                                            customer.Name
+                                            customer.LastName
                                             .ToLower()
                                             .Contains(nameToFind.ToLower()));
 
