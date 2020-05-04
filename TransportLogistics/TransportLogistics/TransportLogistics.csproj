@@ -15,4 +15,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\TransportLogistics.ApplicationLogic\TransportLogistics.ApplicationLogic.csproj" />
+    <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
+    <ProjectReference Include="..\TransportLogistics.DataAccess\TransportLogistics.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

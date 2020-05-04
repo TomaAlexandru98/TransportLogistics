@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.ApplicationLogic.Models
+namespace TransportLogistics.Model
 {
     public class DataEntity
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
     }
 }
