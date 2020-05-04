@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.Data
+
+namespace TransportLogistics.Model
 {
-    public class EmployeeData : DataEntity
+    public class Contact : DataEntity
     {
+        public string PhoneNo { get; protected set; }
         public string Email { get; protected set; }
-        public string Name { get; protected set; }
     }
 }

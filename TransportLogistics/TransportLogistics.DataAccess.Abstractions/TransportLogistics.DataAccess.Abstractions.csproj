@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
     <ProjectReference Include="..\TransportLogistics.Model\TransportLogistics.Model.csproj" />
   </ItemGroup>
 

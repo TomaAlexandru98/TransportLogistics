@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.Model;
 
-namespace TransportLogistics.Data.Abstractions
+namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IBaseRepository<T> where T : DataEntity
     {
