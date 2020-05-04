@@ -5,8 +5,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Abstractions
 {
-    interface IVehiclesRepository
+    public interface IVehiclesRepository : IBaseRepository<Vehicle>
     {
-        IEnumerable<Vehicle> GetAll();
     }
 }
