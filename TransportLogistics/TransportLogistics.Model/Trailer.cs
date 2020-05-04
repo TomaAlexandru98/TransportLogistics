@@ -15,7 +15,6 @@ namespace TransportLogistics.Model
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
 
-        public virtual Vehicle Vehicle { get; protected set; }
         protected Trailer()
         {
         }

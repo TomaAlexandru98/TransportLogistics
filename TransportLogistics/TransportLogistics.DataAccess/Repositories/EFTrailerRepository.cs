@@ -17,7 +17,8 @@ namespace TransportLogistics.DataAccess.Repositories
 
         public IEnumerable<Trailer> GetByVehicleId(Guid vehicleId)
         {
-            var trailerlist = dbContext.Trailers.Where(trailer => trailer.Vehicle.Id == vehicleId);
+            var targetvehicle = dbContext.Vehicles.Where(vehicle => vehicle.Id == vehicleId).FirstOrDefault();
+            var trailerlist = targetvehicle.CurrentTrailers;
             return trailerlist;
         }
 
