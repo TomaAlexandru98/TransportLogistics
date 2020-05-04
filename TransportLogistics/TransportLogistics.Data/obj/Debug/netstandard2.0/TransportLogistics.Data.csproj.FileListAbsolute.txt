@@ -1,0 +1,8 @@
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\bin\Debug\netstandard2.0\TransportLogistics.Data.deps.json
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\bin\Debug\netstandard2.0\TransportLogistics.Data.dll
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\bin\Debug\netstandard2.0\TransportLogistics.Data.pdb
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\obj\Debug\netstandard2.0\TransportLogistics.Data.csprojAssemblyReference.cache
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\obj\Debug\netstandard2.0\TransportLogistics.Data.AssemblyInfoInputs.cache
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\obj\Debug\netstandard2.0\TransportLogistics.Data.AssemblyInfo.cs
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\obj\Debug\netstandard2.0\TransportLogistics.Data.dll
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.Data\obj\Debug\netstandard2.0\TransportLogistics.Data.pdb

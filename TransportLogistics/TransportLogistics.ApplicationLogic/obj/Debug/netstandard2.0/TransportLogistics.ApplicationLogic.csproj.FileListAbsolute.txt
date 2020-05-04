@@ -1,0 +1,11 @@
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\bin\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.deps.json
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\bin\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.dll
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\bin\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.pdb
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.AssemblyInfoInputs.cache
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.AssemblyInfo.cs
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.dll
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.pdb
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\bin\Debug\netstandard2.0\TransportLogistics.Data.dll
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\bin\Debug\netstandard2.0\TransportLogistics.Data.pdb
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.csprojAssemblyReference.cache
+D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics.ApplicationLogic\obj\Debug\netstandard2.0\TransportLogistics.ApplicationLogic.csproj.CopyComplete
