@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.Data
+
+namespace TransportLogistics.Model
 {
-    public class TrailerData : DataEntity
+    public class Trailer : DataEntity
     {
         public int MaximWeightKg { get; protected set; }
         public string Model { get; protected set; }
@@ -13,5 +14,6 @@ namespace TransportLogistics.Data
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+
     }
 }

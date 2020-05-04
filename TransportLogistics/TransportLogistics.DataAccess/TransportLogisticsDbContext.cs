@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TransportLogistics.Data;
+using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess
 {
@@ -13,9 +13,9 @@ namespace TransportLogistics.DataAccess
         {
         }
 
-        public DbSet<VehicleData> Vehicles { get; set; }
-        public DbSet<TrailerData> Trailers { get; set; }
-        public DbSet<CustomerData> Customers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Trailer> Trailers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
 
     }

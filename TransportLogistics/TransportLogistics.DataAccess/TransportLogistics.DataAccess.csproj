@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransportLogistics.Data\TransportLogistics.Data.csproj" />
+    <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
+    <ProjectReference Include="..\TransportLogistics.Model\TransportLogistics.Model.csproj" />
   </ItemGroup>
 
 </Project>

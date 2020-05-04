@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.Data
+namespace TransportLogistics.Model
 {
-    public class UserAccounts : DataEntity
+    public class Dispatcher: Employee
     {
-
     }
 }

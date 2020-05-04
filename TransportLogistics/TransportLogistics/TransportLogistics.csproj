@@ -17,6 +17,8 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\TransportLogistics.ApplicationLogic\TransportLogistics.ApplicationLogic.csproj" />
+    <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
     <ProjectReference Include="..\TransportLogistics.DataAccess\TransportLogistics.DataAccess.csproj" />
   </ItemGroup>
 
