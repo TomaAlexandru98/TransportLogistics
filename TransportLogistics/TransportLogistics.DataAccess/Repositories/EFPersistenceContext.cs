@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
-using TransportLogistics.Data.Abstractions;
+using TransportLogistics.DataAccess.Abstractions;
 
 namespace TransportLogistics.DataAccess.Repositories
 {

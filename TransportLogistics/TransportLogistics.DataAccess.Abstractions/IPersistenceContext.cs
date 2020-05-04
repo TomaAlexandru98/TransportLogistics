@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
 
-namespace TransportLogistics.Data.Abstractions
+namespace TransportLogistics.DataAccess.Abstractions
 {
-    public interface IPersistenceContext : IDisposable
+    public interface IPersistenceContext
     {
         TransactionScope BeginTransaction();
         void SaveChanges();
