@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.DataAccess.Abstractions;
+using TransportLogistics.Model;
+
 namespace TransportLogistics.Data.Abstractions
 {
-    public interface ITrailersRepository : IBaseRepository<TrailerData>
+    public interface ITrailersRepository : IBaseRepository<Trailer>
     {
         
-        TrailerData GetTrailerById(Guid trailerId);
-        IEnumerable<TrailerData> GetByVehicleId(Guid vehicleId);
+        Trailer GetTrailerById(Guid trailerId);
+        IEnumerable<Trailer> GetByVehicleId(Guid vehicleId);
     }
 }

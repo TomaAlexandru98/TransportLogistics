@@ -14,6 +14,8 @@ namespace TransportLogistics.Model
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+
+        public virtual Vehicle Vehicle { get; protected set; }
         protected Trailer()
         {
         }
@@ -46,11 +48,8 @@ namespace TransportLogistics.Model
             };
             return trailer;
         }
-        public void Modify(int aux)
-        {
-
-        }
-        public virtual Vehicle Vehicle { get; protected set; }
+       
+       
 
 
 
