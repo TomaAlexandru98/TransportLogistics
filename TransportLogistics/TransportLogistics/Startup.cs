@@ -40,6 +40,7 @@ namespace TransportLogistics
                    Configuration.GetConnectionString("DefaultConnection1")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ICustomerRepository, EFCustomerRepository>();
