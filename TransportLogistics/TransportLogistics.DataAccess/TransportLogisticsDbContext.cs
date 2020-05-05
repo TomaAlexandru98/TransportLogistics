@@ -8,6 +8,8 @@ namespace TransportLogistics.DataAccess
 {
     public class TransportLogisticsDbContext : DbContext
     {
+      
+
         public TransportLogisticsDbContext(DbContextOptions<TransportLogisticsDbContext> options)
             : base(options)
         {
