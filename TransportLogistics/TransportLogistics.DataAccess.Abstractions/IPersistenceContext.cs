@@ -8,7 +8,6 @@ namespace TransportLogistics.DataAccess.Abstractions
     public interface IPersistenceContext
     {
         TransactionScope BeginTransaction();
-        ICustomerRepository CustomerRepository { get; }
         void SaveChanges();
     }
 }

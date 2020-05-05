@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransportLogistics.DataAccess;
+using TransportLogistics.ApplicationLogic.Services;
+using TransportLogistics.DataAccess.Abstractions;
+using TransportLogistics.DataAccess.Repositories;
 
 namespace TransportLogistics
 {
@@ -38,6 +41,9 @@ namespace TransportLogistics
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<CustomerService>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

@@ -10,5 +10,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         IEnumerable<Customer> FindByLastName(string nameToFind);
         Customer FindByEmail(string emailToFind);
         Customer FindByPhoneNo(string phoneNo);
+        Customer GetCustomerByGuid(Guid customerId);
+
     }
 }
