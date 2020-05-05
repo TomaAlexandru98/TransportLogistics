@@ -16,7 +16,7 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             var customersList = dbContext.Customers
                                 .Where(customer =>
-                                            customer.LastName
+                                            customer.Name
                                             .ToLower()
                                             .Contains(nameToFind.ToLower()));
 
