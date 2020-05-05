@@ -11,5 +11,6 @@ namespace TransportLogistics.Data.Abstractions
         
         Trailer GetTrailerById(Guid trailerId);
         IEnumerable<Trailer> GetByVehicleId(Guid vehicleId);
+        Trailer UpdateTrailer(Guid trailerId, Trailer details);
     }
 }
