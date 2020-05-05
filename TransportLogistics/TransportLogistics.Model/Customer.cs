@@ -6,8 +6,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public class Customer : DataEntity    {
-        public string FirstName { get; protected set; }
+    public class Customer : DataEntity {
         public string Name { get; protected set; }
         public virtual Contact ContactDetails { get; protected set; }
         public virtual ICollection<LocationAddress> LocationAddresses { get; protected set; }
