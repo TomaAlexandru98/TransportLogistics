@@ -16,16 +16,16 @@
     <div class="d-flex flex-column ">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <a class="btn btn-car bg-menu" role="button" data-toggle="modal" data-target="#Modal"  >
+                <a class="btn btn-car bg-menu" role="button" data-toggle="modal" data-target="#Modal">
                     Add User <i class="fa fa-user"></i>
                 </a>
             </div>
-            
+
         </div>
         <div class="input-group-append">
-           
+
             <input type="text" id="mySearchText" placeholder="Search...">
-            <button id="mySearchButton" class="bg-menu"> <i class="fa fa-search" >Search</i></button>
+            <button id="mySearchButton" class="bg-menu"> <i class="fa fa-search">Search</i></button>
         </div>
     </div>
 </div>
@@ -39,39 +39,39 @@
         </tr>
     </thead>
     <tbody>
-            @foreach (var user in Model)
-            {
-        <tr id="@user.Id" >
+        @foreach (var user in Model)
+        {
+            <tr id="@user.Id">
                 <td>@user.UserName </td>
-                <td>@{
-                    if ( userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
-                    {
-
-                      var roles =  userManager.GetRolesAsync(user).GetAwaiter().GetResult();
-                       <p>@roles[0]</p>
-                    }
-                    else
-                    {
-                        <p>No Role</p>;
-                    }
-                    }
-            </td> 
-                
-                <td>@user.Email</td>
                 <td>
-    <button  type ="button"class="edit btn" title="Edit" onClick ="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')"data-toggle="modal" data-target="#exampleModal"><i class="material-icons">&#xE254;</i></button>
-    <a class="delete btn btn-danger" asp-controller="Administrator" asp-action="DeleteUserAccount" asp-route-UserId ="@user.Id"title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-</td>
-                
-        </tr>
-            }
+                    @{
+                        if (userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
+                        {
 
-        
+                            var roles = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+                            <p>@roles[0]</p>
+                        }
+                        else
+                        {
+                            <p>No Role</p>;
+                        }
+                }
+            </td>
+
+            <td>@user.Email</td>
+            <td>
+                <button type="button" class="edit btn" title="Edit" onClick="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">&#xE254;</i></button>
+                <a class="delete btn btn-danger" asp-controller="Administrator" asp-action="DeleteUserAccount" asp-route-UserId="@user.Id" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+            </td>
+        </tr>
+    }
+
+
     </tbody>
 </table>
 
 <form method="post" asp-controller="Administrator" asp-action="EditUserAccount">
-    <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="buttonSubmit" type="submit" class="btn btn-primary" >Save changes</button>
+                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -132,21 +132,21 @@
             </div>
         </div>
     </div>
-    </form>
-    @section scripts{
-        <script>
-            $(document).ready(function () {
-                var table = $('#Users').DataTable({
-                    "dom": '<"top"i>rt<"bottom"><"clear">'
-                });
-
-                $('#mySearchButton').on('keyup click', function () {
-                    table.search($('#mySearchText').val()).draw();
-                });
+</form>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $('#Users').DataTable({
+                "dom": '<"top"i>rt<"bottom"><"clear">'
             });
 
+            $('#mySearchButton').on('keyup click', function () {
+                table.search($('#mySearchText').val()).draw();
+            });
+        });
 
-        </script>
+
+    </script>
 
 
-    }
+}
