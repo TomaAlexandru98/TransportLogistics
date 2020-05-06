@@ -6,7 +6,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.Data.Abstractions
 {
-    public interface ITrailersRepository : IBaseRepository<Trailer>
+    public interface ITrailerRepository : IBaseRepository<Trailer>
     {
         
         Trailer GetTrailerById(Guid trailerId);

@@ -8,7 +8,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFTrailerRepository:EFBaseRepository<Trailer>,ITrailersRepository
+    public class EFTrailerRepository:EFBaseRepository<Trailer>,ITrailerRepository
     {
         public EFTrailerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {

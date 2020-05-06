@@ -18,7 +18,7 @@ using TransportLogistics.ApplicationLogic.Services;
 
 using TransportLogistics.DataAccess.Repositories;
 using TransportLogistics.DataAccess.Abstractions;
-
+using TransportLogistics.Data.Abstractions;
 
 namespace TransportLogistics
 {
@@ -45,7 +45,7 @@ namespace TransportLogistics
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<ITrailersRepository, EFTrailerRepository>();
+            services.AddScoped<ITrailerRepository, EFTrailerRepository>();
             services.AddScoped<TrailerService>();
 
 
