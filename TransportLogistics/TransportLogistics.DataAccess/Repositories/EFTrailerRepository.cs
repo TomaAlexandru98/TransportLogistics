@@ -33,5 +33,6 @@ namespace TransportLogistics.DataAccess.Repositories
             dbContext.SaveChanges();
             return trailer.Entity;
         }
+
     }
 }
