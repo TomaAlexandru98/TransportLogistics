@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransportLogistics.DataAccess;
 using TransportLogistics.ApplicationLogic.Services;
+
 using TransportLogistics.DataAccess.Repositories;
 using TransportLogistics.DataAccess.Abstractions;
 
@@ -42,12 +43,15 @@ namespace TransportLogistics
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<CustomerService>();
+
             services.AddScoped<VehicleService>();
 
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
