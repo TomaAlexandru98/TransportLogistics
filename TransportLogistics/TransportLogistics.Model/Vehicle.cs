@@ -12,25 +12,35 @@ namespace TransportLogistics.Model
         public ICollection<Trailer> CurrentTrailers { get; protected set; }
         public int MaximCarryWeightKg { get; protected set; }
         public string VIN { get; protected set; }
-        public static Vehicle Create(string Name, string Type, int MaximCarryWeight, string VIN)
+
+        public static Vehicle Create(string Name, string Type, string registrationNumber, int MaximCarryWeight, string VIN)
         {
-            if (Name == null || Type == null || VIN == null)
-            {
-                throw new ArgumentNullException();
-            }
             if (MaximCarryWeight < 0)
             {
                 throw new Exception("Maxim carry weight can not be less than 0");
             }
+
             return new Vehicle
             {
+                Id = Guid.NewGuid(),
                 Name = Name,
                 Type = Type,
+                RegistrationNumber = registrationNumber,
                 MaximCarryWeightKg = MaximCarryWeight,
                 VIN = VIN,
-                Id = Guid.NewGuid(),
-               // CurrentTrailers = new List<TrailerData>()
+                CurrentTrailers = new List<Trailer>()
             };
+        }
+
+        public Vehicle Update(string name, string type, string registrationNumber, int maximCarryWeight, string vin)
+        {
+            this.Name = name;
+            this.Type = type;
+            this.RegistrationNumber = registrationNumber;
+            this.MaximCarryWeightKg = maximCarryWeight;
+            this.VIN = vin;
+
+            return this;
         }
     }
 }

@@ -3,16 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200504200559_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -32,8 +35,7 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-
-                    b.ToTable("Contacts");
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
@@ -165,11 +167,11 @@ namespace TransportLogistics.DataAccess.Migrations
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
                 {
-
                     b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
                         .WithMany("CurrentTrailers")
                         .HasForeignKey("VehicleId");
                 });
+#pragma warning restore 612, 618
         }
     }
 }

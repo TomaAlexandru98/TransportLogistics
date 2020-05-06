@@ -14,8 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransportLogistics.DataAccess;
 using TransportLogistics.ApplicationLogic.Services;
-using TransportLogistics.DataAccess.Abstractions;
+
 using TransportLogistics.DataAccess.Repositories;
+using TransportLogistics.DataAccess.Abstractions;
 
 namespace TransportLogistics
 {
@@ -44,6 +45,11 @@ namespace TransportLogistics
 
             services.AddScoped<ICustomerRepository, EFCustomerRepository>();
             services.AddScoped<CustomerService>();
+
+            services.AddScoped<VehicleService>();
+
+            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

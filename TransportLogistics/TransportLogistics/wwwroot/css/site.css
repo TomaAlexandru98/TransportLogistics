@@ -84,3 +84,7 @@ body {
     color: #FFFFFF !important;
     border-bottom: 1px solid #046504 !important;
 }
+
+.maxim-width-input{
+    width: 450px;
+}
