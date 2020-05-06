@@ -41,22 +41,19 @@ namespace TransportLogistics.Controllers
         public IActionResult NewTrailer()
         {
             var trailerid = Guid.NewGuid();
-            //return Index();
-            return PartialView("_NewTrailerPartial", new NewTrailerViewModel { TrailerId = trailerid });
+
+            return RedirectToAction("Index");
+            //return PartialView("_NewTrailerPartial", new NewTrailerViewModel { TrailerId = trailerid });
         }
 
         [HttpPost]
         public IActionResult NewTrailer([FromForm]NewTrailerViewModel trailerData)
         {
-            NewTrailerViewModel viewModelResult = new NewTrailerViewModel()
-            {
-               
-            };
+            
 
             trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
-            
-           // return Index();
-             return PartialView("_NewTrailerPartial", viewModelResult);
+            return RedirectToAction("Index");
+            //return PartialView("_NewTrailerPartial", viewModelResult);
         }
     }
 }

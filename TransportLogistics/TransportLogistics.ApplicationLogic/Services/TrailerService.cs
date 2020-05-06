@@ -12,17 +12,16 @@ namespace TransportLogistics.ApplicationLogic.Services
         //private readonly IPersistenceContext persistenceContext;
         private readonly ITrailersRepository trailersRepository;
        
-        public TrailerService(
-                           ITrailersRepository trailersRepository)
+        public TrailerService(ITrailersRepository trailersRepository)
         {
-            //this.trailersRepository = trailersRepository;
+            this.trailersRepository = trailersRepository;
 
            // this.persistenceContext = persistenceContext;
         }
 
         public Trailer CreateTrailer(string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
         {
-            var trailer = Trailer.Create(model, maximumWeightKg, capacity, numberAxles, height, width, length);
+            var trailer =  Trailer.Create(model, maximumWeightKg, capacity, numberAxles, height, width, length);
             trailersRepository.Add(trailer);
             //persistenceContext.SaveChanges();
             return trailer;
