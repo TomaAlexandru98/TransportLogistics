@@ -9,15 +9,23 @@ namespace TransportLogistics.ApplicationLogic.Services
 {
     public class TrailerService
     {
-        private readonly IPersistenceContext persistenceContext;
-        private readonly ITrailersRepository trailersRepository;
-        private readonly IVehiclesRepository vehiclesRepository;
-        public TrailerService(IPersistenceContext persistenceContext,
-                           IVehiclesRepository vehiclesRepository)
+        //private readonly IPersistenceContext persistenceContext;
+        private readonly ITrailerRepository trailersRepository;
+       
+        public TrailerService(ITrailerRepository trailersRepository)
         {
-            this.vehiclesRepository = vehiclesRepository;
+            this.trailersRepository = trailersRepository;
 
-            this.persistenceContext = persistenceContext;
+           // this.persistenceContext = persistenceContext;
+        }
+
+        public Trailer CreateTrailer(string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+            var trailer =  Trailer.Create(model, maximumWeightKg, capacity, numberAxles, height, width, length);
+            trailersRepository.Add(trailer);
+            //persistenceContext.SaveChanges();
+            return trailer;
+
         }
 
         public Trailer GetTrailerById(string Id)
@@ -44,5 +52,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             return trailers;
         }
 
+       
+        
     }
 }

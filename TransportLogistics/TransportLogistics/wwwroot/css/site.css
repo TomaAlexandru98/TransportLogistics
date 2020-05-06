@@ -85,6 +85,10 @@ body {
     border-bottom: 1px solid #046504 !important;
 }
 
+.maxim-width-input{
+    width: 450px;
+}
+
 .btn-blue {
     border-color: #06087d;
     color: #06087d;

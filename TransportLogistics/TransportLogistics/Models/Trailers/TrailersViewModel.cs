@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TransportLogistics.Models.NewFolder
+namespace TransportLogistics.Models.Trailers
 {
     public class TrailersViewModel
     {
+        //public List<Models.Trailers.TrailersViewModel> TrailerList{ get; set; }
+        //public Guid Id { get; set; }
         public int MaximWeightKg { get; protected set; }
         public string Model { get; protected set; }
         public int Capacity { get; protected set; }

@@ -8,7 +8,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFTrailerRepository:EFBaseRepository<Trailer>,ITrailersRepository
+    public class EFTrailerRepository:EFBaseRepository<Trailer>,ITrailerRepository
     {
         public EFTrailerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {
@@ -33,5 +33,6 @@ namespace TransportLogistics.DataAccess.Repositories
             dbContext.SaveChanges();
             return trailer.Entity;
         }
+
     }
 }
