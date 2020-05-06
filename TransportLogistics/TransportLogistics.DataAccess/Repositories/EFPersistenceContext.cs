@@ -13,6 +13,13 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFPersistenceContext(TransportLogisticsDbContext context)
         {
             this.dbContext = context;
+            this.VehiclesRepository = new EFVehicleRepository(context);
+        }
+
+        public IVehicleRepository VehiclesRepository 
+        { 
+            get;
+            private set;
         }
 
         public TransactionScope BeginTransaction()
