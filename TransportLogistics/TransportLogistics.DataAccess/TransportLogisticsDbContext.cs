@@ -16,7 +16,6 @@ namespace TransportLogistics.DataAccess
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Trailer> Trailers { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
         
     }
 }
