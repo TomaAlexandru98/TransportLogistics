@@ -51,82 +51,116 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var trailer in Model)
         {
-            <tr>
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => trailer.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.MaximWeightKg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.Capacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.NumberAxles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => trailer.Length)
+            </td>
+            <td class="d-flex justify-content-around">
+                @using (Html.BeginForm("EditTrailer", "Trailers", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <a name="ID" id="@trailer.Id" value="@trailer.Id" class="btn btn-outline-dark"  asp-route-Id="@trailer.Id" title="Edit" data-toggle="modal" data-target="#editTrailerModal"><i class="material-icons fa fa-edit"></i></a>
+                }
+                <button class="delete btn btn-danger" asp-controller="Trailers" asp-action="Delete" asp-route-Id="@trailer.Id" title="Delete" data-toggle="tooltip"><i class="material-icons fa fa-trash"></i></button>
+                @*<button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>*@
+            </td>
+        </tr>
+                }
+            </tbody>
+        </table>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaximWeightKg)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberAxles)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Height)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Width)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Length)
-                </td>
-                <td class="d-flex justify-content-around">
-                    <button class="btn btn-outline-dark" title="Edit"><i class="material-icons fa fa-edit"></i></button>
-                    <button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>
-                </td>
-            </tr>
+
+        @section scripts{
+            <partial name="_ValidationScriptsPartial" />
+            <script src="~/js/partialViewLoader.js" type="text/javascript"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#Trailer').DataTable({ responsive: true });
+                });
+                $(function () {
+                    $('#modal').modal('toggle');
+                });
+
+
+            </script>
         }
-    </tbody>
-</table>
+        <form id="editTrailerForm" method="post" asp-controller="Trailers" asp-action="EditTrailer"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#editTrailerBody">
+
+            @Html.AntiForgeryToken()
+            <div class="modal" id="editTrailerModal" tabindex="-1" role="dialog" aria-labelledby="editTrailerModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-weight-bold" id="editTrailerModalLabel">New Trailer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="editTrailerBody" class="modal-body">
+                            @await Html.PartialAsync("_NewTrailerPartial", new NewTrailerViewModel {})
+                        </div>
 
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/partialViewLoader.js" type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            $('#Trailer').DataTable({ responsive: true });
-        });
-        $(function () {
-            $('#modal').modal('toggle');
-        });
-
-   
-    </script>
-}
-
-<form id="newTrailerForm" method="post" asp-controller="Trailers" asp-action="NewTrailer"
-      data-ajax="true"
-      data-ajax-method="POST"
-      data-ajax-mode="replace"
-      data-ajax-update="#newTrailerBody">
-
-    @Html.AntiForgeryToken()
-    <div class="modal" id="newTrailerModal" tabindex="-1" role="dialog" aria-labelledby="newTrailerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" id="newTrailerModalLabel">New Trailer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="newTrailerBody" class="modal-body">
-                    @await Html.PartialAsync("_NewTrailerPartial", new NewTrailerViewModel { })
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave"  class="btn btn-success" type="submit" > Confirm </button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
+                            <button id="btnSave" class="btn btn-success" type="submit"> Confirm </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</form>
+        </form>
+
+        <form id="newTrailerForm" method="post" asp-controller="Trailers" asp-action="NewTrailer"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#newTrailerBody">
+
+            @Html.AntiForgeryToken()
+            <div class="modal" id="newTrailerModal" tabindex="-1" role="dialog" aria-labelledby="newTrailerModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-weight-bold" id="newTrailerModalLabel">New Trailer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="newTrailerBody" class="modal-body">
+                            @await Html.PartialAsync("_NewTrailerPartial", new NewTrailerViewModel { })
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
+                            <button id="btnSave"  class="btn btn-success" type="submit" > Confirm </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
