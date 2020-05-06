@@ -7,23 +7,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TransportLogistics.Data;
+using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.ViewModels;
 
 namespace TransportLogistics.Controllers
 {
-    
+    [Authorize(Roles="Administrator")]
     public class AdministratorController : Controller
     {
-       public AdministratorController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager)
+       public AdministratorController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepiository employeeRepository) 
         {
             UserManager = userManager;
             RoleManager = roleManager;
+            EmployeeRepository = employeeRepository;
         }
 
         public UserManager<IdentityUser> UserManager { get; }
         public RoleManager<IdentityRole> RoleManager { get; }
+        public IEmployeeRepiository EmployeeRepository { get; }
 
         public IActionResult Index()
+        
         
         {
             try
@@ -47,6 +51,8 @@ namespace TransportLogistics.Controllers
                     PhoneNumber = model.PhoneNumber
                 };
                 await UserManager.CreateAsync(user, model.Password);
+               // var createdUser = await UserManager.FindByEmailAsync(model.Email);
+                //EmployeeRepository.AddEmployee(createdUser.Id , model.Name , model.Email , model.Role);
                 if (await RoleManager.FindByNameAsync(model.Role) == null)
                 {
                     var role = new IdentityRole(model.Role);

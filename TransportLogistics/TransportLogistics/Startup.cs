@@ -39,11 +39,13 @@ namespace TransportLogistics
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection1")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<ICustomersRepository, EFCustomerRepository>();
+            services.AddScoped<IEmployeeRepiository, EFEmployeeRepository>();
+            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<CustomerService>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

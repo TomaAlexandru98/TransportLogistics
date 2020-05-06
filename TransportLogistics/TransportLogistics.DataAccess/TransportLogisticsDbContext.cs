@@ -11,12 +11,14 @@ namespace TransportLogistics.DataAccess
         public TransportLogisticsDbContext(DbContextOptions<TransportLogisticsDbContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Trailer> Trailers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Dispatcher> Dispatchers { get; set; }
         
     }
 }

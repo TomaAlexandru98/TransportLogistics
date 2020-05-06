@@ -5,41 +5,44 @@
 
 <div class="row">
     <div class="col-md-4">
-        
-            
-           
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="@Model.Email"></label>
-                <input asp-for="@Model.Email" class="form-control" />
-                <span asp-validation-for="@Model.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Password"></label>
-                <input asp-for="@Model.Password" class="form-control" />
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.ConfirmPassword"></label>
-                <input asp-for="@Model.ConfirmPassword" class="form-control"  />
-                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Name"></label>
-                <input asp-for="@Model.Name" class="form-control" />
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Role"></label>
-                <input asp-for="@Model.Role" class="form-control" />
-                <span asp-validation-for="@Model.Role" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.PhoneNumber"></label>
-                <input asp-for="@Model.PhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-            </div>
-           
+
+
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="@Model.Email"></label>
+            <input asp-for="@Model.Email" class="form-control" />
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Password"></label>
+            <input asp-for="@Model.Password" class="form-control" />
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ConfirmPassword"></label>
+            <input asp-for="@Model.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Name"></label>
+            <input asp-for="@Model.Name" class="form-control" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
        
+        <label asp-for="@Model.Role"></label>
+        <select class="form-control" name="Role" asp-for="@Model.Role">
+            <option>Dispatcher</option>
+            <option>Administrator</option>
+            <option>Driver</option>
+            <option>Supervisor</option>
+        </select>
+        <div class="form-group">
+            <label asp-for="@Model.PhoneNumber"></label>
+            <input asp-for="@Model.PhoneNumber" class="form-control" />
+            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+        </div>
+
+
     </div>
     </div>

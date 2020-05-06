@@ -5,42 +5,42 @@
 function Validate() {
     var correctForm = true;
     var name = document.getElementById("Name");
-    if (name.value == "") {
-        document.getElementById("LabelName").value = 'The name is required';
+    if (document.getElementById("Name").value == "") {
+        document.getElementById("LabelName").innerHTML = "The name is required";
         document.getElementById("LabelName").style.color = "red";
         //name.value =
         correctForm = false;
     }
     else {
-        document.getElementById("LabelName").value = "Name";
-        document.getElementById("LabelName").style.color = "white";
+        document.getElementById("LabelName").innerHTML = "Name";
+        document.getElementById("LabelName").style.color = "green";
     }
     if (document.getElementById("Email").value == "") {
-        document.getElementById("LabelEmail").value = "The email is required";
+        document.getElementById("LabelEmail").innerHTML = "The email is required";
         document.getElementById("LabelEmail").style.color = "red";
         correctForm = false;
     }
     else  {
-        document.getElementById("LabelName").value = "Email";
-        document.getElementById("LabelName").style.color = "white";
+        document.getElementById("LabelEmail").innerHTML = "Email";
+        document.getElementById("LabelEmail").style.color = "green";
     }
     if (document.getElementById("Role").value == "") {
-        document.getElementById("LabelRole").value = "The role is required";
+        document.getElementById("LabelRole").innerHTML = "The role is required";
         document.getElementById("LabelRole").style.color = "red";
         correctForm = false;
     }
     else {
-        document.getElementById("LabelName").value = "Role";
-        document.getElementById("LabelName").style.color = "white";
+        document.getElementById("LabelRole").innerHTML = "Role";
+        document.getElementById("LabelRole").style.color = "green";
     }
     if (document.getElementById("PhoneNumber").value == "") {
-        document.getElementById("LabelPhoneNumber").value = "The phone number is required";
+        document.getElementById("LabelPhoneNumber").innerHTML = "The phone number is required";
         document.getElementById("LabelPhoneNumber").style.color = "red";
         correctForm = false;
     }
     else {
-        document.getElementById("LabelName").value = "Phone Number";
-        document.getElementById("LabelName").style.color = "white";
+        document.getElementById("LabelPhoneNumber").innerHTML = "Phone Number";
+        document.getElementById("LabelPhoneNumber").style.color = "green";
     }
     if (correctForm == false) {
          

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
+using TransportLogistics.Data.Abstractions;
 using TransportLogistics.DataAccess.Abstractions;
 
 namespace TransportLogistics.DataAccess.Repositories
@@ -13,7 +14,14 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFPersistenceContext(TransportLogisticsDbContext context)
         {
             this.dbContext = context;
+            TrailersRepository = new EFTrailersRepository(dbContext);
+            CustomersRepository = new EFCustomerRepository(dbContext);
+            EmployeeRepiository = new EFEmployeeRepository(dbContext);
         }
+
+        public ICustomersRepository CustomersRepository { get ; private set; }
+        public ITrailersRepository TrailersRepository { get ; private set ; }
+        public IEmployeeRepiository EmployeeRepiository { get; private set; }
 
         public TransactionScope BeginTransaction()
         {
