@@ -72,8 +72,8 @@
 
                 <td>@user.Email</td>
                 <td>
-                    <button type="button" class="edit btn" title="Edit" onClick="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">&#xE254;</i></button>
-                    <a class="delete btn btn-danger" asp-controller="Administrator" asp-action="DeleteUserAccount" asp-route-UserId="@user.Id" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    <button type="button" class="edit btn" title="Edit" onClick="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons fa fa-edit"></i></button>
+                    <a class="delete btn btn-danger" asp-controller="Administrator" asp-action="DeleteUserAccount" asp-route-UserId="@user.Id" title="Delete" data-toggle="tooltip"><i class="material-icons fa fa-trash"></i></a>
                 </td>
             </tr>
         }
@@ -107,8 +107,13 @@
                     </div>
                     <div class="form-group">
                         <label id="LabelRole">Role</label>
-                        <input type="text" id="Role" name="Role" class="form-control" onkeyup="Validate()" />
-                    </div>
+                        <select class="form-control" name="Role" >
+                            <option >Dispatcher</option>
+                            <option>Administrator</option>
+                            <option>Driver</option>
+                            <option>Supervisor</option>
+                        </select>
+                       </div>
                     <input type="hidden" id="identityId" name="UserId" />
                 </div>
                 <div class="modal-footer">
@@ -135,7 +140,7 @@
                     </button>
                 </div>
                 <div id="newPaymentBody" class="modal-body">
-                    @await Html.PartialAsync("_NewUserPartial", new TransportLogistics.ViewModels.UserAccountCreateViewModel { });
+                    @await Html.PartialAsync("_NewUserPartial", new TransportLogistics.ViewModels.UserAccountCreateViewModel { })
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
