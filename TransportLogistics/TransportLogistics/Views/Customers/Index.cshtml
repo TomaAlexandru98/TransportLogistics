@@ -29,29 +29,36 @@
             <th>Email</th>
             <th>Phone Number</th>
             <th>Address</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
     <tbody>
         @foreach (var customer in Model.CustomerViews)
         {
-            <tr>
-                <td>@customer.Name</td>
-                <td>@customer.Email</td>
-                <td>@customer.PhoneNo</td>
-                
-                <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Address Locations (@customer.LocationViews.Count())
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        @foreach (var location in customer.LocationViews)
-                        {
-                            <div class="dropdown-item">@location.Country, @location.City, @location.Street, @location.StreetNumber, @location.PostalCode</div>
-                        }
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td>@customer.Name</td>
+            <td>@customer.Email</td>
+            <td>@customer.PhoneNo</td>
+
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Address Locations (@customer.LocationViews.Count())
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    @foreach (var location in customer.LocationViews)
+                    {
+                        <div class="dropdown-item">@location.Country, @location.City, @location.Street, @location.StreetNumber, @location.PostalCode</div>
+                    }
+                </div>
+            </td>
+
+            <td class="d-flex justify-content-around">
+                <button class="btn btn-outline-dark" title="Edit"><i class="material-icons fa fa-edit"></i></button>
+                <button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>
+            </td>
+
+        </tr>
         }
     </tbody>
 </table>
