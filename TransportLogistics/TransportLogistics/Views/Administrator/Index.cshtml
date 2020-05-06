@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@{
+    ViewData["Title"] = "AdministratorController";
+}
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<div class="d-flex flex-column flex-md-row">
+    <div class="d-flex flex-column flex-grow-1">
+
+    </div>
+    <div class="d-flex flex-column ">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a class="btn-car"  asp-area="Identity" asp-page="/Account/Register" >
+                    Add User <i class="fa fa-user"></i>
+                </a>
+            </div>
+
+        </div>
+        <div class="input-group-append">
+           
+            <input type="text" id="mySearchText" placeholder="Search...">
+            <button id="mySearchButton" class="bg-menu"> <i class="fa fa-search">Search</i></button>
+        </div>
+    </div>
+</div>
+<table id="Users">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>UserRole</th>
+            <th>UserEmail</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var user in Model)
+            {
+                <td>@user.UserName </td>
+
+                <td>sal</td>
+                <td>@user.Email</td>
+                <td> <button class="edit btn" title="Edit"><i class="material-icons">&#xE254;</i></button>
+                <a class="delete btn btn-danger " title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+            }
+
+        </tr>
+        
+    </tbody>
+</table>
+        
+
+
+@section scripts{
+    <script>
+       $(document).ready( function () {
+  var table = $('#Users').DataTable({
+    "dom": '<"top"i>rt<"bottom"><"clear">'
+  });
+  
+  $('#mySearchButton').on( 'keyup click', function () {
+    table.search($('#mySearchText').val()).draw();
+  } );
+} );
+
+    </script>
+
+
+}
