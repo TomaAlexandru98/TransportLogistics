@@ -13,7 +13,13 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFPersistenceContext(TransportLogisticsDbContext context)
         {
             this.dbContext = context;
-            CustomerRepository = new EFCustomerRepository(context);
+            this.VehiclesRepository = new EFVehicleRepository(context);
+        }
+
+        public IVehicleRepository VehiclesRepository 
+        { 
+            get;
+            private set;
         }
 
         public TransactionScope BeginTransaction()
@@ -26,12 +32,6 @@ namespace TransportLogistics.DataAccess.Repositories
                 new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted });
 
             return currentTransactionScope;
-        }
-
-        public ICustomerRepository CustomerRepository
-        {
-            get;
-            private set;
         }
 
         public void Dispose()

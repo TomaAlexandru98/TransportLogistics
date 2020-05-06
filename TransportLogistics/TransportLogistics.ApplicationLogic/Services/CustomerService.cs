@@ -10,16 +10,16 @@ namespace TransportLogistics.ApplicationLogic.Services
 {
     public class CustomerService
     {
-        private readonly IPersistenceContext persistenceContext;
+        //private readonly IPersistenceContext persistenceContext;
         private readonly ICustomerRepository customerRepository;
 
-        public CustomerService(IPersistenceContext persistenceContext)
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            this.persistenceContext = persistenceContext;
-            customerRepository = persistenceContext.CustomerRepository;
+            //this.persistenceContext = persistenceContext;
+            this.customerRepository = customerRepository;
         }
 
-        public IEnumerable<LocationAddress> GetCustomerLocationAddresses(string customerId)
+        public IEnumerable<LocationAddress> GetCustomerAddresses(string customerId)
         {
             Guid.TryParse(customerId, out Guid guid);
             var customer = customerRepository?.GetById(guid);
@@ -31,6 +31,16 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return customer.LocationAddresses
                             .AsEnumerable();
+        }
+
+        public Customer GetCustomerByGuid(Guid customerId)
+        {
+            return customerRepository.GetCustomerByGuid(customerId);
+        }
+
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return customerRepository.GetAll();
         }
 
     }

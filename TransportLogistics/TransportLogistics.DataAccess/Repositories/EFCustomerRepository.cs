@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             var customersList = dbContext.Customers
                                 .Where(customer =>
-                                            customer.LastName
+                                            customer.Name
                                             .ToLower()
                                             .Contains(nameToFind.ToLower()));
 
@@ -39,8 +40,16 @@ namespace TransportLogistics.DataAccess.Repositories
                             .Where(customer =>
                                     customer.ContactDetails.PhoneNo
                                     .Contains(phoneNo)).FirstOrDefault();
-
+           
             return foundCustomer;
+        }
+
+        public Customer GetCustomerByGuid(Guid customerId)
+        {
+            return dbContext.Customers.Include(c => c.ContactDetails)
+                                        .Include(c => c.LocationAddresses)
+                                        .Where(customer => customer.Id == customerId)
+                                        .FirstOrDefault();
         }
     }
 }

@@ -13,7 +13,9 @@ namespace TransportLogistics.DataAccess.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+
 #pragma warning disable 612, 618
+
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -33,7 +35,9 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+
                     b.ToTable("Contact");
+
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
@@ -45,10 +49,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("ContactDetailsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
+
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -168,11 +171,12 @@ namespace TransportLogistics.DataAccess.Migrations
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
                 {
-                    b.HasOne("TransportLogistics.Model.Vehicle", null)
+
+
+                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
                         .WithMany("CurrentTrailers")
                         .HasForeignKey("VehicleId");
                 });
-#pragma warning restore 612, 618
         }
     }
 }
