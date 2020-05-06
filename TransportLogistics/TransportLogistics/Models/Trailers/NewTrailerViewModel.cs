@@ -9,9 +9,10 @@ namespace TransportLogistics.Models.Trailers
     public class NewTrailerViewModel
     {
         [Required]
-        public Guid? TrailerId { get; set; }
-
-        [Required(ErrorMessage = "The amount must be specified")]
+        
+        public Guid TrailerId { get; set; }
+        
+        [Required(ErrorMessage = "The model must be specified")]
         [Display(Name = "Model")]
         public string Model { get; set; }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,31 @@ namespace TransportLogistics.Controllers
             trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
             return RedirectToAction("Index");
             //return PartialView("_NewTrailerPartial", viewModelResult);
+        }
+
+        
+            public IActionResult EditTrailer(string ID)
+        {
+          
+            return RedirectToAction("EditTrailer", ID);
+          
+        }
+        
+        [HttpPost]
+        public ActionResult EditTrailer(string ID, [FromForm]NewTrailerViewModel trailerData)
+        {
+           
+            
+            var trailer = trailerService.GetTrailerById(ID);
+            
+            //trailer.Modify(trailer, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+            return RedirectToAction("Index");
+        }
+        
+        public IActionResult Delete(string Id)
+        {
+            trailerService.RemoveTrailer(Id);
+            return RedirectToAction("Index");
         }
     }
 }
