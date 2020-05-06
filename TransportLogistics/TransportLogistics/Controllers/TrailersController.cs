@@ -57,17 +57,16 @@ namespace TransportLogistics.Controllers
             //return PartialView("_NewTrailerPartial", viewModelResult);
         }
 
-        [HttpGet]
-            public IActionResult EditTrailer( Guid id)
+        
+            public IActionResult EditTrailer(string ID)
         {
-           // var trailerId = Guid.Empty;
-            //Guid.TryParse(id, out trailerId);
-            return RedirectToAction("EditTrailer", id);
+          
+            return RedirectToAction("EditTrailer", ID);
           
         }
         
         [HttpPost]
-        public ActionResult EditTrailer(string ID)
+        public ActionResult EditTrailer(string ID, [FromForm]NewTrailerViewModel trailerData)
         {
            
             
