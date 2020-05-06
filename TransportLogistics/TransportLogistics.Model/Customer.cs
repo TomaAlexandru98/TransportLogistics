@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Text;
 
 
@@ -14,22 +15,29 @@ namespace TransportLogistics.Model
         protected Customer()
         { }
 
-        public static Customer Create(string name)
+        public static Customer Create(string name, string phoneNo, string email)
         {
             var createdCustomer = new Customer()
             {
                 Id = Guid.NewGuid(),
                 Name = name,
-                ContactDetails = new Contact(),
+                ContactDetails = Contact.Create(phoneNo, email),
                 LocationAddresses = new List<LocationAddress>()
             };
          
             return createdCustomer;
         }
 
-        public void UpdateContactDetails(string phoneNo, string email)
+        public void AddLocationAddress(LocationAddress locationAddress)
         {
-            ContactDetails.Update(phoneNo, email);
+            LocationAddresses.Count();
+            LocationAddresses.Add(locationAddress);
+        }
+
+        public Contact UpdateContactDetails(string phoneNo, string email)
+        {
+            var updatedContact = ContactDetails.Update(phoneNo, email);
+            return updatedContact;
         }
     }
 

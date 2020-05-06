@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.Models.Customers;
@@ -11,10 +11,12 @@ namespace TransportLogistics.Controllers
     public class CustomersController : Controller
     {
         private readonly CustomerService customerService;
+        private readonly ILogger<CustomerService> logger;
 
-        public CustomersController(CustomerService customerService)
+        public CustomersController(CustomerService customerService, ILogger<CustomerService> logger)
         {
             this.customerService = customerService;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -64,8 +66,50 @@ namespace TransportLogistics.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError("Failed to create a new Customer {@Exception}", e.Message);
+                logger.LogDebug("Failed to create a new Customer {@ExceptionMessage}", e);
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult CreateCustomer()
+        {
+            var viewModel = new NewCustomerViewModel();
+            return PartialView("_NewCustomerPartial");//, viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCustomer([FromForm] NewCustomerViewModel customerData)
+        {
+            //var creationResultViewModel = new NewCustomerViewModel();
+            
+            if (!ModelState.IsValid || customerData == null ||
+                    customerData.Email == null ||
+                    customerData.Name == null ||
+                    customerData.PhoneNo == null)
+            {
+                return RedirectToAction("Index");
+                //return PartialView("_NewCustomerPartial", creationResultViewModel);
+            }
+
+            try
+            {
+                customerService.CreateNewCustomer(customerData.Name, 
+                                    customerData.PhoneNo, 
+                                    customerData.Email);
+                return RedirectToAction("Index");
+
+                //return PartialView("_NewCustomerPartial", creationResultViewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to create a new Customer {@Exception}", e.Message);
+                logger.LogDebug("Failed to create a new Customer {@ExceptionMessage}", e);
+                return BadRequest("Failed to create a new Customer");
+            }
+             
+        }
+
     }
 }
