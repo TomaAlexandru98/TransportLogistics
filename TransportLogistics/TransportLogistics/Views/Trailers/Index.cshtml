@@ -76,7 +76,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Length)
                 </td>
-                <td>Edit / Delete</td>
+                <td class="d-flex justify-content-around">
+                    <button class="btn btn-outline-dark" title="Edit"><i class="material-icons fa fa-edit"></i></button>
+                    <button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>
+                </td>
             </tr>
         }
     </tbody>
