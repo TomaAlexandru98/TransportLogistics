@@ -10,9 +10,9 @@ namespace TransportLogistics.ApplicationLogic.Services
     public class TrailerService
     {
         //private readonly IPersistenceContext persistenceContext;
-        private readonly ITrailersRepository trailersRepository;
+        private readonly ITrailerRepository trailersRepository;
        
-        public TrailerService(ITrailersRepository trailersRepository)
+        public TrailerService(ITrailerRepository trailersRepository)
         {
             this.trailersRepository = trailersRepository;
 
