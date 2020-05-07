@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.Models.Customers;
@@ -27,7 +28,7 @@ namespace TransportLogistics.Controllers
 
                 foreach (var customerIndex in customerService.GetAllCustomers())
                 {
-                    var customer = customerService.GetCustomerByGuid(customerIndex.Id);
+                    var customer = customerService.GetCustomerById(customerIndex.Id);
 
                     List<LocationViewModel> locationViews = new List<LocationViewModel>();
 
@@ -50,6 +51,7 @@ namespace TransportLogistics.Controllers
 
                     customerViews.Add(new CustomerViewModel()
                     {
+                        Id = customer.Id.ToString(),
                         Name = customer.Name,
                         PhoneNo = customer.ContactDetails.PhoneNo,
                         Email = customer.ContactDetails.Email,
@@ -75,22 +77,34 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult CreateCustomer()
         {
-            var viewModel = new NewCustomerViewModel();
-            return PartialView("_NewCustomerPartial");//, viewModel);
+            return PartialView("_NewCustomerPartial", new NewCustomerViewModel());
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCustomer(string customerId)
+        {
+            var customerToUpdate = customerService.GetCustomerById(customerId);
+
+            var customerViewModel = new UpdateCustomerViewModel()
+            {
+                Id = customerId,
+                PhoneNo = customerToUpdate.ContactDetails.PhoneNo,
+                Email = customerToUpdate.ContactDetails.Email
+            };
+
+            return PartialView("_UpdateCustomerPartial", customerViewModel);
         }
 
         [HttpPost]
         public IActionResult CreateCustomer([FromForm] NewCustomerViewModel customerData)
         {
-            //var creationResultViewModel = new NewCustomerViewModel();
             
             if (!ModelState.IsValid || customerData == null ||
                     customerData.Email == null ||
                     customerData.Name == null ||
                     customerData.PhoneNo == null)
             {
-                return RedirectToAction("Index");
-                //return PartialView("_NewCustomerPartial", creationResultViewModel);
+                return PartialView("_NewCustomerPartial", new NewCustomerViewModel());
             }
 
             try
@@ -99,8 +113,6 @@ namespace TransportLogistics.Controllers
                                     customerData.PhoneNo, 
                                     customerData.Email);
                 return RedirectToAction("Index");
-
-                //return PartialView("_NewCustomerPartial", creationResultViewModel);
             }
             catch (Exception e)
             {
@@ -108,7 +120,26 @@ namespace TransportLogistics.Controllers
                 logger.LogDebug("Failed to create a new Customer {@ExceptionMessage}", e);
                 return BadRequest("Failed to create a new Customer");
             }
-             
+        }
+
+        public IActionResult Remove(string id)
+        {
+            try
+            {
+                customerService.RemoveCustomerById(id);
+            }
+            catch (CustomerNotFoundException notFound)
+            {
+                logger.LogError("Failed to find the customer entity {@Exception}", notFound.Message);
+                logger.LogDebug("Failed to find the customer entity {@ExceptionMessage}", notFound);
+            } 
+            catch (Exception e)
+            {
+                logger.LogError("Failed to remove the customer entity {@Exception}", e.Message);
+                logger.LogDebug("Failed to remove customer entity {@ExceptionMessage}", e);
+            }
+
+            return RedirectToAction("Index");
         }
 
     }

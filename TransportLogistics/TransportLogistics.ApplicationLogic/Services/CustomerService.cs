@@ -19,7 +19,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             this.customerRepository = customerRepository;
         }
 
-        public IEnumerable<LocationAddress> GetCustomerAddresses(string customerId)
+        public Customer GetCustomerById(string customerId)
         {
             Guid.TryParse(customerId, out Guid guid);
             var customer = customerRepository?.GetById(guid);
@@ -29,13 +29,21 @@ namespace TransportLogistics.ApplicationLogic.Services
                 throw new CustomerNotFoundException(guid);
             }
 
-            return customer.LocationAddresses
-                            .AsEnumerable();
+            return customer;
         }
 
-        public Customer GetCustomerByGuid(Guid customerId)
+        public Customer GetCustomerById(Guid customerId)
         {
             return customerRepository.GetCustomerByGuid(customerId);
+        }
+
+        public IEnumerable<LocationAddress> GetCustomerAddresses(string customerId)
+        {
+
+            var customer = GetCustomerById(customerId);
+
+            return customer.LocationAddresses
+                            .AsEnumerable();
         }
 
         public IEnumerable<Customer> GetAllCustomers()
@@ -51,5 +59,17 @@ namespace TransportLogistics.ApplicationLogic.Services
             return customer;
         }
 
+        public bool RemoveCustomerById(string customerId)
+        {
+            var customer = GetCustomerById(customerId);
+
+            if (customer == null)
+                return false;
+
+            customerRepository.Remove(customer.Id);
+            persistenceContext.SaveChanges();
+
+            return true;
+        }
     }
 }
