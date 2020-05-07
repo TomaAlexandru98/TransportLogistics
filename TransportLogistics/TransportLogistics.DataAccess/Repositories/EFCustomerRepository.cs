@@ -8,7 +8,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFCustomerRepository : EFBaseRepository<Customer>, ICustomerRepository
+    public class EFCustomerRepository : EFBaseRepository<Customer>, ICustomersRepository
     {
         public EFCustomerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         { }

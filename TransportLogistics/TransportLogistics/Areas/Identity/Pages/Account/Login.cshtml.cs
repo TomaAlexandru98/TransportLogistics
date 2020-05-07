@@ -42,9 +42,11 @@ namespace TransportLogistics.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+           
             [EmailAddress]
             public string Email { get; set; }
+            [Required]
+            public string Name { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -79,8 +81,8 @@ namespace TransportLogistics.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var result = await _signInManager.PasswordSignInAsync(Input.Name, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded )
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
@@ -96,6 +98,7 @@ namespace TransportLogistics.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                   
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

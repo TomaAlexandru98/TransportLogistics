@@ -3,19 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200506090017_dispatchers")]
+    partial class dispatchers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-
 #pragma warning disable 612, 618
-
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -35,9 +35,7 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-
-                    b.ToTable("Contact");
-
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
@@ -49,9 +47,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("ContactDetailsId")
                         .HasColumnType("uniqueidentifier");
 
-
                     b.Property<string>("Name")
-
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -191,12 +187,11 @@ namespace TransportLogistics.DataAccess.Migrations
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
                 {
-
-
-                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
+                    b.HasOne("TransportLogistics.Model.Vehicle", null)
                         .WithMany("CurrentTrailers")
                         .HasForeignKey("VehicleId");
                 });
+#pragma warning restore 612, 618
         }
     }
 }

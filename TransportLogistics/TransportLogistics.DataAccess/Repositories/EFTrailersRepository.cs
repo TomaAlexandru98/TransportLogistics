@@ -10,7 +10,7 @@ namespace TransportLogistics.DataAccess.Repositories
 {
     public class EFTrailerRepository:EFBaseRepository<Trailer>,ITrailerRepository
     {
-        public EFTrailerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
+        public EFTrailersRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {
 
         }

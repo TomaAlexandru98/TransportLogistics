@@ -63,15 +63,7 @@ namespace TransportLogistics.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            [Required]
-            [Display(Name = "User Role")]
-            public string Role { get; set; }
-            [Required]
-            [Display(Name = "Name")]
-            public string Name { get; set; }
-            [Required]
-            [Display(Name = "Phone Number")]
-            public string PhoneNumber { get; set; }
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,17 +79,12 @@ namespace TransportLogistics.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Name, Email = Input.Email , PhoneNumber = Input.PhoneNumber };
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email  };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    if (await RoleManager.FindByNameAsync(Input.Role) == null)
-                    {
-                        IdentityRole role = new IdentityRole(Input.Role);
-                        await RoleManager.CreateAsync(role);
-                       await _userManager.AddToRoleAsync(user, Input.Role);
-                    }
+                   
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
