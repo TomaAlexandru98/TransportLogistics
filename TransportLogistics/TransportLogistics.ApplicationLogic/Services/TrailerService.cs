@@ -60,5 +60,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid idToSearch = Guid.Parse(id);
             trailersRepository.Remove(idToSearch);
         }
+
+        public void Update(Guid id, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+
+            trailersRepository.UpdateTrailer( id,  model,  maximumWeightKg,  capacity,  numberAxles,  height,  width,  length);
+        }
     }
 }

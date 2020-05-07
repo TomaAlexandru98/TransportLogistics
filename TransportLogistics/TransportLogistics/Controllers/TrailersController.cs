@@ -57,23 +57,34 @@ namespace TransportLogistics.Controllers
             //return PartialView("_NewTrailerPartial", viewModelResult);
         }
 
-        
-            public IActionResult EditTrailer(string ID)
+        [HttpGet]
+            public IActionResult EditTrailer([FromRoute]string id)
         {
-          
-            return RedirectToAction("EditTrailer", ID);
+            var trailer = trailerService.GetTrailerById(id);
+            NewTrailerViewModel model = new NewTrailerViewModel() {
+                TrailerId = trailer.Id,
+                Capacity = trailer.Capacity,
+                MaximWeightKg = trailer.MaximWeightKg,
+                Model = trailer.Model,
+                NumberAxles = trailer.NumberAxles,
+                Height = trailer.Height,
+                Width = trailer.Width,
+                Length = trailer.Length
+            }
+            ;
+            
+            return PartialView("_NewTrailerPartial",model);
           
         }
         
         [HttpPost]
-        public ActionResult EditTrailer(string ID, [FromForm]NewTrailerViewModel trailerData)
+        public ActionResult EditTrailer([FromForm]NewTrailerViewModel trailerData)
         {
-           
-            
-            var trailer = trailerService.GetTrailerById(ID);
-            
+            //trailerserveice.Updatedata
+            var trailer = trailerService.GetTrailerById(trailerData.TrailerId.ToString());
             //trailer.Modify(trailer, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
-            return RedirectToAction("Index");
+            trailerService.Update(trailerData.TrailerId, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+            return PartialView("_NewTrailerPartial", trailerData);
         }
         
         public IActionResult Delete(string Id)
