@@ -21,9 +21,9 @@ a {
     background-color: #06087d; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
-    padding: 12px 16px; /* Some padding */
+    padding: 12px; /* Some padding */
     font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
+    cursor: pointer !important; /* Mouse pointer on hover */
 }
     .btn-car:hover {
         background-color: #4648c7;
@@ -83,4 +83,25 @@ body {
     background-color: #06087d !important;
     color: #FFFFFF !important;
     border-bottom: 1px solid #046504 !important;
+}
+
+.maxim-width-input{
+    width: 450px;
+}
+
+.btn-blue {
+    border-color: #06087d;
+    color: #06087d;
+}
+
+    .btn-blue:hover {
+        background-color: #06087d;
+        color: white;
+    }
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #06087d !important;
+    border-color: #06087d !important;
 }

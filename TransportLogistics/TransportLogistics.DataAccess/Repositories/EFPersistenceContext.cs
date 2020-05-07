@@ -22,7 +22,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public ICustomersRepository CustomersRepository { get ; private set; }
         public ITrailersRepository TrailersRepository { get ; private set ; }
         public IEmployeeRepiository EmployeeRepiository { get; private set; }
-
+        
         public TransactionScope BeginTransaction()
         {
             if (currentTransactionScope != null)

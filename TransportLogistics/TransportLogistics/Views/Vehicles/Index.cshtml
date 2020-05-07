@@ -1,11 +1,11 @@
-﻿
-
+﻿@model TransportLogistics.ViewModels.Vehicles.VehiclesListViewModel
+@using TransportLogistics.ViewModels.Vehicles
 @{
     ViewData["Title"] = "Index";
 }
 
-<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
 <div class="d-flex flex-column flex-md-row">
     <div class="d-flex flex-column flex-grow-1">
 
@@ -13,7 +13,7 @@
     <div class="d-flex flex-column ">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <button class="btn-car">
+                <button class="btn-car" data-toggle="modal" data-target="#newVehicleModal">
                     <i class="fa fa-car"></i>Add Vehicle
                 </button>
 
@@ -21,32 +21,73 @@
         </div>
     </div>
 </div>
-<table id="Vehicles">
-    <thead>
-        <tr>
-            <th>Vehicle Name</th>
-            <th>Vehicle Type</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Ford Tourneo Courier</td>
-            <td>Small Transport</td>
-        </tr>
-        <tr>
-            <td>VW Transporter</td>
-            <td>Medium Transport</td>
-        </tr>
-    </tbody>
-</table>
 
+<div id="containerTableId">
+    <partial name="_VehiclesTable" model="@Model" />
+</div>
+
+<form method="post" asp-controller="Vehicle" asp-action="Create">
+    <div class="modal fade" id="newVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="contId">
+                        <partial name="_Create" model="new NewVehicleViewModel()" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Vehicle" asp-action="Update">
+    <div class="modal fade" id="updateVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="updateFormId"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#Vehicles').DataTable();
+            $('#vehiclesTable').DataTable({ responsive: true });
         });
-    </script>
 
+        function removeVehicle(id) {
+            $.ajax({
+                url: "Vehicle/Remove?id=" + id,
+                success: function () {
+                    document.getElementById("row-to-delete-" + id).style.display = "none";
+                }
+            });
+        }
+
+        function loadUpdatePage(id) {
+            loadServerPartialView("#updateFormId", "Vehicle/Update?id=" + id);
+        }
+    </script>
 
 }

@@ -46,6 +46,7 @@ namespace TransportLogistics.Model
                 Length = length
             };
             return trailer;
+           
         }
        
        
