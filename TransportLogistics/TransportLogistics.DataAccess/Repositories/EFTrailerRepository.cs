@@ -34,5 +34,12 @@ namespace TransportLogistics.DataAccess.Repositories
             return trailer.Entity;
         }
 
+        public Trailer UpdateTrailer(Guid trailerId, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+            var targettrailer = dbContext.Trailers.Where(trailer => trailer.Id == trailerId).FirstOrDefault();
+            targettrailer.Modify(targettrailer, targettrailer.Model, targettrailer.MaximWeightKg, targettrailer.Capacity, targettrailer.NumberAxles, targettrailer.Height, targettrailer.Width, targettrailer.Length);
+            dbContext.SaveChanges();
+            return targettrailer;
+        }
     }
 }
