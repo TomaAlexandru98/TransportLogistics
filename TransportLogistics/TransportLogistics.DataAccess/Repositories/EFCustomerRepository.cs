@@ -51,5 +51,28 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .Where(customer => customer.Id == customerId)
                                         .FirstOrDefault();
         }
+
+        public bool RemoveCustomerWithLocations(Guid customerId)
+        {
+            var entityToRemove = GetCustomerByGuid(customerId);
+            
+            if (entityToRemove != null)
+            {
+                if (entityToRemove.LocationAddresses.Count() > 0)
+                {
+                    foreach (LocationAddress location in entityToRemove.LocationAddresses)
+                    {
+                        dbContext.Remove(location);
+                    }
+                }
+
+                dbContext.Remove(entityToRemove.ContactDetails);
+                dbContext.Remove(entityToRemove);
+                dbContext.SaveChanges();
+                
+                return true;
+            }
+            return false;
+        }
     }
 }

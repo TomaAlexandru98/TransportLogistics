@@ -66,7 +66,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             if (customer == null)
                 return false;
 
-            customerRepository.Remove(customer.Id);
+            customerRepository.RemoveCustomerWithLocations(customer.Id);
             persistenceContext.SaveChanges();
 
             return true;

@@ -11,6 +11,6 @@ namespace TransportLogistics.DataAccess.Abstractions
         Customer FindByEmail(string emailToFind);
         Customer FindByPhoneNo(string phoneNo);
         Customer GetCustomerByGuid(Guid customerId);
-
+        bool RemoveCustomerWithLocations(Guid customerId);
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
@@ -112,7 +113,7 @@ namespace TransportLogistics.Controllers
                 customerService.CreateNewCustomer(customerData.Name, 
                                     customerData.PhoneNo, 
                                     customerData.Email);
-                return RedirectToAction("Index");
+                return PartialView("_NewCustomerPartial", customerData);
             }
             catch (Exception e)
             {
@@ -122,11 +123,24 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult Remove(string id)
+        [HttpGet]
+        public IActionResult Remove([FromRoute]string Id)
+        {
+                
+            RemoveCustomerViewModel removeViewModel = new RemoveCustomerViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveCustomerPartial", removeViewModel);       
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveCustomerViewModel removeData)
         {
             try
             {
-                customerService.RemoveCustomerById(id);
+                customerService.RemoveCustomerById(removeData.Id);
             }
             catch (CustomerNotFoundException notFound)
             {
@@ -139,8 +153,7 @@ namespace TransportLogistics.Controllers
                 logger.LogDebug("Failed to remove customer entity {@ExceptionMessage}", e);
             }
 
-            return RedirectToAction("Index");
+            return PartialView("_RemoveCustomerPartial", removeData);
         }
-
     }
 }

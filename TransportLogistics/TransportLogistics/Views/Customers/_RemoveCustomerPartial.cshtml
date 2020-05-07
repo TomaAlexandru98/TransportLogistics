@@ -1,0 +1,14 @@
+﻿@using TransportLogistics.Models.Customers;
+
+@model RemoveCustomerViewModel;
+
+<input type="hidden" asp-for="Id" />
+
+    <div class="text-center">
+        <h2>Are you sure?</h2>
+        <p>There's no going back, sir</p>
+    </div>
+    <div class="d-flex justify-content-around">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-success" data-dismiss="modal" onclick="CloseModal('#removeModal')">Remove</button>
+    </div>

@@ -76,14 +76,19 @@
             <td>
                 @Html.DisplayFor(modelItem => trailer.Length)
             </td>
-            <td class="d-flex justify-content-around">
-                @using (Html.BeginForm("EditTrailer", "Trailers", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <a name="ID" id="@trailer.Id" class="btn btn-outline-dark"  title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></a>
-                }
-                <button class="delete btn btn-danger" asp-controller="Trailers" asp-action="Delete" asp-route-Id="@trailer.Id" title="Delete" data-toggle="tooltip"><i class="material-icons fa fa-trash"></i></button>
-                @*<button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>*@
+            <td style="max-width:20%">
+                <div class="d-flex justify-content-around">
+                    
+                        @using (Html.BeginForm("EditTrailer", "Trailers", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button name="ID" id="@trailer.Id" class="btn btn-outline-dark" title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></button>
+                        }
+
+                    <button class="delete btn btn-danger" asp-controller="Trailers" asp-action="Delete" asp-route-Id="@trailer.Id" title="Delete" data-toggle="tooltip"><i class="material-icons fa fa-trash"></i></button>
+                    @*<button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>*@
+
+                </div>
             </td>
         </tr>
                 }
