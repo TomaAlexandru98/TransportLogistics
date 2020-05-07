@@ -1,0 +1,26 @@
+﻿@using TransportLogistics.Models.Customers;
+@model UpdateCustomerViewModel;
+
+@{
+    ViewData["Title"] = "Creating";
+}
+
+<input type="hidden" asp-for="Id" />
+
+<div class="form-group">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" type="text" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="PhoneNo"></label>
+    <input asp-for="PhoneNo" type="text" class="form-control" />
+    <span asp-validation-for="PhoneNo" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" type="email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+</div>
