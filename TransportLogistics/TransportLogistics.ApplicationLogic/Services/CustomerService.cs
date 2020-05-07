@@ -22,7 +22,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         public Customer GetCustomerById(string customerId)
         {
             Guid.TryParse(customerId, out Guid guid);
-            var customer = customerRepository?.GetById(guid);
+            var customer = customerRepository?.GetCustomerByGuid(guid);
 
             if (customer == null)
             {
@@ -59,6 +59,12 @@ namespace TransportLogistics.ApplicationLogic.Services
             return customer;
         }
 
+        public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
+        {
+            customerRepository.AddLocationToCustomer(customerId, locationAddress);
+            persistenceContext.SaveChanges();
+        }
+
         public bool RemoveCustomerById(string customerId)
         {
             var customer = GetCustomerById(customerId);
@@ -70,6 +76,13 @@ namespace TransportLogistics.ApplicationLogic.Services
             persistenceContext.SaveChanges();
 
             return true;
+        }
+
+        public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
+        {
+            var customerToUpdate = customerRepository.UpdateCustomer(customerId, name, phoneNo, email);
+
+            return customerToUpdate;
         }
     }
 }

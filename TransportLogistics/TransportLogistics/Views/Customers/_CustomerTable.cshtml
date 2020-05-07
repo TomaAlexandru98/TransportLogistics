@@ -1,7 +1,6 @@
 ﻿@using TransportLogistics.Models.Customers;
 @model CustomerListViewModel;
 
-
 <div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
     <button class="btn-car" data-toggle="modal" data-target="#customerModal">New Customer <i class="fa fa-user"></i></button>
 </div>
@@ -46,16 +45,18 @@
                 <td style="max-width:20%">
                     <div class="d-flex justify-content-around">
 
-                        <button class="btn btn-blue mr-1 ml-1" title="Add Location">
+                        <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
+                                onclick="LoadAddLocationView('@customer.Id');" data-target="#locationModal">
                             <i class="material-icons fa fa-plus"></i>
                         </button>
 
-                        <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" id="@customer.Id">
+                        <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                                onclick="LoadUpdateCustomerView('@customer.Id');" data-target="#updateCustomerModal">
                             <i class="material-icons fa fa-edit"></i>
                         </button>
 
-                        <button id="@customer.Id" class="btn btn-outline-danger mr-1 ml-1" title="Delete"
-                                onclick="LoadRemoveCustomerView('@customer.Id');" data-toggle="modal" data-target="#removeModal">
+                        <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                                onclick="LoadRemoveCustomerView('@customer.Id');" data-target="#removeModal">
                             <i class="material-icons fa fa-trash"></i>
                         </button>
                     </div>

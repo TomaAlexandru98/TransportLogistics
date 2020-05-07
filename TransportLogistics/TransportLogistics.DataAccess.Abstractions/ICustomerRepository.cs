@@ -12,5 +12,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         Customer FindByPhoneNo(string phoneNo);
         Customer GetCustomerByGuid(Guid customerId);
         bool RemoveCustomerWithLocations(Guid customerId);
+        void AddLocationToCustomer(Guid custoemrId, LocationAddress address);
+        Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email);
     }
 }

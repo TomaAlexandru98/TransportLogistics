@@ -8,6 +8,7 @@ namespace TransportLogistics.Models.Customers
 {
     public class NewLocationViewModel
     {
+        public string CustomerId { get; set; }
 
         [Required(ErrorMessage = "Country required")]
         [Display(Name = "Country")]
@@ -21,8 +22,9 @@ namespace TransportLogistics.Models.Customers
         [Display(Name = "Street")]
         public string Street { get; set; }
 
+        [Required]
         [Display(Name = "Street number")]
-        public string StreetNumber { get; set; }
+        public int StreetNumber { get; set; }
 
         [Required(ErrorMessage = "Postal Code required")]
         [Display(Name = "PostalCode")]

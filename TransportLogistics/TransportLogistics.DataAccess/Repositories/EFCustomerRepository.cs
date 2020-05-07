@@ -52,6 +52,13 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .FirstOrDefault();
         }
 
+        public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
+        {
+            var customer = GetCustomerByGuid(customerId);
+            customer.AddLocationAddress(locationAddress);
+            dbContext.SaveChanges();
+        }
+
         public bool RemoveCustomerWithLocations(Guid customerId)
         {
             var entityToRemove = GetCustomerByGuid(customerId);
@@ -73,6 +80,18 @@ namespace TransportLogistics.DataAccess.Repositories
                 return true;
             }
             return false;
+        }
+
+        public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
+        {
+            var customerToUpdate = GetCustomerByGuid(customerId);
+
+            var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
+            customerToUpdate.UpdateCustomer(name, contact);
+
+            dbContext.SaveChanges();
+
+            return customerToUpdate;
         }
     }
 }

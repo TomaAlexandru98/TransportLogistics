@@ -81,25 +81,10 @@ namespace TransportLogistics.Controllers
             return PartialView("_NewCustomerPartial", new NewCustomerViewModel());
         }
 
-        [HttpGet]
-        public IActionResult UpdateCustomer(string customerId)
-        {
-            var customerToUpdate = customerService.GetCustomerById(customerId);
-
-            var customerViewModel = new UpdateCustomerViewModel()
-            {
-                Id = customerId,
-                PhoneNo = customerToUpdate.ContactDetails.PhoneNo,
-                Email = customerToUpdate.ContactDetails.Email
-            };
-
-            return PartialView("_UpdateCustomerPartial", customerViewModel);
-        }
-
         [HttpPost]
         public IActionResult CreateCustomer([FromForm] NewCustomerViewModel customerData)
         {
-            
+
             if (!ModelState.IsValid || customerData == null ||
                     customerData.Email == null ||
                     customerData.Name == null ||
@@ -110,8 +95,8 @@ namespace TransportLogistics.Controllers
 
             try
             {
-                customerService.CreateNewCustomer(customerData.Name, 
-                                    customerData.PhoneNo, 
+                customerService.CreateNewCustomer(customerData.Name,
+                                    customerData.PhoneNo,
                                     customerData.Email);
 
                 return PartialView("_NewCustomerPartial", customerData);
@@ -123,6 +108,128 @@ namespace TransportLogistics.Controllers
                 return BadRequest("Failed to create a new Customer");
             }
         }
+
+
+
+        [HttpGet]
+        public IActionResult UpdateCustomer([FromRoute]string Id)
+        {
+            try
+            {
+                var customerToUpdate = customerService.GetCustomerById(Id);
+
+                var editCustomerViewModel = new UpdateCustomerViewModel()
+                {
+                    Id = Id,
+                    Name = customerToUpdate.Name,
+                    PhoneNo = customerToUpdate.ContactDetails.PhoneNo,
+                    Email = customerToUpdate.ContactDetails.Email
+                };
+
+                return PartialView("_UpdateCustomerPartial", editCustomerViewModel);
+
+            } catch (CustomerNotFoundException notFound)
+            {
+                logger.LogError("Failed to find the customer entity {@Exception}", notFound.Message);
+                logger.LogDebug("Failed to find the customer entity {@ExceptionMessage}", notFound);
+                return BadRequest("Failed to find customer");
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to update customer entity at Get {@Exception}", e.Message);
+                logger.LogDebug("Failed to update customer entity at Get {@ExceptionMessage}", e);
+                return BadRequest("Failed to update customer entity");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCustomer([FromForm] UpdateCustomerViewModel updatedData)
+        {
+            if (!ModelState.IsValid || updatedData == null ||
+                   updatedData.Email == null ||
+                   updatedData.Name == null ||
+                   updatedData.PhoneNo == null)
+            {
+                return PartialView("_UpdateCustomerPartial", new NewCustomerViewModel());
+            }
+
+            try
+            {
+                var customerToUpdate = customerService.GetCustomerById(updatedData.Id);
+                customerService.UpdateCustomer(customerToUpdate.Id,
+                                                updatedData.Name,
+                                                updatedData.PhoneNo,
+                                                updatedData.Email);
+
+                return PartialView("_UpdateCustomerPartial", updatedData);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to edit customer entity {@Exception}", e.Message);
+                logger.LogDebug("Failed to edit customer entity {@ExceptionMessage}", e);
+                return BadRequest("Failed to edit customer entity");
+            }
+        }
+
+
+
+        [HttpGet]
+        public IActionResult AddLocation([FromRoute]string Id)
+        {
+
+            NewLocationViewModel locationModel = new NewLocationViewModel()
+            {
+                CustomerId = Id
+            };
+
+            return PartialView("_AddAddressPartial", locationModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddLocation([FromForm] NewLocationViewModel locationData)
+        {
+            if (!ModelState.IsValid ||
+                        locationData.CustomerId == null ||
+                        locationData == null ||
+                        locationData.Country == null ||
+                        locationData.City == null ||
+                        locationData.Street == null ||
+                        locationData.StreetNumber == 0 ||
+                        locationData.PostalCode == null)
+            {
+                return PartialView("_AddLocationPartial", locationData);
+            }
+
+            try
+            {
+                var customer = customerService.GetCustomerById(locationData.CustomerId);
+
+                var newLocation = LocationAddress.Create(
+                            locationData.Country,
+                            locationData.City,
+                            locationData.Street,
+                            locationData.StreetNumber,
+                            locationData.PostalCode);
+
+                customerService.AddLocationToCustomer(customer.Id, newLocation);
+
+                return PartialView("_AddLocationPartial", locationData);
+            }
+            catch (CustomerNotFoundException notFound)
+            {
+                logger.LogError("Failed to find the customer entity {@Exception}", notFound.Message);
+                logger.LogDebug("Failed to find the customer entity {@ExceptionMessage}", notFound);
+                return BadRequest("Failed to find user");
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to add a new Location {@Exception}", e.Message);
+                logger.LogDebug("Failed to add a new Location {@ExceptionMessage}", e);
+                return BadRequest("Failed to create a new Location");
+            }
+        }
+
+
 
 
         [HttpGet]

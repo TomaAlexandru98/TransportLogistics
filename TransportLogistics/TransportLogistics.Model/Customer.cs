@@ -39,6 +39,13 @@ namespace TransportLogistics.Model
             var updatedContact = ContactDetails.Update(phoneNo, email);
             return updatedContact;
         }
-    }
 
+        public Customer UpdateCustomer(string name, Contact contact)
+        {
+            Name = name;
+            ContactDetails = contact;
+
+            return this;
+        }
+    }
 }

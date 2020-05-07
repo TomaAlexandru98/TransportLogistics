@@ -14,10 +14,17 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             this.dbContext = context;
             this.VehiclesRepository = new EFVehicleRepository(context);
+            this.CustomerRepository = new EFCustomerRepository(context);
         }
 
         public IVehicleRepository VehiclesRepository 
         { 
+            get;
+            private set;
+        }
+
+        public ICustomerRepository CustomerRepository
+        {
             get;
             private set;
         }
