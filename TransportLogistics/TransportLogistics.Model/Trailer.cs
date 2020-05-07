@@ -58,6 +58,7 @@ namespace TransportLogistics.Model
             trailer.Height = height;
             trailer.Width = width;
             trailer.Length = length;
+            
         }
     }
 }

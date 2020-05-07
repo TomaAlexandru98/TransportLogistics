@@ -86,8 +86,9 @@ namespace TransportLogistics.Controllers
             trailerService.Update(trailerData.TrailerId, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
             return PartialView("_NewTrailerPartial", trailerData);
         }
-        
-        public IActionResult Delete(string Id)
+
+        [HttpGet]
+        public ActionResult Delete(string Id)
         {
             trailerService.RemoveTrailer(Id);
             return RedirectToAction("Index");

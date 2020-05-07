@@ -76,14 +76,22 @@
             <td>
                 @Html.DisplayFor(modelItem => trailer.Length)
             </td>
-            <td class="d-flex justify-content-around">
-                @using (Html.BeginForm("EditTrailer", "Trailers", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <a name="ID" id="@trailer.Id" class="btn btn-outline-dark"  title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></a>
-                }
-                <button class="delete btn btn-danger" asp-controller="Trailers" asp-action="Delete" asp-route-Id="@trailer.Id" title="Delete" data-toggle="tooltip"><i class="material-icons fa fa-trash"></i></button>
-                @*<button class="btn btn-outline-danger" title="Delete"><i class="material-icons fa fa-trash"></i></button>*@
+            <td style="max-width:20%">
+                <div class="d-flex justify-content-around">
+                    @using (Html.BeginForm("EditTrailer", "Trailers", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button name="ID" id="@trailer.Id" class="btn btn-outline-dark m-2" title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></button>
+                    }
+                    <button type="button" class="btn btn-outline-danger m-2" onclick="location.href='@Url.Action("Delete", "Trailers",new { Id = trailer.Id })'"><i class="material-icons fa fa-trash"></i></button>
+
+
+                    @*<button id="@trailer.Id" type="submit"class="btn btn-outline-danger m-2" title="Delete" asp-route-Id="@trailer.Id" asp-controller="Trailers" asp-action="Delete" formmethod="post">
+
+            <i class="material-icons fa fa-trash"></i>
+        </button>*@
+
+                </div>
             </td>
         </tr>
                 }
@@ -108,7 +116,10 @@
 
                 function CloseModal(modalName) {
                     $(modalName).modal("hide");
+                   
                 }//Reload page after Confirm is pressed with a function
+
+                
             </script>
         }
         <form id="editTrailerForm" method="post" asp-controller="Trailers" asp-action="EditTrailer"
@@ -134,7 +145,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                            <button id="btnSave" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#editTrailerModal')"> Confirm </button>
+                            <button id="btnSave" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#editTrailerModal'); Reload();"> Confirm </button>
                         </div>
                     </div>
                 </div>
