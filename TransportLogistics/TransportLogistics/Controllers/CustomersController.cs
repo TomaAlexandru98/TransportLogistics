@@ -113,6 +113,7 @@ namespace TransportLogistics.Controllers
                 customerService.CreateNewCustomer(customerData.Name, 
                                     customerData.PhoneNo, 
                                     customerData.Email);
+
                 return PartialView("_NewCustomerPartial", customerData);
             }
             catch (Exception e)
@@ -122,6 +123,7 @@ namespace TransportLogistics.Controllers
                 return BadRequest("Failed to create a new Customer");
             }
         }
+
 
         [HttpGet]
         public IActionResult Remove([FromRoute]string Id)

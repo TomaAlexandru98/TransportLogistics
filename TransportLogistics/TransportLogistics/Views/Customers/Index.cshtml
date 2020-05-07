@@ -27,17 +27,15 @@
             $(modalName).modal("hide");
 
             setTimeout(function () {
-                location.reload();
+                loadServerPartialView("#table");
             }, 100);
         }
     </script>
 }
 
-<div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
-    <button class="btn-car" data-toggle="modal" data-target="#customerModal">New Customer <i class="fa fa-user"></i></button>
+<div id="table">
+    <partial name="_CustomerTable" />
 </div>
-
-<partial name="_CustomerTable" />
 
 <form method="post" asp-controller="Customers" asp-action="CreateCustomer"
       data-ajax="true"
@@ -65,6 +63,7 @@
         </div>
     </div>
 </form>
+
 
 <form method="post" asp-controller="Customers" asp-action="Remove"
       data-ajax="true"
