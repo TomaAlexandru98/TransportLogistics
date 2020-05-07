@@ -83,7 +83,7 @@
                             @Html.AntiForgeryToken()
                             <a name="ID" id="@trailer.Id" class="btn btn-outline-dark m-2" title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></a>
                         }
-                        <button type="button" class="btn btn-outline-danger m-2" onclick="location.href='@Url.Action("Delete", "Trailers",new { Id = trailer.Id })'"><i class="material-icons fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-outline-danger m-2" ondblclick="location.href = '@Url.Action("Delete", "Trailers",new { Id = trailer.Id })'; "><i class="material-icons fa fa-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -111,10 +111,14 @@
                     $(modalName).modal("hide");
                     setTimeout(function () {
                         window.location.reload();
-                    }, 100); 
-
+                    }, 100); }
+        function ConfirmDelete() {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
         }
-
      
 
     </script>
@@ -172,7 +176,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit"> Confirm </button>
+                    <button id="btnSave" class="btn btn-success" type="submit"data-dismiss="modal" onclick="CloseModal('#newTrailerModal')"> Confirm </button>
                 </div>
             </div>
         </div>

@@ -41,10 +41,10 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult NewTrailer()
         {
-            var trailerid = Guid.NewGuid();
+            //var trailerid = Guid.NewGuid();
 
-            return RedirectToAction("Index");
-            //return PartialView("_NewTrailerPartial", new NewTrailerViewModel { TrailerId = trailerid });
+            //return RedirectToAction("Index");
+            return PartialView("_NewTrailerPartial", new NewTrailerViewModel());
         }
 
         [HttpPost]
