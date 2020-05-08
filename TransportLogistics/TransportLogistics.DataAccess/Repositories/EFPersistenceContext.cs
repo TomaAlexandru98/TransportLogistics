@@ -16,7 +16,7 @@ namespace TransportLogistics.DataAccess.Repositories
             this.VehiclesRepository = new EFVehicleRepository(context);
         }
 
-        public IVehicleRepository VehiclesRepository 
+        public IVehiclesRepository VehiclesRepository 
         { 
             get;
             private set;
