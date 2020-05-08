@@ -17,11 +17,17 @@ namespace TransportLogistics.DataAccess.Repositories
             TrailersRepository = new EFTrailersRepository(dbContext);
             CustomersRepository = new EFCustomerRepository(dbContext);
             EmployeeRepiository = new EFEmployeeRepository(dbContext);
+            this.VehiclesRepository = new EFVehicleRepository(dbContext);
         }
 
         public ICustomersRepository CustomersRepository { get ; private set; }
         public ITrailersRepository TrailersRepository { get ; private set ; }
         public IEmployeeRepiository EmployeeRepiository { get; private set; }
+         public IVehicleRepository VehiclesRepository 
+        { 
+            get;
+            private set;
+        }
         
         public TransactionScope BeginTransaction()
         {

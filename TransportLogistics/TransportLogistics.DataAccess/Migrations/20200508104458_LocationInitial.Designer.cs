@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200505140308_IntialMigration")]
-    partial class IntialMigration
+    [Migration("20200508104458_LocationInitial")]
+    partial class LocationInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contact");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
@@ -47,10 +47,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("ContactDetailsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -88,7 +85,7 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("LocationAddress");
+                    b.ToTable("LocationAddresses");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>

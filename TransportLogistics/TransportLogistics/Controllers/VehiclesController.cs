@@ -9,12 +9,12 @@ using TransportLogistics.ViewModels.Vehicles;
 
 namespace TransportLogistics.Controllers
 {
-    public class VehicleController : Controller
+    public class VehiclesController : Controller
     {
         private readonly VehicleService vehicleService;
         private readonly ILogger<VehicleService> logger;
 
-        public VehicleController(VehicleService vehicleService, ILogger<VehicleService> logger)
+        public VehiclesController(VehicleService vehicleService, ILogger<VehicleService> logger)
         {
             this.vehicleService = vehicleService;
             this.logger = logger;

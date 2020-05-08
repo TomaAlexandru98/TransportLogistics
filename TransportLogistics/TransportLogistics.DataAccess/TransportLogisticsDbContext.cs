@@ -9,7 +9,6 @@ namespace TransportLogistics.DataAccess
     public class TransportLogisticsDbContext : DbContext
     {
       
-
         public TransportLogisticsDbContext(DbContextOptions<TransportLogisticsDbContext> options)
             : base(options)
         {
@@ -22,5 +21,6 @@ namespace TransportLogistics.DataAccess
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Dispatcher> Dispatchers { get; set; }
         
+        public DbSet<LocationAddress> LocationAddresses { get; set; }
     }
 }

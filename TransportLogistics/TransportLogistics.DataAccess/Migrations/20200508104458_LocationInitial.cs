@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class LocationInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Contact",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -17,7 +17,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,9 +48,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Contact_ContactDetailsId",
+                        name: "FK_Customers_Contacts_ContactDetailsId",
                         column: x => x.ContactDetailsId,
-                        principalTable: "Contact",
+                        principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -81,7 +81,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LocationAddress",
+                name: "LocationAddresses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -94,9 +94,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationAddress", x => x.Id);
+                    table.PrimaryKey("PK_LocationAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LocationAddress_Customers_CustomerId",
+                        name: "FK_LocationAddresses_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -109,8 +109,8 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "ContactDetailsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocationAddress_CustomerId",
-                table: "LocationAddress",
+                name: "IX_LocationAddresses_CustomerId",
+                table: "LocationAddresses",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
@@ -122,7 +122,7 @@ namespace TransportLogistics.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LocationAddress");
+                name: "LocationAddresses");
 
             migrationBuilder.DropTable(
                 name: "Trailers");
@@ -134,7 +134,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Contact");
+                name: "Contacts");
         }
     }
 }
