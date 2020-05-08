@@ -14,6 +14,9 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFPersistenceContext(TransportLogisticsDbContext context)
         {
             this.dbContext = context;
+
+            this.VehiclesRepository = new EFVehicleRepository(context);
+            this.CustomerRepository = new EFCustomerRepository(context);
             TrailersRepository = new EFTrailersRepository(dbContext);
             CustomersRepository = new EFCustomerRepository(dbContext);
             EmployeeRepiository = new EFEmployeeRepository(dbContext);
@@ -22,7 +25,10 @@ namespace TransportLogistics.DataAccess.Repositories
         public ICustomersRepository CustomersRepository { get ; private set; }
         public ITrailersRepository TrailersRepository { get ; private set ; }
         public IEmployeeRepiository EmployeeRepiository { get; private set; }
+        public IVehicleRepository VehiclesRepository { get; private set; }
         
+        }
+
         public TransactionScope BeginTransaction()
         {
             if (currentTransactionScope != null)

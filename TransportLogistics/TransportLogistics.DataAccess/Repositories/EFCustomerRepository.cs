@@ -51,5 +51,48 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .Where(customer => customer.Id == customerId)
                                         .FirstOrDefault();
         }
+
+        public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
+        {
+            var customer = GetCustomerByGuid(customerId);
+            dbContext.LocationAddresses.Add(locationAddress);
+            customer.AddLocationAddress(locationAddress);
+            dbContext.SaveChanges();
+        }
+
+        public bool RemoveCustomerWithLocations(Guid customerId)
+        {
+            var entityToRemove = GetCustomerByGuid(customerId);
+            
+            if (entityToRemove != null)
+            {
+                if (entityToRemove.LocationAddresses.Count() > 0)
+                {
+                    foreach (LocationAddress location in entityToRemove.LocationAddresses)
+                    {
+                        dbContext.Remove(location);
+                    }
+                }
+
+                dbContext.Remove(entityToRemove.ContactDetails);
+                dbContext.Remove(entityToRemove);
+                dbContext.SaveChanges();
+                
+                return true;
+            }
+            return false;
+        }
+
+        public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
+        {
+            var customerToUpdate = GetCustomerByGuid(customerId);
+
+            var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
+            customerToUpdate.UpdateCustomer(name, contact);
+
+            dbContext.SaveChanges();
+
+            return customerToUpdate;
+        }
     }
 }
