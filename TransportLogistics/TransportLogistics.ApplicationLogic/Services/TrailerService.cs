@@ -23,16 +23,19 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             var trailer =  Trailer.Create(model, maximumWeightKg, capacity, numberAxles, height, width, length);
             trailersRepository.Add(trailer);
+            
             //persistenceContext.SaveChanges();
             return trailer;
-
+            
         }
 
+        
         public Trailer GetTrailerById(string Id)
         {
 
             Guid idToSearch = Guid.Parse(Id);
-            var trailer = trailersRepository?.GetTrailerById(idToSearch);
+            var trailer = trailersRepository.GetById(idToSearch);
+            //var trailer = trailersRepository.GetTrailerById(idToSearch);
             if (trailer == null)
             {
                 throw new Exception();
@@ -52,7 +55,16 @@ namespace TransportLogistics.ApplicationLogic.Services
             return trailers;
         }
 
-       
-        
+        public void RemoveTrailer(string id)
+        {
+            Guid idToSearch = Guid.Parse(id);
+            trailersRepository.Remove(idToSearch);
+        }
+
+        public void Update(Guid id, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+           
+            trailersRepository.UpdateTrailer( id,  model,  maximumWeightKg,  capacity,  numberAxles,  height,  width,  length);
+        }
     }
 }
