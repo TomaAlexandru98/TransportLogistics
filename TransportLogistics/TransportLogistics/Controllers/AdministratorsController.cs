@@ -14,9 +14,9 @@ using TransportLogistics.ViewModels.Administrator;
 namespace TransportLogistics.Controllers
 {
     [Authorize(Roles="Administrator")]
-    public class AdministratorController : Controller
+    public class AdministratorsController : Controller
     {
-       public AdministratorController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepository employeeRepository) 
+       public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepository employeeRepository) 
         {
             UserManager = userManager;
             RoleManager = roleManager;

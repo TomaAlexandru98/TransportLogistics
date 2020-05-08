@@ -1,0 +1,98 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@inject UserManager<IdentityUser> userManager;
+@{
+    ViewData["Title"] = "AdministratorController";
+}
+
+
+
+<partial name="_TablePartial.cshtml" model="@Model"/>
+
+<form method="delete" asp-controller="Administrators" asp-action="DeleteUserAccount">
+    <div class="modal fade" tabindex="-1" id="removeModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="newPaymentBody" class="modal-body">
+                  <input type ="hidden" name="UserId" id="userToDeleteId" />
+                    <p>Are you sure you want to delete this user?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post" asp-controller="Administrators" asp-action="EditUserAccount">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label id="LabelName">Name</label>
+                        <input class="form-control" type="text" id="Name" name="Name" onkeyup="Validate()"  />
+                    </div>
+                    <div class="form-group">
+                        <label id="LabelEmail">Email</label>
+                        <input type="text" id="Email" class="form-control" name="Email" onkeyup="Validate()" />
+                    </div>
+                    <div class="form-group">
+                        <label id="LabelPhoneNumber">PhoneNumber</label>
+                        <input type="text" id="PhoneNumber" class="form-control" name="PhoneNumber" onkeyup="Validate()" />
+                    </div>
+                    <div class="form-group">
+                        <label id="LabelRole">Role</label>
+                        <select class="form-control" name="Role" >
+                            <option >Dispatcher</option>
+                            <option>Administrator</option>
+                            <option>Driver</option>
+                            <option>Supervisor</option>
+                        </select>
+                       </div>
+                    <input type="hidden" id="identityId" name="UserId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="newPaymentForm" method="post" asp-controller="Administrators" asp-action="CreateUserAccount">
+
+    <div class="modal fade" tabindex="-1" id="Modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="newPaymentBody" class="modal-body">
+                    @await Html.PartialAsync("_NewUserPartial", new TransportLogistics.ViewModels.UserAccountCreateViewModel { })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
