@@ -9,7 +9,7 @@
 
 <partial name="_TablePartial.cshtml" model="@Model"/>
 
-<form method="delete" asp-controller="Administrator" asp-action="DeleteUserAccount">
+<form method="delete" asp-controller="Administrators" asp-action="DeleteUserAccount">
     <div class="modal fade" tabindex="-1" id="removeModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -31,7 +31,7 @@
         </div>
     </div>
 </form>
-<form method="post" asp-controller="Administrator" asp-action="EditUserAccount">
+<form method="post" asp-controller="Administrators" asp-action="EditUserAccount">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -73,7 +73,7 @@
         </div>
     </div>
 </form>
-<form id="newPaymentForm" method="post" asp-controller="Administrator" asp-action="CreateUserAccount">
+<form id="newPaymentForm" method="post" asp-controller="Administrators" asp-action="CreateUserAccount">
 
     <div class="modal fade" tabindex="-1" id="Modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

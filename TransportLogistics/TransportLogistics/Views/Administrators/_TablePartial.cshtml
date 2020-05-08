@@ -1,0 +1,115 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@inject UserManager<IdentityUser> userManager;
+@{
+    ViewData["Title"] = "_TablePartial";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#Users').DataTable({ responsive: true });
+    });
+  
+        $(document).ready(function () {
+            var table = $('#users').datatable({
+                "dom": '<"top"i>rt<"bottom"><"clear">'
+            });
+
+            $('#mysearchbutton').on('keyup click', function () {
+                table.search($('#mysearchtext').val()).draw();
+            });
+        });
+
+</script>
+   
+<div class="d-flex flex-column flex-md-row">
+    <div class="d-flex flex-column flex-grow-1">
+
+    </div>
+    <div class="d-flex flex-column ">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a class="btn btn-car bg-menu" role="button" data-toggle="modal" data-target="#Modal">
+                    Add User <i class="fa fa-user"></i>
+                </a>
+            </div>
+
+        </div>
+        @*<div class="input-group-append">
+
+                <input type="text" id="mySearchText" placeholder="Search...">
+                <button id="mySearchButton" class="bg-menu"> <i class="fa fa-search">Search</i></button>
+            </div>*@
+    </div>
+</div>
+<table id="Users" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>UserRole</th>
+            <th>UserEmail</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+            @foreach (var user in Model)
+            {
+                <tr id="@user.Id">
+                    <td>@user.UserName </td>
+                    <td>
+                        @{
+                            if (userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
+                            {
+
+                                var roles = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+                                <p>@roles[0]</p>
+                            }
+                            else
+                            {
+                                <p>No Role</p>;
+                            }
+                        }
+                    </td>
+
+                    <td>@user.Email</td>
+                    <td>
+                        <button type="button" class="edit btn" title="Edit" onClick="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons fa fa-edit"></i></button>
+                        <a class="delete btn btn-danger" data-target="#removeModal" onclick="sendUserId('@user.Id')"
+  title="Delete" data-toggle="modal"><i class="material-icons fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+
+    </tbody>
+</table>
+@*@section scripts{
+onclick="sendUserId('@user.Id')"
+    onclick="DeleteUserAccount('@user.Id')"
+    <script>
+        $(document).ready(function () {
+            var table = $('#users').datatable({
+                "dom": '<"top"i>rt<"bottom"><"clear">'
+            });
+
+            $('#mysearchbutton').on('keyup click', function () {
+                table.search($('#mysearchtext').val()).draw();
+            });
+        });
+
+
+    </script>
+
+
+}*@

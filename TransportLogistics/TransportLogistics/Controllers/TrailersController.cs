@@ -19,7 +19,6 @@ namespace TransportLogistics.Controllers
         private readonly IConfiguration _configuration;
         private string _connectionString;
         DbContextOptionsBuilder<TransportLogisticsDbContext> _optionsBuilder;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly TrailerService trailerService;
         public TrailersController(IConfiguration configuration,TrailerService trailerService)
         {
