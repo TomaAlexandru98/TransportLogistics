@@ -88,10 +88,25 @@ namespace TransportLogistics.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(string Id)
+        public IActionResult Delete([FromRoute]string Id)
         {
-            trailerService.RemoveTrailer(Id);
-            return RedirectToAction("Index");
+
+            RemoveTrailerViewModel removeViewModel = new RemoveTrailerViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveTrailerPartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveTrailerViewModel removeData)
+        {
+            
+                trailerService.RemoveTrailer(removeData.Id);
+
+
+            return PartialView("_RemoveTrailerPartial", removeData);
         }
     }
 }
