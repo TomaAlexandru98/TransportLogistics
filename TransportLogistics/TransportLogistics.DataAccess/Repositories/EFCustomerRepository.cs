@@ -8,7 +8,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFCustomerRepository : EFBaseRepository<Customer>, ICustomersRepository
+    public class EFCustomerRepository : EFBaseRepository<Customer>, ICustomerRepository
     {
         public EFCustomerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         { }
@@ -55,8 +55,8 @@ namespace TransportLogistics.DataAccess.Repositories
         public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
         {
             var customer = GetCustomerByGuid(customerId);
+            dbContext.LocationAddresses.Add(locationAddress);
             customer.AddLocationAddress(locationAddress);
-            Update(customer);
             dbContext.SaveChanges();
         }
 

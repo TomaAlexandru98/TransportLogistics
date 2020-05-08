@@ -10,12 +10,12 @@ namespace TransportLogistics.ApplicationLogic.Services
     public class VehicleService
     {
         private readonly IPersistenceContext persistenceContext;
-        private readonly IVehiclesRepository vehiclesRepository;
+        private readonly IVehicleRepository vehicleRepository;
 
         public VehicleService(IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
-            this.vehiclesRepository = persistenceContext.VehiclesRepository;
+            this.vehicleRepository = persistenceContext.VehicleRepository;
         }
 
         public Vehicle GetById(string id)
@@ -23,12 +23,12 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid vehicleId = Guid.Empty;
             Guid.TryParse(id, out vehicleId);
 
-            return vehiclesRepository?.GetById(vehicleId);
+            return vehicleRepository?.GetById(vehicleId);
         }
 
         public IEnumerable<Vehicle> GetAll()
         {
-            return vehiclesRepository?.GetAll()
+            return vehicleRepository?.GetAll()
                                       .AsEnumerable();
         }
 
@@ -39,7 +39,7 @@ namespace TransportLogistics.ApplicationLogic.Services
                            string vin)
         {
             var vehicleToAdd = Vehicle.Create(name, type, registrationNumber, maximCarryWeight, vin);
-            vehiclesRepository?.Add(vehicleToAdd);
+            vehicleRepository?.Add(vehicleToAdd);
             persistenceContext?.SaveChanges();
             return vehicleToAdd;
         }
@@ -49,7 +49,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid vehicleId = Guid.Empty;
             Guid.TryParse(id, out vehicleId);
 
-            var result = vehiclesRepository?.Remove(vehicleId);
+            var result = vehicleRepository?.Remove(vehicleId);
             if (result == true)
             {
                 persistenceContext.SaveChanges();

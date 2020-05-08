@@ -20,7 +20,6 @@ namespace TransportLogistics.DataAccess
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Dispatcher> Dispatchers { get; set; }
-        
         public DbSet<LocationAddress> LocationAddresses { get; set; }
     }
 }
