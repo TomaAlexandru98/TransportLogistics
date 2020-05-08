@@ -10,7 +10,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"><</script>
@@ -112,9 +112,13 @@
 
                 function CloseModal(modalName) {
                     $(modalName).modal("hide");
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 200); }
+                    //setTimeout(function () {
+                    //    window.location.reload();
+                    //}, 400);
+        }
+        function reloadData() {
+            window.location.reload();
+        }
         function ConfirmDelete() {
             var x = confirm("Are you sure you want to delete?");
             if (x)
@@ -146,13 +150,13 @@
                     </button>
                 </div>
                 <div id="editTrailerBody" class="modal-body">
-                    @await Html.PartialAsync("_NewTrailerPartial", new NewTrailerViewModel { })
+                   
                 </div>
 
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#editTrailerModal')"> Confirm </button>
+                    <button id="btnSaveChanges" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#editTrailerModal')"> Confirm </button>
                 </div>
             </div>
         </div>
@@ -163,6 +167,7 @@
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
+      data-ajax-complete="reloadData()"
       data-ajax-update="#newTrailerBody">
 
     @Html.AntiForgeryToken()
