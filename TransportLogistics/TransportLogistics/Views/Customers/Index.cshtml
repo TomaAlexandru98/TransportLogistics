@@ -20,7 +20,7 @@
         });
 
         function LoadRemoveCustomerView(Id) {
-             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Customers")'+"/" + Id);
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Customers")' + "/" + Id);
         }
 
         function LoadAddLocationView(Id) {
@@ -33,10 +33,9 @@
 
         function CloseModal(modalName) {
             $(modalName).modal("hide");
-
-            //loadServerPartialView("#table");
-
+            
             setTimeout(function () {
+                //loadServerPartialView("#table");
                 location.reload();
             }, 100);
         }

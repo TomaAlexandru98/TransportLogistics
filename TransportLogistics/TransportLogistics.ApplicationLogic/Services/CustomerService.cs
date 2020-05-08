@@ -61,6 +61,9 @@ namespace TransportLogistics.ApplicationLogic.Services
 
         public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
         {
+            //var customer = GetCustomerById(customerId);
+            //customer.AddLocationAddress(locationAddress);
+            //customerRepository.Update(customer);
             customerRepository.AddLocationToCustomer(customerId, locationAddress);
             persistenceContext.SaveChanges();
         }

@@ -56,6 +56,7 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             var customer = GetCustomerByGuid(customerId);
             customer.AddLocationAddress(locationAddress);
+            Update(customer);
             dbContext.SaveChanges();
         }
 

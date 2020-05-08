@@ -194,7 +194,7 @@ namespace TransportLogistics.Controllers
                         locationData.Country == null ||
                         locationData.City == null ||
                         locationData.Street == null ||
-                        locationData.StreetNumber == 0 ||
+                        locationData.StreetNumber <= 0 ||
                         locationData.PostalCode == null)
             {
                 return PartialView("_AddLocationPartial", locationData);
