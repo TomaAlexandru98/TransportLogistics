@@ -50,10 +50,12 @@ function Validate() {
     if (correctForm == false) {
          
         $("#buttonSubmit").prop('disabled', true);
+        document.getElementById("buttonSubmit").disabled = 'true';
 
     }
     else {
         $("#buttonSubmit").prop('disabled', false);
+        document.getElementById("buttonSubmit").disabled = false;
     }
 }
 function setUserInfo(userId,userName,userEmail,userPhoneNumber,userRole) {
@@ -67,4 +69,12 @@ function setUserInfo(userId,userName,userEmail,userPhoneNumber,userRole) {
 }
 function RedirectToAdminIndex() {
     window.location.href = "/Administrator/Index";
+}
+function sendUserId(id){
+    document.getElementById('userToDeleteId').value = id;
+}
+function DeleteUserAccount(Id) {
+    loadServerPartialView("#removeModal", '@Url.Action("DeleteUserAccount","Administrator")' + "/" + Id);
+   
+
 }

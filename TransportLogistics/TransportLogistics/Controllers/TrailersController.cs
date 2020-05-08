@@ -52,7 +52,7 @@ namespace TransportLogistics.Controllers
         {
             
 
-            trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+           // trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
             return RedirectToAction("Index");
             //return PartialView("_NewTrailerPartial", trailerData);
         }

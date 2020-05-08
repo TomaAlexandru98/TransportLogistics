@@ -12,7 +12,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         TransactionScope BeginTransaction();
         void SaveChanges();
         ICustomersRepository CustomersRepository { get;  }
-        ITrailersRepository TrailersRepository { get;  }
+        ITrailerRepository TrailersRepository { get;  }
         IEmployeeRepiository EmployeeRepiository { get; }
     }
 }
