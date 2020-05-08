@@ -5,7 +5,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Abstractions
 {
-    public interface IVehiclesRepository : IBaseRepository<Vehicle>
+    public interface IVehicleRepository : IBaseRepository<Vehicle>
     {
     }
 }

@@ -51,8 +51,8 @@ namespace TransportLogistics
 
 
             
-            services.AddScoped<ICustomersRepository, EFCustomerRepository>();
-            services.AddScoped<IEmployeeRepiository, EFEmployeeRepository>();
+            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<IEmployeeRepository, EFEmployeeRepository>();
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<CustomerService>();
 

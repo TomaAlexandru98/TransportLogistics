@@ -5,7 +5,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Abstractions
 {
-    public interface ICustomersRepository : IBaseRepository<Customer>
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
         IEnumerable<Customer> FindByLastName(string nameToFind);
         Customer FindByEmail(string emailToFind);
