@@ -10,7 +10,7 @@ namespace TransportLogistics.ApplicationLogic.Services
     public class VehicleService
     {
         private readonly IPersistenceContext persistenceContext;
-        private readonly IVehicleRepository vehiclesRepository;
+        private readonly IVehiclesRepository vehiclesRepository;
 
         public VehicleService(IPersistenceContext persistenceContext)
         {
