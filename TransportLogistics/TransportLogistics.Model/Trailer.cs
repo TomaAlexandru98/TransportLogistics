@@ -46,11 +46,19 @@ namespace TransportLogistics.Model
                 Length = length
             };
             return trailer;
+           
         }
-       
-       
 
-
-
+        public void Modify(Trailer trailer, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+            trailer.Model = model;
+            trailer.MaximWeightKg = maximumWeightKg;
+            trailer.Capacity = capacity;
+            trailer.NumberAxles = numberAxles;
+            trailer.Height = height;
+            trailer.Width = width;
+            trailer.Length = length;
+            
+        }
     }
 }

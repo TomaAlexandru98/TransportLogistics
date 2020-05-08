@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
+using TransportLogistics.Data.Abstractions;
 
 namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IPersistenceContext
     {
-        IVehiclesRepository VehiclesRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
+        ITrailerRepository TrailerRepository { get; }
+        IEmployeeRepository EmployeeRepository { get; }
+        IVehicleRepository VehicleRepository { get; }
         TransactionScope BeginTransaction();
         void SaveChanges();
     }

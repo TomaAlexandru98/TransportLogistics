@@ -13,10 +13,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransportLogistics.DataAccess;
+
 using TransportLogistics.ApplicationLogic.Services;
 
 using TransportLogistics.DataAccess.Repositories;
 using TransportLogistics.DataAccess.Abstractions;
+using TransportLogistics.Data.Abstractions;
 
 namespace TransportLogistics
 {
@@ -40,15 +42,24 @@ namespace TransportLogistics
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection1")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<ITrailerRepository, EFTrailerRepository>();
+            services.AddScoped<TrailerService>();
+
+
+            
             services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<IEmployeeRepository, EFEmployeeRepository>();
+            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<CustomerService>();
 
             services.AddScoped<VehicleService>();
 
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
