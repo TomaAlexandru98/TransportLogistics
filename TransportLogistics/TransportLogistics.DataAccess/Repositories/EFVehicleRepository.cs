@@ -5,7 +5,7 @@ using TransportLogistics.Model;
 using TransportLogistics.DataAccess.Abstractions;
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFVehicleRepository : EFBaseRepository<Vehicle>, IVehicleRepository
+    public class EFVehicleRepository : EFBaseRepository<Vehicle>, IVehiclesRepository
     {
         public EFVehicleRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {

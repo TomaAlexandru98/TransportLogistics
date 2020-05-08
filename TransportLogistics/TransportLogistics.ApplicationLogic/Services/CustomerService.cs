@@ -14,7 +14,6 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly ICustomerRepository customerRepository;
 
         public CustomerService(ICustomerRepository customerRepository, IPersistenceContext persistenceContext)
-
         {
             this.persistenceContext = persistenceContext;
             this.customerRepository = customerRepository;

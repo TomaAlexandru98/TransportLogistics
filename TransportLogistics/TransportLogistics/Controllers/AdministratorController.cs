@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TransportLogistics.Data;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.ViewModels;
+using TransportLogistics.ViewModels.Administrator;
 
 namespace TransportLogistics.Controllers
 {
@@ -95,12 +96,12 @@ namespace TransportLogistics.Controllers
             return RedirectToAction("Index", "Administrator");
             
         }
-        
-        public async Task<IActionResult> DeleteUserAccount(string UserId)
+
+        public async Task<IActionResult> DeleteUserAccount(UserDeleteViewModel model)
         {
             try
             {
-                var user = await UserManager.FindByIdAsync(UserId);
+                var user = await UserManager.FindByIdAsync(model.UserId);
                 await UserManager.DeleteAsync(user);
             }
             catch (Exception e)
@@ -109,5 +110,18 @@ namespace TransportLogistics.Controllers
             }
             return RedirectToAction("Index");
         }
+        //    public async Task<IActionResult> DeleteUserAccount(string Id)
+        //    {
+        //        try
+        //        {
+        //            var user = await UserManager.FindByIdAsync(Id);
+        //            await UserManager.DeleteAsync(user);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        return PartialView("_TablePartial");
+        //    }
+        }
     }
-}
