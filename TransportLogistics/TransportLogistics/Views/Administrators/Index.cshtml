@@ -31,7 +31,7 @@
         </div>
     </div>
 </form>
-<form method="post" asp-controller="Administrators" asp-action="EditUserAccount">
+<form method="post"  id="editForm"  >
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -41,33 +41,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label id="LabelName">Name</label>
-                        <input class="form-control" type="text" id="name" name="Name" onkeyup="Validate()"  />
-                    </div>
-                    <div class="form-group">
-                        <label id="LabelEmail">Email</label>
-                        <input type="text" id="email" class="form-control" name="Email" onkeyup="Validate()" />
-                    </div>
-                    <div class="form-group">
-                        <label id="LabelPhoneNumber">PhoneNumber</label>
-                        <input type="text" id="phoneNumber" class="form-control" name="PhoneNumber" onkeyup="Validate()" />
-                    </div>
-                    <div class="form-group">
-                        <label id="LabelRole">Role</label>
-                        <select class="form-control" name="Role" >
-                            <option >Dispatcher</option>
-                            <option>Administrator</option>
-                            <option>Driver</option>
-                            <option>Supervisor</option>
-                        </select>
-                       </div>
-                    <input type="hidden" id="identityId" name="UserId" />
+                <div class="modal-body" id="editModal">
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button  type="submit" id="EditBtn"  class="btn btn-primary" onclick="Validate()">Save changes</button>
+                    <button  type="submit" id="EditBtn"  class="btn btn-primary" onclick="getUsersPartial()">Save changes</button>
                 </div>
             </div>
         </div>
@@ -95,4 +74,20 @@
         </div>
     </div>
 </form>
-
+<script>
+    function LoadEditModal(userId) {
+        loadServerPartialView('#editModal','Administrators/EditUserAccount?userId=' + userId )
+    }
+    function getUsersPartial() {
+       
+        var formData = $('#editForm').serialize();
+        $.ajax({
+            type: "POST",
+            data: formData,
+            url: "/Administrators/EditUserAccount",
+            success: function () {
+                loadServerPartialView('usersAccounts', "/Administrators/EditUserAccount");
+            }
+        });
+    }
+</script>

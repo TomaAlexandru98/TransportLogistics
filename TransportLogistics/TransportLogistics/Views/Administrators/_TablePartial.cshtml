@@ -84,7 +84,7 @@
 
                     <td>@user.Email</td>
                     <td>
-                        <button type="button" class="edit btn" title="Edit" onClick="setUserInfo('@user.Id' , '@user.UserName','@user.Email','@user.PhoneNumber','@userManager.GetRolesAsync(user).GetAwaiter().GetResult().ElementAt(0)')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons fa fa-edit"></i></button>
+                        <button type="button" id="@user.Id" class="edit btn" title="Edit" onclick="LoadEditModal('@user.Id')" data-toggle="modal" data-target="#exampleModal"><i class="material-icons fa fa-edit"></i></button>
                         <a class="delete btn btn-danger" data-target="#removeModal" onclick="sendUserId('@user.Id')"
   title="Delete" data-toggle="modal"><i class="material-icons fa fa-trash"></i></a>
                     </td>

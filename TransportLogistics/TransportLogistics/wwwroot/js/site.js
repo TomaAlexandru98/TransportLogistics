@@ -9,44 +9,24 @@ function loadServerPartialView(container, baseUrl) {
 // Write your JavaScript code.
 function Validate() {
     var correctForm = true;
-    var name = document.getElementById("name");
-    if (document.getElementById("name").value == "") {
-        document.getElementById("LabelName").innerHTML = "The name is required";
-        document.getElementById("LabelName").style.color = "red";
-        //name.value =
+  
+    if (document.getElementById("Name").value == "") {
+        
+         correctForm = false;
+    }
+   
+    
+    if (document.getElementById("Email").value == "") {
+       
         correctForm = false;
     }
-    else {
-        document.getElementById("LabelName").innerHTML = "Name";
-        document.getElementById("LabelName").style.color = "green";
-    }
-    if (document.getElementById("email").value == "") {
-        document.getElementById("LabelEmail").innerHTML = "The email is required";
-        document.getElementById("LabelEmail").style.color = "red";
+   
+  
+    if (document.getElementById("PhoneNumber").value == "") {
+      
         correctForm = false;
     }
-    else  {
-        document.getElementById("LabelEmail").innerHTML = "Email";
-        document.getElementById("LabelEmail").style.color = "green";
-    }
-    if (document.getElementById("Role").value == "") {
-        document.getElementById("LabelRole").innerHTML = "The role is required";
-        document.getElementById("LabelRole").style.color = "red";
-        correctForm = false;
-    }
-    else {
-        document.getElementById("LabelRole").innerHTML = "Role";
-        document.getElementById("LabelRole").style.color = "green";
-    }
-    if (document.getElementById("phoneNumber").value == "") {
-        document.getElementById("LabelPhoneNumber").innerHTML = "The phone number is required";
-        document.getElementById("LabelPhoneNumber").style.color = "red";
-        correctForm = false;
-    }
-    else {
-        document.getElementById("LabelPhoneNumber").innerHTML = "Phone Number";
-        document.getElementById("LabelPhoneNumber").style.color = "green";
-    }
+   
     if (correctForm == false) {
          
         $("#EditBtn").prop('disabled', true);
@@ -54,8 +34,8 @@ function Validate() {
 
     }
     else {
-        //$("#EditBtn").prop('disabled', false);
-        document.getElementById("EditBtn").disabled = false;
+        $("#EditBtn").prop('disabled', false);
+       
     }
 }
 function setUserInfo(userId,userName,userEmail,userPhoneNumber,userRole) {
