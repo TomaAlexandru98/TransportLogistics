@@ -68,6 +68,19 @@ namespace TransportLogistics.Controllers
         }
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public async Task<IActionResult> EditUserAccount(string userId)
+        {
+            var user =await UserManager.FindByIdAsync(userId.ToString());
+            UserAccontEditViewModel model = new UserAccontEditViewModel()
+            {
+                Name = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserId = userId.ToString()
+            };
+            return PartialView("_EditUserAccount",model);
+        }
         [HttpPost]
         public async Task<IActionResult> EditUserAccount([FromForm] UserAccontEditViewModel model)
         {
@@ -91,9 +104,11 @@ namespace TransportLogistics.Controllers
             {
                 
                 return View();
-                //create new view to inform administrator he could not create the user
+               
             }
-            return RedirectToAction("Index");
+            var users = UserManager.Users;
+            return PartialView("_TablePartial",users);
+            //return RedirectToAction("Index");
             
         }
 
