@@ -93,7 +93,7 @@ namespace TransportLogistics.Controllers
                 return View();
                 //create new view to inform administrator he could not create the user
             }
-            return RedirectToAction("Index", "Administrator");
+            return RedirectToAction("Index");
             
         }
 
