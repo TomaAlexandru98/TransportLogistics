@@ -77,7 +77,7 @@ namespace TransportLogistics.Controllers
                                    viewModel.RegistrationNumber,
                                    viewModel.MaximCarryWeight,
                                    viewModel.VIN);
-                return RedirectToAction("Index");
+                return PartialView("_Create", new NewVehicleViewModel());
             }
             catch(Exception e)
             {
@@ -130,7 +130,7 @@ namespace TransportLogistics.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_Update");
+                return PartialView("_Update", viewModel);
             }
 
             try
@@ -141,7 +141,7 @@ namespace TransportLogistics.Controllers
                                       viewModel.RegistrationNumber,
                                       viewModel.MaximCarryWeight,
                                       viewModel.VIN);
-                return RedirectToAction("Index");
+                return PartialView("_Update", viewModel);
             }
             catch(Exception e)
             {
