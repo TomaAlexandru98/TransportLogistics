@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.ApplicationLogic.Sevices
 {
-    class DriversService
+    class DriverService
     {
     }
 }

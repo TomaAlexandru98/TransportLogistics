@@ -9,8 +9,8 @@ function loadServerPartialView(container, baseUrl) {
 // Write your JavaScript code.
 function Validate() {
     var correctForm = true;
-    var name = document.getElementById("Name");
-    if (document.getElementById("Name").value == "") {
+    var name = document.getElementById("name");
+    if (document.getElementById("name").value == "") {
         document.getElementById("LabelName").innerHTML = "The name is required";
         document.getElementById("LabelName").style.color = "red";
         //name.value =
@@ -20,7 +20,7 @@ function Validate() {
         document.getElementById("LabelName").innerHTML = "Name";
         document.getElementById("LabelName").style.color = "green";
     }
-    if (document.getElementById("Email").value == "") {
+    if (document.getElementById("email").value == "") {
         document.getElementById("LabelEmail").innerHTML = "The email is required";
         document.getElementById("LabelEmail").style.color = "red";
         correctForm = false;
@@ -38,7 +38,7 @@ function Validate() {
         document.getElementById("LabelRole").innerHTML = "Role";
         document.getElementById("LabelRole").style.color = "green";
     }
-    if (document.getElementById("PhoneNumber").value == "") {
+    if (document.getElementById("phoneNumber").value == "") {
         document.getElementById("LabelPhoneNumber").innerHTML = "The phone number is required";
         document.getElementById("LabelPhoneNumber").style.color = "red";
         correctForm = false;
@@ -49,21 +49,21 @@ function Validate() {
     }
     if (correctForm == false) {
          
-        $("#buttonSubmit").prop('disabled', true);
-        document.getElementById("buttonSubmit").disabled = 'true';
+        $("#EditBtn").prop('disabled', true);
+        
 
     }
     else {
-        $("#buttonSubmit").prop('disabled', false);
-        document.getElementById("buttonSubmit").disabled = false;
+        //$("#EditBtn").prop('disabled', false);
+        document.getElementById("EditBtn").disabled = false;
     }
 }
 function setUserInfo(userId,userName,userEmail,userPhoneNumber,userRole) {
    
     document.getElementById("identityId").value = userId;
-    document.getElementById("Name").value = userName;
-    document.getElementById("Email").value = userEmail;
-    document.getElementById("PhoneNumber").value = userPhoneNumber;
+    document.getElementById("name").value = userName;
+    document.getElementById("email").value = userEmail;
+    document.getElementById("phoneNumber").value = userPhoneNumber;
     document.getElementById("Role").value = userRole;
 
 }

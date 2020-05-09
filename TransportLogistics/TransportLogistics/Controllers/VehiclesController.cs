@@ -9,12 +9,12 @@ using TransportLogistics.ViewModels.Vehicles;
 
 namespace TransportLogistics.Controllers
 {
-    public class VehicleController : Controller
+    public class VehiclesController : Controller
     {
         private readonly VehicleService vehicleService;
         private readonly ILogger<VehicleService> logger;
 
-        public VehicleController(VehicleService vehicleService, ILogger<VehicleService> logger)
+        public VehiclesController(VehicleService vehicleService, ILogger<VehicleService> logger)
         {
             this.vehicleService = vehicleService;
             this.logger = logger;
@@ -77,7 +77,7 @@ namespace TransportLogistics.Controllers
                                    viewModel.RegistrationNumber,
                                    viewModel.MaximCarryWeight,
                                    viewModel.VIN);
-                return RedirectToAction("Index");
+                return PartialView("_Create", new NewVehicleViewModel());
             }
             catch(Exception e)
             {
@@ -130,7 +130,7 @@ namespace TransportLogistics.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_Update");
+                return PartialView("_Update", viewModel);
             }
 
             try
@@ -141,7 +141,7 @@ namespace TransportLogistics.Controllers
                                       viewModel.RegistrationNumber,
                                       viewModel.MaximCarryWeight,
                                       viewModel.VIN);
-                return RedirectToAction("Index");
+                return PartialView("_Update", viewModel);
             }
             catch(Exception e)
             {

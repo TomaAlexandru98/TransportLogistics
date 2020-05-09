@@ -6,7 +6,7 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFEmployeeRepository:IEmployeeRepiository
+    public class EFEmployeeRepository:IEmployeeRepository
     {
       public EFEmployeeRepository(TransportLogisticsDbContext dbContext)
         {

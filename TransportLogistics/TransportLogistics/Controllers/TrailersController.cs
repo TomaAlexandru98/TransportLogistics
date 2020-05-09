@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,6 @@ namespace TransportLogistics.Controllers
         private readonly IConfiguration _configuration;
         private string _connectionString;
         DbContextOptionsBuilder<TransportLogisticsDbContext> _optionsBuilder;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly TrailerService trailerService;
         public TrailersController(IConfiguration configuration,TrailerService trailerService)
         {
@@ -40,10 +40,10 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult NewTrailer()
         {
-            var trailerid = Guid.NewGuid();
+            //var trailerid = Guid.NewGuid();
 
-            return RedirectToAction("Index");
-            //return PartialView("_NewTrailerPartial", new NewTrailerViewModel { TrailerId = trailerid });
+            //return RedirectToAction("Index");
+            return PartialView("_NewTrailerPartial", new NewTrailerViewModel());
         }
 
         [HttpPost]
@@ -51,9 +51,61 @@ namespace TransportLogistics.Controllers
         {
             
 
-           // trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+            trailerService.CreateTrailer(trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
             return RedirectToAction("Index");
-            //return PartialView("_NewTrailerPartial", viewModelResult);
+            //return PartialView("_NewTrailerPartial", trailerData);
+        }
+
+        [HttpGet]
+            public IActionResult EditTrailer([FromRoute]string id)
+        {
+            var trailer = trailerService.GetTrailerById(id);
+            NewTrailerViewModel model = new NewTrailerViewModel() {
+                TrailerId = trailer.Id,
+                Capacity = trailer.Capacity,
+                MaximWeightKg = trailer.MaximWeightKg,
+                Model = trailer.Model,
+                NumberAxles = trailer.NumberAxles,
+                Height = trailer.Height,
+                Width = trailer.Width,
+                Length = trailer.Length
+            }
+            ;
+            
+            return PartialView("_NewTrailerPartial",model);
+          
+        }
+        
+        [HttpPost]
+        public ActionResult EditTrailer([FromForm]NewTrailerViewModel trailerData)
+        {
+            //trailerserveice.Updatedata
+            var trailer = trailerService.GetTrailerById(trailerData.TrailerId.ToString());
+            //trailer.Modify(trailer, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+            trailerService.Update(trailerData.TrailerId, trailerData.Model, trailerData.MaximWeightKg, trailerData.Capacity, trailerData.NumberAxles, trailerData.Height, trailerData.Width, trailerData.Length);
+            return PartialView("_NewTrailerPartial", trailerData);
+        }
+
+        [HttpGet]
+        public IActionResult Delete([FromRoute]string Id)
+        {
+
+            RemoveTrailerViewModel removeViewModel = new RemoveTrailerViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveTrailerPartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveTrailerViewModel removeData)
+        {
+            
+                trailerService.RemoveTrailer(removeData.Id);
+
+
+            return PartialView("_RemoveTrailerPartial", removeData);
         }
     }
 }

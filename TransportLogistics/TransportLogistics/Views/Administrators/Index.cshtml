@@ -6,10 +6,10 @@
 }
 
 
-
-<partial name="_TablePartial.cshtml" model="@Model"/>
-
-<form method="delete" asp-controller="Administrator" asp-action="DeleteUserAccount">
+    <div id="usersAccounts">
+        <partial name="_TablePartial.cshtml" model="@Model" />
+    </div>
+<form method="delete" asp-controller="Administrators" asp-action="DeleteUserAccount">
     <div class="modal fade" tabindex="-1" id="removeModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -31,7 +31,7 @@
         </div>
     </div>
 </form>
-<form method="post" asp-controller="Administrator" asp-action="EditUserAccount">
+<form method="post" asp-controller="Administrators" asp-action="EditUserAccount">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -44,15 +44,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label id="LabelName">Name</label>
-                        <input class="form-control" type="text" id="Name" name="Name" onkeyup="Validate()"  />
+                        <input class="form-control" type="text" id="name" name="Name" onkeyup="Validate()"  />
                     </div>
                     <div class="form-group">
                         <label id="LabelEmail">Email</label>
-                        <input type="text" id="Email" class="form-control" name="Email" onkeyup="Validate()" />
+                        <input type="text" id="email" class="form-control" name="Email" onkeyup="Validate()" />
                     </div>
                     <div class="form-group">
                         <label id="LabelPhoneNumber">PhoneNumber</label>
-                        <input type="text" id="PhoneNumber" class="form-control" name="PhoneNumber" onkeyup="Validate()" />
+                        <input type="text" id="phoneNumber" class="form-control" name="PhoneNumber" onkeyup="Validate()" />
                     </div>
                     <div class="form-group">
                         <label id="LabelRole">Role</label>
@@ -67,13 +67,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Save changes</button>
+                    <button  type="submit" id="EditBtn"  class="btn btn-primary" onclick="Validate()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
-<form id="newPaymentForm" method="post" asp-controller="Administrator" asp-action="CreateUserAccount">
+<form id="newPaymentForm" method="post" asp-controller="Administrators" asp-action="CreateUserAccount">
 
     <div class="modal fade" tabindex="-1" id="Modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -89,7 +89,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="buttonSubmit" type="submit" class="btn btn-primary">Save changes</button>
+                    <button  type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

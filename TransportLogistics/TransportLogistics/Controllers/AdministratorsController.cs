@@ -14,9 +14,9 @@ using TransportLogistics.ViewModels.Administrator;
 namespace TransportLogistics.Controllers
 {
     [Authorize(Roles="Administrator")]
-    public class AdministratorController : Controller
+    public class AdministratorsController : Controller
     {
-       public AdministratorController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepiository employeeRepository) 
+       public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepository employeeRepository) 
         {
             UserManager = userManager;
             RoleManager = roleManager;
@@ -25,7 +25,7 @@ namespace TransportLogistics.Controllers
 
         public UserManager<IdentityUser> UserManager { get; }
         public RoleManager<IdentityRole> RoleManager { get; }
-        public IEmployeeRepiository EmployeeRepository { get; }
+        public IEmployeeRepository EmployeeRepository { get; }
 
         public IActionResult Index()
         
@@ -93,7 +93,7 @@ namespace TransportLogistics.Controllers
                 return View();
                 //create new view to inform administrator he could not create the user
             }
-            return RedirectToAction("Index", "Administrator");
+            return RedirectToAction("Index");
             
         }
 

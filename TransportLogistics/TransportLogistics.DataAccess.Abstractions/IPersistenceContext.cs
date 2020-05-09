@@ -8,11 +8,11 @@ namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IPersistenceContext
     {
-        IVehicleRepository VehiclesRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
+        ITrailerRepository TrailerRepository { get; }
+        IEmployeeRepository EmployeeRepository { get; }
+        IVehicleRepository VehicleRepository { get; }
         TransactionScope BeginTransaction();
         void SaveChanges();
-        ICustomersRepository CustomersRepository { get;  }
-        ITrailerRepository TrailersRepository { get;  }
-        IEmployeeRepiository EmployeeRepiository { get; }
     }
 }

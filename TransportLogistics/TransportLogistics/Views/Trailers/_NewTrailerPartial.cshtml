@@ -5,6 +5,8 @@
 }
 
 <input type="hidden" asp-for="TrailerId" />
+@Html.HiddenFor(model => model.TrailerId)
+
 <div class="form-group">
     <label asp-for="Model"></label>
     <input asp-for="Model" type="text" class="form-control" />
