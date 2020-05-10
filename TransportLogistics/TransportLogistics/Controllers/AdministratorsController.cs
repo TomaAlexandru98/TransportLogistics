@@ -30,6 +30,8 @@ namespace TransportLogistics.Controllers
         public IActionResult Index()
         
         
+        
+        
         {
             try
             {
@@ -41,7 +43,8 @@ namespace TransportLogistics.Controllers
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> CreateUserAccount(UserAccountCreateViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> CreateUserAccount([FromForm]UserAccountCreateViewModel model)
         {
             if(ModelState.IsValid)
             {
@@ -66,7 +69,8 @@ namespace TransportLogistics.Controllers
                 }
            
         }
-            return RedirectToAction("Index");
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
         [HttpGet]
         public async Task<IActionResult> EditUserAccount(string userId)
@@ -106,12 +110,14 @@ namespace TransportLogistics.Controllers
                 return View();
                
             }
-            var users = UserManager.Users;
-            return PartialView("_TablePartial",users);
-            //return RedirectToAction("Index");
             
+            return PartialView("_EditUserAccount",model);
+           }
+        public IActionResult GetUsersPartialView()
+        {
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
-
         public async Task<IActionResult> DeleteUserAccount(UserDeleteViewModel model)
         {
             try
@@ -123,20 +129,9 @@ namespace TransportLogistics.Controllers
             {
                 return BadRequest();
             }
-            return RedirectToAction("Index");
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
-        //    public async Task<IActionResult> DeleteUserAccount(string Id)
-        //    {
-        //        try
-        //        {
-        //            var user = await UserManager.FindByIdAsync(Id);
-        //            await UserManager.DeleteAsync(user);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        return PartialView("_TablePartial");
-        //    }
+     
         }
     }
