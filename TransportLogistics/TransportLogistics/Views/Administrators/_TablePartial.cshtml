@@ -5,6 +5,15 @@
     ViewData["Title"] = "_TablePartial";
 }
 
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
 
 
 
@@ -66,3 +75,8 @@
 
     </tbody>
 </table>
+<script>
+    $(document).ready(function () {
+        $('#Users').DataTable({ responsive: true });
+    });
+ </script>
