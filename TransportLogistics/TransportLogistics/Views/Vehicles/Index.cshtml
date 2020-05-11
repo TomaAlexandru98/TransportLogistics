@@ -69,7 +69,7 @@
     </div>
 </div>
 
-<form method="post" id="updateVehicleForm">
+<form method="post" id="updateVehicleForm" asp-controller="Vehicles" asp-action="Update">
     <div class="modal fade" id="updateVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -79,7 +79,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="updateVehicleContainer"></div>
+                <div class="modal-body" id="updateVehicleContainer">
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button data-vehicle-id="" id="updateVehicleButton" type="submit" data-dismiss="modal" class="btn btn-primary">Update</button>
@@ -91,13 +92,12 @@
 
 @section scripts{
 
+    <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-    <partial name="_ValidationScriptsPartial" />
-
     <script>
         $(document).ready(function () {
-            $('#vehiclesTable').DataTable({ responsive: true });
+            $("#vehiclesTable").DataTable({ responsive: true });
         });
 
         function sendVehicleIdToModal(id) {
