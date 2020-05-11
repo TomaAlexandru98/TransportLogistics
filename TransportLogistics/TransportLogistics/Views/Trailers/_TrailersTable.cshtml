@@ -53,7 +53,7 @@
                             @Html.AntiForgeryToken()
                             <a name="ID" id="@trailer.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></a>
                         }
-                        <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                        <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
                                 onclick="LoadRemoveTrailerView('@trailer.Id');" data-target="#removeModal">
                             <i class="material-icons fa fa-trash"></i>
                         </button>
