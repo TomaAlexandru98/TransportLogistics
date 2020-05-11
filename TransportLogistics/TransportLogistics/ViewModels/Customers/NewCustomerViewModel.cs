@@ -12,7 +12,7 @@ namespace TransportLogistics.Models.Customers
         [Display(Name = "Full Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "PhoneNumber required")]
+        [Required(ErrorMessage = "Phone number required")]
         [Display(Name = "Phone Number")]
         public string PhoneNo { get; set; }
 

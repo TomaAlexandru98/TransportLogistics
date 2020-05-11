@@ -7,10 +7,10 @@ namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
-        IEnumerable<Customer> FindByLastName(string nameToFind);
+        IEnumerable<Customer> FindByName(string nameToFind);
         Customer FindByEmail(string emailToFind);
         Customer FindByPhoneNo(string phoneNo);
-        Customer GetCustomerByGuid(Guid customerId);
+        new Customer GetById(Guid customerId);
         bool RemoveCustomerWithLocations(Guid customerId);
         void AddLocationToCustomer(Guid customerId, LocationAddress address);
         Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email);

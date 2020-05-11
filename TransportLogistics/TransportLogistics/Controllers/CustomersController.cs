@@ -75,6 +75,8 @@ namespace TransportLogistics.Controllers
             }
         }
 
+
+
         [HttpGet]
         public IActionResult CreateCustomer()
         {
