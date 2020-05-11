@@ -17,15 +17,15 @@
         {
             <tr>
                 <td>@customer.Name</td>
-                <td>@customer.Email</td>
-                <td>@customer.PhoneNo</td>
+                <td>@customer.ContactDetails.Email</td>
+                <td>@customer.ContactDetails.PhoneNo</td>
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Address Locations (@customer.LocationViews.Count())
+                        Address Locations (@customer.LocationAddresses.Count())
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        @foreach (var location in customer.LocationViews)
+                        @foreach (var location in customer.LocationAddresses)
                         {
                             <div class="dropdown-item">
                                 @location.Country,

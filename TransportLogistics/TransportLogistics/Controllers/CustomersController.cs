@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Runtime;
 using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
@@ -21,58 +19,48 @@ namespace TransportLogistics.Controllers
             this.logger = logger;
         }
 
-        public IActionResult Index()
+        private CustomerListViewModel LoadCustomerViews()
         {
+
+            CustomerListViewModel customerViewModel = null;
             try
             {
-                List<CustomerViewModel> customerViews = new List<CustomerViewModel>();
-
-                foreach (var customerIndex in customerService.GetAllCustomers())
-                {
-                    var customer = customerService.GetCustomerById(customerIndex.Id);
-
-                    List<LocationViewModel> locationViews = new List<LocationViewModel>();
-
-                    IEnumerable<LocationAddress> locationAddresses = customerService?.GetCustomerAddresses(customer.Id.ToString());
-
-                    if (locationAddresses != null)
-                    {
-                        foreach (var locationAddress in locationAddresses)
-                        {
-                            locationViews.Add(new LocationViewModel()
-                            {
-                                City = locationAddress.City,
-                                Country = locationAddress.Country,
-                                PostalCode = locationAddress.PostalCode,
-                                Street = locationAddress.Street,
-                                StreetNumber = locationAddress.StreetNumber
-                            });
-                        }
-                    }
-
-                    customerViews.Add(new CustomerViewModel()
-                    {
-                        Id = customer.Id.ToString(),
-                        Name = customer.Name,
-                        PhoneNo = customer.ContactDetails.PhoneNo,
-                        Email = customer.ContactDetails.Email,
-                        LocationViews = locationViews
-                    });
-                }
-
-                CustomerListViewModel customerViewModel = new CustomerListViewModel()
-                {
-                    CustomerViews = customerViews
+                customerViewModel = new CustomerListViewModel() {
+                   CustomerViews = customerService.GetAllCustomers()
                 };
-
-                return View(customerViewModel);
-            }
-            catch (Exception e)
+                
+            } catch (Exception e)
             {
-                logger.LogError("Failed to create a new Customer {@Exception}", e.Message);
-                logger.LogDebug("Failed to create a new Customer {@ExceptionMessage}", e);
-                return BadRequest(e.Message);
+                logger.LogError("Failed to load Customer entities {@Exception}", e.Message);
+                logger.LogDebug("Failed to load Customer entities {@ExceptionMessage}", e);
             }
+
+            return customerViewModel;
+        }
+
+        public IActionResult Index()
+        {
+            var customerViewModel = LoadCustomerViews();
+
+            if (customerViewModel == null)
+            {
+                return BadRequest("Failed to load Customer entities");
+            }
+
+            return View(customerViewModel);
+        }
+
+
+        public IActionResult CustomerTable()
+        {
+            var customerViewModel = LoadCustomerViews();
+
+            if (customerViewModel == null)
+            {
+                return BadRequest("Failed to load Customer entities");
+            }
+
+            return PartialView("_CustomerTable", customerViewModel);
         }
 
 
