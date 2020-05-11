@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace TransportLogistics
 {
@@ -41,7 +42,13 @@ namespace TransportLogistics
         }
         public static void Main(string[] args)
         {
-           
+
+            Log.Logger = new LoggerConfiguration()
+               .Enrich.FromLogContext()
+               .Enrich.WithThreadId()
+               .Enrich.WithProcessId()
+               .WriteTo.Console()
+               .CreateLogger();
             IHost host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
@@ -59,6 +66,7 @@ namespace TransportLogistics
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Data;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.ViewModels;
@@ -16,32 +18,39 @@ namespace TransportLogistics.Controllers
     [Authorize(Roles="Administrator")]
     public class AdministratorsController : Controller
     {
-       public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,IEmployeeRepository employeeRepository) 
+       public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,EmployeeServices employeeServices,
+           ILogger<AdministratorsController>logger) 
         {
             UserManager = userManager;
             RoleManager = roleManager;
-            EmployeeRepository = employeeRepository;
+            EmployeeServices = employeeServices;
+            Logger = logger;
         }
 
-        public UserManager<IdentityUser> UserManager { get; }
-        public RoleManager<IdentityRole> RoleManager { get; }
-        public IEmployeeRepository EmployeeRepository { get; }
+        private UserManager<IdentityUser> UserManager;
+        private RoleManager<IdentityRole> RoleManager;
+        private EmployeeServices EmployeeServices;
+        private ILogger<AdministratorsController> Logger;
 
         public IActionResult Index()
-        
+      
         
         {
             try
             {
                 var users = UserManager.Users;
+                Logger.LogInformation("Users were retrieved successfully");
                 return View(users);
             }
             catch(Exception e)
             {
+                Logger.LogDebug("Failed to retrieve users accounts {@Exception}", e);
+                Logger.LogError("Failed to retrieve users accounts {Exception}", e.Message);
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> CreateUserAccount(UserAccountCreateViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> CreateUserAccount([FromForm]UserAccountCreateViewModel model)
         {
             if(ModelState.IsValid)
             {
@@ -52,8 +61,8 @@ namespace TransportLogistics.Controllers
                     PhoneNumber = model.PhoneNumber
                 };
                 await UserManager.CreateAsync(user, model.Password);
-               // var createdUser = await UserManager.FindByEmailAsync(model.Email);
-                //EmployeeRepository.AddEmployee(createdUser.Id , model.Name , model.Email , model.Role);
+                var createdUser = await UserManager.FindByEmailAsync(model.Email);
+                EmployeeServices.AddEmployee(createdUser.Id , model.Name , model.Email , model.Role);
                 if (await RoleManager.FindByNameAsync(model.Role) == null)
                 {
                     var role = new IdentityRole(model.Role);
@@ -66,7 +75,8 @@ namespace TransportLogistics.Controllers
                 }
            
         }
-            return RedirectToAction("Index");
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
         [HttpGet]
         public async Task<IActionResult> EditUserAccount(string userId)
@@ -106,12 +116,14 @@ namespace TransportLogistics.Controllers
                 return View();
                
             }
-            var users = UserManager.Users;
-            return PartialView("_TablePartial",users);
-            //return RedirectToAction("Index");
             
+            return PartialView("_EditUserAccount",model);
+           }
+        public IActionResult GetUsersPartialView()
+        {
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
-
         public async Task<IActionResult> DeleteUserAccount(UserDeleteViewModel model)
         {
             try
@@ -121,22 +133,13 @@ namespace TransportLogistics.Controllers
             }
             catch (Exception e)
             {
+                Logger.LogDebug("Failed to delete user account,most likely model was not correct {@Exception}", e);
+                Logger.LogError("Failed to delete user account,most likely model was not correct {Exception}", e.Message);
                 return BadRequest();
             }
-            return RedirectToAction("Index");
+            var users = UserManager.Users;
+            return PartialView("_TablePartial", users);
         }
-        //    public async Task<IActionResult> DeleteUserAccount(string Id)
-        //    {
-        //        try
-        //        {
-        //            var user = await UserManager.FindByIdAsync(Id);
-        //            await UserManager.DeleteAsync(user);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        return PartialView("_TablePartial");
-        //    }
+     
         }
     }

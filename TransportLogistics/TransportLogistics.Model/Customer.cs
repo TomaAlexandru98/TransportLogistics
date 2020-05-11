@@ -14,7 +14,7 @@ namespace TransportLogistics.Model
 
         protected Customer()
         { }
-
+        
         public static Customer Create(string name, string phoneNo, string email)
         {
             var createdCustomer = new Customer()
