@@ -85,10 +85,6 @@
     </form>
   
  <script>
-         $(document).ready(function () {
-            $('#Users').DataTable({ responsive: true });
-        });
-
         function LoadEditModal(userId) {
             loadServerPartialView('#editModal', 'Administrators/EditUserAccount?userId=' + userId)
         }
