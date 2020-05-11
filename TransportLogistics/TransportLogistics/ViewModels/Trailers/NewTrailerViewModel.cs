@@ -11,11 +11,13 @@ namespace TransportLogistics.Models.Trailers
         [Required]
         
         public Guid TrailerId { get; set; }
-        
-        [Required(ErrorMessage = "The model must be specified")]
+
+        [Required(ErrorMessage = "Model is required.")]
         [Display(Name = "Model")]
         public string Model { get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "Value cannot be 0 ")]
+        
+        
         [Required]
         [Display(Name = "MaximWeight")]
         public int MaximWeightKg { get; set; }
