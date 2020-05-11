@@ -100,7 +100,18 @@ body {
 
 .page-item.active .page-link {
     z-index: 1;
-    color: #fff;
+    color: #fff !important;
     background-color: #06087d !important;
     border-color: #06087d !important;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #06087d !important;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
 }

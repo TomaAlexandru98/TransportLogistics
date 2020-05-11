@@ -102,7 +102,7 @@ namespace TransportLogistics.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete([FromRoute]string Id)
+        public IActionResult Remove([FromRoute]string Id)
         {
 
             RemoveTrailerViewModel removeViewModel = new RemoveTrailerViewModel()

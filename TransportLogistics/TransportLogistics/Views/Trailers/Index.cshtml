@@ -46,17 +46,19 @@
                 });
 
                 function LoadEditTrailerView(Id) {
-                    loadServerPartialView("#editTrailerBody",'@Url.Action("EditTrailer", "Trailers")'+"/" + Id);
+                    loadServerPartialView("#editTrailerBody", '@Url.Action("EditTrailer", "Trailers")' + "/" + Id).done(function () { $.validator.unobtrusive.parse(document);});
+                    
                 }
 
                 function CloseModal(modalName) {
-                    $(modalName).modal("hide");
+                   // $(modalName).modal("hide");
                     //setTimeout(function () {
                     //    window.location.reload();
                     //}, 400);
         }
         function reloadData() {
             window.location.reload();
+            
         }
         function ConfirmDelete() {
             var x = confirm("Are you sure you want to delete?");
@@ -67,7 +69,7 @@
         }
 
         function LoadRemoveTrailerView(Id) {
-             loadServerPartialView("#removeBody",'@Url.Action("Delete", "Trailers")'+"/" + Id);
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Trailers")'+"/" + Id);
         }
 
     </script>
@@ -100,7 +102,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSaveChanges" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#editTrailerModal')"> Confirm </button>
+                    <button id="btnSaveChanges" class="btn btn-success" type="submit"  > Confirm </button>
                 </div>
             </div>
         </div>
@@ -131,7 +133,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit" data-dismiss="modal" onclick="CloseModal('#newTrailerModal')"> Confirm </button>
+                    <button id="btnSave" class="btn btn-success" type="submit"  onclick="CloseModal('#newTrailerModal')"> Confirm </button>
                 </div>
             </div>
         </div>
