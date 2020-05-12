@@ -10,13 +10,13 @@ namespace TransportLogistics.ViewModels
     public class UserAccontEditViewModel
     {
         [Required]
-        
+        [Display(Name="Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
-        
+        [Display(Name = "Email")]
         public string Email { get; set; }
         [Required]
-       
+       [Display(Name="Name")]
         public string Name { get; set; }
         [Required]
         
