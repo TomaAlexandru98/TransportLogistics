@@ -133,7 +133,7 @@
 
         function loadTable() {
             loadServerPartialView("#customerTableContainer", "/Customers/CustomerTable").done(function () {
-                $('#customersTable').DataTable({ responsive: true });
+                $('#customersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
 
