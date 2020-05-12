@@ -11,7 +11,7 @@ namespace TransportLogistics.ViewModels.Vehicles
         public string Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string NameUpdate { get; set; }
 
         [Required]
         public string Type { get; set; }

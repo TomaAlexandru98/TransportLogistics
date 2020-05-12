@@ -111,7 +111,7 @@ namespace TransportLogistics.Controllers
                 var viewModel = new UpdateVehicleViewModel
                 {
                     Id = id,
-                    Name = vehicleFromDb.Name,
+                    NameUpdate = vehicleFromDb.Name,
                     Type = vehicleFromDb.Type,
                     RegistrationNumber = vehicleFromDb.RegistrationNumber,
                     MaximCarryWeight = vehicleFromDb.MaximCarryWeightKg,
@@ -121,12 +121,14 @@ namespace TransportLogistics.Controllers
             }
             catch(Exception e)
             {
+                logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
+                logger.LogDebug("Failed to retrieve vehicle {ExceptionMessage}", e);
                 return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public IActionResult Update([FromForm] UpdateVehicleViewModel viewModel)
+        public IActionResult Update([FromForm]UpdateVehicleViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -136,7 +138,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 vehicleService.Update(viewModel.Id,
-                                      viewModel.Name,
+                                      viewModel.NameUpdate,
                                       viewModel.Type,
                                       viewModel.RegistrationNumber,
                                       viewModel.MaximCarryWeight,
@@ -145,6 +147,8 @@ namespace TransportLogistics.Controllers
             }
             catch(Exception e)
             {
+                logger.LogError("Failed to update vehicle {@Exception}", e.Message);
+                logger.LogDebug("Failed to update vehicle {ExceptionMessage}", e);
                 return BadRequest(e.Message);
             }
         }
