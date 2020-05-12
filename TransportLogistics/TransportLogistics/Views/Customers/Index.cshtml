@@ -148,6 +148,7 @@
         function LoadUpdateCustomerView(Id) {
             loadServerPartialView("#updateCustomerBody", '@Url.Action("UpdateCustomer", "Customers")' + "/" + Id);
         }
+
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
