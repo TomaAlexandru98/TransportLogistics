@@ -43,5 +43,10 @@ namespace TransportLogistics.DataAccess.Repositories
             dbContext.SaveChanges();
             return targettrailer;
         }
+
+        public new IEnumerable<Trailer> GetAll()
+        {
+            return dbContext.Trailers.AsEnumerable();
+        }
     }
 }

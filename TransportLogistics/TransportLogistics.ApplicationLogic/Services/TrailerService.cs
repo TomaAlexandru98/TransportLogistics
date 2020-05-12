@@ -66,5 +66,9 @@ namespace TransportLogistics.ApplicationLogic.Services
            
             trailersRepository.UpdateTrailer( id,  model,  maximumWeightKg,  capacity,  numberAxles,  height,  width,  length);
         }
+        public IEnumerable<Trailer> GetAllTrailers()
+        {
+            return trailersRepository.GetAll();
+        }
     }
 }
