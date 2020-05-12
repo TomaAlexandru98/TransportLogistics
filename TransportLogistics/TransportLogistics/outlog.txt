@@ -2868,3 +2868,622 @@ WHERE [t].[Id] = @__id_0"
 12:30:02.354  [INF][1224-33] Executed action "TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)" in 13.8604ms
 12:30:02.356  [INF][1224-33] Executed endpoint '"TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)"'
 12:30:02.357  [INF][1224-33] Request finished in 24.2806ms 200 text/html; charset=utf-8
+15:37:13.855  [INF][15596-1] User profile is available. Using '"C:\Users\alema\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+15:37:14.413  [INF][15596-1] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:15.862  [INF][15596-1] Executed DbCommand ("71"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0"
+15:37:15.995  [INF][15596-8] Executed DbCommand ("16"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:16.031  [INF][15596-8] Executed DbCommand ("2"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:16.039  [INF][15596-4] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:16.043  [INF][15596-7] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:16.048  [INF][15596-8] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:16.104  [INF][15596-10] Executed DbCommand ("2"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0"
+15:37:16.113  [WRN][15596-10] User "38987df2-3463-4d46-b2e7-fa1b7b9ce545" validation failed: "DuplicateUserName".
+15:37:16.915  [INF][15596-1] Application started. Press Ctrl+C to shut down.
+15:37:16.916  [INF][15596-1] Hosting environment: "Development"
+15:37:16.917  [INF][15596-1] Content root path: "D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics"
+15:37:16.952  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/  
+15:37:17.037  [INF][15596-4] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:17.049  [INF][15596-7] Executed DbCommand ("2"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+15:37:17.094  [INF][15596-8] Executed DbCommand ("2"ms) [Parameters=["@__user_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0"
+15:37:17.131  [INF][15596-8] Executed DbCommand ("2"ms) [Parameters=["@__userId_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0"
+15:37:17.141  [INF][15596-4] Executed DbCommand ("1"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0"
+15:37:17.151  [INF][15596-7] Executed DbCommand ("2"ms) [Parameters=["@__role_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[ClaimType], [a].[ClaimValue]
+FROM [AspNetRoleClaims] AS [a]
+WHERE [a].[RoleId] = @__role_Id_0"
+15:37:17.159  [INF][15596-7] Executing endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+15:37:17.181  [INF][15596-7] Route matched with "{action = \"Index\", controller = \"Home\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.HomeController" ("TransportLogistics").
+15:37:17.204  [INF][15596-7] Executing ViewResult, running view "Index".
+15:37:17.321  [INF][15596-4] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:17.324  [INF][15596-8] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:17.354  [INF][15596-7] Executed ViewResult - view "Index" executed in 161.6478ms.
+15:37:17.357  [INF][15596-7] Executed action "TransportLogistics.Controllers.HomeController.Index (TransportLogistics)" in 174.0019ms
+15:37:17.359  [INF][15596-7] Executed endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+15:37:17.369  [INF][15596-7] Request finished in 419.3839ms 200 text/html; charset=utf-8
+15:37:17.383  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+15:37:17.383  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+15:37:17.383  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+15:37:17.383  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+15:37:17.383  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+15:37:17.406  [INF][15596-10] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+15:37:17.409  [INF][15596-10] Request finished in 26.0057ms 200 text/css
+15:37:17.409  [INF][15596-8] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+15:37:17.413  [INF][15596-8] Request finished in 30.0531ms 200 text/css
+15:37:17.422  [INF][15596-18] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+15:37:17.422  [INF][15596-13] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+15:37:17.426  [INF][15596-18] Request finished in 42.418ms 200 text/css
+15:37:17.427  [INF][15596-13] Request finished in 43.5108ms 200 text/css
+15:37:17.480  [INF][15596-12] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery\dist\jquery.min.js"'
+15:37:17.482  [INF][15596-12] Request finished in 98.3677ms 200 application/javascript
+15:37:17.489  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+15:37:17.494  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=dcS2Np9oGXBtMxveuxN_WxHHFO-29MdZk00cCPr2xRE  
+15:37:17.496  [INF][15596-10] Sending file. Request path: '"/js/site.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\js\site.js"'
+15:37:17.498  [INF][15596-10] Request finished in 4.2914ms 200 application/javascript
+15:37:17.509  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/delivery.png  
+15:37:17.514  [INF][15596-20] Sending file. Request path: '"/delivery.png"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\delivery.png"'
+15:37:17.517  [INF][15596-20] Request finished in 7.5523ms 200 image/png
+15:37:17.519  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/webfonts/fa-solid-900.woff2  
+15:37:17.531  [INF][15596-12] Sending file. Request path: '"/lib/fontawesome/webfonts/fa-solid-900.woff2"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2"'
+15:37:17.533  [INF][15596-12] Request finished in 14.078ms 200 font/woff2
+15:37:17.566  [INF][15596-10] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.bundle.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"'
+15:37:17.568  [INF][15596-10] Request finished in 79.8138ms 200 application/javascript
+15:37:20.281  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/Trailers  
+15:37:20.289  [INF][15596-4] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:20.293  [INF][15596-4] Route matched with "{action = \"Index\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:20.304  [INF][15596-4] Executing ViewResult, running view "Index".
+15:37:20.405  [INF][15596-4] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:20.411  [INF][15596-8] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+15:37:20.416  [INF][15596-12] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:20.422  [INF][15596-13] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:20.449  [INF][15596-8] Executed ViewResult - view "Index" executed in 147.6627ms.
+15:37:20.454  [INF][15596-8] Executed action "TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)" in 158.9396ms
+15:37:20.456  [INF][15596-8] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:20.459  [INF][15596-8] Request finished in 178.7481ms 200 text/html; charset=utf-8
+15:37:20.475  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+15:37:20.476  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+15:37:20.479  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+15:37:20.479  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+15:37:20.486  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css  
+15:37:20.486  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+15:37:20.490  [INF][15596-12] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+15:37:20.494  [INF][15596-20] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+15:37:20.496  [INF][15596-12] Request finished in 19.1613ms 200 text/css
+15:37:20.497  [INF][15596-20] Request finished in 18.1941ms 200 text/css
+15:37:20.485  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css  
+15:37:20.485  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+15:37:20.502  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=dcS2Np9oGXBtMxveuxN_WxHHFO-29MdZk00cCPr2xRE  
+15:37:20.504  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:20.503  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.css  
+15:37:20.505  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:20.506  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.js  
+15:37:20.511  [INF][15596-4] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.dataTables.min.css"'
+15:37:20.513  [INF][15596-8] Sending file. Request path: '"/js/site.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\js\site.js"'
+15:37:20.518  [INF][15596-8] Request finished in 15.7826ms 200 application/javascript
+15:37:20.517  [INF][15596-4] Request finished in 30.7296ms 200 text/css
+15:37:20.518  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:20.522  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js  
+15:37:20.522  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:20.522  [INF][15596-18] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.bootstrap4.css"'
+15:37:20.527  [INF][15596-18] Request finished in 42.0462ms 200 text/css
+15:37:20.529  [INF][15596-12] Sending file. Request path: '"/lib/datatables/datatables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.css"'
+15:37:20.532  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js  
+15:37:20.533  [INF][15596-12] Request finished in 29.5596ms 200 text/css
+15:37:20.535  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js  
+15:37:20.535  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:20.548  [INF][15596-13] Request finished in 43.4507ms 404 
+15:37:20.548  [INF][15596-12] Request finished in 13.4271ms 404 
+15:37:20.549  [INF][15596-4] Request finished in 26.279ms 404 
+15:37:20.552  [INF][15596-10] Request finished in 45.5444ms 404 
+15:37:20.555  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation/dist/jquery.validate.min.js  
+15:37:20.548  [INF][15596-19] Request finished in 30.0223ms 404 
+15:37:20.575  [INF][15596-8] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.min.js"'
+15:37:20.578  [INF][15596-7] Sending file. Request path: '"/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js"'
+15:37:20.578  [INF][15596-12] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+15:37:20.586  [INF][15596-8] Request finished in 59.8284ms 200 application/javascript
+15:37:20.588  [INF][15596-12] Request finished in 109.3255ms 200 text/css
+15:37:20.592  [INF][15596-7] Request finished in 51.8853ms 200 application/javascript
+15:37:20.593  [INF][15596-4] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.bundle.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"'
+15:37:20.578  [INF][15596-18] Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"'
+15:37:20.600  [INF][15596-12] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+15:37:20.601  [INF][15596-18] Request finished in 69.3528ms 200 application/javascript
+15:37:20.602  [INF][15596-12] Request finished in 127.7253ms 200 text/css
+15:37:20.594  [INF][15596-19] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery\dist\jquery.min.js"'
+15:37:20.603  [INF][15596-4] Request finished in 115.9001ms 200 application/javascript
+15:37:20.607  [INF][15596-19] Request finished in 122.766ms 200 application/javascript
+15:37:20.616  [INF][15596-20] Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"'
+15:37:20.622  [INF][15596-20] Request finished in 66.5869ms 200 application/javascript
+15:37:20.623  [INF][15596-18] Sending file. Request path: '"/lib/datatables/datatables.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.js"'
+15:37:20.625  [INF][15596-18] Request finished in 119.1293ms 200 application/javascript
+15:37:20.650  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/webfonts/fa-solid-900.woff2  
+15:37:20.655  [INF][15596-4] Sending file. Request path: '"/lib/fontawesome/webfonts/fa-solid-900.woff2"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2"'
+15:37:20.657  [INF][15596-4] Request finished in 6.7825ms 200 font/woff2
+15:37:20.695  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:20.698  [INF][15596-12] Request finished in 3.2594ms 404 
+15:37:20.705  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:20.707  [INF][15596-12] Request finished in 2.2ms 404 
+15:37:20.713  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:20.715  [INF][15596-13] Request finished in 2.2064ms 404 
+15:37:20.722  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:20.727  [INF][15596-13] Request finished in 5.5121ms 404 
+15:37:20.742  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:20.746  [INF][15596-18] Request finished in 3.7333ms 404 
+15:37:20.779  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/TrailersTable  
+15:37:20.782  [INF][15596-8] Executing endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:20.786  [INF][15596-8] Route matched with "{action = \"TrailersTable\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult TrailersTable()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:20.793  [INF][15596-8] Executing PartialViewResult, running view "_TrailersTable".
+15:37:20.871  [WRN][15596-8] No type was specified for the decimal column '"Height"' on entity type '"Trailer"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+15:37:20.873  [WRN][15596-8] No type was specified for the decimal column '"Length"' on entity type '"Trailer"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+15:37:20.875  [WRN][15596-8] No type was specified for the decimal column '"Width"' on entity type '"Trailer"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+15:37:20.877  [INF][15596-8] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:20.938  [INF][15596-8] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]"
+15:37:20.992  [INF][15596-8] Executed PartialViewResult - view "_TrailersTable" executed in 202.4601ms.
+15:37:20.994  [INF][15596-8] Executed action "TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)" in 206.0652ms
+15:37:20.996  [INF][15596-8] Executed endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:20.998  [INF][15596-8] Request finished in 218.4463ms 200 text/html; charset=utf-8
+15:37:34.141  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/EditTrailer/23f854b5-c2b4-450f-b3fe-338d30065099  
+15:37:34.147  [INF][15596-4] Executing endpoint '"TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)"'
+15:37:34.162  [INF][15596-4] Route matched with "{action = \"EditTrailer\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult EditTrailer(System.String)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:34.177  [INF][15596-4] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:34.187  [INF][15596-4] Executed DbCommand ("2"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]
+WHERE [t].[Id] = @__id_0"
+15:37:34.191  [INF][15596-4] Executing PartialViewResult, running view "_NewTrailerPartial".
+15:37:34.196  [INF][15596-4] Executed PartialViewResult - view "_NewTrailerPartial" executed in 4.4514ms.
+15:37:34.197  [INF][15596-4] Executed action "TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)" in 33.3172ms
+15:37:34.199  [INF][15596-4] Executed endpoint '"TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)"'
+15:37:34.200  [INF][15596-4] Request finished in 60.0635ms 200 text/html; charset=utf-8
+15:37:37.111  [INF][15596-4] Request starting HTTP/2.0 POST https://localhost:44393/Trailers/EditTrailer application/x-www-form-urlencoded; charset=UTF-8 389
+15:37:37.114  [INF][15596-4] Executing endpoint '"TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)"'
+15:37:37.121  [INF][15596-4] Route matched with "{action = \"EditTrailer\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.ActionResult EditTrailer(TransportLogistics.Models.Trailers.NewTrailerViewModel)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:37.145  [INF][15596-4] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:37.148  [INF][15596-4] Executed DbCommand ("0"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]
+WHERE [t].[Id] = @__id_0"
+15:37:37.269  [INF][15596-4] Executed DbCommand ("5"ms) [Parameters=["@p8='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?' (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Size = 4000), @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Decimal)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+UPDATE [Trailers] SET [Capacity] = @p0, [Height] = @p1, [Length] = @p2, [MaximWeightKg] = @p3, [Model] = @p4, [NumberAxles] = @p5, [VehicleId] = @p6, [Width] = @p7
+WHERE [Id] = @p8;
+SELECT @@ROWCOUNT;"
+15:37:37.288  [INF][15596-4] Executing PartialViewResult, running view "_NewTrailerPartial".
+15:37:37.292  [INF][15596-4] Executed PartialViewResult - view "_NewTrailerPartial" executed in 4.5967ms.
+15:37:37.294  [INF][15596-4] Executed action "TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)" in 171.5184ms
+15:37:37.296  [INF][15596-4] Executed endpoint '"TransportLogistics.Controllers.TrailersController.EditTrailer (TransportLogistics)"'
+15:37:37.298  [INF][15596-4] Request finished in 187.0585ms 200 text/html; charset=utf-8
+15:37:37.314  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/Trailers  
+15:37:37.319  [INF][15596-7] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:37.321  [INF][15596-7] Route matched with "{action = \"Index\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:37.322  [INF][15596-7] Executing ViewResult, running view "Index".
+15:37:37.328  [INF][15596-7] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:37.332  [INF][15596-13] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+15:37:37.337  [INF][15596-10] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:37.341  [INF][15596-19] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:37.344  [INF][15596-13] Executed ViewResult - view "Index" executed in 21.8918ms.
+15:37:37.346  [INF][15596-13] Executed action "TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)" in 24.1507ms
+15:37:37.348  [INF][15596-13] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:37.350  [INF][15596-13] Request finished in 35.8789ms 200 text/html; charset=utf-8
+15:37:37.380  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+15:37:37.383  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+15:37:37.387  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=dcS2Np9oGXBtMxveuxN_WxHHFO-29MdZk00cCPr2xRE  
+15:37:37.383  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+15:37:37.386  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+15:37:37.385  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+15:37:37.383  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+15:37:37.385  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.css  
+15:37:37.404  [INF][15596-4] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+15:37:37.406  [INF][15596-4] Request finished in 22.4512ms 200 text/css
+15:37:37.406  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css  
+15:37:37.406  [INF][15596-18] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+15:37:37.411  [INF][15596-8] Sending file. Request path: '"/js/site.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\js\site.js"'
+15:37:37.412  [INF][15596-18] Request finished in 28.9968ms 200 text/css
+15:37:37.418  [INF][15596-8] Request finished in 31.51ms 200 application/javascript
+15:37:37.418  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.js  
+15:37:37.420  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:37.426  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js  
+15:37:37.420  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css  
+15:37:37.424  [INF][15596-12] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.bootstrap4.css"'
+15:37:37.420  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:37.443  [INF][15596-12] Request finished in 36.2712ms 200 text/css
+15:37:37.429  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:37.447  [INF][15596-10] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.dataTables.min.css"'
+15:37:37.453  [INF][15596-4] Request finished in 33.1772ms 404 
+15:37:37.452  [INF][15596-8] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.min.js"'
+15:37:37.455  [INF][15596-10] Request finished in 33.7313ms 200 text/css
+15:37:37.461  [INF][15596-8] Request finished in 34.2487ms 200 application/javascript
+15:37:37.465  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js  
+15:37:37.453  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:37.470  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation/dist/jquery.validate.min.js  
+15:37:37.473  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:37.453  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js  
+15:37:37.452  [INF][15596-20] Request finished in 31.3579ms 404 
+15:37:37.481  [INF][15596-8] Request finished in 8.1406ms 404 
+15:37:37.482  [INF][15596-12] Request finished in 29.7516ms 404 
+15:37:37.457  [INF][15596-18] Request finished in 28.2822ms 404 
+15:37:37.498  [INF][15596-8] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.bundle.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"'
+15:37:37.500  [INF][15596-10] Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"'
+15:37:37.516  [INF][15596-8] Request finished in 130.2571ms 200 application/javascript
+15:37:37.521  [INF][15596-10] Request finished in 50.6927ms 200 application/javascript
+15:37:37.507  [INF][15596-12] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+15:37:37.528  [INF][15596-8] Sending file. Request path: '"/lib/datatables/datatables.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.js"'
+15:37:37.530  [INF][15596-12] Request finished in 147.399ms 200 text/css
+15:37:37.489  [INF][15596-13] Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"'
+15:37:37.519  [INF][15596-20] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery\dist\jquery.min.js"'
+15:37:37.533  [INF][15596-4] Sending file. Request path: '"/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js"'
+15:37:37.540  [INF][15596-8] Request finished in 117.402ms 200 application/javascript
+15:37:37.536  [INF][15596-13] Request finished in 83.6777ms 200 application/javascript
+15:37:37.540  [INF][15596-20] Request finished in 154.3037ms 200 application/javascript
+15:37:37.543  [INF][15596-4] Request finished in 80.9048ms 200 application/javascript
+15:37:37.527  [INF][15596-18] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+15:37:37.429  [INF][15596-19] Sending file. Request path: '"/lib/datatables/datatables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.css"'
+15:37:37.551  [INF][15596-18] Request finished in 170.5979ms 200 text/css
+15:37:37.555  [INF][15596-19] Request finished in 170.2812ms 200 text/css
+15:37:37.612  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/webfonts/fa-solid-900.woff2  
+15:37:37.619  [INF][15596-8] Sending file. Request path: '"/lib/fontawesome/webfonts/fa-solid-900.woff2"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2"'
+15:37:37.621  [INF][15596-8] Request finished in 8.2109ms 200 font/woff2
+15:37:37.656  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:37.663  [INF][15596-8] Request finished in 7.5371ms 404 
+15:37:37.672  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:37.677  [INF][15596-4] Request finished in 4.6094ms 404 
+15:37:37.684  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:37.688  [INF][15596-8] Request finished in 4.3701ms 404 
+15:37:37.695  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:37.699  [INF][15596-13] Request finished in 3.7981ms 404 
+15:37:37.715  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:37.719  [INF][15596-13] Request finished in 4.1906ms 404 
+15:37:37.740  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/TrailersTable  
+15:37:37.744  [INF][15596-13] Executing endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:37.745  [INF][15596-13] Route matched with "{action = \"TrailersTable\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult TrailersTable()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:37.748  [INF][15596-13] Executing PartialViewResult, running view "_TrailersTable".
+15:37:37.750  [INF][15596-13] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:37.753  [INF][15596-13] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]"
+15:37:37.766  [INF][15596-13] Executed PartialViewResult - view "_TrailersTable" executed in 18.5319ms.
+15:37:37.767  [INF][15596-13] Executed action "TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)" in 20.4687ms
+15:37:37.770  [INF][15596-13] Executed endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:37.771  [INF][15596-13] Request finished in 30.949ms 200 text/html; charset=utf-8
+15:37:50.471  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/Remove/9cabc49a-13c3-4e7e-b937-93db348b4abe  
+15:37:50.474  [INF][15596-13] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:50.479  [INF][15596-13] Route matched with "{action = \"Remove\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Remove(System.String)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:50.482  [INF][15596-13] Executing PartialViewResult, running view "_RemoveTrailerPartial".
+15:37:50.486  [INF][15596-13] Executed PartialViewResult - view "_RemoveTrailerPartial" executed in 3.7326ms.
+15:37:50.488  [INF][15596-13] Executed action "TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)" in 6.8719ms
+15:37:50.490  [INF][15596-13] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:50.492  [INF][15596-13] Request finished in 20.7823ms 200 text/html; charset=utf-8
+15:37:51.239  [INF][15596-4] Request starting HTTP/2.0 POST https://localhost:44393/Trailers/Remove application/x-www-form-urlencoded; charset=UTF-8 297
+15:37:51.245  [INF][15596-4] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:51.251  [INF][15596-4] Route matched with "{action = \"Remove\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Remove(TransportLogistics.Models.Trailers.RemoveTrailerViewModel)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:51.256  [INF][15596-4] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:51.260  [INF][15596-4] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]
+WHERE [t].[Id] = @__id_0"
+15:37:51.273  [INF][15596-4] Executed DbCommand ("3"ms) [Parameters=["@p0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DELETE FROM [Trailers]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;"
+15:37:51.279  [INF][15596-4] Executing PartialViewResult, running view "_RemoveTrailerPartial".
+15:37:51.281  [INF][15596-4] Executed PartialViewResult - view "_RemoveTrailerPartial" executed in 2.7811ms.
+15:37:51.285  [INF][15596-4] Executed action "TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)" in 32.476ms
+15:37:51.286  [INF][15596-4] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:51.288  [INF][15596-4] Request finished in 48.8853ms 200 text/html; charset=utf-8
+15:37:51.298  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/Trailers  
+15:37:51.302  [INF][15596-8] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:51.304  [INF][15596-8] Route matched with "{action = \"Index\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:51.306  [INF][15596-8] Executing ViewResult, running view "Index".
+15:37:51.310  [INF][15596-8] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:51.314  [INF][15596-20] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+15:37:51.319  [INF][15596-4] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:51.322  [INF][15596-10] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:51.325  [INF][15596-20] Executed ViewResult - view "Index" executed in 19.3268ms.
+15:37:51.327  [INF][15596-20] Executed action "TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)" in 21.5402ms
+15:37:51.329  [INF][15596-20] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:51.331  [INF][15596-20] Request finished in 33.1019ms 200 text/html; charset=utf-8
+15:37:51.348  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+15:37:51.352  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+15:37:51.354  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+15:37:51.354  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.css  
+15:37:51.352  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+15:37:51.363  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+15:37:51.356  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+15:37:51.382  [INF][15596-4] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+15:37:51.360  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css  
+15:37:51.360  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css  
+15:37:51.385  [INF][15596-4] Request finished in 32.8713ms 200 text/css
+15:37:51.402  [INF][15596-48] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js  
+15:37:51.402  [INF][15596-12] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+15:37:51.408  [INF][15596-8] Sending file. Request path: '"/lib/datatables/datatables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.css"'
+15:37:51.410  [INF][15596-12] Request finished in 57.3797ms 200 text/css
+15:37:51.407  [INF][15596-19] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.bootstrap4.css"'
+15:37:51.413  [INF][15596-8] Request finished in 58.321ms 200 text/css
+15:37:51.414  [INF][15596-20] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.dataTables.min.css"'
+15:37:51.436  [INF][15596-12] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery\dist\jquery.min.js"'
+15:37:51.437  [INF][15596-4] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+15:37:51.439  [INF][15596-12] Request finished in 83.3873ms 200 application/javascript
+15:37:51.438  [INF][15596-20] Request finished in 77.4839ms 200 text/css
+15:37:51.441  [INF][15596-4] Request finished in 89.027ms 200 text/css
+15:37:51.425  [INF][15596-19] Request finished in 65.578ms 200 text/css
+15:37:51.402  [INF][15596-40] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.js  
+15:37:51.368  [INF][15596-37] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=dcS2Np9oGXBtMxveuxN_WxHHFO-29MdZk00cCPr2xRE  
+15:37:51.382  [INF][15596-38] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:51.383  [INF][15596-36] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:51.457  [INF][15596-37] Sending file. Request path: '"/js/site.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\js\site.js"'
+15:37:51.458  [INF][15596-38] Request finished in 75.983ms 404 
+15:37:51.460  [INF][15596-37] Request finished in 91.7171ms 200 application/javascript
+15:37:51.462  [INF][15596-36] Request finished in 78.2879ms 404 
+15:37:51.401  [INF][15596-41] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation/dist/jquery.validate.min.js  
+15:37:51.391  [INF][15596-44] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:51.414  [INF][15596-42] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+15:37:51.402  [INF][15596-46] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:51.472  [INF][15596-40] Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"'
+15:37:51.471  [INF][15596-44] Request finished in 79.7434ms 404 
+15:37:51.476  [INF][15596-40] Request finished in 74.7991ms 200 application/javascript
+15:37:51.471  [INF][15596-42] Request finished in 122.796ms 200 text/css
+15:37:51.478  [INF][15596-46] Request finished in 75.2177ms 404 
+15:37:51.385  [INF][15596-43] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:51.382  [INF][15596-39] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js  
+15:37:51.385  [INF][15596-45] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js  
+15:37:51.489  [INF][15596-43] Request finished in 103.1943ms 404 
+15:37:51.424  [INF][15596-50] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.bundle.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"'
+15:37:51.493  [INF][15596-39] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.min.js"'
+15:37:51.493  [INF][15596-45] Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"'
+15:37:51.497  [INF][15596-39] Request finished in 114.6524ms 200 application/javascript
+15:37:51.499  [INF][15596-45] Request finished in 113.4878ms 200 application/javascript
+15:37:51.495  [INF][15596-50] Request finished in 132.9049ms 200 application/javascript
+15:37:51.423  [INF][15596-48] Sending file. Request path: '"/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js"'
+15:37:51.462  [INF][15596-54] Sending file. Request path: '"/lib/datatables/datatables.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.js"'
+15:37:51.506  [INF][15596-48] Request finished in 104.6993ms 200 application/javascript
+15:37:51.508  [INF][15596-54] Request finished in 106.092ms 200 application/javascript
+15:37:51.521  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/webfonts/fa-solid-900.woff2  
+15:37:51.528  [INF][15596-53] Sending file. Request path: '"/lib/fontawesome/webfonts/fa-solid-900.woff2"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2"'
+15:37:51.532  [INF][15596-53] Request finished in 10.4514ms 200 font/woff2
+15:37:51.557  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:51.560  [INF][15596-4] Request finished in 2.8773ms 404 
+15:37:51.567  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:37:51.570  [INF][15596-7] Request finished in 2.5909ms 404 
+15:37:51.576  [INF][15596-7] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:37:51.578  [INF][15596-7] Request finished in 2.4631ms 404 
+15:37:51.584  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:51.587  [INF][15596-12] Request finished in 2.543ms 404 
+15:37:51.601  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:37:51.604  [INF][15596-19] Request finished in 3.3134ms 404 
+15:37:51.622  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/TrailersTable  
+15:37:51.625  [INF][15596-19] Executing endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:51.627  [INF][15596-19] Route matched with "{action = \"TrailersTable\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult TrailersTable()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:51.629  [INF][15596-19] Executing PartialViewResult, running view "_TrailersTable".
+15:37:51.632  [INF][15596-19] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:51.635  [INF][15596-19] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]"
+15:37:51.647  [INF][15596-19] Executed PartialViewResult - view "_TrailersTable" executed in 17.7168ms.
+15:37:51.649  [INF][15596-19] Executed action "TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)" in 20.0093ms
+15:37:51.651  [INF][15596-19] Executed endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:37:51.653  [INF][15596-19] Request finished in 31.0716ms 200 text/html; charset=utf-8
+15:37:58.721  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/Remove/48791291-a0d3-4d8f-bbce-024f802dd731  
+15:37:58.724  [INF][15596-4] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:58.726  [INF][15596-4] Route matched with "{action = \"Remove\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Remove(System.String)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:58.730  [INF][15596-4] Executing PartialViewResult, running view "_RemoveTrailerPartial".
+15:37:58.734  [INF][15596-4] Executed PartialViewResult - view "_RemoveTrailerPartial" executed in 3.7426ms.
+15:37:58.736  [INF][15596-4] Executed action "TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)" in 7.1993ms
+15:37:58.738  [INF][15596-4] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:58.740  [INF][15596-4] Request finished in 19.6261ms 200 text/html; charset=utf-8
+15:37:59.883  [INF][15596-13] Request starting HTTP/2.0 POST https://localhost:44393/Trailers/Remove application/x-www-form-urlencoded; charset=UTF-8 297
+15:37:59.886  [INF][15596-13] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:59.888  [INF][15596-13] Route matched with "{action = \"Remove\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Remove(TransportLogistics.Models.Trailers.RemoveTrailerViewModel)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:59.892  [INF][15596-13] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:59.897  [INF][15596-13] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]
+WHERE [t].[Id] = @__id_0"
+15:37:59.901  [INF][15596-13] Executed DbCommand ("0"ms) [Parameters=["@p0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DELETE FROM [Trailers]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;"
+15:37:59.904  [INF][15596-13] Executing PartialViewResult, running view "_RemoveTrailerPartial".
+15:37:59.907  [INF][15596-13] Executed PartialViewResult - view "_RemoveTrailerPartial" executed in 2.7111ms.
+15:37:59.909  [INF][15596-13] Executed action "TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)" in 19.5958ms
+15:37:59.911  [INF][15596-13] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+15:37:59.913  [INF][15596-13] Request finished in 30.4964ms 200 text/html; charset=utf-8
+15:37:59.924  [INF][15596-8] Request starting HTTP/2.0 GET https://localhost:44393/Trailers  
+15:37:59.928  [INF][15596-8] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:59.930  [INF][15596-8] Route matched with "{action = \"Index\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:37:59.932  [INF][15596-8] Executing ViewResult, running view "Index".
+15:37:59.936  [INF][15596-8] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:37:59.941  [INF][15596-19] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+15:37:59.947  [INF][15596-8] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+15:37:59.950  [INF][15596-13] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+15:37:59.954  [INF][15596-19] Executed ViewResult - view "Index" executed in 22.2583ms.
+15:37:59.956  [INF][15596-19] Executed action "TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)" in 24.3043ms
+15:37:59.958  [INF][15596-19] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Index (TransportLogistics)"'
+15:37:59.960  [INF][15596-19] Request finished in 37.2538ms 200 text/html; charset=utf-8
+15:37:59.976  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+15:37:59.980  [INF][15596-20] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+15:37:59.983  [INF][15596-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+15:37:59.983  [INF][15596-10] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.css  
+15:37:59.983  [INF][15596-12] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+15:37:59.983  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+15:37:59.987  [INF][15596-18] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css  
+15:37:59.989  [INF][15596-40] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:37:59.989  [INF][15596-37] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:38:00.007  [INF][15596-12] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+15:38:00.011  [INF][15596-7] Sending file. Request path: '"/lib/datatables/datatables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.css"'
+15:38:00.016  [INF][15596-12] Request finished in 32.8044ms 200 text/css
+15:38:00.011  [INF][15596-13] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+15:38:00.020  [INF][15596-7] Request finished in 36.1762ms 200 text/css
+15:38:00.022  [INF][15596-13] Request finished in 39.191ms 200 text/css
+15:38:00.015  [INF][15596-18] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.dataTables.min.css"'
+15:38:00.015  [INF][15596-40] Request finished in 25.5263ms 404 
+15:38:00.027  [INF][15596-18] Request finished in 39.6484ms 200 text/css
+15:38:00.018  [INF][15596-37] Request finished in 28.6011ms 404 
+15:37:59.989  [INF][15596-38] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation/dist/jquery.validate.min.js  
+15:37:59.987  [INF][15596-36] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css  
+15:37:59.989  [INF][15596-41] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js  
+15:37:59.989  [INF][15596-44] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js  
+15:38:00.041  [INF][15596-36] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\css\responsive.bootstrap4.css"'
+15:37:59.989  [INF][15596-42] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js  
+15:38:00.049  [INF][15596-36] Request finished in 61.8425ms 200 text/css
+15:38:00.048  [INF][15596-41] Sending file. Request path: '"/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.min.js"'
+15:38:00.051  [INF][15596-44] Sending file. Request path: '"/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js"'
+15:38:00.057  [INF][15596-41] Request finished in 68.2905ms 200 application/javascript
+15:38:00.059  [INF][15596-44] Request finished in 69.708ms 200 application/javascript
+15:38:00.057  [INF][15596-42] Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"'
+15:37:59.991  [INF][15596-46] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=dcS2Np9oGXBtMxveuxN_WxHHFO-29MdZk00cCPr2xRE  
+15:38:00.066  [INF][15596-42] Request finished in 76.2765ms 200 application/javascript
+15:37:59.991  [INF][15596-43] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:37:59.991  [INF][15596-39] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+15:38:00.071  [INF][15596-46] Sending file. Request path: '"/js/site.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\js\site.js"'
+15:38:00.073  [INF][15596-43] Request finished in 81.4715ms 404 
+15:38:00.075  [INF][15596-46] Request finished in 84.0142ms 200 application/javascript
+15:38:00.045  [INF][15596-45] Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"'
+15:38:00.000  [INF][15596-47] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+15:38:00.081  [INF][15596-45] Request finished in 92.0781ms 200 application/javascript
+15:38:00.083  [INF][15596-47] Request finished in 102.8955ms 200 text/css
+15:38:00.011  [INF][15596-50] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\jquery\dist\jquery.min.js"'
+15:38:00.086  [INF][15596-4] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.bundle.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"'
+15:38:00.089  [INF][15596-50] Request finished in 105.9688ms 200 application/javascript
+15:37:59.988  [INF][15596-48] Request starting HTTP/2.0 GET https://localhost:44393/lib/datatables/datatables.min.js  
+15:38:00.092  [INF][15596-4] Request finished in 99.7761ms 200 application/javascript
+15:38:00.006  [INF][15596-52] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+15:37:59.991  [INF][15596-51] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:38:00.098  [INF][15596-52] Request finished in 121.654ms 200 text/css
+15:37:59.991  [INF][15596-53] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:38:00.103  [INF][15596-51] Request finished in 111.6229ms 404 
+15:38:00.109  [INF][15596-53] Request finished in 117.7496ms 404 
+15:38:00.113  [INF][15596-53] Sending file. Request path: '"/lib/datatables/datatables.min.js"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\datatables\datatables.min.js"'
+15:38:00.115  [INF][15596-53] Request finished in 126.1486ms 200 application/javascript
+15:38:00.136  [INF][15596-13] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/webfonts/fa-solid-900.woff2  
+15:38:00.140  [INF][15596-47] Sending file. Request path: '"/lib/fontawesome/webfonts/fa-solid-900.woff2"'. Physical path: '"D:\Internship\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2"'
+15:38:00.142  [INF][15596-47] Request finished in 6.7277ms 200 font/woff2
+15:38:00.164  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery-3.3.1.min.js  
+15:38:00.169  [INF][15596-19] Request finished in 4.7362ms 404 
+15:38:00.176  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.min.js  
+15:38:00.178  [INF][15596-19] Request finished in 2.5623ms 404 
+15:38:00.184  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/scripts/jquery.validate.unobtrusive.min.js  
+15:38:00.186  [INF][15596-19] Request finished in 2.4075ms 404 
+15:38:00.191  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/Scripts/bootstrap.min.js  
+15:38:00.194  [INF][15596-19] Request finished in 2.7383ms 404 
+15:38:00.208  [INF][15596-19] Request starting HTTP/2.0 GET https://localhost:44393/js/partialViewLoader.js  
+15:38:00.211  [INF][15596-19] Request finished in 2.7448ms 404 
+15:38:00.232  [INF][15596-47] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/TrailersTable  
+15:38:00.235  [INF][15596-47] Executing endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:38:00.238  [INF][15596-47] Route matched with "{action = \"TrailersTable\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult TrailersTable()" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+15:38:00.240  [INF][15596-47] Executing PartialViewResult, running view "_TrailersTable".
+15:38:00.244  [INF][15596-47] Entity Framework Core "3.1.3" initialized '"TransportLogisticsDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+15:38:00.247  [INF][15596-47] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[Capacity], [t].[Height], [t].[Length], [t].[MaximWeightKg], [t].[Model], [t].[NumberAxles], [t].[VehicleId], [t].[Width]
+FROM [Trailers] AS [t]"
+15:38:00.257  [INF][15596-47] Executed PartialViewResult - view "_TrailersTable" executed in 16.6033ms.
+15:38:00.259  [INF][15596-47] Executed action "TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)" in 19.3838ms
+15:38:00.261  [INF][15596-47] Executed endpoint '"TransportLogistics.Controllers.TrailersController.TrailersTable (TransportLogistics)"'
+15:38:00.263  [INF][15596-47] Request finished in 30.5849ms 200 text/html; charset=utf-8
+16:22:17.448  [INF][15596-55] Request starting HTTP/2.0 GET https://localhost:44393/Trailers/Remove/bcd951ee-601a-46e6-85ad-009f78cf99ad  
+16:22:17.458  [INF][15596-55] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+16:22:18.227  [INF][15596-55] Executed DbCommand ("5"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+16:22:18.233  [INF][15596-55] Executed DbCommand ("2"ms) [Parameters=["@__user_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0"
+16:22:18.239  [INF][15596-62] Executed DbCommand ("3"ms) [Parameters=["@__userId_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0"
+16:22:18.242  [INF][15596-55] Executed DbCommand ("1"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0"
+16:22:18.246  [INF][15596-28] Executed DbCommand ("1"ms) [Parameters=["@__role_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[ClaimType], [a].[ClaimValue]
+FROM [AspNetRoleClaims] AS [a]
+WHERE [a].[RoleId] = @__role_Id_0"
+16:22:18.248  [INF][15596-28] Executing endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+16:22:18.250  [INF][15596-28] Route matched with "{action = \"Remove\", controller = \"Trailers\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Remove(System.String)" on controller "TransportLogistics.Controllers.TrailersController" ("TransportLogistics").
+16:22:18.253  [INF][15596-28] Executing PartialViewResult, running view "_RemoveTrailerPartial".
+16:22:18.256  [INF][15596-28] Executed PartialViewResult - view "_RemoveTrailerPartial" executed in 4.1912ms.
+16:22:18.258  [INF][15596-28] Executed action "TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)" in 7.0271ms
+16:22:18.261  [INF][15596-28] Executed endpoint '"TransportLogistics.Controllers.TrailersController.Remove (TransportLogistics)"'
+16:22:18.263  [INF][15596-28] Request finished in 815.1195ms 200 text/html; charset=utf-8
