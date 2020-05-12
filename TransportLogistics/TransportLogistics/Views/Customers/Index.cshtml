@@ -108,7 +108,7 @@
       data-ajax-mode="replace"
       data-ajax-update="#removeBody">
 
-    <div class="modal fade" id="removeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" style="margin-top:9rem;" id="removeModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content" style="max-width: 60%">
                 <div class="modal-body" id="removeBody">
@@ -133,7 +133,7 @@
 
         function loadTable() {
             loadServerPartialView("#customerTableContainer", "/Customers/CustomerTable").done(function () {
-                $('#customersTable').DataTable({ responsive: true });
+                $('#customersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
 
@@ -148,6 +148,7 @@
         function LoadUpdateCustomerView(Id) {
             loadServerPartialView("#updateCustomerBody", '@Url.Action("UpdateCustomer", "Customers")' + "/" + Id);
         }
+
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();

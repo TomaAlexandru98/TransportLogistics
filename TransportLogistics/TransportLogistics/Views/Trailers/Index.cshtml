@@ -40,10 +40,11 @@
         $(document).ready(function () {
             loadTable();
         });
-        function loadTable() {
+        function loadTable(modalName) {
             loadServerPartialView("#trailerTableContainer", "/Trailers/TrailersTable").done(function () {
-                $('#Trailer').DataTable({ responsive: true });
+                $('#Trailer').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50]  });
             });
+            $(modalName).modal('hide');
         }
                 $(function () {
                     $('#modal').modal('toggle');
@@ -86,7 +87,7 @@
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
-      data-ajax-complete="reloadData()"
+      data-ajax-complete="loadTable('#editTrailerModal')"
       data-ajax-update="#editTrailerBody">
 
     @Html.AntiForgeryToken()
@@ -100,10 +101,7 @@
                     </button>
                 </div>
                 <div id="editTrailerBody" class="modal-body">
-
                 </div>
-
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
                     <button id="btnSaveChanges" class="btn btn-success" type="submit"  > Confirm </button>
@@ -117,7 +115,7 @@
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
-      data-ajax-complete="reloadData()"
+      data-ajax-complete="loadTable('#newTrailerModal')"
       data-ajax-update="#newTrailerBody">
 
     @Html.AntiForgeryToken()
@@ -148,7 +146,7 @@
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
-      data-ajax-complete="reloadData()"
+      data-ajax-complete="loadTable('#removeModal')"
       data-ajax-update="#removeBody">
 
     <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
