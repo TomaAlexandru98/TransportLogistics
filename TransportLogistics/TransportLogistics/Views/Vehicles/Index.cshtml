@@ -103,9 +103,14 @@
     <script>
 
         $(document).ready(function () {
-            $("#vehiclesTable").DataTable({ responsive: true });
-            
+            loadTable();
         });
+
+        function loadTable() {
+            loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable").done(function () {
+                $('#vehiclesTable').DataTable({ responsive: true });
+            });
+        }
 
         function sendVehicleIdToModal(id) {
             document.getElementById("updateVehicleButton").setAttribute("data-vehicle-id", id);
@@ -131,7 +136,7 @@
                     $("#createVehicleContainer").html(htmlContent);
                     if (htmlContent.indexOf("field-validation-error") == -1) {
                         $("#createVehicleModal").modal("hide");
-                        loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable");
+                        loadTable();
                     }
                 }
             });
@@ -157,7 +162,7 @@
                     $("#updateVehicleContainer").html(htmlContent);
                     if (htmlContent.indexOf("field-validation-error") == -1) {
                         $("#updateVehicleModal").modal("hide");
-                        loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable");
+                        loadTable();
                     }
                 }
                 
