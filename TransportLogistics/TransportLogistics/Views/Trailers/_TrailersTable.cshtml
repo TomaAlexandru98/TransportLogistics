@@ -1,5 +1,5 @@
-﻿@using TransportLogistics.Models.Trailers
-@model List<TransportLogistics.Model.Trailer>
+﻿@using TransportLogistics.ViewModels.Trailers
+@model TrailersListViewModel
 
 
 @{
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var trailer in Model)
+        @foreach (var trailer in Model.TrailerViews)
         {
             <tr>
 
