@@ -23,30 +23,43 @@
         @if (Model.Any())
             @foreach (var user in Model)
             {
-                <tr id="@user.Id">
-                    <td>@user.UserName </td>
-                    <td>
-                        @{
-                            if (userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
-                            {
+        <tr id="@user.Id">
+            <td>@user.UserName </td>
+            <td>
+                @{
+                    if (userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
+                    {
 
-                                var roles = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
-                                <p>@roles[0]</p>
-                            }
-                            else
-                            {
-                                <p>No Role</p>;
-                            }
-                        }
-                    </td>
+                        var roles = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+                        <p>@roles[0]</p>
+                    }
+                    else
+                    {
+                        <p>No Role</p>;
+                    }
+                }
+            </td>
 
-                    <td>@user.Email</td>
-                    <td>
-                        <button type="button" id="@user.Id" class="edit btn" title="Edit" onclick="LoadEditModal('@user.Id')" data-toggle="modal" data-target="#ModalEdit"><i class="material-icons fa fa-edit"></i></button>
-                        <a class="delete btn btn-danger" data-target="#ModalRemove" onclick="sendUserId('@user.Id')"
-                           title="Delete" data-toggle="modal"><i class="material-icons fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <td>@user.Email</td>
+
+            <td style="width:15%">
+                <div class="d-flex justify-content-around">
+
+                    
+
+                    <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                            onclick="LoadEditModal('@user.Id')" data-target="#ModalEdit">
+                        <i class="material-icons fa fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                            onclick="sendUserId('@user.Id')" data-target="#ModalRemove">
+                        <i class="material-icons fa fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+           
+        </tr>
             }
 
 
