@@ -12,33 +12,64 @@ using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess;
 using TransportLogistics.Model;
 using TransportLogistics.Models.Trailers;
+using TransportLogistics.ViewModels.Trailers;
 
 namespace TransportLogistics.Controllers
 {
     public class TrailersController : Controller
     {
-        private readonly IConfiguration _configuration;
-        private string _connectionString;
-        DbContextOptionsBuilder<TransportLogisticsDbContext> _optionsBuilder;
+       
         private readonly TrailerService trailerService;
         private readonly ILogger<TrailerService> logger;
-        public TrailersController(IConfiguration configuration,TrailerService trailerService, ILogger<TrailerService> logger)
+        public TrailersController(TrailerService trailerService, ILogger<TrailerService> logger)
         {
             this.logger = logger;
             this.trailerService = trailerService;
-            _configuration = configuration;
-            _optionsBuilder = new DbContextOptionsBuilder<TransportLogisticsDbContext>();
-            _connectionString = _configuration.GetConnectionString("DefaultConnection1");
-            _optionsBuilder.UseSqlServer(_connectionString);
+            
+        }
+        private TrailersListViewModel LoadTrailersViews()
+        {
+
+            TrailersListViewModel trailerViewModel = null;
+            try
+            {
+                trailerViewModel = new TrailersListViewModel()
+                {
+                    TrailerViews = trailerService.GetAllTrailers()
+                };
+
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load Trailer entities {@Exception}", e.Message);
+                logger.LogDebug("Failed to load Trailer entities {@ExceptionMessage}", e);
+            }
+
+            return trailerViewModel;
+        }
+        public IActionResult TrailersTable()
+        {
+            var trailerViewModel = LoadTrailersViews();
+
+            if (trailerViewModel == null)
+            {
+                return BadRequest("Failed to load Trailers entities");
+            }
+
+            return PartialView("_TrailersTable", trailerViewModel);
         }
         [HttpGet]
         public IActionResult Index()
         {
-            using (TransportLogisticsDbContext _context = new TransportLogisticsDbContext(_optionsBuilder.Options))
+            var trailerViewModel = LoadTrailersViews();
+
+            if (trailerViewModel == null)
             {
-                return View(_context.Trailers.ToList());
+                return BadRequest("Failed to load Trailers entities");
             }
-           
+
+            return View(trailerViewModel);
+
         }
 
         [HttpGet]
@@ -102,7 +133,7 @@ namespace TransportLogistics.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete([FromRoute]string Id)
+        public IActionResult Remove([FromRoute]string Id)
         {
 
             RemoveTrailerViewModel removeViewModel = new RemoveTrailerViewModel()

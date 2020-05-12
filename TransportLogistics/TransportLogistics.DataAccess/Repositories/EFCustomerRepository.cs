@@ -52,6 +52,13 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .FirstOrDefault();
         }
 
+        public new IEnumerable<Customer> GetAll()
+        {
+            return dbContext.Customers.Include(c => c.ContactDetails)
+                                        .Include(c => c.LocationAddresses)
+                                        .AsEnumerable();
+        }
+
         public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
         {
             var customer = GetById(customerId);
