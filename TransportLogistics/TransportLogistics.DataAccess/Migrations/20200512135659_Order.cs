@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class Order : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Contacts",
+                name: "Contact",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -17,7 +17,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.PrimaryKey("PK_Contact", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,9 +62,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Contacts_ContactDetailsId",
+                        name: "FK_Customers_Contact_ContactDetailsId",
                         column: x => x.ContactDetailsId,
-                        principalTable: "Contacts",
+                        principalTable: "Contact",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -151,7 +151,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Contacts");
+                name: "Contact");
         }
     }
 }
