@@ -13,7 +13,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFCustomerRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         { }
 
-        public IEnumerable<Customer> FindByLastName(string nameToFind)
+        public IEnumerable<Customer> FindByName(string nameToFind)
         {
             var customersList = dbContext.Customers
                                 .Where(customer =>
@@ -44,7 +44,7 @@ namespace TransportLogistics.DataAccess.Repositories
             return foundCustomer;
         }
 
-        public Customer GetCustomerByGuid(Guid customerId)
+        public new Customer GetById(Guid customerId)
         {
             return dbContext.Customers.Include(c => c.ContactDetails)
                                         .Include(c => c.LocationAddresses)
@@ -52,9 +52,16 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .FirstOrDefault();
         }
 
+        public new IEnumerable<Customer> GetAll()
+        {
+            return dbContext.Customers.Include(c => c.ContactDetails)
+                                        .Include(c => c.LocationAddresses)
+                                        .AsEnumerable();
+        }
+
         public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
         {
-            var customer = GetCustomerByGuid(customerId);
+            var customer = GetById(customerId);
             dbContext.LocationAddresses.Add(locationAddress);
             customer.AddLocationAddress(locationAddress);
             dbContext.SaveChanges();
@@ -62,7 +69,7 @@ namespace TransportLogistics.DataAccess.Repositories
 
         public bool RemoveCustomerWithLocations(Guid customerId)
         {
-            var entityToRemove = GetCustomerByGuid(customerId);
+            var entityToRemove = GetById(customerId);
             
             if (entityToRemove != null)
             {
@@ -85,7 +92,7 @@ namespace TransportLogistics.DataAccess.Repositories
 
         public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
         {
-            var customerToUpdate = GetCustomerByGuid(customerId);
+            var customerToUpdate = GetById(customerId);
 
             var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
             customerToUpdate.UpdateCustomer(name, contact);

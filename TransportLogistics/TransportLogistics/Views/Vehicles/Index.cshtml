@@ -25,7 +25,8 @@
     <partial name="_VehiclesTable" model="@Model" />
 </div>
 
-<form method="post" id="createVehicleForm">
+<form method="post" id="createVehicleForm" asp-controller="Vehicles" asp-action="Create">
+    @Html.AntiForgeryToken()
     <div class="modal fade" id="createVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -42,34 +43,34 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="createVehicleButton" data-dismiss="modal" class="btn btn-primary">Create</button>
-                </div>
+                    <button type="submit" id="createVehicleButton" class="btn btn-primary">Create</button>
+                </div>  
             </div>
         </div>
     </div>
 </form>
 
-<div class="modal fade" id="deleteVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-delete" id="deleteVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete vehicle</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="modal-content"  style="max-width:60%">
+            
             <div class="modal-body">
-                <div>Are you sure you want to delete this vehicle?</div>
+                <div class="text-center">
+                    <h2>Are you sure?</h2>
+                   
+                </div>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button data-vehicle-id="" type="submit" id="deleteVehicleButton" data-dismiss="modal" class="btn btn-success" onclick="removeVehicle(id)">Yes</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="submit" id="deleteVehicleButton" data-dismiss="modal" class="btn btn-primary" onclick="removeVehicle(id)">Yes</button>
-            </div>
+           
         </div>
     </div>
 </div>
 
 <form method="post" id="updateVehicleForm">
+    @Html.AntiForgeryToken()
     <div class="modal fade" id="updateVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -79,10 +80,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="updateVehicleContainer"></div>
+                <div class="modal-body" id="updateVehicleContainer">
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button data-vehicle-id="" id="updateVehicleButton" type="submit" data-dismiss="modal" class="btn btn-primary">Update</button>
+                    <button id="updateVehicleButton" type="submit" class="btn btn-primary">Update</button>
                 </div>
             </div>
         </div>
@@ -93,12 +95,21 @@
 
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+
     <partial name="_ValidationScriptsPartial" />
+    
 
     <script>
+
         $(document).ready(function () {
-            $('#vehiclesTable').DataTable({ responsive: true });
+            loadTable();
         });
+
+        function loadTable() {
+            loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable").done(function () {
+                $('#vehiclesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
 
         function sendVehicleIdToModal(id) {
             document.getElementById("updateVehicleButton").setAttribute("data-vehicle-id", id);
@@ -120,26 +131,49 @@
                 type: "POST",
                 data: createVehicleForm,
                 url: "/Vehicles/Create",
-                success: function () {
-                    loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable");
+                success: function (htmlContent) {
+                    $("#createVehicleContainer").html(htmlContent);
+                    if (htmlContent.indexOf("field-validation-error") == -1) {
+                        $("#createVehicleModal").modal("hide");
+                        loadTable();
+                    }
                 }
             });
         });
 
         function loadVehicleInModal(id) {
-            loadServerPartialView("#updateVehicleContainer", "Vehicles/Update?id=" + id);
+            loadServerPartialView("#updateVehicleContainer", "Vehicles/Update?id=" + id).done(function () {
+                $.validator.unobtrusive.parse(document);
+            
+                $("#NameUpdate").keyup(function () {
+                    $("#updateVehicleForm").valid();
+                });
+            });
         }
 
         $("#updateVehicleButton").on("click", function () {
-            var createVehicleForm = $("#updateVehicleForm").serialize();
+            var updateVehicleForm = $("#updateVehicleForm").serialize();
             $.ajax({
                 type: "POST",
-                data: createVehicleForm,
+                data: updateVehicleForm,
                 url: "/Vehicles/Update",
-                success: function () {
-                    loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable");
+                success: function (htmlContent) {
+                    $("#updateVehicleContainer").html(htmlContent);
+                    if (htmlContent.indexOf("field-validation-error") == -1) {
+                        $("#updateVehicleModal").modal("hide");
+                        loadTable();
+                    }
                 }
+                
             });
+        });
+
+        $("#updateVehicleForm").submit(function (event) {
+            event.preventDefault();
+        });
+
+        $("#createVehicleForm").submit(function (event) {
+            event.preventDefault();
         });
     </script>
 }

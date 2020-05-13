@@ -1,6 +1,7 @@
 function loadServerPartialView(container, baseUrl) {
-  return  $.get(baseUrl, function (responseData) {
+    return $.get(baseUrl, function (responseData) {
         $(container).html(responseData);
+
     });
 }
 // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification

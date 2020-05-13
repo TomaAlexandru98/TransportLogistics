@@ -1,10 +1,6 @@
 ﻿@using TransportLogistics.Models.Customers;
 @model CustomerListViewModel;
 
-<div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
-    <button class="btn-car" data-toggle="modal" data-target="#customerModal">New Customer <i class="fa fa-user"></i></button>
-</div>
-
 <table id="customersTable" class="table table-striped table-bordered" style="width:100%">
     <thead class="dropdown text-center">
         <tr>
@@ -21,15 +17,15 @@
         {
             <tr>
                 <td>@customer.Name</td>
-                <td>@customer.Email</td>
-                <td>@customer.PhoneNo</td>
+                <td>@customer.ContactDetails.Email</td>
+                <td>@customer.ContactDetails.PhoneNo</td>
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Address Locations (@customer.LocationViews.Count())
+                        Address Locations (@customer.LocationAddresses.Count())
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        @foreach (var location in customer.LocationViews)
+                        @foreach (var location in customer.LocationAddresses)
                         {
                             <div class="dropdown-item">
                                 @location.Country,
