@@ -6,11 +6,12 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
-    public class EFEmployeeRepository:IEmployeeRepository
+    public class EFEmployeeRepository: IEmployeeRepository
     {
       public EFEmployeeRepository(TransportLogisticsDbContext dbContext)
         {
             DbContext = dbContext;
+          
         }
 
         public TransportLogisticsDbContext DbContext { get; }
@@ -20,7 +21,7 @@ namespace TransportLogistics.DataAccess.Repositories
             if(role == "Driver")
             {
                var driver = Driver.Create(userId, name, email);
-               // DbContext.Drivers.Add(driver);
+                DbContext.Drivers.Add(driver);
             }
             else if(role == "Supervisor")
             {
@@ -34,5 +35,6 @@ namespace TransportLogistics.DataAccess.Repositories
             }
             DbContext.SaveChanges();
         }
+       
     }
 }

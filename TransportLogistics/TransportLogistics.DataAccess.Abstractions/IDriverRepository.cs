@@ -5,9 +5,10 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.DataAccess.Abstractions
 {
-    public interface IEmployeeRepository
+    public interface IDriverRepository:IBaseRepository<Driver>
     {
-        void AddEmployee(string userId, string name, string email,string role);
+        Driver GetByUserId(string userId);
+        ICollection<Order> GetOrders(Guid id);
         
     }
 }

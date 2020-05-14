@@ -33,8 +33,6 @@ namespace TransportLogistics.Controllers
         private ILogger<AdministratorsController> Logger;
 
         public IActionResult Index()
-      
-        
         {
             try
             {
@@ -130,6 +128,7 @@ namespace TransportLogistics.Controllers
             {
                 var user = await UserManager.FindByIdAsync(model.UserId);
                 await UserManager.DeleteAsync(user);
+               // EmployeeServices.DeleteEmployee(model.UserId);
             }
             catch (Exception e)
             {

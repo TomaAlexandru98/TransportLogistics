@@ -4,7 +4,8 @@ using System.Text;
 
 
 namespace TransportLogistics.Model
-{
+{ public enum Status {Busy,Free }
+   
     public class Trailer : DataEntity
     {
         public int MaximWeightKg { get; protected set; }
@@ -14,6 +15,7 @@ namespace TransportLogistics.Model
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+        public Status Status { get; private set; }
 
         protected Trailer()
         {
