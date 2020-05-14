@@ -33099,3 +33099,169 @@ WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
 11:31:15.302  [INF][20296-15] Executed action "TransportLogistics.Controllers.VehiclesController.Index (TransportLogistics)" in 31.6281ms
 11:31:15.302  [INF][20296-15] Executed endpoint '"TransportLogistics.Controllers.VehiclesController.Index (TransportLogistics)"'
 11:31:15.303  [INF][20296-15] Request finished in 33.4728ms 200 text/html; charset=utf-8
+12:59:56.059  [INF][22256-1] User profile is available. Using '"C:\Users\Alex\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+12:59:56.572  [INF][22256-1] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+12:59:59.551  [INF][22256-1] Executed DbCommand ("60"ms) [Parameters=["@__normalizedEmail_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0"
+12:59:59.666  [INF][22256-4] Executed DbCommand ("9"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+12:59:59.692  [INF][22256-4] Executed DbCommand ("2"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+12:59:59.697  [INF][22256-8] Executed DbCommand ("0"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+12:59:59.699  [INF][22256-8] Executed DbCommand ("0"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+12:59:59.704  [INF][22256-7] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+12:59:59.740  [INF][22256-10] Executed DbCommand ("1"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0"
+12:59:59.747  [WRN][22256-10] User "04affa3f-5772-4de2-b6fc-886a1a75f1de" validation failed: "DuplicateUserName".
+13:00:01.031  [INF][22256-1] Application started. Press Ctrl+C to shut down.
+13:00:01.032  [INF][22256-1] Hosting environment: "Development"
+13:00:01.032  [INF][22256-1] Content root path: "D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics"
+13:00:01.046  [INF][22256-11] Request starting HTTP/2.0 GET https://localhost:44393/  
+13:00:01.077  [INF][22256-11] Executing endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+13:00:01.093  [INF][22256-11] Route matched with "{action = \"Index\", controller = \"Home\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.HomeController" ("TransportLogistics").
+13:00:01.169  [INF][22256-11] Executing ViewResult, running view "Index".
+13:00:01.386  [INF][22256-11] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+13:00:01.542  [INF][22256-11] Executed ViewResult - view "Index" executed in 442.6733ms.
+13:00:01.542  [INF][22256-11] Executed action "TransportLogistics.Controllers.HomeController.Index (TransportLogistics)" in 449.102ms
+13:00:01.543  [INF][22256-11] Executed endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+13:00:01.549  [INF][22256-11] Request finished in 505.5213ms 200 text/html; charset=utf-8
+13:00:01.562  [INF][22256-14] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+13:00:01.562  [INF][22256-7] Request starting HTTP/2.0 GET https://localhost:44393/delivery.png  
+13:00:01.562  [INF][22256-11] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+13:00:01.562  [INF][22256-15] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+13:00:01.562  [INF][22256-4] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+13:00:01.623  [INF][22256-10] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+13:00:01.625  [INF][22256-10] Request finished in 63.0439ms 200 text/css
+13:00:01.632  [INF][22256-14] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+13:00:01.632  [INF][22256-14] Request finished in 70.2046ms 200 text/css
+13:00:01.696  [INF][22256-4] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+13:00:01.696  [INF][22256-4] Request finished in 134.75ms 200 text/css
+13:00:01.726  [INF][22256-14] Sending file. Request path: '"/delivery.png"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\delivery.png"'
+13:00:01.727  [INF][22256-14] Request finished in 165.0573ms 200 image/png
+13:00:01.880  [INF][22256-14] Request starting HTTP/2.0 GET https://localhost:44393/lib/jquery/dist/jquery.min.js  
+13:00:01.882  [INF][22256-14] The file "/lib/jquery/dist/jquery.min.js" was not modified
+13:00:01.883  [INF][22256-14] Request finished in 2.7945ms 304 application/javascript
+13:00:01.903  [INF][22256-4] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+13:00:01.903  [INF][22256-4] Request finished in 341.7417ms 200 text/css
+13:00:01.941  [INF][22256-4] Request starting HTTP/2.0 GET https://localhost:44393/js/site.js?v=Obcob0qPbuJuJMImcUOSC8hqWKw4z9cbB9H-Oaq1lTo  
+13:00:01.941  [INF][22256-4] The file "/js/site.js" was not modified
+13:00:01.941  [INF][22256-4] Request finished in 0.4992ms 304 application/javascript
+13:00:01.944  [INF][22256-4] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+13:00:01.944  [INF][22256-4] The file "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" was not modified
+13:00:01.945  [INF][22256-4] Request finished in 0.4215ms 304 application/javascript
+13:00:02.274  [INF][22256-4] Request starting HTTP/2.0 GET https://localhost:44393/favicon.ico  
+13:00:02.335  [INF][22256-15] Sending file. Request path: '"/favicon.ico"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\favicon.ico"'
+13:00:02.336  [INF][22256-15] Request finished in 62.8138ms 200 image/x-icon
+13:08:45.915  [INF][22256-23] Request starting HTTP/2.0 GET https://localhost:44393/Identity/Account/Login  
+13:08:46.125  [INF][22256-23] Executing endpoint '"/Account/Login"'
+13:08:46.173  [INF][22256-23] Route matched with "{page = \"/Account/Login\", area = \"Identity\", action = \"\", controller = \"\"}". Executing page "/Account/Login"
+13:08:46.198  [INF][22256-23] Executing handler method "TransportLogistics.Areas.Identity.Pages.Account.LoginModel.OnGetAsync" - ModelState is Valid
+13:08:46.203  [INF][22256-23] AuthenticationScheme: "Identity.External" signed out.
+13:08:46.204  [INF][22256-23] Executed handler method "OnGetAsync", returned result "".
+13:08:46.207  [INF][22256-23] Executing an implicit handler method - ModelState is Valid
+13:08:46.208  [INF][22256-23] Executed an implicit handler method, returned result "Microsoft.AspNetCore.Mvc.RazorPages.PageResult".
+13:08:46.253  [INF][22256-23] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+13:08:46.290  [INF][22256-23] Executed page "/Account/Login" in 116.8107ms
+13:08:46.290  [INF][22256-23] Executed endpoint '"/Account/Login"'
+13:08:46.292  [INF][22256-23] Request finished in 376.216ms 200 text/html; charset=utf-8
+13:08:46.332  [INF][22256-23] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+13:08:46.332  [INF][22256-32] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+13:08:46.332  [INF][22256-31] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/solid.css  
+13:08:46.332  [INF][22256-28] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+13:08:46.348  [INF][22256-23] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+13:08:46.348  [INF][22256-28] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+13:08:46.348  [INF][22256-23] Request finished in 16.7445ms 200 text/css
+13:08:46.348  [INF][22256-28] Request finished in 16.5195ms 200 text/css
+13:08:46.350  [INF][22256-32] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+13:08:46.350  [INF][22256-32] Request finished in 18.5233ms 200 text/css
+13:08:46.447  [INF][22256-32] Request starting HTTP/2.0 GET https://localhost:44393/favicon.ico  
+13:08:46.453  [INF][22256-32] Sending file. Request path: '"/favicon.ico"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\favicon.ico"'
+13:08:46.453  [INF][22256-32] Request finished in 6.7105ms 200 image/x-icon
+13:08:46.514  [INF][22256-31] Sending file. Request path: '"/lib/fontawesome/css/solid.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\solid.css"'
+13:08:46.514  [INF][22256-31] Request finished in 181.8147ms 200 text/css
+13:08:47.952  [INF][22256-31] Request starting HTTP/2.0 POST https://localhost:44393/Identity/Account/Login application/x-www-form-urlencoded 250
+13:08:47.961  [INF][22256-31] Executing endpoint '"/Account/Login"'
+13:08:47.962  [INF][22256-31] Route matched with "{page = \"/Account/Login\", area = \"Identity\", action = \"\", controller = \"\"}". Executing page "/Account/Login"
+13:08:47.980  [INF][22256-31] Executing handler method "TransportLogistics.Areas.Identity.Pages.Account.LoginModel.OnPostAsync" - ModelState is Valid
+13:08:48.042  [INF][22256-31] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+13:08:48.282  [INF][22256-28] Executed DbCommand ("8"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0"
+13:08:48.475  [INF][22256-31] Executed DbCommand ("2"ms) [Parameters=["@__user_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0"
+13:08:48.520  [INF][22256-23] Executed DbCommand ("3"ms) [Parameters=["@__userId_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0"
+13:08:48.527  [INF][22256-23] Executed DbCommand ("1"ms) [Parameters=["@__normalizedName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0"
+13:08:48.541  [INF][22256-28] Executed DbCommand ("2"ms) [Parameters=["@__role_Id_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[ClaimType], [a].[ClaimValue]
+FROM [AspNetRoleClaims] AS [a]
+WHERE [a].[RoleId] = @__role_Id_0"
+13:08:48.545  [INF][22256-28] AuthenticationScheme: "Identity.Application" signed in.
+13:08:48.547  [INF][22256-28] User logged in.
+13:08:48.548  [INF][22256-28] Executed handler method "OnPostAsync", returned result "Microsoft.AspNetCore.Mvc.LocalRedirectResult".
+13:08:48.550  [INF][22256-28] Executing LocalRedirectResult, redirecting to "/".
+13:08:48.551  [INF][22256-28] Executed page "/Account/Login" in 588.8742ms
+13:08:48.552  [INF][22256-28] Executed endpoint '"/Account/Login"'
+13:08:48.553  [INF][22256-28] Request finished in 601.0947ms 302 
+13:08:48.556  [INF][22256-32] Request starting HTTP/2.0 GET https://localhost:44393/  
+13:08:48.560  [INF][22256-32] Executing endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+13:08:48.560  [INF][22256-32] Route matched with "{action = \"Index\", controller = \"Home\", page = \"\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "TransportLogistics.Controllers.HomeController" ("TransportLogistics").
+13:08:48.561  [INF][22256-32] Executing ViewResult, running view "Index".
+13:08:48.564  [INF][22256-32] Entity Framework Core "3.1.3" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+13:08:48.569  [INF][22256-28] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0"
+13:08:48.572  [INF][22256-31] Executed DbCommand ("1"ms) [Parameters=["@__normalizedRoleName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0"
+13:08:48.574  [INF][22256-31] Executed DbCommand ("1"ms) [Parameters=["@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)"
+13:08:48.580  [INF][22256-28] Executed ViewResult - view "Index" executed in 18.6785ms.
+13:08:48.581  [INF][22256-28] Executed action "TransportLogistics.Controllers.HomeController.Index (TransportLogistics)" in 21.0822ms
+13:08:48.582  [INF][22256-28] Executed endpoint '"TransportLogistics.Controllers.HomeController.Index (TransportLogistics)"'
+13:08:48.582  [INF][22256-28] Request finished in 26.4569ms 200 text/html; charset=utf-8
+13:08:48.600  [INF][22256-32] Request starting HTTP/2.0 GET https://localhost:44393/lib/bootstrap/dist/css/bootstrap.min.css  
+13:08:48.601  [INF][22256-31] Request starting HTTP/2.0 GET https://localhost:44393/css/site.css  
+13:08:48.601  [INF][22256-32] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"'
+13:08:48.601  [INF][22256-23] Request starting HTTP/2.0 GET https://localhost:44393/lib/fontawesome/css/fontawesome.css  
+13:08:48.602  [INF][22256-32] Request finished in 1.8933ms 200 text/css
+13:08:48.602  [INF][22256-28] Sending file. Request path: '"/lib/fontawesome/css/fontawesome.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\lib\fontawesome\css\fontawesome.css"'
+13:08:48.603  [INF][22256-28] Request finished in 1.5269ms 200 text/css
+13:08:48.606  [INF][22256-31] Sending file. Request path: '"/css/site.css"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\css\site.css"'
+13:08:48.606  [INF][22256-31] Request finished in 5.4655ms 200 text/css
+13:08:48.629  [INF][22256-31] Request starting HTTP/2.0 GET https://localhost:44393/delivery.png  
+13:08:48.631  [INF][22256-26] Sending file. Request path: '"/delivery.png"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\delivery.png"'
+13:08:48.632  [INF][22256-26] Request finished in 2.5449ms 200 image/png
+13:08:48.639  [INF][22256-26] Request starting HTTP/2.0 GET https://localhost:44393/favicon.ico  
+13:08:48.641  [INF][22256-26] Sending file. Request path: '"/favicon.ico"'. Physical path: '"D:\Projects\ASP.NET\TransportLogistics\TransportLogistics\TransportLogistics\wwwroot\favicon.ico"'
+13:08:48.642  [INF][22256-26] Request finished in 2.8993ms 200 image/x-icon
