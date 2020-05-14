@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200512135659_Order")]
-    partial class Order
+    [Migration("20200514080800_restoreDB")]
+    partial class restoreDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,6 +108,35 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.ToTable("LocationAddresses");
                 });
 
+            modelBuilder.Entity("TransportLogistics.Model.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeliveryAddressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PickUpAddressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RecipientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryAddressId");
+
+                    b.HasIndex("PickUpAddressId");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -183,6 +212,21 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Customer", null)
                         .WithMany("LocationAddresses")
                         .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Order", b =>
+                {
+                    b.HasOne("TransportLogistics.Model.LocationAddress", "DeliveryAddress")
+                        .WithMany()
+                        .HasForeignKey("DeliveryAddressId");
+
+                    b.HasOne("TransportLogistics.Model.LocationAddress", "PickUpAddress")
+                        .WithMany()
+                        .HasForeignKey("PickUpAddressId");
+
+                    b.HasOne("TransportLogistics.Model.Customer", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>

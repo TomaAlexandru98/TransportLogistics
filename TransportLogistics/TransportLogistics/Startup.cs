@@ -19,6 +19,7 @@ using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess.Repositories;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Data.Abstractions;
+using TransportLogistics.ApplicationLogic.Sevices;
 
 namespace TransportLogistics
 {
@@ -61,7 +62,7 @@ namespace TransportLogistics
 
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<EmployeeServices>();
-
+            services.AddScoped<DriverService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

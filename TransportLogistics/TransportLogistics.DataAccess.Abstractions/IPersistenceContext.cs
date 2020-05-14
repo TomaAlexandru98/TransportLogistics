@@ -12,6 +12,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         ITrailerRepository TrailerRepository { get; }
         IEmployeeRepository EmployeeRepository { get; }
         IVehicleRepository VehicleRepository { get; }
+        IDriverRepository DriverRepository { get; }
         TransactionScope BeginTransaction();
         void SaveChanges();
     }

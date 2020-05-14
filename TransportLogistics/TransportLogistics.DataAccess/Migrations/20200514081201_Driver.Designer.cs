@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200512135857_OrdersAdded")]
-    partial class OrdersAdded
+    [Migration("20200514081201_Driver")]
+    partial class Driver
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,26 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.ToTable("Dispatchers");
                 });
 
+            modelBuilder.Entity("TransportLogistics.Model.Driver", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drivers");
+                });
+
             modelBuilder.Entity("TransportLogistics.Model.LocationAddress", b =>
                 {
                     b.Property<Guid>("Id")
@@ -117,6 +137,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("DeliveryAddressId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("PickUpAddressId")
                         .HasColumnType("uniqueidentifier");
 
@@ -129,6 +152,8 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeliveryAddressId");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("PickUpAddressId");
 
@@ -219,6 +244,10 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.LocationAddress", "DeliveryAddress")
                         .WithMany()
                         .HasForeignKey("DeliveryAddressId");
+
+                    b.HasOne("TransportLogistics.Model.Driver", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("DriverId");
 
                     b.HasOne("TransportLogistics.Model.LocationAddress", "PickUpAddress")
                         .WithMany()
