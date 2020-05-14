@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
+    <button class="btn-car" data-toggle="modal" data-target="#customerModal">New Customer <i class="fa fa-user"></i></button>
+</div>
+
+<div id="ordersTableContainer"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            loadTable();
+        });
+
+        function loadTable() {
+            loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
+                $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+
+
+    </script>
+}
