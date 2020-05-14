@@ -33,8 +33,6 @@ namespace TransportLogistics.Controllers
         private ILogger<AdministratorsController> Logger;
 
         public IActionResult Index()
-      
-        
         {
             try
             {

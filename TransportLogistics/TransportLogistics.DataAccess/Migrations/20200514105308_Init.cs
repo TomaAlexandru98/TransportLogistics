@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class Order : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,8 @@ namespace TransportLogistics.DataAccess.Migrations
                     Type = table.Column<string>(nullable: true),
                     RegistrationNumber = table.Column<string>(nullable: true),
                     MaximCarryWeightKg = table.Column<int>(nullable: false),
-                    VIN = table.Column<string>(nullable: true)
+                    VIN = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,6 +118,39 @@ namespace TransportLogistics.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    PickUpAddressId = table.Column<Guid>(nullable: true),
+                    DeliveryAddressId = table.Column<Guid>(nullable: true),
+                    RecipientId = table.Column<Guid>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_LocationAddresses_DeliveryAddressId",
+                        column: x => x.DeliveryAddressId,
+                        principalTable: "LocationAddresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_LocationAddresses_PickUpAddressId",
+                        column: x => x.PickUpAddressId,
+                        principalTable: "LocationAddresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Customers_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_ContactDetailsId",
                 table: "Customers",
@@ -126,6 +160,21 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "IX_LocationAddresses_CustomerId",
                 table: "LocationAddresses",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_DeliveryAddressId",
+                table: "Orders",
+                column: "DeliveryAddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_PickUpAddressId",
+                table: "Orders",
+                column: "PickUpAddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_RecipientId",
+                table: "Orders",
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trailers_VehicleId",
@@ -139,16 +188,19 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Dispatchers");
 
             migrationBuilder.DropTable(
-                name: "LocationAddresses");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Trailers");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "LocationAddresses");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Contact");
