@@ -8,7 +8,12 @@ namespace TransportLogistics.Controllers
 {
     public class DispatcherController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Orders()
+        {
+            return View();
+        }
+
+        public IActionResult Drivers()
         {
             return View();
         }
