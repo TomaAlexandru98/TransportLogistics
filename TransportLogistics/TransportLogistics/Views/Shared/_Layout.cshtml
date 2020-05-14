@@ -53,20 +53,34 @@
                                         </div>
                                     } }
                         </li>
-                        
-                        <li style="padding-left:1em">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    Dispatcher
-                                </button>
+                        @{
+                            var UserId = userManager.GetUserId(User);
+                            var user1 = await userManager.FindByIdAsync(UserId);
+                            if (user1 != null)
+                                if (userManager.IsInRoleAsync(userManager.FindByIdAsync(userManager.GetUserId(User)).GetAwaiter().GetResult(), "Dispatcher")
+                                 .GetAwaiter().GetResult())
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a asp-controller="Dispatcher" asp-action="Index" class="dropdown-item">Orders</a>
-                                    <a asp-controller="Drivers" asp-action="Index" class="dropdown-item">Drivers</a>
-                                </div>
-                            </div>
-                        </li>
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Index">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Customers
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Orders" asp-action="Index">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Orders
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="Index">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Drivers
+                                        </a>
+                                    </li>
+                                }
+                            }
                     </ul>
                 </div>
             </div>
