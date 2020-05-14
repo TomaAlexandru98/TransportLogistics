@@ -19,12 +19,14 @@ namespace TransportLogistics.DataAccess.Repositories
             CustomerRepository = new EFCustomerRepository(context);
             TrailerRepository = new EFTrailerRepository(context);
             EmployeeRepository = new EFEmployeeRepository(context);
+            DriverRepository = new EFDriverRepository(context);
         }
 
         public ICustomerRepository CustomerRepository { get ; private set; }
         public ITrailerRepository TrailerRepository { get ; private set ; }
         public IEmployeeRepository EmployeeRepository { get; private set; }
         public IVehicleRepository VehicleRepository { get; private set; }
+        public IDriverRepository DriverRepository { get; private set; }
         
         public TransactionScope BeginTransaction()
         {
