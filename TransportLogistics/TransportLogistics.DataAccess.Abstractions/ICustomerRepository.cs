@@ -11,6 +11,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         Customer FindByEmail(string emailToFind);
         Customer FindByPhoneNo(string phoneNo);
         new Customer GetById(Guid customerId);
+        new IEnumerable<Customer> GetAll();
         bool RemoveCustomerWithLocations(Guid customerId);
         void AddLocationToCustomer(Guid customerId, LocationAddress address);
         Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email);
