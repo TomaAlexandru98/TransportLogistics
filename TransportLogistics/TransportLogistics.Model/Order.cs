@@ -7,7 +7,9 @@ namespace TransportLogistics.Model
     public enum Status { Created, Assigned, PickedUp, Delivering, Delivered };
     public class Order : DataEntity
     {
-        public Tuple<LocationAddress, LocationAddress> Route { get; protected set; }
-        public Customer Recipient { get; protected set; }
+        public LocationAddress PickUpAddress { get; private set; }
+        public LocationAddress DeliveryAddress { get; private set; }
+        public Customer Recipient { get; private set; }
+        public Status Status { get; private set; }
     }
 }
