@@ -30,29 +30,57 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li>
-                                @{ 
-                                    var userId = userManager.GetUserId(User);
-                                    var user =await userManager.FindByIdAsync(userId);
-                                    if(user!= null)
+                            @{
+                                var userId = userManager.GetUserId(User);
+                                var user = await userManager.FindByIdAsync(userId);
+                                if (user != null)
                                     if (userManager.IsInRoleAsync(userManager.FindByIdAsync(userManager.GetUserId(User)).GetAwaiter().GetResult(), "Administrator")
                                      .GetAwaiter().GetResult())
 
                                     {
-                            <div class="dropdown">
-                                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    Manage
-                                </button>
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                Manage
+                                            </button>
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a asp-controller="Trailers" asp-action="Index" class="dropdown-item">Trailers</a>
-                                    <a asp-controller="Vehicles" asp-action="Index" class="dropdown-item">Vehicles</a>
-                                    <a asp-controller="Customers" asp-action="Index" class="dropdown-item">Customers</a>
-                                    <a asp-controller="Administrators" asp-action="Index" class="dropdown-item">Accounts</a>
-                                </div>
-                            </div>
-                                        } }
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a asp-controller="Trailers" asp-action="Index" class="dropdown-item">Trailers</a>
+                                                <a asp-controller="Vehicles" asp-action="Index" class="dropdown-item">Vehicles</a>
+                                                <a asp-controller="Customers" asp-action="Index" class="dropdown-item">Customers</a>
+                                                <a asp-controller="Administrators" asp-action="Index" class="dropdown-item">Accounts</a>
+                                            </div>
+                                        </div>
+                                    } }
                         </li>
+                        @{
+                            var UserId = userManager.GetUserId(User);
+                            var user1 = await userManager.FindByIdAsync(UserId);
+                            if (user1 != null)
+                                if (userManager.IsInRoleAsync(userManager.FindByIdAsync(userManager.GetUserId(User)).GetAwaiter().GetResult(), "Dispatcher")
+                                 .GetAwaiter().GetResult())
+
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Index">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Customers
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Dispatcher" asp-action="Orders">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Orders
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Dispatcher" asp-action="Drivers">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Drivers
+                                        </a>
+                                    </li>
+                                }
+                            }
                     </ul>
                 </div>
             </div>

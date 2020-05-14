@@ -50,12 +50,13 @@
                                 onclick="LoadUpdateCustomerView('@customer.Id');" data-target="#updateCustomerModal">
                             <i class="material-icons fa fa-edit"></i>
                         </button>
-
-                        <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
-                                onclick="LoadRemoveCustomerView('@customer.Id');" data-target="#removeModal">
-                            <i class="material-icons fa fa-trash"></i>
-                        </button>
-                    </div>
+                        @if (User.IsInRole("Administrator")) { 
+                            <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                                    onclick="LoadRemoveCustomerView('@customer.Id');" data-target="#removeModal">
+                                <i class="material-icons fa fa-trash"></i>
+                            </button>
+                        }
+                        </div>
                 </td>
             </tr>
         }
