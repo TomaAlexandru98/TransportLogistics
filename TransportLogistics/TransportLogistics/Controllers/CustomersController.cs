@@ -5,6 +5,7 @@ using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.Models.Customers;
+using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.Controllers
 {
@@ -178,14 +179,7 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult AddLocation([FromForm] NewLocationViewModel locationData)
         {
-            if (!ModelState.IsValid ||
-                        locationData.CustomerId == null ||
-                        locationData == null ||
-                        locationData.Country == null ||
-                        locationData.City == null ||
-                        locationData.Street == null ||
-                        locationData.StreetNumber <= 0 ||
-                        locationData.PostalCode == null)
+            if (!ModelState.IsValid || locationData != null)
             {
                 return PartialView("_AddLocationPartial", locationData);
             }
@@ -219,6 +213,65 @@ namespace TransportLogistics.Controllers
             }
         }
 
+
+
+        [HttpGet]
+        public IActionResult EditLocation([FromRoute] string Id)
+        {
+            try
+            {
+                var locationToUpdate = customerService.GetLocationAddress(Id);
+
+                var editLocationViewModel = new EditLocationViewModel()
+                {
+                    Id = Id,
+                    Country = locationToUpdate.Country,
+                    City = locationToUpdate.City,
+                    Street = locationToUpdate.Street,
+                    StreetNumber = locationToUpdate.StreetNumber,
+                    PostalCode = locationToUpdate.PostalCode                   
+                };
+
+                return PartialView("_EditLocationPartial", editLocationViewModel);
+
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to update location entity at Get {@Exception}", e.Message);
+                logger.LogDebug("Failed to update location entity at Get {@ExceptionMessage}", e);
+                return BadRequest("Failed to update location entity");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult EditLocation([FromForm] EditLocationViewModel updatedLocation)
+        {
+            if (!ModelState.IsValid || updatedLocation == null)
+            {
+                return PartialView("_EditLocationPartial", new EditLocationViewModel());
+            }
+
+            try
+            {
+                var locationToUpdate = customerService.GetLocationAddress(updatedLocation.Id);
+
+                customerService.UpdateLocationAddress(locationToUpdate.Id,
+                                updatedLocation.Country,
+                                updatedLocation.City,
+                                updatedLocation.Street,
+                                updatedLocation.StreetNumber,
+                                updatedLocation.PostalCode);
+
+                return PartialView("_EditLocationPartial", updatedLocation);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to edit location entity {@Exception}", e.Message);
+                logger.LogDebug("Failed to edit location entity {@ExceptionMessage}", e);
+                return BadRequest("Failed to edit location entity");
+            }
+        }
 
 
 
