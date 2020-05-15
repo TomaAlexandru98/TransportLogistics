@@ -14,5 +14,10 @@ namespace TransportLogistics.Model
         public OrderStatus Status { get; private set; }
         public decimal Price { get; private set; }
         public OrderType Type { get; private set; }
+        public void SetStatus(OrderStatus status)
+        {
+            Status = status;
+        }
+      
     }
 }

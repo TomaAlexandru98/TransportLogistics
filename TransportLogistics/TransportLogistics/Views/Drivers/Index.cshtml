@@ -16,11 +16,23 @@
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 
 }
-<partial name="_OrdersTablePartial.cshtml" model="@Model"/>
+<div id="OrdersTable">
+    <partial name="_OrdersTablePartial.cshtml" model="@Model" />
+</div>
 <script>
-
-    $(document).ready(function () {
-        $('#Orders').DataTable({ responsive:true,lengthMenu:[5,10,15]});
-    })
+    
+$(document).ready(function () {
+        $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+    }
+    )
+    function StatusUpdate(id) {
+        var icon = "<i class='fas fa-check'></i>";
+        var content = $('#' + id).html();
+        if ($('#' + id).html().indexOf("PickedUp") > 0)
+            $('#' + id).html("PickedUp " + icon);
+        else {
+            $('#' + id).html("Delivered " + icon);
+            }
+    }
 </script>
 

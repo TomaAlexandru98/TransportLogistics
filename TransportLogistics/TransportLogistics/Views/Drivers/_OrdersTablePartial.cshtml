@@ -14,15 +14,43 @@
     </thead>
     <tbody>
         @if (Model.Orders != null)
+        {
+            var i = Model.Orders.Count;
             foreach (var order in Model.Orders)
             {
-                <tr>
-                    <td>@order.PickUpAddress.City</td>
-                    <td>@order.DeliveryAddress.City</td>
-                    <td><a class="btn bg-menu" id="OrderButton"> @order.Status</a></td>
-                    <td>@order.Price</td>
-                </tr>
+                //if(order.Status == TransportLogistics.Model.OrderStatus.PickedUp)
+                //{
+                //    order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
+                //}
+                if(order.Status == TransportLogistics.Model.OrderStatus.Created || order.Status == TransportLogistics.Model.OrderStatus.Assigned)
+                {
+                    order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
+                }
+
+        <tr>
+            @if (order.Type == TransportLogistics.Model.OrderType.Delivery)
+            {
+                <td>-</td>
             }
+            else
+            {
+                <td>@order.PickUpAddress.City</td>
+            }
+            @if (order.Type == TransportLogistics.Model.OrderType.PickUp)
+            {
+                <td>-</td>
+            }
+            else
+            {
+                <td>@order.DeliveryAddress.City</td>
+
+            }
+            <td style="text-align:center"><a class="btn bg-menu" id="@i" data-ajax="true"  asp-controller="Drivers" asp-action="SetOrderStatus" asp-route-driverId="@Model.DriverId" 
+                   asp-route-orderId="@order.Id" asp-route-status="@order.Status"  onclick="StatusUpdate(this.id)">
+                @order.Status </a></td>
+            <td>@order.Price</td>
+        </tr>
+                i--; }  }
         <tr>
             <td>Craiova</td>
             <td>Buc</td>
@@ -33,7 +61,12 @@
 </table>
 
 <script>
-    $(document).ready(function () {
-       // $('#OrderBtn').html("Picked"); 
-    })
+  
+    
+    function loaded() {
+        loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
+            $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+        })
+    }
+
 </script>

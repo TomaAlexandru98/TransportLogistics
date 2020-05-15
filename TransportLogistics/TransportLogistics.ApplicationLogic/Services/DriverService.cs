@@ -21,35 +21,10 @@ namespace TransportLogistics.ApplicationLogic.Sevices
         }
         public ICollection<Order> GetOrders(Guid id)
         {
-            return DriverRepository.GetOrders(id);
+          return DriverRepository.GetOrders(id);
+          
         }
-
-        public void AddNewRoute(Guid driverId, ICollection<Order> orders)
-        {
-            var driver = DriverRepository.GetById(driverId);
-            Route route =  Route.Create();
-            foreach(var order in orders)
-            {
-                route.LocationAddresses.Add(order.PickUpAddress);
-                route.LocationAddresses.Add(order.DeliveryAddress);
-            }
-            driver.RoutesHistory.Add(route);
-            DriverRepository.Update(driver);
-        }
-
-        public ICollection<Order> GetFilteredOrders(Guid id)
-        {
-            
-            var filteredOrders = GetOrders(id);
-            if(filteredOrders != null)
-            foreach (var order in filteredOrders)
-            {
-                if(order.Status == OrderStatus.Delivered)
-                {
-                    filteredOrders.Remove(order);
-                }
-            }
-            return filteredOrders;
-        }
+ 
+        
     }
 }

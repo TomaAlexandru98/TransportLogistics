@@ -29,5 +29,21 @@ namespace TransportLogistics.Model
 
             return createdLocation;
         }
+        public void SetCity(string city)
+        {
+            City = city;
+        }
+        public void SetCountry(string country)
+        {
+            Country = country;
+        }
+        public void SetStreet(string street)
+        {
+            Street = Street;
+        }
+        public void SetStreetNumber(int streetNumber)
+        {
+            StreetNumber = streetNumber;
+        }
     }
 }
