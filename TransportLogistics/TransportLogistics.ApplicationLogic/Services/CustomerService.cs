@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.DataAccess.Abstractions;
@@ -51,6 +52,12 @@ namespace TransportLogistics.ApplicationLogic.Services
             return customerRepository.GetAll();
         }
 
+        public LocationAddress GetLocationAddress(string locationId)
+        {
+            Guid.TryParse(locationId, out Guid locationGuid);
+            return customerRepository.GetLocationAddress(locationGuid);
+        }
+
         public Customer CreateNewCustomer(string name, string phoneNo, string email)
         {
             var customer = Customer.Create(name, phoneNo, email);
@@ -79,9 +86,25 @@ namespace TransportLogistics.ApplicationLogic.Services
 
         public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
         {
-            var customerToUpdate = customerRepository.UpdateCustomer(customerId, name, phoneNo, email);
+            var customerToUpdate = GetCustomerById(customerId);
+
+            var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
+            customerToUpdate.UpdateCustomer(name, contact);
+ 
+            persistenceContext.SaveChanges();
 
             return customerToUpdate;
+        }
+
+        public LocationAddress UpdateLocationAddress(Guid locationId, string country, string city, 
+                                                    string street, int streetNumber, string postalCode)
+        {
+            var locationToUpdate = customerRepository.GetLocationAddress(locationId);
+
+            locationToUpdate.Update(country, city, street, streetNumber, postalCode);
+            persistenceContext.SaveChanges();
+
+            return locationToUpdate;
         }
     }
 }

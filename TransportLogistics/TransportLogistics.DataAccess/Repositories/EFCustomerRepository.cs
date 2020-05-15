@@ -90,16 +90,11 @@ namespace TransportLogistics.DataAccess.Repositories
             return false;
         }
 
-        public Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email)
+        public LocationAddress GetLocationAddress(Guid locationId)
         {
-            var customerToUpdate = GetById(customerId);
-
-            var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
-            customerToUpdate.UpdateCustomer(name, contact);
-
-            dbContext.SaveChanges();
-
-            return customerToUpdate;
+            return dbContext.LocationAddresses
+                            .Where(c => c.Id == locationId)
+                            .FirstOrDefault();
         }
     }
 }
