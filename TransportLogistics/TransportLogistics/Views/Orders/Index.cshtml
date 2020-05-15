@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Orders";
 }
 
 <div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
-    <button class="btn-car" data-toggle="modal" data-target="#customerModal">New Customer <i class="fa fa-user"></i></button>
+    <button class="btn-car" data-toggle="modal" data-target="#orderModal">New Order <i class="fa fa-box"></i></button>
 </div>
 
 <div id="ordersTableContainer"></div>
@@ -14,9 +14,8 @@
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
 
-
+    
     <script type="text/javascript">
-
         $(document).ready(function () {
             loadTable();
         });
@@ -26,7 +25,5 @@
                 $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
-
-
     </script>
 }
