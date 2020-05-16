@@ -19,6 +19,20 @@ namespace TransportLogistics.Model
             Status = status;
         }
         
-      
+      public static Order Create(LocationAddress deliveryAddress, LocationAddress pickUpAddress, Customer recipient, decimal price)
+        {
+
+            var order = new Order()
+            {
+                DeliveryAddress = deliveryAddress,
+                Id = Guid.NewGuid(),
+                PickUpAddress = pickUpAddress,
+                Price = price,
+                Recipient = recipient,
+                Status = OrderStatus.Created
+
+            };
+            return order;
+        }
     }
 }
