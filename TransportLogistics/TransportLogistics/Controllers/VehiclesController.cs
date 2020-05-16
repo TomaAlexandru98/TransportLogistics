@@ -152,5 +152,25 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult History(string id)
+        {
+            try
+            {
+                var viewModel = new HistoryVehicleViewModel
+                {
+                    Vehicle = vehicleService.GetById(id)
+                };
+
+                return View(viewModel);
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
+                logger.LogDebug("Failed to retrieve vehicle {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
+    public enum VehicleStatus { Free, Busy, UnAvailable}
     public class Vehicle : DataEntity
     {
         public string Name { get; protected set; }
@@ -12,6 +13,7 @@ namespace TransportLogistics.Model
         public ICollection<Trailer> CurrentTrailers { get; protected set; }
         public int MaximCarryWeightKg { get; protected set; }
         public string VIN { get; protected set; }
+        public VehicleStatus Status { get; protected set; }
 
         public static Vehicle Create(string Name, string Type, string registrationNumber, int MaximCarryWeight, string VIN)
         {
@@ -28,7 +30,8 @@ namespace TransportLogistics.Model
                 RegistrationNumber = registrationNumber,
                 MaximCarryWeightKg = MaximCarryWeight,
                 VIN = VIN,
-                CurrentTrailers = new List<Trailer>()
+                CurrentTrailers = new List<Trailer>(),
+                Status = VehicleStatus.Free
             };
         }
 
@@ -41,6 +44,12 @@ namespace TransportLogistics.Model
             this.VIN = vin;
 
             return this;
+        }
+
+        public VehicleStatus UpdateStatus(VehicleStatus status)
+        {
+            this.Status = status;
+            return this.Status;
         }
     }
 }
