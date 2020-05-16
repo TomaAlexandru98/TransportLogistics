@@ -90,6 +90,11 @@ body {
     margin-left: 8rem;
    
 }
+
+.maxim-width-input{
+    width: 450px;
+}
+
 .btn-blue {
     border-color: #06087d;
     color: #06087d;

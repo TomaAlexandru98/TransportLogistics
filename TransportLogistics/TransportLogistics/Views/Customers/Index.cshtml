@@ -1,4 +1,5 @@
 ﻿@using TransportLogistics.Models.Customers;
+@using TransportLogistics.ViewModels.Customers;
 
 @{
     ViewData["Title"] = "Index";
@@ -101,6 +102,36 @@
 </form>
 
 
+<form method="post" asp-controller="Customers" asp-action="EditLocation"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#editLocationModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#editLocationBody">
+
+    <div class="modal fade" id="editLocationModal" tabindex="-1" aria-labelledby="editLocationTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLocationTitle">Edit location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="editLocationBody">
+                    <partial name="_EditLocationPartial" model="new EditLocationViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
 <form method="post" asp-controller="Customers" asp-action="Remove"
       data-ajax="true"
       data-ajax-method="POST"
@@ -128,7 +159,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            loadTable(); 
+            loadTable();
         });
 
         function loadTable() {
@@ -147,6 +178,10 @@
 
         function LoadUpdateCustomerView(Id) {
             loadServerPartialView("#updateCustomerBody", '@Url.Action("UpdateCustomer", "Customers")' + "/" + Id);
+        }
+
+        function LoadEditLocationView(Id) {
+            loadServerPartialView("#editLocationBody", '@Url.Action("EditLocation", "Customers")' + "/" + Id);
         }
 
         function modalFormComplete(modalName) {
