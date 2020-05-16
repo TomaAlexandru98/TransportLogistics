@@ -40,6 +40,8 @@ namespace TransportLogistics.Model
             PostalCode = postalCode;
 
             return this;
+        }
+
         public void SetCity(string city)
         {
             City = city;
