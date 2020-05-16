@@ -47,7 +47,7 @@ namespace TransportLogistics.Model
         {
             StreetNumber = streetNumber;
 
-
+        }
         public LocationAddress Update(string country, string city, string street, int streetNumber, string postalCode)
         {
             Country = country;
