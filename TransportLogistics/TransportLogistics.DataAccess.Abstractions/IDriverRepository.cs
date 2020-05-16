@@ -8,7 +8,8 @@ namespace TransportLogistics.DataAccess.Abstractions
     public interface IDriverRepository:IBaseRepository<Driver>
     {
         Driver GetByUserId(string userId);
-        ICollection<Order> GetOrders(Guid id);
+        ICollection<RouteEntry> GetRouteEntries(Guid id);
+        Driver GetDriverWithRoute(Guid id);
         
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200515182520_routeEntryOr")]
+    partial class routeEntryOr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +92,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("RoutesHistoricId")
+                    b.Property<Guid?>("RoutesHistoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -103,7 +105,7 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasIndex("CurrentRouteId");
 
-                    b.HasIndex("RoutesHistoricId");
+                    b.HasIndex("RoutesHistoryId");
 
                     b.ToTable("Drivers");
                 });
@@ -277,9 +279,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -304,9 +303,9 @@ namespace TransportLogistics.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("CurrentRouteId");
 
-                    b.HasOne("TransportLogistics.Model.RoutesHistory", "RoutesHistoric")
+                    b.HasOne("TransportLogistics.Model.RoutesHistory", "RoutesHistory")
                         .WithMany()
-                        .HasForeignKey("RoutesHistoricId");
+                        .HasForeignKey("RoutesHistoryId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.LocationAddress", b =>

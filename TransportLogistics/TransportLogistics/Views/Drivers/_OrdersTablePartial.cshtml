@@ -13,27 +13,48 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Orders != null)
-            foreach (var order in Model.Orders)
+        @if (Model.RouteEntries != null)
+        {
+            var i = Model.RouteEntries.Count;
+            foreach (var routeEntry in Model.RouteEntries)
             {
-                <tr>
-                    <td>@order.PickUpAddress.City</td>
-                    <td>@order.DeliveryAddress.City</td>
-                    <td><a class="btn bg-menu" id="OrderButton"> @order.Status</a></td>
-                    <td>@order.Price</td>
-                </tr>
-            }
+                //TransportLogistics.Model.OrderStatus orderStatus = TransportLogistics.Model.OrderStatus.PickedUp;
+                //if(routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.PickedUp)
+                //{
+                //    orderStatus = TransportLogistics.Model.OrderStatus.Delivered;
+                //}
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering)
+                {
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
+                }
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Created ||
+                routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned)
+                {
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
+                }
+
         <tr>
-            <td>Craiova</td>
-            <td>Buc</td>
-            <td><button class="btn bg-menu" id="OrderBtn"> Delivered</button></td>
-            <td>200 lei</td>
+           
+           
+            <td>@routeEntry.Order.PickUpAddress.Country, @routeEntry.Order.PickUpAddress.City,@routeEntry.Order.PickUpAddress.Street,@routeEntry.Order.PickUpAddress.StreetNumber</td>
+            
+           
+          
+                <td>@routeEntry.Order.DeliveryAddress.Country,@routeEntry.Order.DeliveryAddress.City,@routeEntry.Order.DeliveryAddress.Street,@routeEntry.Order.DeliveryAddress.StreetNumber</td>
+           
+            <td style="text-align:center"><a class="btn bg-menu" id="@i" data-ajax="true"  asp-controller="Drivers" asp-action="SetOrderStatus" asp-route-driverId="@Model.DriverId" 
+                   asp-route-orderId="@routeEntry.Order.Id" asp-route-status="@routeEntry.Order.Status"  onclick="StatusUpdate(this.id)"
+                   >
+                @routeEntry.Order.Status </a></td>
+            <td>@routeEntry.Order.Price</td>
         </tr>
+                i--; }  }
+       
     </tbody>
 </table>
 
 <script>
-    $(document).ready(function () {
-       // $('#OrderBtn').html("Picked"); 
-    })
+  
+   
+
 </script>

@@ -14,13 +14,89 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
 
 }
-<partial name="_OrdersTablePartial.cshtml" model="@Model"/>
-<script>
 
+<div id="OrdersTable">
+    <partial name="_OrdersTablePartial.cshtml" model="@Model" />
+</div>
+<div class=" clearfix">
+
+    <button type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
+</div>
+<div class="modal fade modal-delete" tabindex="-1" id="RouteEnded" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="max-width:60%">
+
+            <div id="newPaymentBody" class="modal-body">
+                <div class="text-center">
+                    <h2>Are you sure?</h2>
+
+                </div>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success" onclick="EndRoute()">Yes</button>
+                </div>
+             </div>
+          </div>
+    </div>
+</div>
+<script>
+    function EndRoute() {
+         var ordersCounter = @Model.RouteEntries.Count;
+        for (var i = 1; i <= ordersCounter; i++) {
+            $.removeCookie('' + i);
+        }
+        window.location.href = '@Url.ActionLink("EndRoute", "Drivers")';
+
+    }
     $(document).ready(function () {
-        $('#Orders').DataTable({ responsive:true,lengthMenu:[5,10,15]});
+        $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+        setCookies();
     })
+        function setCookies() {
+        var ordersCounter = @Model.RouteEntries.Count;
+        for (var i = 1; i <= ordersCounter; i++) {
+            //before setting status from cookie we have to check if the order status did not change because the cookie contains the old status with icon
+            var buttonContent = $('#' + i).html();
+            var cookieContent = $.cookie('' + i);
+            if ($.cookie('' + i) != null) {
+                
+                if ($.cookie('' + i).search("Pick") > -1 && $('#' + i).html().search("Pick") > -1 ||
+                    ($.cookie('' + i).search("Deliver") > -1 && $('#' + i).html().search("Deliver") > -1)) {
+                    $('#' + i).html($.cookie('' + i));
+                }
+            }
+        }
+    }
+    
+    function StatusUpdate(id) {
+        var icon = "<i class='fas fa-check'></i>";
+        if ($('#' + id).html().search("Picked") > -1) {
+             if ($('#' + id).html().indexOf('f') > -1) {
+                $('#' + id).html("PickedUp");
+            }
+            else {
+                $('#' + id).html("PickedUp " + icon);
+            }
+            $.cookie(id, $('#' + id).html());
+            }
+        else if ($('#' + id).html().indexOf("Delivered") > -1) {
+            if ($('#' + id).html().indexOf('f') > -1) {
+                $('#' + id).html("Delivered");
+            }
+            else {
+                $('#' + id).html("Delivered " + icon);
+            }
+             $.cookie(id, $('#' + id).html());
+        }
+    }
+    function loaded() {
+        loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
+            $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+            setCookies();
+        })
+    }
 </script>
 

@@ -8,7 +8,9 @@ namespace TransportLogistics.ViewModels.Drivers
 {
     public class CurrentRouteViewModel
     {
-        public ICollection<Order> Orders { get; set; }
+      
+        public ICollection<RouteEntry> RouteEntries { get; set; }
         public Guid DriverId { get; set; }
+
     }
 }
