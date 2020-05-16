@@ -167,19 +167,19 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult AddLocation([FromRoute]string Id)
         {
-
+            
             NewLocationViewModel locationModel = new NewLocationViewModel()
             {
                 CustomerId = Id
             };
 
-            return PartialView("_AddAddressPartial", locationModel);
+            return PartialView("_AddLocationPartial", locationModel);
         }
 
         [HttpPost]
         public IActionResult AddLocation([FromForm] NewLocationViewModel locationData)
         {
-            if (!ModelState.IsValid || locationData != null)
+            if (!ModelState.IsValid || locationData == null)
             {
                 return PartialView("_AddLocationPartial", locationData);
             }

@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TransportLogistics.Controllers
 {
-    public class OrdersController : Controller
+    public class DispatchersController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Orders()
         {
             return View();
         }
 
-        public IActionResult OrdersTable()
+        public IActionResult Drivers()
         {
-            return PartialView("_OrdersTable");
+            return View();
         }
     }
 }
