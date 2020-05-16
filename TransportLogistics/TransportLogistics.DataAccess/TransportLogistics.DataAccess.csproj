@@ -28,7 +28,7 @@
 
 
 
-  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
