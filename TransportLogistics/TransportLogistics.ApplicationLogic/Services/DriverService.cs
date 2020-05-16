@@ -19,12 +19,18 @@ namespace TransportLogistics.ApplicationLogic.Sevices
         {
             return DriverRepository.GetByUserId(userId);
         }
-        public ICollection<Order> GetOrders(Guid id)
+        public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
-          return DriverRepository.GetOrders(id);
+          return DriverRepository.GetRouteEntries(id);
           
         }
- 
-        
+
+        public void EndCurrentRoute(Driver driver)
+        {
+            driver = DriverRepository.GetDriverWithRoute(driver.Id);
+            driver.AddRouteToHistoric(driver.CurrentRoute);
+            driver.SetCurrentRouteNull();
+            DriverRepository.Update(driver);
+        }
     }
 }

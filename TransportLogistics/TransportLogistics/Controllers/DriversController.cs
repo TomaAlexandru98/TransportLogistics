@@ -27,14 +27,14 @@ namespace TransportLogistics.Controllers
         private OrderService OrderService;
 
         public async Task<IActionResult> Index()
+        
         {
             var user = await UserManager.GetUserAsync(User);
             var driver = DriverService.GetByUserId(user.Id);
-            var orders = DriverService.GetOrders(driver.Id);
+            var routeEntries = DriverService.GetRouteEntries(driver.Id);
            
-            
             var currentRoute = new CurrentRouteViewModel();
-            currentRoute.Orders = orders;
+            currentRoute.RouteEntries = routeEntries;
             currentRoute.DriverId = driver.Id;
 
             return View(currentRoute);
@@ -43,23 +43,27 @@ namespace TransportLogistics.Controllers
         {
 
             OrderService.ChangeOrderStatus(orderId, status);
-            var orders = DriverService.GetOrders(driverId);
-            var route = new CurrentRouteViewModel() { Orders = orders, DriverId = driverId };
-            return PartialView("_OrdersTablePartial",route);
+            return RedirectToAction("Index");
            
         }
         public async Task<IActionResult> GetOrdersPartial()
         {
             var user = await UserManager.GetUserAsync(User);
             var driver = DriverService.GetByUserId(user.Id);
-            var orders = DriverService.GetOrders(driver.Id);
-
+            var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
             var currentRoute = new CurrentRouteViewModel();
-            currentRoute.Orders = orders;
+            currentRoute.RouteEntries = routeEntries;
             currentRoute.DriverId = driver.Id;
             return PartialView("_OrdersTablePartial", currentRoute);
 
+        }
+        public IActionResult EndRoute()
+        {
+            var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
+            var driver = DriverService.GetByUserId(user.Id);
+            DriverService.EndCurrentRoute(driver);
+            return RedirectToAction("Index");
         }
     }
 }

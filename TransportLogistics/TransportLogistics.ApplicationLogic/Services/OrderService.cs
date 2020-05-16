@@ -20,7 +20,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             var Order =OrderRepository.GetById(orderId);
             Order.SetStatus(status);
-            //OrderRepository.Update(Order);
+            OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
 
         }

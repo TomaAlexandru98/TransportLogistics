@@ -20,35 +20,33 @@ namespace TransportLogistics.DataAccess.Repositories
                Where(o => o.UserId == userId).FirstOrDefault();
             return driver;
         }
-        private Driver GetDriverWithRoute(Guid id)
+        public Driver GetDriverWithRoute(Guid id)
         {
-            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o => o.Orders).Where(o => o.Id == id).FirstOrDefault();
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).Include(o=> o.RoutesHistoric).
+                Where(o=> o.Id == id).FirstOrDefault();
         }
-
-        public ICollection<Order> GetOrders(Guid id)
+        public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
             var driver = GetDriverWithRoute(id);
-
-            ICollection<Order> ordersWithLoccations = new List<Order>();
-            if (driver.CurrentRoute != null)
+            ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
+            ICollection<RouteEntry> completeRouteEntries = new List<RouteEntry>();
+            if (driver.CurrentRoute != null && driver.CurrentRoute.RouteEntries.Count > 0)
             {
-                var orders = driver.CurrentRoute.Orders;
-                foreach (var order in orders)
-                {
-                    var temp = dbContext.Orders.Where(o => o.Id == order.Id).Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).FirstOrDefault();
-                    ordersWithLoccations.Add(temp);
-                    //if (temp.Status == OrderStatus.PickedUp && temp.Type != OrderType.PickUp)
-                    //{
-                    //    if (temp.Status != OrderStatus.Delivered)
-                    //    {
+                routeEntries = driver.CurrentRoute.RouteEntries;
+               foreach (var routeEntry in routeEntries)
+               {
+                    var tempRouteEntry = dbContext.RouteEntries.Include(o => o.Order).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
+                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).
+                        Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
+                    tempRouteEntry.SetOrder(order);
 
-                    //  }
-                    //}
-                }
+                    completeRouteEntries.Add(tempRouteEntry);
+               }
             }
-            return ordersWithLoccations; 
-           
+            return completeRouteEntries;
         }
+
+        
        
     }
 }
