@@ -13,7 +13,16 @@ namespace TransportLogistics.Controllers
             return View();
         }
 
+        public IActionResult OrdersTable()
+        {
+            return PartialView("_OrdersTable");
+        }
+       
         public IActionResult Drivers()
+        {
+            return PartialView("_OrdersTablePartial");
+        }
+        public IActionResult Routes()
         {
             return View();
         }
