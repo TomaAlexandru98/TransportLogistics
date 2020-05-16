@@ -6,7 +6,7 @@ namespace TransportLogistics.Model
 {
     public class Route:DataEntity
     {
-        public ICollection<LocationAddress> LocationAddresses { get; private set; }
+        public ICollection<RouteEntry> RouteEntries { get; private set; }
         public static Route Create()
         {
             var route = new Route()

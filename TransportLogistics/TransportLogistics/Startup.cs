@@ -41,7 +41,7 @@ namespace TransportLogistics
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<TransportLogisticsDbContext>(options =>
-               options.UseSqlServer(
+            options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection1")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -63,6 +63,7 @@ namespace TransportLogistics
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<EmployeeServices>();
             services.AddScoped<DriverService>();
+            services.AddScoped<OrderService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

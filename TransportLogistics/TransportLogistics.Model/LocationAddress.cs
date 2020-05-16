@@ -31,6 +31,23 @@ namespace TransportLogistics.Model
             return createdLocation;
         }
 
+        public void SetCity(string city)
+        {
+            City = city;
+        }
+        public void SetCountry(string country)
+        {
+            Country = country;
+        }
+        public void SetStreet(string street)
+        {
+            Street = Street;
+        }
+        public void SetStreetNumber(int streetNumber)
+        {
+            StreetNumber = streetNumber;
+
+
         public LocationAddress Update(string country, string city, string street, int streetNumber, string postalCode)
         {
             Country = country;
@@ -40,6 +57,7 @@ namespace TransportLogistics.Model
             PostalCode = postalCode;
 
             return this;
+
         }
     }
 }
