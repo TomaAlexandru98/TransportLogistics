@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
@@ -15,9 +16,9 @@ namespace TransportLogistics.Controllers
         private readonly OrderService orderservice;
         private readonly ILogger<OrderService> logger;
         private readonly CustomerService customerService;
-        public OrdersController(OrderService orderservice, ILogger<OrderService> logger, CustomerService customerService)
+        public OrdersController(OrderService orderService, ILogger<OrderService> logger, CustomerService customerService)
         {
-            this.orderservice = orderservice;
+            this.orderservice = orderService;
             this.logger = logger;
             this.customerService = customerService;
         }
@@ -28,24 +29,43 @@ namespace TransportLogistics.Controllers
 
         public IActionResult OrdersTable()
         {
-            return PartialView("_OrdersTable");
+            var ordersView = new OrderViewModel()
+            {
+                Orders = orderservice.GetAllOrders()
+            };
+
+            return PartialView("_OrdersTablePartial", ordersView);
         }
+
 
         [HttpGet]
         public IActionResult NewOrder()
         {
-           var customers =  customerService.GetAllCustomers().ToList();
-            List<string> customerNames = new List<string>();
-            foreach(var customer in customers)
-            {
-                customerNames.Add(customer.Name);
-            }
-            var newOrderViewModel = new NewOrderViewModel()
+            try
             {
 
-                CustomerNames = customerNames.AsEnumerable()
-            };
-            return PartialView("_NewOrderPartial", newOrderViewModel);
+                var customers = customerService.GetAllCustomers();
+                List<SelectListItem> customerNames = new List<SelectListItem>();
+
+                foreach (var customer in customers)
+                {
+                    customerNames.Add(new SelectListItem(customer.Name, customer.Id.ToString()));
+                }
+
+                NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+                {
+                    //CustomerList = customerNames,
+                    Price = 200
+                };
+
+                return PartialView("_NewOrderPartial", newOrderViewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to create a new Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to create a new Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
@@ -56,12 +76,12 @@ namespace TransportLogistics.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    orderservice.CreateOrder(orderData.DeliveryAddress,orderData.PickUpAddress,orderData.Recipient,orderData.Price);
+                    //orderservice.CreateOrder(orderData.DeliveryAddress,orderData.PickUpAddress,orderData.Recipient,orderData.Price);
                     //return RedirectToAction("Index");
                     return PartialView("_NewOrderPartial", orderData);
                 }
-                return View(orderData);
 
+                return PartialView("_NewOrderPartial", orderData);
             }
             catch (Exception e)
             {
