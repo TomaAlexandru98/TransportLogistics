@@ -20,45 +20,28 @@ namespace TransportLogistics.Controllers
             this.logger = logger;
         }
 
-        private CustomerListViewModel LoadCustomerViews()
-        {
-
-            CustomerListViewModel customerViewModel = null;
-            try
-            {
-                customerViewModel = new CustomerListViewModel() {
-                   CustomerViews = customerService.GetAllCustomers()
-                };
-                
-            } catch (Exception e)
-            {
-                logger.LogError("Failed to load Customer entities {@Exception}", e.Message);
-                logger.LogDebug("Failed to load Customer entities {@ExceptionMessage}", e);
-            }
-
-            return customerViewModel;
-        }
 
         public IActionResult Index()
         {
-            var customerViewModel = LoadCustomerViews();
-
-            if (customerViewModel == null)
-            {
-                return BadRequest("Failed to load Customer entities");
-            }
-
-            return View(customerViewModel);
+            return View();
         }
 
 
         public IActionResult CustomerTable()
         {
-            var customerViewModel = LoadCustomerViews();
-
-            if (customerViewModel == null)
+            CustomerListViewModel customerViewModel = null;
+            try
             {
-                return BadRequest("Failed to load Customer entities");
+                customerViewModel = new CustomerListViewModel()
+                {
+                    CustomerViews = customerService.GetAllCustomers()
+                };
+
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load Customer entities {@Exception}", e.Message);
+                logger.LogDebug("Failed to load Customer entities {@ExceptionMessage}", e);
             }
 
             return PartialView("_CustomerTable", customerViewModel);
@@ -99,7 +82,6 @@ namespace TransportLogistics.Controllers
                 return BadRequest("Failed to create a new Customer");
             }
         }
-
 
 
         [HttpGet]
@@ -167,19 +149,19 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult AddLocation([FromRoute]string Id)
         {
-
+            
             NewLocationViewModel locationModel = new NewLocationViewModel()
             {
                 CustomerId = Id
             };
 
-            return PartialView("_AddAddressPartial", locationModel);
+            return PartialView("_AddLocationPartial", locationModel);
         }
 
         [HttpPost]
         public IActionResult AddLocation([FromForm] NewLocationViewModel locationData)
         {
-            if (!ModelState.IsValid || locationData != null)
+            if (!ModelState.IsValid || locationData == null)
             {
                 return PartialView("_AddLocationPartial", locationData);
             }

@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Routes";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+<div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
+    <button class="btn-car" data-toggle="modal" data-target="#newRouteModal">Define Route <i class="fa fa-route"></i></button>
+</div>
+
+<div id="routesTableContainer"></div>
+
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            loadTable();
+        });
+
+        function loadTable() {
+            loadServerPartialView("#routesTableContainer", "/Routes/RoutesTable").done(function () {
+                $('#routesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+    </script>
+}

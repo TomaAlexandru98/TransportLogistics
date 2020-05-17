@@ -7,6 +7,8 @@ namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IOrderRepository:IBaseRepository<Order>
     {
-      //  void ChangeOrderStatus(Guid orderId,OrderStatus status);
+        //  void ChangeOrderStatus(Guid orderId,OrderStatus status);
+
+        new IEnumerable<Order> GetAll();
     }
 }
