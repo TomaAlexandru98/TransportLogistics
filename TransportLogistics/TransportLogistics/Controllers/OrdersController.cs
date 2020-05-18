@@ -54,7 +54,7 @@ namespace TransportLogistics.Controllers
 
                 NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
                 {
-                    //CustomerList = customerNames,
+                    CustomerList = customerNames,
                     Price = 200
                 };
 

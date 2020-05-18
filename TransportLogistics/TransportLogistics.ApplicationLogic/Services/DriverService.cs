@@ -4,7 +4,7 @@ using System.Text;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.ApplicationLogic.Sevices
+namespace TransportLogistics.ApplicationLogic.Services
 {
    public class DriverService
     {
@@ -31,6 +31,11 @@ namespace TransportLogistics.ApplicationLogic.Sevices
             driver.AddRouteToHistoric(driver.CurrentRoute);
             driver.SetCurrentRouteNull();
             DriverRepository.Update(driver);
+        }
+
+        public IEnumerable<Driver> GetAllDrivers()
+        {
+            return DriverRepository.GetAll();
         }
     }
 }

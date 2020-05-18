@@ -9,7 +9,7 @@
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
     <button class="btn-car ml-3" onclick="goToRoutes()">Define Route <i class="fa fa-box"></i></button>
-    <button class="btn-car" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
+    <button class="btn-car" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
 </div>
 
 <div id="ordersTableContainer"></div>
@@ -61,13 +61,17 @@
             });
         }
 
+        function LoadNewOrderView() {
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
+        }
+
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
         }
 
         function goToRoutes() {
-            document.location = '@Url.Action("Index","Routes")';
+            document.location = '@Url.Action("Index", "Routes")';
         }
 
     </script>

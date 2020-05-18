@@ -10,9 +10,9 @@ namespace TransportLogistics.ViewModels.Orders
 {
     public class NewOrderViewModel
     {
-        //public string RecipientId { get; set; }
+        public string RecipientId { get; set; }
 
-        //public List<SelectListItem> CustomerList { get; set; }
+        public List<SelectListItem> CustomerList { get; set; }
         
         /*
         [Required(ErrorMessage = "PickUpAddress is required.")]
@@ -23,11 +23,11 @@ namespace TransportLogistics.ViewModels.Orders
         [Display(Name = "DeliveryAddress")]
         public LocationAddress DeliveryAddress { get; set; }
         */
-        /*
+     /*
         [Required(ErrorMessage = "Recipient is required.")]
         [Display(Name = "Recipient")]
         public string RecipientId { get; set; }
-        */
+    */
   
         [Range(0, 9999999, ErrorMessage = "Wrong Input.")]
         [Required]
