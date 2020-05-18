@@ -9,7 +9,7 @@ using TransportLogistics.ViewModels.Dispatchers;
 
 namespace TransportLogistics.Controllers
 {
-    public class DispatchersController : Controller
+    public class DispatchersController : Controller   //Delete and use other controllers sau exclusive pentru el
     {
 
         private readonly DriverService driverService;
