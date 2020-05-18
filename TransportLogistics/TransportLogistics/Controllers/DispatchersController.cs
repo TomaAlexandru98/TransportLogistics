@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TransportLogistics.Controllers
 {
-    public class DispatchersController : Controller
+    public class DispatchersController : Controller   //Delete and use other controllers sau exclusive pentru el
     {
         public IActionResult Orders()
         {
