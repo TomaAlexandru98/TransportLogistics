@@ -4,21 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+
   <ItemGroup>
 
-    <Compile Remove="Migrations\20200514104234_StatusOrder.cs" />
-    <Compile Remove="Migrations\20200514104234_StatusOrder.Designer.cs" />
-    <Compile Remove="Migrations\20200514105204_Init.cs" />
-    <Compile Remove="Migrations\20200514105204_Init.Designer.cs" />
+    <Compile Remove="Migrations\20200516141413_test.cs" />
+    <Compile Remove="Migrations\20200516141413_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
-
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,10 +28,8 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-
-
-
   </ItemGroup>
+  
 
   <ItemGroup>
     <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />

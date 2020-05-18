@@ -51,7 +51,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public T Update(T itemToUpdate)
         {
             var entity = dbContext.Update<T>(itemToUpdate);
-            dbContext.SaveChanges();
+           dbContext.SaveChanges();
             return entity.Entity;
         }
     }

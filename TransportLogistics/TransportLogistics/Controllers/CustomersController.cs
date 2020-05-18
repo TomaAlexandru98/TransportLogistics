@@ -5,6 +5,7 @@ using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.Models.Customers;
+using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.Controllers
 {
@@ -19,45 +20,28 @@ namespace TransportLogistics.Controllers
             this.logger = logger;
         }
 
-        private CustomerListViewModel LoadCustomerViews()
-        {
-
-            CustomerListViewModel customerViewModel = null;
-            try
-            {
-                customerViewModel = new CustomerListViewModel() {
-                   CustomerViews = customerService.GetAllCustomers()
-                };
-                
-            } catch (Exception e)
-            {
-                logger.LogError("Failed to load Customer entities {@Exception}", e.Message);
-                logger.LogDebug("Failed to load Customer entities {@ExceptionMessage}", e);
-            }
-
-            return customerViewModel;
-        }
 
         public IActionResult Index()
         {
-            var customerViewModel = LoadCustomerViews();
-
-            if (customerViewModel == null)
-            {
-                return BadRequest("Failed to load Customer entities");
-            }
-
-            return View(customerViewModel);
+            return View();
         }
 
 
         public IActionResult CustomerTable()
         {
-            var customerViewModel = LoadCustomerViews();
-
-            if (customerViewModel == null)
+            CustomerListViewModel customerViewModel = null;
+            try
             {
-                return BadRequest("Failed to load Customer entities");
+                customerViewModel = new CustomerListViewModel()
+                {
+                    CustomerViews = customerService.GetAllCustomers()
+                };
+
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load Customer entities {@Exception}", e.Message);
+                logger.LogDebug("Failed to load Customer entities {@ExceptionMessage}", e);
             }
 
             return PartialView("_CustomerTable", customerViewModel);
@@ -98,7 +82,6 @@ namespace TransportLogistics.Controllers
                 return BadRequest("Failed to create a new Customer");
             }
         }
-
 
 
         [HttpGet]
@@ -166,26 +149,19 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult AddLocation([FromRoute]string Id)
         {
-
+            
             NewLocationViewModel locationModel = new NewLocationViewModel()
             {
                 CustomerId = Id
             };
 
-            return PartialView("_AddAddressPartial", locationModel);
+            return PartialView("_AddLocationPartial", locationModel);
         }
 
         [HttpPost]
         public IActionResult AddLocation([FromForm] NewLocationViewModel locationData)
         {
-            if (!ModelState.IsValid ||
-                        locationData.CustomerId == null ||
-                        locationData == null ||
-                        locationData.Country == null ||
-                        locationData.City == null ||
-                        locationData.Street == null ||
-                        locationData.StreetNumber <= 0 ||
-                        locationData.PostalCode == null)
+            if (!ModelState.IsValid || locationData == null)
             {
                 return PartialView("_AddLocationPartial", locationData);
             }
@@ -219,6 +195,65 @@ namespace TransportLogistics.Controllers
             }
         }
 
+
+
+        [HttpGet]
+        public IActionResult EditLocation([FromRoute] string Id)
+        {
+            try
+            {
+                var locationToUpdate = customerService.GetLocationAddress(Id);
+
+                var editLocationViewModel = new EditLocationViewModel()
+                {
+                    Id = Id,
+                    Country = locationToUpdate.Country,
+                    City = locationToUpdate.City,
+                    Street = locationToUpdate.Street,
+                    StreetNumber = locationToUpdate.StreetNumber,
+                    PostalCode = locationToUpdate.PostalCode                   
+                };
+
+                return PartialView("_EditLocationPartial", editLocationViewModel);
+
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to update location entity at Get {@Exception}", e.Message);
+                logger.LogDebug("Failed to update location entity at Get {@ExceptionMessage}", e);
+                return BadRequest("Failed to update location entity");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult EditLocation([FromForm] EditLocationViewModel updatedLocation)
+        {
+            if (!ModelState.IsValid || updatedLocation == null)
+            {
+                return PartialView("_EditLocationPartial", new EditLocationViewModel());
+            }
+
+            try
+            {
+                var locationToUpdate = customerService.GetLocationAddress(updatedLocation.Id);
+
+                customerService.UpdateLocationAddress(locationToUpdate.Id,
+                                updatedLocation.Country,
+                                updatedLocation.City,
+                                updatedLocation.Street,
+                                updatedLocation.StreetNumber,
+                                updatedLocation.PostalCode);
+
+                return PartialView("_EditLocationPartial", updatedLocation);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to edit location entity {@Exception}", e.Message);
+                logger.LogDebug("Failed to edit location entity {@ExceptionMessage}", e);
+                return BadRequest("Failed to edit location entity");
+            }
+        }
 
 
 

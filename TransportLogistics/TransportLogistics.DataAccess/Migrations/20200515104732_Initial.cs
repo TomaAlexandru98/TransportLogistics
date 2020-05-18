@@ -58,7 +58,8 @@ namespace TransportLogistics.DataAccess.Migrations
                     Type = table.Column<string>(nullable: true),
                     RegistrationNumber = table.Column<string>(nullable: true),
                     MaximCarryWeightKg = table.Column<int>(nullable: false),
-                    VIN = table.Column<string>(nullable: true)
+                    VIN = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

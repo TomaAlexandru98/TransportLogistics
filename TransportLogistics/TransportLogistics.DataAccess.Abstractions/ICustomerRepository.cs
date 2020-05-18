@@ -14,6 +14,6 @@ namespace TransportLogistics.DataAccess.Abstractions
         new IEnumerable<Customer> GetAll();
         bool RemoveCustomerWithLocations(Guid customerId);
         void AddLocationToCustomer(Guid customerId, LocationAddress address);
-        Customer UpdateCustomer(Guid customerId, string name, string phoneNo, string email);
+        LocationAddress GetLocationAddress(Guid locationId);
     }
 }

@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200514105308_Init")]
-    partial class Init
+    [Migration("20200516111231_renaming")]
+    partial class renaming
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,39 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.ToTable("Dispatchers");
                 });
 
+            modelBuilder.Entity("TransportLogistics.Model.Driver", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentRouteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("RoutesHistoricId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentRouteId");
+
+                    b.HasIndex("RoutesHistoricId");
+
+                    b.ToTable("Drivers");
+                });
+
             modelBuilder.Entity("TransportLogistics.Model.LocationAddress", b =>
                 {
                     b.Property<Guid>("Id")
@@ -120,6 +153,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("PickUpAddressId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid?>("RecipientId")
                         .HasColumnType("uniqueidentifier");
 
@@ -135,6 +171,57 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasIndex("RecipientId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Route", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RoutesHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoutesHistoryId");
+
+                    b.ToTable("Routes");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.RouteEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OrderType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("RouteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("RouteEntries");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.RoutesHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoutesHistories");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
@@ -159,6 +246,9 @@ namespace TransportLogistics.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberAxles")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("VehicleId")
@@ -189,9 +279,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -208,6 +295,17 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Contact", "ContactDetails")
                         .WithMany()
                         .HasForeignKey("ContactDetailsId");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Driver", b =>
+                {
+                    b.HasOne("TransportLogistics.Model.Route", "CurrentRoute")
+                        .WithMany()
+                        .HasForeignKey("CurrentRouteId");
+
+                    b.HasOne("TransportLogistics.Model.RoutesHistory", "RoutesHistoric")
+                        .WithMany()
+                        .HasForeignKey("RoutesHistoricId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.LocationAddress", b =>
@@ -230,6 +328,24 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Customer", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Route", b =>
+                {
+                    b.HasOne("TransportLogistics.Model.RoutesHistory", null)
+                        .WithMany("Routes")
+                        .HasForeignKey("RoutesHistoryId");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.RouteEntry", b =>
+                {
+                    b.HasOne("TransportLogistics.Model.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("TransportLogistics.Model.Route", null)
+                        .WithMany("RouteEntries")
+                        .HasForeignKey("RouteId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>

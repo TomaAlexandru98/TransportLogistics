@@ -17,6 +17,10 @@
     {
       "library": "datatables@1.10.20",
       "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "library": "jquery-cookie@1.4.1",
+      "destination": "wwwroot/lib/jquery-cookie/"
     }
   ]
 }

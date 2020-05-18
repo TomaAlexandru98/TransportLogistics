@@ -1,0 +1,90 @@
+﻿@using TransportLogistics.ViewModels.Orders
+@model OrderViewModel;
+
+<table id="ordersTable" class="table table-striped table-bordered" style="width:100%">
+    <thead class="dropdown text-center">
+        <tr>
+            <th>Pickup Address</th>
+            <th>Delivery Address</th>
+            <th>Recipient</th>
+            <th>Status</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.PickUpAddress.PostalCode <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul style="list-style: none">
+                            <li>Country:</li>
+                            <li>@order.PickUpAddress.Country</li>
+                            <li>City:</li>
+                            <li>@order.PickUpAddress.City</li>
+                            <li>Street:</li>
+                            <li>@order.PickUpAddress.Street</li>
+                            <li>Street number:</li>
+                            <li>@order.PickUpAddress.StreetNumber</li>
+                            <li>Postal Code:</li>
+                            <li>@order.PickUpAddress.PostalCode</li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.DeliveryAddress.PostalCode <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul style="list-style: none">
+                            <li>Country:</li>
+                            <li>@order.DeliveryAddress.Country</li>
+                            <li>City:</li>
+                            <li>@order.DeliveryAddress.City</li>
+                            <li>Street:</li>
+                            <li>@order.DeliveryAddress.Street</li>
+                            <li>Street number:</li>
+                            <li>@order.DeliveryAddress.StreetNumber</li>
+                            <li>Postal Code:</li>
+                            <li>@order.DeliveryAddress.PostalCode</li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.Recipient.Name <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul style="list-style: none">
+                            <li>Email:</li>
+                            <li>@order.Recipient.ContactDetails.Email</li>
+                            <li>Phone number:</li>
+                            <li>@order.Recipient.ContactDetails.PhoneNo</li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>@order.Status</td>
+                <td>@order.Price</td>
+                <td>
+                    <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                            onclick="LoadUpdateCustomerView('@order.Id');" data-target="#updateOrderModal">
+                        <i class="material-icons fa fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                            onclick="LoadRemoveCustomerView('@order.Id');" data-target="#removeOrderModal">
+                        <i class="material-icons fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
