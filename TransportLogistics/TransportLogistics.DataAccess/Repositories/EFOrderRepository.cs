@@ -4,6 +4,8 @@ using System.Text;
 using TransportLogistics.Model;
 using TransportLogistics.Data.Abstractions;
 using TransportLogistics.DataAccess.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace TransportLogistics.DataAccess.Repositories
 {
@@ -13,6 +15,16 @@ namespace TransportLogistics.DataAccess.Repositories
         {
 
         }
-       
+
+        public new IEnumerable<Order> GetAll()
+        {
+            return dbContext.Orders
+                        .Include(o => o.PickUpAddress)
+                        .Include(o => o.DeliveryAddress)
+                        .Include(o => o.Recipient)
+                        .Include(o => o.Recipient.ContactDetails)
+                        .AsEnumerable();
+        }
+
     }
 }

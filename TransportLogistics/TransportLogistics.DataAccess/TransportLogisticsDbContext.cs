@@ -14,6 +14,8 @@ namespace TransportLogistics.DataAccess
         {
 
         }
+
+
         public DbSet<LocationAddress> LocationAddresses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Driver> Drivers { get; set; }

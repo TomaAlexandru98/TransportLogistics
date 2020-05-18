@@ -41,7 +41,7 @@ namespace TransportLogistics.Model
         }
         public void SetStreet(string street)
         {
-            Street = Street;
+            Street = street;
         }
         public void SetStreetNumber(int streetNumber)
         {

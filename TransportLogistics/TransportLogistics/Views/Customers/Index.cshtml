@@ -1,5 +1,4 @@
-﻿@using TransportLogistics.Models.Customers;
-@using TransportLogistics.ViewModels.Customers;
+﻿@using TransportLogistics.ViewModels.Customers;
 
 @{
     ViewData["Title"] = "Index";
@@ -90,7 +89,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="locationBody">
-                    <partial name="_AddAddressPartial" model="new NewLocationViewModel()" />
+                    <partial name="_AddLocationPartial" model="new NewLocationViewModel()" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

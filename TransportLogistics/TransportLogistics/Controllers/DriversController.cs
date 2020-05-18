@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TransportLogistics.ApplicationLogic.Services;
-using TransportLogistics.ApplicationLogic.Sevices;
 using TransportLogistics.Model;
 using TransportLogistics.ViewModels.Drivers;
 

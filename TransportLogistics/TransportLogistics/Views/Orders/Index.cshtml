@@ -1,4 +1,4 @@
-﻿@using TransportLogistics.ViewModels.Orders 
+﻿@using TransportLogistics.ViewModels.Orders
 @{
     ViewData["Title"] = "Orders";
 }
@@ -8,13 +8,41 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <button class="btn-car ml-3" data-toggle="modal" data-target="#orderModal">Define Route <i class="fa fa-box"></i></button>
-    <button class="btn-car" data-toggle="modal" data-target="#orderModal">New Order <i class="fa fa-box"></i></button>
+    <button class="btn-car ml-3" onclick="goToRoutes()">Define Route <i class="fa fa-box"></i></button>
+    <button class="btn-car" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
 </div>
 
-
-
 <div id="ordersTableContainer"></div>
+
+<form method="post" asp-controller="Orders" asp-action="NewOrder"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#newOrderModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#newOrderBody">
+
+    <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newOrderTitle">New Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="newOrderBody">
+                    <partial name="_NewOrderPartial" model="new NewOrderViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
@@ -32,36 +60,19 @@
                 $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
+
+        function LoadNewOrderView() {
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
+        }
+
+        function modalFormComplete(modalName) {
+            $(modalName).modal("hide");
+            loadTable();
+        }
+
+        function goToRoutes() {
+            document.location = '@Url.Action("Index", "Routes")';
+        }
+
     </script>
 }
-
-<form id="newOrderForm" method="post" asp-controller="Orders" asp-action="NewOrder"
-      data-ajax="true"
-      data-ajax-method="POST"
-      data-ajax-mode="replace"
-      data-ajax-complete="loadTable('#newOrderModal')"
-      data-ajax-update="#newOrderBody">
-
-    @Html.AntiForgeryToken()
-    <div class="modal" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" id="newOrderModalLabel">New Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="newOrderBody" class="modal-body">
-                    @await Html.PartialAsync("_NewOrderPartial", new NewOrderViewModel { })
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newOrderModal')"> Confirm </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>

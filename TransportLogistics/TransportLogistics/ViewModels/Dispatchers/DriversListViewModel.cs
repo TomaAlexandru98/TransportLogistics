@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.ViewModels.Orders
+namespace TransportLogistics.ViewModels.Dispatchers
 {
-    public class OrderViewModel
+    public class DriversListViewModel
     {
-        public IEnumerable<Order> Orders {get; set;}
+        public IEnumerable<Driver> Drivers { get; set; }
     }
 }

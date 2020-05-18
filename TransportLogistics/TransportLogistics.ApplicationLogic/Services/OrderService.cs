@@ -32,5 +32,10 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
             return order;
         }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return OrderRepository.GetAll();
+        }
     }
 }
