@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +12,13 @@ namespace TransportLogistics.ViewModels.Orders
     public class NewOrderViewModel
     {
         public string RecipientId { get; set; }
+        public string Location1Id { get; set; }
+        public string Location2Id { get; set; }
 
         public List<SelectListItem> CustomerList { get; set; }
         
+        public List<SelectListItem> Location1 { get; set; }
+        public List<SelectListItem> Location2 { get; set; }
         /*
         [Required(ErrorMessage = "PickUpAddress is required.")]
         [Display(Name = "PickUpAddress")]

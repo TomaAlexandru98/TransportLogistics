@@ -25,9 +25,9 @@ namespace TransportLogistics.ApplicationLogic.Services
 
         }
 
-        public Order CreateOrder(LocationAddress deliveryAddress, LocationAddress pickUpAddress, Customer recipient, decimal price)
+        public Order CreateOrder(Customer customer, string RecipientId,decimal price)
         {
-            var order = Order.Create(deliveryAddress, pickUpAddress, recipient, price);
+            var order = Order.Create(customer, RecipientId, price);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;

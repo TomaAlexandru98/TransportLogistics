@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc.Ajax;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -39,12 +40,13 @@ namespace TransportLogistics.Controllers
 
 
         [HttpGet]
-        public IActionResult NewOrder()
+        public IActionResult NewOrder(string RecipientId)
         {
             try
             {
 
                 var customers = customerService.GetAllCustomers();
+               // var locations = customerService.GetCustomerAddresses(RecipientId);
                 List<SelectListItem> customerNames = new List<SelectListItem>();
 
                 foreach (var customer in customers)
@@ -55,6 +57,7 @@ namespace TransportLogistics.Controllers
                 NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
                 {
                     CustomerList = customerNames,
+                     
                     Price = 200
                 };
 
@@ -76,7 +79,8 @@ namespace TransportLogistics.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //orderservice.CreateOrder(orderData.DeliveryAddress,orderData.PickUpAddress,orderData.Recipient,orderData.Price);
+                    
+                    //orderservice.CreateOrder(orderData.CustomerList.Capacity,orderData.RecipientId,orderData.Price);
                     //return RedirectToAction("Index");
                     return PartialView("_NewOrderPartial", orderData);
                 }
@@ -90,5 +94,24 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public JsonResult GetDropdownList(string value)
+        {
+
+            var locationList = customerService.GetCustomerAddresses(value);
+
+            if (locationList.Count()>0)
+            {
+               
+                return Json(new { data = locationList }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { data = "" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
+
+        }
+       
     }
 }
