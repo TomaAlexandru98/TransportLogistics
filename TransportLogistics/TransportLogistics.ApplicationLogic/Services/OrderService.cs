@@ -10,11 +10,12 @@ namespace TransportLogistics.ApplicationLogic.Services
     {
         private readonly IPersistenceContext PersistenceContext;
         private readonly IOrderRepository OrderRepository;
-
+        private readonly ICustomerRepository customerRepository;
         public OrderService(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             OrderRepository = persistenceContext.OrderRepository;
+            customerRepository = persistenceContext.CustomerRepository;
         }
         public void ChangeOrderStatus(Guid orderId, string status)
         {
@@ -46,9 +47,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             }
         }
 
-        public Order CreateOrder(Customer customer, string RecipientId, decimal price)
+        public Order CreateOrder(string RecipientId,LocationAddress pickup, LocationAddress delivery, decimal price)
         {
-            var order = Order.Create(customer, RecipientId, price);
+            Guid customerId = Guid.Parse(RecipientId);
+            var recipient = customerRepository.GetById(customerId);
+            var order = Order.Create(recipient, pickup, delivery, price);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;

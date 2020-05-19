@@ -24,32 +24,22 @@
 
     <div class="form-group">
 
-        <select id="EventId" name="eventId" asp-for="RecipientId" asp-items="@Model.CustomerList" onchange="showValue(this.value);">
+        <select  asp-for="RecipientId" asp-items="@Model.CustomerList" onchange="loadCustomerAddreses('#RecipientId','#SecondDropdown');loadCustomerAddreses('#RecipientId','#ThirdDropdown'); ">
         </select>
 
     </div>
 
+    <div class="form-group">
+        <select id="SecondDropdown" name="eventId">
+        </select>
+        </div>
+    <div class="form-group">
+        <select id="ThirdDropdown" name="eventId">
+        </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" type="number" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
 
-<select id="SecondDropdown" name="eventId">
-</select>
-
-<div class="form-group">
-
-    <select asp-for="Location2Id" asp-items="@Model.Location2">
-    </select>
-
-</div>
-<div class="form-group">
-    <label asp-for="Price"></label>
-    <input asp-for="Price" type="number" class="form-control" />
-    <span asp-validation-for="Price" class="text-danger"></span>
-</div>
-
-<input id="button1" type="button" value="Click!" />
-<script>
-    $(document).ready(function () {
-        $('#button1').click(function () {
-            alert($('#EventId :selected').text());
-        });
-    });
-</script>
