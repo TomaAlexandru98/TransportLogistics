@@ -24,7 +24,7 @@
 
     <div class="form-group">
 
-        <select id="EventId" name="eventId" asp-for="RecipientId" asp-items="@Model.CustomerList" onchange="showValue(this.value);">
+        <select  asp-for="RecipientId" asp-items="@Model.CustomerList" onchange="loadCustomerAddreses('#RecipientId','#SecondDropdown');">
         </select>
 
     </div>

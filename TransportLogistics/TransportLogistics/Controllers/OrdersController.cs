@@ -44,7 +44,7 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-
+                //load partial view cu datele populate pe parte de server / cu JSON
                 var customers = customerService.GetAllCustomers();
                // var locations = customerService.GetCustomerAddresses(RecipientId);
                 List<SelectListItem> customerNames = new List<SelectListItem>();
@@ -96,19 +96,19 @@ namespace TransportLogistics.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetDropdownList(string value)
+        public JsonResult GetCustomerLocations(string id)
         {
 
-            var locationList = customerService.GetCustomerAddresses(value);
+            var locationList = customerService.GetCustomerAddresses(id);
 
             if (locationList.Count()>0)
             {
                
-                return Json(new { data = locationList }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+                return Json(new { data = locationList });
             }
             else
             {
-                return Json(new { data = "" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+                return Json(new { data = "" });
             }
 
         }
