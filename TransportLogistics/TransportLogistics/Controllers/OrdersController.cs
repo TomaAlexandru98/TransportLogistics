@@ -23,6 +23,7 @@ namespace TransportLogistics.Controllers
             this.logger = logger;
             this.customerService = customerService;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -39,49 +40,61 @@ namespace TransportLogistics.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult NewOrder(string RecipientId)
+        private List<SelectListItem> GetCustomerList()
         {
-            try
-            {
-                //load partial view cu datele populate pe parte de server / cu JSON
-                var customers = customerService.GetAllCustomers();
-               // var locations = customerService.GetCustomerAddresses(RecipientId);
-                List<SelectListItem> customerNames = new List<SelectListItem>();
+            var customers = customerService.GetAllCustomers();
+            List<SelectListItem> customerNames = new List<SelectListItem>();
 
-                foreach (var customer in customers)
+            foreach (var customer in customers)
+            {
+                if (customer.LocationAddresses.Count > 1)
                 {
                     customerNames.Add(new SelectListItem(customer.Name, customer.Id.ToString()));
                 }
-
-                NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
-                {
-                    CustomerList = customerNames,
-                     
-                    Price = 200
-                };
-
-                return PartialView("_NewOrderPartial", newOrderViewModel);
             }
-            catch (Exception e)
-            {
-                logger.LogError("Failed to create a new Order {@Exception}", e.Message);
-                logger.LogDebug("Failed to create a new Order {@ExceptionMessage}", e);
-                return BadRequest(e.Message);
-            }
+            return customerNames;
         }
+
+        [HttpGet]
+        public IActionResult NewOrder(string id)
+        {
+            List<SelectListItem> customerLocations = null;
+
+            if (id != null)
+            {
+                var locations = customerService.GetCustomerAddresses(id);
+                customerLocations = new List<SelectListItem>();
+                foreach (var location in locations)
+                {
+                    customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+                }
+            }
+
+            NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+            {
+                CustomerList = GetCustomerList(),
+                PickupLocation = customerLocations,
+                DeliveryLocation = customerLocations
+            };
+
+            return PartialView("_NewOrderPartial", newOrderViewModel);
+        }
+
 
         [HttpPost]
         public IActionResult NewOrder([FromForm]NewOrderViewModel orderData)
         {
-
             try
             {
                 if (ModelState.IsValid)
                 {
-                    
-                    //orderservice.CreateOrder(orderData.RecipientId,orderData.Location1,orderData.Location2,orderData.Price);
-                    //return RedirectToAction("Index");
+                    var recipient = customerService.GetCustomerById(orderData.RecipientId);
+
+                    orderservice.CreateOrder(recipient, 
+                        orderData.PickupLocationId, 
+                        orderData.DeliveryLocationId,
+                        orderData.Price);
+
                     return PartialView("_NewOrderPartial", orderData);
                 }
 
@@ -95,23 +108,13 @@ namespace TransportLogistics.Controllers
             }
         }
 
+        /*
         [HttpGet]
         public JsonResult GetCustomerLocations(string id)
         {
-
             var locationList = customerService.GetCustomerAddresses(id);
-
-            if (locationList.Count()>0)
-            {
-               
-                return Json(new { data = locationList });
-            }
-            else
-            {
-                return Json(new { data = "" });
-            }
-
+            return Json(new { data = locationList });
         }
-       
+        */
     }
 }

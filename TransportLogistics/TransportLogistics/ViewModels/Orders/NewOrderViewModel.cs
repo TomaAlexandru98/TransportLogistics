@@ -11,29 +11,22 @@ namespace TransportLogistics.ViewModels.Orders
 {
     public class NewOrderViewModel
     {
+        [Required(ErrorMessage = "Choosing a recipient is required.")]
+        [Display(Name = "Recipient:")]
         public string RecipientId { get; set; }
-        public string Location1Id { get; set; }
-        public string Location2Id { get; set; }
+
+        [Required(ErrorMessage = "Pickup Address is required.")]
+        [Display(Name = "Pickup Address:")]
+        public string PickupLocationId { get; set; }
+
+        [Required(ErrorMessage = "Delivery Address is required.")]
+        [Display(Name = "Delivery Address:")]
+        public string DeliveryLocationId { get; set; }
 
         public List<SelectListItem> CustomerList { get; set; }
-        
-        public List<SelectListItem> Location1 { get; set; }
-        public List<SelectListItem> Location2 { get; set; }
-        /*
-        [Required(ErrorMessage = "PickUpAddress is required.")]
-        [Display(Name = "PickUpAddress")]
-        public LocationAddress PickUpAddress { get; set; }
+        public List<SelectListItem> PickupLocation { get; set; }
+        public List<SelectListItem> DeliveryLocation { get; set; }
 
-        [Required(ErrorMessage = "DeliveryAddress is required.")]
-        [Display(Name = "DeliveryAddress")]
-        public LocationAddress DeliveryAddress { get; set; }
-        */
-     /*
-        [Required(ErrorMessage = "Recipient is required.")]
-        [Display(Name = "Recipient")]
-        public string RecipientId { get; set; }
-    */
-  
         [Range(0, 9999999, ErrorMessage = "Wrong Input.")]
         [Required]
         [Display(Name = "Price")]

@@ -20,6 +20,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         public void ChangeOrderStatus(Guid orderId, string status)
         {
             OrderStatus enumStatus = OrderStatus.Assigned;
+
             switch (status)
             {
                 case "PickedUp":
@@ -29,7 +30,8 @@ namespace TransportLogistics.ApplicationLogic.Services
                     enumStatus = OrderStatus.Delivered;
                     break;
             }
-            var Order =OrderRepository.GetById(orderId);
+
+            var Order = OrderRepository.GetById(orderId);
             Order.SetStatus(enumStatus);
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
@@ -47,14 +49,25 @@ namespace TransportLogistics.ApplicationLogic.Services
             }
         }
 
-        public Order CreateOrder(string RecipientId,LocationAddress pickup, LocationAddress delivery, decimal price)
+        public Order CreateOrder(Customer recipient, string pickupId, string deliveryId, decimal price)
         {
-            Guid customerId = Guid.Parse(RecipientId);
-            var recipient = customerRepository.GetById(customerId);
-            var order = Order.Create(recipient, pickup, delivery, price);
+            Guid.TryParse(pickupId, out Guid pickupGuid);
+            var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
+
+            Guid.TryParse(deliveryId, out Guid deliveryGuid);
+            var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
+
+            var order = Order.Create(recipient, pickupLocation, deliveryLocation, price);
+            
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
+        }
+
+        public Order GetById(string Id)
+        {
+            Guid.TryParse(Id, out Guid guid);
+            return OrderRepository.GetById(guid);
         }
 
         public IEnumerable<Order> GetAllOrders()

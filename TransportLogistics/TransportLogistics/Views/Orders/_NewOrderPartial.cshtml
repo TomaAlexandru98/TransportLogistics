@@ -4,42 +4,36 @@
     ViewData["Title"] = "Test";
 }
 
-@*
-    <input type="hidden" asp-for="OrderId" />
-    <input type="hidden" asp-for="Status" />
-
-    <div class="form-group">
-        <label asp-for="PickUpAddress"></label>
-        <input asp-for="PickUpAddress" type="text" class="form-control" />
-        <span class="text-danger" asp-validation-for="PickUpAddress"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="DeliveryAddress"></label>
-        <input asp-for="DeliveryAddress" type="text" class="form-control" />
-        <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
-
-    </div>
-*@
-
-    <div class="form-group">
-
-        <select  asp-for="RecipientId" asp-items="@Model.CustomerList" onchange="loadCustomerAddreses('#RecipientId','#SecondDropdown');loadCustomerAddreses('#RecipientId','#ThirdDropdown'); ">
+<div class="form-group text-center">
+    <label asp-for="RecipientId"></label>
+    <div>
+        <select style="min-width: 60%" asp-for="RecipientId" asp-items="@Model.CustomerList"
+                onclick="LoadDropdown('#RecipientId')">
         </select>
-
     </div>
+    <span asp-validation-for="RecipientId" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <select id="SecondDropdown" name="eventId">
+<div class="form-group text-center">
+    <label asp-for="PickupLocationId"></label>
+    <div>
+        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation">
         </select>
-        </div>
-    <div class="form-group">
-        <select id="ThirdDropdown" name="eventId">
-        </select>
-        </div>
-        <div class="form-group">
-            <label asp-for="Price"></label>
-            <input asp-for="Price" type="number" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
-        </div>
+    </div>
+    <span asp-validation-for="PickupLocationId" class="text-danger"></span>
+</div>
 
+<div class="form-group text-center">
+    <label asp-for="DeliveryLocationId"></label>
+    <div>
+        <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocation">
+        </select>
+    </div>
+    <span asp-validation-for="DeliveryLocationId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Price"></label>
+    <input asp-for="Price" type="number" class="form-control" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>

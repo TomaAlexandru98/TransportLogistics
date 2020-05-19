@@ -19,61 +19,46 @@
             <tr>
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @order.PickUpAddress.PostalCode <i class="fa fa-plus"></i>
+                        @order.PickUpAddress.PostalCode
                     </button>
-                    <div class="dropdown-menu">
-                        <ul style="list-style: none">
-                            <li>Country:</li>
-                            <li>@order.PickUpAddress.Country</li>
-                            <li>City:</li>
-                            <li>@order.PickUpAddress.City</li>
-                            <li>Street:</li>
-                            <li>@order.PickUpAddress.Street</li>
-                            <li>Street number:</li>
-                            <li>@order.PickUpAddress.StreetNumber</li>
-                            <li>Postal Code:</li>
-                            <li>@order.PickUpAddress.PostalCode</li>
-                        </ul>
+                    <div class="dropdown-menu" style="padding: 0.8rem">
+                        <div>Country: @order.PickUpAddress.Country</div>
+                        <div>City: @order.PickUpAddress.City</div>
+                        <div>Street: @order.PickUpAddress.Street</div>
+                        <div>Street number: @order.PickUpAddress.StreetNumber</div>
+                        <div>Postal Code: @order.PickUpAddress.PostalCode</div>
                     </div>
                 </td>
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @order.DeliveryAddress.PostalCode <i class="fa fa-plus"></i>
+                        @order.DeliveryAddress.PostalCode
                     </button>
-                    <div class="dropdown-menu">
-                        <ul style="list-style: none">
-                            <li>Country:</li>
-                            <li>@order.DeliveryAddress.Country</li>
-                            <li>City:</li>
-                            <li>@order.DeliveryAddress.City</li>
-                            <li>Street:</li>
-                            <li>@order.DeliveryAddress.Street</li>
-                            <li>Street number:</li>
-                            <li>@order.DeliveryAddress.StreetNumber</li>
-                            <li>Postal Code:</li>
-                            <li>@order.DeliveryAddress.PostalCode</li>
-                        </ul>
+                    <div class="dropdown-menu" style="padding: 0.8rem">
+                        <div>Country: @order.DeliveryAddress.Country</div>
+                        <div>City: @order.DeliveryAddress.City</div>
+                        <div>Street: @order.DeliveryAddress.Street</div>
+                        <div>Street number: @order.DeliveryAddress.StreetNumber</div>
+                        <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
                     </div>
                 </td>
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @order.Recipient.Name <i class="fa fa-plus"></i>
+                        @order.Recipient.Name
                     </button>
-                    <div class="dropdown-menu">
-                        <ul style="list-style: none">
-                            <li>Email:</li>
-                            <li>@order.Recipient.ContactDetails.Email</li>
-                            <li>Phone number:</li>
-                            <li>@order.Recipient.ContactDetails.PhoneNo</li>
-                        </ul>
+                    <div class="dropdown-menu" style="padding: 0.8rem">
+                        <div>Email</div>
+                        <div>@order.Recipient.ContactDetails.Email</div>
+                        <div>Phone number:</div>
+                        <div>@order.Recipient.ContactDetails.PhoneNo</div>
                     </div>
                 </td>
 
                 <td>@order.Status</td>
                 <td>@order.Price</td>
-                <td>
+                <td class="d-flex justify-content-around">
+
                     <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
                             onclick="LoadUpdateCustomerView('@order.Id');" data-target="#updateOrderModal">
                         <i class="material-icons fa fa-edit"></i>
