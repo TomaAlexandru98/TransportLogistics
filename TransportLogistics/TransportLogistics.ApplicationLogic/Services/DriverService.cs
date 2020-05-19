@@ -5,7 +5,7 @@ using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.ApplicationLogic.Sevices
+namespace TransportLogistics.ApplicationLogic.Services
 {
    public class DriverService
     {
