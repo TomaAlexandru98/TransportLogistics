@@ -32,8 +32,8 @@ namespace TransportLogistics.ApplicationLogic.Services
             Order.SetStatus(enumStatus);
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
-
         }
+
         //when a driver starts up a route,all the order with status PickedUp should be changed into Delivering
         public void StartRoute(ICollection<RouteEntry> routeEntries)
         {
@@ -44,6 +44,19 @@ namespace TransportLogistics.ApplicationLogic.Services
                     routeEntry.Order.SetStatus(OrderStatus.Delivering);
                 }
             }
+        }
+
+        public Order CreateOrder(Customer customer, string RecipientId, decimal price)
+        {
+            var order = Order.Create(customer, RecipientId, price);
+            OrderRepository.Add(order);
+            PersistenceContext.SaveChanges();
+            return order;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return OrderRepository.GetAll();
         }
     }
 }
