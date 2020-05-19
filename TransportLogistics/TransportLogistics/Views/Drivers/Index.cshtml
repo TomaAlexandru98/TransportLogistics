@@ -21,82 +21,189 @@
 <div id="OrdersTable">
     <partial name="_OrdersTablePartial.cshtml" model="@Model" />
 </div>
-<div class=" clearfix">
 
-    <button type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
+
+<div>
+   
+    <div class="d-flex bd-highlight mb-3">
+        <div class="p-2 flex-grow-1 bd-highlight">
+            <button type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
+    <h4 style="color:red" id="endRouteError"></h4>
+        </div>
+        <div class="p-2 bd-highlight"><button id="StartRoute" type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteStarted">
+            Start Route</button></div>
+    </div>
 </div>
+
 <div class="modal fade modal-delete" tabindex="-1" id="RouteEnded" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="max-width:60%">
 
             <div id="newPaymentBody" class="modal-body">
                 <div class="text-center">
-                    <h2>Are you sure?</h2>
+                    <h5>Mark route as completed</h5>
 
                 </div>
                 <div class="d-flex justify-content-around">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-success" onclick="EndRoute()">Yes</button>
+                    <button type="submit" class="btn btn-success" onclick="EndRoute()">Ok</button>
                 </div>
              </div>
           </div>
     </div>
 </div>
+<div class="modal fade modal-delete" tabindex="-1" id="RouteStarted" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="max-width:60%">
+
+            <div id="newPaymentBody" class="modal-body">
+                <div class="text-center">
+                    <h2>Are you sure you want start the route?</h2>
+
+                </div>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success" onclick="StartRoute()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="tableReload()">
+    <div class="modal fade modal-delete" tabindex="-1" id="OrderStatus" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:60%">
+
+                <div id="newPaymentBody" class="modal-body">
+                    <div class="text-center">
+                        <p>Order status will be modified</p>
+                        <input type="hidden" id="orderStatus" name="status"/>
+                        <input type="hidden" id="orderId" name="orderId" />
+                        <input type="hidden" id="driverId" name="driverId"/>
+                        <input type="hidden" id="rowId" />
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success" >Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <script>
+
+    function clearDiv() {
+        
+        setTimeout( function () {
+           $('#endRouteError').html("");
+            } , 7000);
+            }
     function EndRoute() {
-         var ordersCounter = @Model.RouteEntries.Count;
+        var ordersCounter = @Model.RouteEntries.Count;
+        if (areOrdersCompleted() == false) {
+            $('#endRouteError').html("Not all the orders are completed");
+            $('#RouteEnded').modal('hide');
+             clearDiv();
+            return;
+        }
         for (var i = 1; i <= ordersCounter; i++) {
             $.removeCookie('' + i);
         }
+        $.removeCookie('StartRoute');
         window.location.href = '@Url.ActionLink("EndRoute", "Drivers")';
 
+    }
+    function StartRoute() {
+        
+        loadServerPartialView('#OrdersTable', "Drivers/StartRoute").done(function () {
+             $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+             $('#RouteStarted').modal('hide');
+            $('#StartRoute').prop('disabled', true);
+             EnableButtons();
+            $.cookie('StartRoute', true);
+         })
     }
     $(document).ready(function () {
         $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
         setCookies();
+        EnableButtons();
+
     })
         function setCookies() {
         var ordersCounter = @Model.RouteEntries.Count;
         for (var i = 1; i <= ordersCounter; i++) {
-            //before setting status from cookie we have to check if the order status did not change because the cookie contains the old status with icon
+           
             var buttonContent = $('#' + i).html();
             var cookieContent = $.cookie('' + i);
             if ($.cookie('' + i) != null) {
                 
                 if ($.cookie('' + i).search("Pick") > -1 && $('#' + i).html().search("Pick") > -1 ||
                     ($.cookie('' + i).search("Deliver") > -1 && $('#' + i).html().search("Deliver") > -1)) {
+
                     $('#' + i).html($.cookie('' + i));
+                    if ($('#'+ i).html().indexOf('f') > -1)
+                    {
+                        $('#' + i).prop('disabled', true);
+                    }
+
                 }
             }
-        }
+            }
+            
+            $('#StartRoute').prop('disabled', $.cookie('StartRoute'));
     }
     
     function StatusUpdate(id) {
         var icon = "<i class='fas fa-check'></i>";
+       
         if ($('#' + id).html().search("Picked") > -1) {
-             if ($('#' + id).html().indexOf('f') > -1) {
-                $('#' + id).html("PickedUp");
-            }
-            else {
-                $('#' + id).html("PickedUp " + icon);
-            }
+            $('#' + id).html("PickedUp " + icon);
+            $('#' + id).prop('disabled', true);
             $.cookie(id, $('#' + id).html());
             }
         else if ($('#' + id).html().indexOf("Delivered") > -1) {
-            if ($('#' + id).html().indexOf('f') > -1) {
-                $('#' + id).html("Delivered");
-            }
-            else {
-                $('#' + id).html("Delivered " + icon);
-            }
+           
+            $('#' + id).html("Delivered " + icon);
+            $('#' + id).addClass('checked');
+             $('#' + id).prop('disabled', true);
              $.cookie(id, $('#' + id).html());
         }
     }
-    function loaded() {
+    function EnableButtons() {
+        if ($('#StartRoute').is(':disabled'))
+            {
+            var ordersCounter = @Model.RouteEntries.Count;
+            for (var i = 1; i <= ordersCounter; i++) {
+                if($('#' + i).html().indexOf('f') == -1)
+                $("#" + i).prop('disabled', false);
+            }
+        }
+    }
+    function tableReload() {
         loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
             $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+            $('#OrderStatus').modal('hide');
+            EnableButtons();
             setCookies();
+            StatusUpdate($('#rowId').val());
         })
     }
+    function setOrderStatusModal(driverId,orderStatus,orderId,id) {
+        $('#driverId').val(driverId);
+        $('#orderStatus').val(orderStatus);
+        $('#orderId').val(orderId);
+        $('#rowId').val(id);
+    }
+    function areOrdersCompleted() {
+         var ordersCounter = @Model.RouteEntries.Count;
+        for (var i = 1; i <= ordersCounter; i++) {
+            if ($('#' + i).html().indexOf('f') == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+   
 </script>
 

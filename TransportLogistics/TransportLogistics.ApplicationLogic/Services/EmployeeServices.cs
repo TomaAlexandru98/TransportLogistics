@@ -29,8 +29,8 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             var employee = GetEmployee(userId);
             DriverRepository.Remove(employee.Id);
-            //SupervisorRepository.Remove(id);
-            //DispatcherRepository.Remove(id);
+            //SupervisorRepository.Remove(employee.id);
+            //DispatcherRepository.Remove(employee.id);
         }
         public Employee GetEmployee(string userId)
         {
