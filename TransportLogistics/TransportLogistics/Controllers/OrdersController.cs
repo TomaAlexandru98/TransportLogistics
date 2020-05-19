@@ -80,7 +80,7 @@ namespace TransportLogistics.Controllers
                 if (ModelState.IsValid)
                 {
                     
-                    //orderservice.CreateOrder(orderData.CustomerList.Capacity,orderData.RecipientId,orderData.Price);
+                    //orderservice.CreateOrder(orderData.RecipientId,orderData.Location1,orderData.Location2,orderData.Price);
                     //return RedirectToAction("Index");
                     return PartialView("_NewOrderPartial", orderData);
                 }
