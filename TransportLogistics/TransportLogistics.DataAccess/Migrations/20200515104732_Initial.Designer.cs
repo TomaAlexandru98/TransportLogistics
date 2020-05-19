@@ -10,7 +10,7 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200514131504_Initial")]
+    [Migration("20200515104732_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,6 +246,9 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
