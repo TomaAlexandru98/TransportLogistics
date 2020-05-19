@@ -103,7 +103,7 @@ namespace TransportLogistics.Controllers
                 userSaved.PhoneNumber = model.PhoneNumber;
                 await UserManager.UpdateAsync(userSaved);
                 var roles = await UserManager.GetRolesAsync(userSaved);
-                
+                //EmployeeServices.UpdateEmployee();
                 if (await UserManager.IsInRoleAsync(userSaved, model.Role) == false)
                 {
                     await UserManager.RemoveFromRoleAsync(userSaved,roles[0]);

@@ -18,12 +18,8 @@
             var i = Model.RouteEntries.Count;
             foreach (var routeEntry in Model.RouteEntries)
             {
-                //TransportLogistics.Model.OrderStatus orderStatus = TransportLogistics.Model.OrderStatus.PickedUp;
-                //if(routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.PickedUp)
-                //{
-                //    orderStatus = TransportLogistics.Model.OrderStatus.Delivered;
-                //}
-                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering)
+                
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering )
                 {
                     routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
                 }
@@ -42,10 +38,8 @@
           
                 <td>@routeEntry.Order.DeliveryAddress.Country,@routeEntry.Order.DeliveryAddress.City,@routeEntry.Order.DeliveryAddress.Street,@routeEntry.Order.DeliveryAddress.StreetNumber</td>
            
-            <td style="text-align:center"><a class="btn bg-menu" id="@i" data-ajax="true"  asp-controller="Drivers" asp-action="SetOrderStatus" asp-route-driverId="@Model.DriverId" 
-                   asp-route-orderId="@routeEntry.Order.Id" asp-route-status="@routeEntry.Order.Status"  onclick="StatusUpdate(this.id)"
-                   >
-                @routeEntry.Order.Status </a></td>
+            <td style="text-align:center"><button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
+                  data-toggle="modal" data-target="#OrderStatus">  @routeEntry.Order.Status </button></td>
             <td>@routeEntry.Order.Price</td>
         </tr>
                 i--; }  }
