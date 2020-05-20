@@ -17,23 +17,57 @@ namespace TransportLogistics.ApplicationLogic.Services
             OrderRepository = persistenceContext.OrderRepository;
             customerRepository = persistenceContext.CustomerRepository;
         }
-        public void ChangeOrderStatus(Guid orderId, OrderStatus status)
+        public void ChangeOrderStatus(Guid orderId, string status)
         {
-            var Order =OrderRepository.GetById(orderId);
-            Order.SetStatus(status);
+            OrderStatus enumStatus = OrderStatus.Assigned;
+
+            switch (status)
+            {
+                case "PickedUp":
+                    enumStatus = OrderStatus.PickedUp;
+                    break;
+                case "Delivered":
+                    enumStatus = OrderStatus.Delivered;
+                    break;
+            }
+
+            var Order = OrderRepository.GetById(orderId);
+            Order.SetStatus(enumStatus);
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
-
         }
 
-        public Order CreateOrder(string RecipientId,LocationAddress pickup, LocationAddress delivery, decimal price)
+        //when a driver starts up a route,all the order with status PickedUp should be changed into Delivering
+        public void StartRoute(ICollection<RouteEntry> routeEntries)
         {
-            Guid customerId = Guid.Parse(RecipientId);
-            var recipient = customerRepository.GetById(customerId);
-            var order = Order.Create(recipient, pickup, delivery, price);
+            foreach(var routeEntry in routeEntries)
+            {
+                if(routeEntry.Order.Status == OrderStatus.PickedUp)
+                {
+                    routeEntry.Order.SetStatus(OrderStatus.Delivering);
+                }
+            }
+        }
+
+        public Order CreateOrder(Customer recipient, string pickupId, string deliveryId, decimal price)
+        {
+            Guid.TryParse(pickupId, out Guid pickupGuid);
+            var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
+
+            Guid.TryParse(deliveryId, out Guid deliveryGuid);
+            var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
+
+            var order = Order.Create(recipient, pickupLocation, deliveryLocation, price);
+            
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
+        }
+
+        public Order GetById(string Id)
+        {
+            Guid.TryParse(Id, out Guid guid);
+            return OrderRepository.GetById(guid);
         }
 
         public IEnumerable<Order> GetAllOrders()

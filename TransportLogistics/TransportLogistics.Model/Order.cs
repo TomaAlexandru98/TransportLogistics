@@ -24,13 +24,12 @@ namespace TransportLogistics.Model
 
             var order = new Order()
             {
-                DeliveryAddress = delivery,
                 Id = Guid.NewGuid(),
+                DeliveryAddress = delivery,
                 PickUpAddress = pickup,
                 Price = price,
                 Recipient = recipient,
                 Status = OrderStatus.Created
-
             };
             return order;
         }

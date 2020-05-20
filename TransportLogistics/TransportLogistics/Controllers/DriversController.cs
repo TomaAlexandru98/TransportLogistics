@@ -38,12 +38,12 @@ namespace TransportLogistics.Controllers
 
             return View(currentRoute);
         }
-        public IActionResult SetOrderStatus(OrderStatus status , Guid orderId,Guid driverId)
+        public IActionResult SetOrderStatus(string status , Guid orderId,Guid driverId)
         {
 
             OrderService.ChangeOrderStatus(orderId, status);
             return RedirectToAction("Index");
-           
+
         }
         public async Task<IActionResult> GetOrdersPartial()
         {
@@ -63,6 +63,13 @@ namespace TransportLogistics.Controllers
             var driver = DriverService.GetByUserId(user.Id);
             DriverService.EndCurrentRoute(driver);
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> StartRoute()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var driver = DriverService.GetByUserId(user.Id);
+            DriverService.SetDriverStatus(driver, DriverStatus.Driving);
+            return RedirectToAction("GetOrdersPartial");
         }
     }
 }

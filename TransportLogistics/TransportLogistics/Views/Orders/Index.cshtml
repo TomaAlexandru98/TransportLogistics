@@ -61,6 +61,11 @@
             });
         }
 
+        function LoadDropdown(customerControl) {
+            var customerId = $(customerControl).val();
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/" + customerId);
+        }
+
         function LoadNewOrderView() {
             loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
         }
@@ -75,29 +80,8 @@
         }
 
 
-        $("#EventId").on("change", function(){
-            showValue($(this).val());
-        })
 
-
-
-
-
-function showValue(val)
-{
-    var val = $('#dropDownId').val();
-    console.log(val);
-    $.getJSON('@Url.Action("GetDropdownList", "Orders")' + "/" + EventId, function (result) {
-            $("#SecondDropdown").html(""); // makes select null before filling process
-            var data = result.data;
-            for (var i = 0; i < data.length; i++) {
-                $("#SecondDropdown").append("<option>"+ data[i] +"</option>")
-            }
-
-    })
-    
-}
-
+        @*
         function loadCustomerAddreses(customerControl,dropDownId) {
 
             var customerId = $(customerControl).val();
@@ -109,5 +93,6 @@ function showValue(val)
                 }
             });
         }
+        *@
     </script>
 }
