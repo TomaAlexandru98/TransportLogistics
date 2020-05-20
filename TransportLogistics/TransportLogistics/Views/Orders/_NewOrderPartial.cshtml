@@ -1,5 +1,5 @@
-﻿@using TransportLogistics.ViewModels.Orders;
-@model NewOrderViewModel;
+﻿@using TransportLogistics.ViewModels.Orders
+@model NewOrderViewModel
 @{
     ViewData["Title"] = "Test";
 }
@@ -7,9 +7,9 @@
 <div class="form-group text-center">
     <label asp-for="RecipientId"></label>
     <div>
-        <select style="min-width: 60%" asp-for="RecipientId" asp-items="@Model.CustomerList"
-                onclick="LoadDropdown('#RecipientId')">
-        </select>
+            <select style="min-width: 60%" asp-for="RecipientId" asp-items="@Model.CustomerList"
+                    onchange="LoadDropdown('#RecipientId')">
+            </select>
     </div>
     <span asp-validation-for="RecipientId" class="text-danger"></span>
 </div>
@@ -17,7 +17,8 @@
 <div class="form-group text-center">
     <label asp-for="PickupLocationId"></label>
     <div>
-        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation">
+        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation"
+                onchange="LoadDropdown('#PickupLocationId')">
         </select>
     </div>
     <span asp-validation-for="PickupLocationId" class="text-danger"></span>
