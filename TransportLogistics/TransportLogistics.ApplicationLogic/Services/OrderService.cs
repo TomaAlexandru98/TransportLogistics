@@ -16,20 +16,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersistenceContext = persistenceContext;
             OrderRepository = persistenceContext.OrderRepository;
         }
-        public void ChangeOrderStatus(Guid orderId, string status)
+        public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
-            OrderStatus enumStatus = OrderStatus.Assigned;
-            switch (status)
-            {
-                case "PickedUp":
-                    enumStatus = OrderStatus.PickedUp;
-                    break;
-                case "Delivered":
-                    enumStatus = OrderStatus.Delivered;
-                    break;
-            }
+           
             var Order =OrderRepository.GetById(orderId);
-            Order.SetStatus(enumStatus);
+            Order.SetStatus(status);
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
 
