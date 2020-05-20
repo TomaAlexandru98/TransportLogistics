@@ -42,6 +42,35 @@
     </div>
 </form>
 
+
+<form id="editOrderForm" method="post" asp-controller="Orders" asp-action="Update"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="modalFormComplete('#editOrderModal')"
+      data-ajax-update="#editOrderBody">
+
+    @Html.AntiForgeryToken()
+    <div class="modal" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold" id="editOrderModalLabel">Edit Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="editOrderBody" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
+                    <button id="btnSaveChanges" class="btn btn-success" type="submit"> Confirm </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 <form method="post" asp-controller="Orders" asp-action="Remove"
       data-ajax="true"
       data-ajax-method="POST"
@@ -74,11 +103,15 @@
             loadTable();
         });
 
+        function LoadEditOrderView(Id) {
+                    loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id).done(function () { $.validator.unobtrusive.parse(document);});
+
+                }
         function loadTable() {
             loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
                 $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
-            
+
         }
 
         function LoadDropdown(customerControl) {

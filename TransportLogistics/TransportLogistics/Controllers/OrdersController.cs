@@ -129,6 +129,58 @@ namespace TransportLogistics.Controllers
 
             return PartialView("_RemoveOrderPartial", removeData);
         }
+
+        [HttpGet]
+        public IActionResult Update(string id)
+        {
+            List<SelectListItem> customerLocations = null;
+
+            var order = orderservice.GetById(id);
+            var customerId = order.Recipient.Id;
+            var locations = customerService.GetCustomerAddresses(customerId.ToString());
+            customerLocations = new List<SelectListItem>();
+            foreach (var location in locations)
+            {
+                customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+            }
+
+            UpdateOrderViewModel newOrderViewModel = new UpdateOrderViewModel()
+            {
+                Id = order.Id.ToString(),
+                CustomerList = GetCustomerList(),
+                PickupLocation = customerLocations,
+                DeliveryLocation = customerLocations,
+                Price = order.Price,
+                
+            };
+
+            return PartialView("_Update", newOrderViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Update([FromForm]UpdateOrderViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_Update", viewModel);
+            }
+
+            try
+            {
+                
+                orderservice.Update(viewModel.Id,
+                                      viewModel.PickupLocationId,
+                                      viewModel.DeliveryLocationId,
+                                      viewModel.Price);
+                return PartialView("_Update", viewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to update order {@Exception}", e.Message);
+                logger.LogDebug("Failed to update order {ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
         /*
         [HttpGet]
         public JsonResult GetCustomerLocations(string id)

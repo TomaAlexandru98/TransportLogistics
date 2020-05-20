@@ -33,5 +33,15 @@ namespace TransportLogistics.Model
             };
             return order;
         }
+
+        public Order Update(LocationAddress pickup, LocationAddress delivery, decimal price)
+        {
+            this.PickUpAddress = pickup;
+            this.DeliveryAddress = delivery;
+            this.Price = price;
+          
+
+            return this;
+        }
     }
 }

@@ -89,5 +89,22 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return false;
         }
+        public Customer GetRecipient(string id)
+        {
+            return null;
+        }
+        public Order Update(string id,string pickupId,string deliveryId, decimal price)
+        {
+            Guid.TryParse(pickupId, out Guid pickupGuid);
+            var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
+
+            Guid.TryParse(deliveryId, out Guid deliveryGuid);
+            var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
+
+            var order = GetById(id);
+            order.Update(pickupLocation, deliveryLocation, price);
+            PersistenceContext.SaveChanges();
+            return order;
+        }
     }
 }
