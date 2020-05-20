@@ -9,12 +9,16 @@ using TransportLogistics.ViewModels.Routes;
 
 namespace TransportLogistics.Controllers
 {
-    
-
     public class RoutesController : Controller
     {
         private readonly ILogger<OrderService> logger;
-        
+        private readonly RouteService routeService;
+
+        public RoutesController(ILogger<OrderService> logger, RouteService routeservice)
+        {
+            this.logger = logger;
+            this.routeService = routeservice;
+        }
         public IActionResult Index()
         {
             return View();
@@ -24,9 +28,9 @@ namespace TransportLogistics.Controllers
         {
             var routesView = new RouteViewModel()
             {
-                Routes = route
-            }
-            return PartialView("_RoutesTablePartial");
+                Routes = routeService.GetAllRoutes()
+            };
+            return PartialView("_RoutesTablePartial", routesView);
         }
     }
 }

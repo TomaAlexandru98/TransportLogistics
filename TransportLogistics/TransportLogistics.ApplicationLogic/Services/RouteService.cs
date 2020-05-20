@@ -33,5 +33,9 @@ namespace TransportLogistics.ApplicationLogic.Services
             route.RouteEntries.Add(entry);
             return route;
         }
+        public IEnumerable<Route> GetAllRoutes()
+        {
+            return routeRepository.GetAll();
+        }
     }
 }
