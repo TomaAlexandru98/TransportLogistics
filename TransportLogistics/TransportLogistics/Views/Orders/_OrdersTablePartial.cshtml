@@ -59,8 +59,8 @@
                 <td>@order.Price</td>
                 <td class="d-flex justify-content-around">
 
-                    <a name="ID" id="@order.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
-                    data-target="#editOrderModal" onclick="LoadEditOrderView('@order.Id');"><i class="material-icons fa fa-edit"></i></a>
+                    <button name="ID" id="@order.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                    data-target="#editOrderModal" onclick="LoadEditOrderView('@order.Id');"><i class="material-icons fa fa-edit"></i></button>
 
                     <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
                             onclick="LoadRemoveOrderView('@order.Id');" data-target="#removeModal" >
