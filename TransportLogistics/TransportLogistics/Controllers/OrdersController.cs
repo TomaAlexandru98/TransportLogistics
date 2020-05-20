@@ -108,6 +108,27 @@ namespace TransportLogistics.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Remove([FromRoute]string Id)
+        {
+
+            RemoveOrderViewModel removeViewModel = new RemoveOrderViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveOrderPartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveOrderViewModel removeData)
+        {
+
+            orderservice.Remove(removeData.Id);
+
+
+            return PartialView("_RemoveOrderPartial", removeData);
+        }
         /*
         [HttpGet]
         public JsonResult GetCustomerLocations(string id)

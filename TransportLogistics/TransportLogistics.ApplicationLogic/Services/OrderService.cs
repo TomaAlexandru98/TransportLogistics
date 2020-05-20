@@ -74,5 +74,20 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return OrderRepository.GetAll();
         }
+
+        public bool Remove(string id)
+        {
+            Guid orderId = Guid.Empty;
+            Guid.TryParse(id, out orderId);
+
+            var result = OrderRepository?.Remove(orderId);
+            if (result == true)
+            {
+                PersistenceContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

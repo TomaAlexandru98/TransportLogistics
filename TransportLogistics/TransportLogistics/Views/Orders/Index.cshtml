@@ -42,6 +42,25 @@
     </div>
 </form>
 
+<form method="post" asp-controller="Orders" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="modalFormComplete('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveOrderPartial" model="new RemoveOrderViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
 
 
 @section Scripts {
@@ -59,6 +78,7 @@
             loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
                 $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
+            
         }
 
         function LoadDropdown(customerControl) {
@@ -79,7 +99,9 @@
             document.location = '@Url.Action("Index", "Routes")';
         }
 
-
+         function LoadRemoveOrderView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Orders")'+"/" + Id);
+        }
 
         @*
         function loadCustomerAddreses(customerControl,dropDownId) {
