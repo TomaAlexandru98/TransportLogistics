@@ -126,9 +126,6 @@ namespace TransportLogistics.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> CancelOrder()
-        {
-            return RedirectToAction("GetOrdersPartial");
-        }
+      
     }
 }

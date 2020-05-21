@@ -46,7 +46,11 @@ namespace TransportLogistics.DataAccess.Repositories
             return completeRouteEntries;
         }
 
-        
-       
+        public RoutesHistory GetRoutesHistory(Guid id)
+        {
+            var driver = GetById(id);
+            var routes = dbContext.Drivers.Include(o => o.RoutesHistoric).ThenInclude(o => o.Routes).FirstOrDefault();
+            return driver.RoutesHistoric;
+        }
     }
 }

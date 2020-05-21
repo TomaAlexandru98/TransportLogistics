@@ -21,16 +21,18 @@
             foreach (var routeEntry in Model.RouteEntries)
             {
 
-                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering )
-                { 
+                var initialStatus = routeEntry.Order.Status;
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering
+                    || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
+                {
 
-                routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
                 }
-            if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Created ||
-            routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned)
-            {
-                routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
-            }
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Created ||
+                routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
+                {
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
+                }
 
         <tr>
            
@@ -43,14 +45,16 @@
            
             <td style="text-align:center;max-height:3rem;min-width:20rem"><button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
                   data-toggle="modal" data-target="#OrderStatus">  @routeEntry.Order.Status </button></td>
-            @*@ if (routeEntry.Order.Status != TransportLogistics.Model.OrderStatus.Canceled)*@
-            
             @{ var cancelButtonId = i + Model.RouteEntries.Count; }
-            <td><button class="btn bg-menu" id="@cancelButtonId"  data-toggle="modal" data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
-            @*else
+            @if (initialStatus != TransportLogistics.Model.OrderStatus.Canceled)
             {
-            <td><button  disabled class="btn bg-menu">Canceled <i class='fas fa-check'></i></button></td>
-            }*@
+            
+            <td><button class="btn bg-menu" id="@cancelButtonId"  data-toggle="modal" data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
+           }
+            else
+            {
+            <td><button  disabled class="btn bg-menu" id="@cancelButtonId">Canceled <i class='fas fa-check'></i></button></td>
+            }
             <td>@routeEntry.Order.Price</td>
         </tr>
                 i--; }  }
