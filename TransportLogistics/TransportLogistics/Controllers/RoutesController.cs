@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
+using TransportLogistics.ViewModels.Orders;
 using TransportLogistics.ViewModels.Routes;
 
 
@@ -110,5 +111,30 @@ namespace TransportLogistics.Controllers
             return PartialView("_RoutesTablePartial", routesView);
 
         }
+
+
+        [HttpGet]
+        public IActionResult Remove([FromRoute]string Id)
+        {
+
+            RemoveRouteViewModel removeViewModel = new RemoveRouteViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveRoutePartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveRouteViewModel removeData)
+        {
+
+            routeService.Remove(removeData.Id);
+
+            return PartialView("_RemoveRoutePartial", removeData);
+        }
+
+
+
     }
 }
