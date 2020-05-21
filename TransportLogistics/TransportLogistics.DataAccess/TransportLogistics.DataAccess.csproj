@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200520134430_VehicleInRoute.cs" />
+    <Compile Remove="Migrations\20200520134430_VehicleInRoute.Designer.cs" />
+    <Compile Remove="Migrations\20200521170429_timing.cs" />
+    <Compile Remove="Migrations\20200521170429_timing.Designer.cs" />
+    <Compile Remove="Migrations\20200521165723_time.cs" />
+    <Compile Remove="Migrations\20200521165723_time.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
   
 
     <PackageReference Include="jQuery" Version="3.5.1" />

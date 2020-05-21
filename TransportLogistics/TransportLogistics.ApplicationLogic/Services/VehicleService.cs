@@ -86,5 +86,16 @@ namespace TransportLogistics.ApplicationLogic.Services
             return this.vehicleRepository.GetDetailsRoute(guidVehicleId, guidRouteId);
 
         }
+
+        public bool IsVehicle(string vehicleId)
+        {
+            Guid.TryParse(vehicleId, out Guid vehicleGuid);
+            if (vehicleRepository.GetById(vehicleGuid) == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

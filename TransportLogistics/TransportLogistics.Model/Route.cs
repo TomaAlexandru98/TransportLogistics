@@ -4,15 +4,20 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public class Route:DataEntity
+    public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get; private set; }
         public Vehicle Vehicle { get; private set; }
-        public static Route Create()
+        public DateTime StartTime { get; private set; }
+        public DateTime FinishTime { get; private set; }
+       
+        public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                Vehicle = vehicle
+
             }; 
             return route;
         }
@@ -20,6 +25,15 @@ namespace TransportLogistics.Model
         public void SetRouteEntries(ICollection<RouteEntry> routeEntries)
         {
             RouteEntries = routeEntries;
+        }
+        public void SetStartTime()
+        {
+            StartTime = DateTime.UtcNow;
+        }
+        public void SetFinishTime()
+        {
+            FinishTime = DateTime.UtcNow;
+           
         }
     } 
 }
