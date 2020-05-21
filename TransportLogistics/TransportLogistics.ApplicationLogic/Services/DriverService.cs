@@ -11,11 +11,13 @@ namespace TransportLogistics.ApplicationLogic.Sevices
     {
         private readonly IDriverRepository DriverRepository;
         private readonly IPersistenceContext PersistenceContext;
+        private readonly IRouteRepository RouteRepository;
         private readonly OrderService OrderService;
-        public DriverService(IPersistenceContext persistenceContext, OrderService orderService)
+        public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
         {
             PersistenceContext = persistenceContext;
             DriverRepository = persistenceContext.DriverRepository;
+            RouteRepository = persistenceContext.RouteRepository;
             OrderService = orderService;
         }
         public Driver GetByUserId(string userId)
@@ -44,6 +46,16 @@ namespace TransportLogistics.ApplicationLogic.Sevices
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }
-        
+        public RoutesHistory GetRoutesHistory(Guid id)
+        {
+            return DriverRepository.GetRoutesHistory(id);
+        }
+        public Route GetRouteById(Guid id)
+        {
+
+            return RouteRepository.GetRouteById(id);
+        }
+
+
     }
 }

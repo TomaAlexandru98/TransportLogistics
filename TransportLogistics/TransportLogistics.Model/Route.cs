@@ -17,6 +17,9 @@ namespace TransportLogistics.Model
             return route;
         }
 
-
+        public void SetRouteEntries(ICollection<RouteEntry> routeEntries)
+        {
+            RouteEntries = routeEntries;
+        }
     } 
 }
