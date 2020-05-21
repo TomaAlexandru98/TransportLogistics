@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc.Ajax;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
@@ -14,12 +15,12 @@ namespace TransportLogistics.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly OrderService orderservice;
+        private readonly OrderService orderService;
         private readonly ILogger<OrderService> logger;
         private readonly CustomerService customerService;
         public OrdersController(OrderService orderService, ILogger<OrderService> logger, CustomerService customerService)
         {
-            this.orderservice = orderService;
+            this.orderService = orderService;
             this.logger = logger;
             this.customerService = customerService;
         }
@@ -33,7 +34,7 @@ namespace TransportLogistics.Controllers
         {
             var ordersView = new OrderViewModel()
             {
-                Orders = orderservice.GetAllOrders()
+                Orders = orderService.GetAllOrders()
             };
 
             return PartialView("_OrdersTablePartial", ordersView);
@@ -55,29 +56,68 @@ namespace TransportLogistics.Controllers
             return customerNames;
         }
 
+        private SelectListItem CreateListItem(LocationAddress location)
+        {
+            string dropdownText = $"{ location.PostalCode }, { location.Street}";
+            SelectListItem selectLocation = new SelectListItem(dropdownText, location.Id.ToString());
+            return selectLocation;
+        }
+
         [HttpGet]
         public IActionResult NewOrder(string id)
         {
-            List<SelectListItem> customerLocations = null;
+            List<SelectListItem> pickupLocations = new List<SelectListItem>();
+            List<SelectListItem> deliveryLocations = new List<SelectListItem>();
+            string recipientId = null;
 
-            if (id != null)
+            try
             {
-                var locations = customerService.GetCustomerAddresses(id);
-                customerLocations = new List<SelectListItem>();
-                foreach (var location in locations)
+                if (id != null)
                 {
-                    customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+                    if (customerService.IsCustomer(id))
+                    {
+                        recipientId = id;
+                        var locations = customerService.GetCustomerAddresses(id);
+                        foreach (var location in locations)
+                        {
+                            pickupLocations.Add(CreateListItem(location));
+                        }
+                    }
+                    else
+                    {
+                        var pickup = customerService.GetLocationAddress(id);
+                        var customer = customerService.GetCustomerByLocation(pickup);
+                        recipientId = customer.Id.ToString();
+
+                        foreach (var location in customer.LocationAddresses)
+                        {
+                            if (location.Id != pickup.Id)
+                            {
+                                deliveryLocations.Add(CreateListItem(location));
+                            }
+                        }
+
+                        pickupLocations.Add(CreateListItem(pickup));
+                        pickupLocations.AddRange(deliveryLocations);
+                    }
                 }
+
+                NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+                {
+                    CustomerList = GetCustomerList(),
+                    PickupLocation = pickupLocations,
+                    DeliveryLocation = deliveryLocations,
+                    RecipientId = recipientId
+                };
+
+                return PartialView("_NewOrderPartial", newOrderViewModel);
             }
-
-            NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+            catch (Exception e)
             {
-                CustomerList = GetCustomerList(),
-                PickupLocation = customerLocations,
-                DeliveryLocation = customerLocations
-            };
-
-            return PartialView("_NewOrderPartial", newOrderViewModel);
+                logger.LogError("Failed to load information for Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
         }
 
 
@@ -92,7 +132,7 @@ namespace TransportLogistics.Controllers
 
                     var recipient = customerService.GetCustomerById(orderData.RecipientId);
 
-                    orderservice.CreateOrder(recipient, 
+                    orderService.CreateOrder(recipient, 
                         orderData.PickupLocationId, 
                         orderData.DeliveryLocationId,
                         orderData.Price);
@@ -127,8 +167,7 @@ namespace TransportLogistics.Controllers
         public IActionResult Remove(RemoveOrderViewModel removeData)
         {
 
-            orderservice.Remove(removeData.Id);
-
+            orderService.Remove(removeData.Id);
 
             return PartialView("_RemoveOrderPartial", removeData);
         }
@@ -136,15 +175,14 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult Update(string id)
         {
-            List<SelectListItem> customerLocations = null;
-
-            var order = orderservice.GetById(id);
+            var order = orderService.GetById(id);
             var customerId = order.Recipient.Id;
             var locations = customerService.GetCustomerAddresses(customerId.ToString());
-            customerLocations = new List<SelectListItem>();
+
+            List<SelectListItem>  customerLocations = new List<SelectListItem>();
             foreach (var location in locations)
             {
-                customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+                customerLocations.Add(CreateListItem(location));
             }
 
             UpdateOrderViewModel newOrderViewModel = new UpdateOrderViewModel()
@@ -153,8 +191,9 @@ namespace TransportLogistics.Controllers
                 CustomerList = GetCustomerList(),
                 PickupLocation = customerLocations,
                 DeliveryLocation = customerLocations,
-                Price = order.Price,
-                
+                DeliveryLocationId = order.DeliveryAddress.Id.ToString(),
+                PickupLocationId = order.PickUpAddress.Id.ToString(),
+                Price = order.Price,                
             };
 
             return PartialView("_Update", newOrderViewModel);
@@ -171,7 +210,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 
-                orderservice.Update(viewModel.Id,
+                orderService.Update(viewModel.Id,
                                       viewModel.PickupLocationId,
                                       viewModel.DeliveryLocationId,
                                       viewModel.Price);
@@ -184,6 +223,9 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+
         /*
         [HttpGet]
         public JsonResult GetCustomerLocations(string id)

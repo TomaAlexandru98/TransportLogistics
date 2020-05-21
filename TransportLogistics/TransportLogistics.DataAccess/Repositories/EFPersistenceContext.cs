@@ -29,6 +29,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public IVehicleRepository VehicleRepository { get; private set; }
         public IDriverRepository DriverRepository { get; private set; }
         public IOrderRepository OrderRepository { get; private set; }
+        public IRouteRepository RouteRepository { get; private set; }
         
         public TransactionScope BeginTransaction()
         {

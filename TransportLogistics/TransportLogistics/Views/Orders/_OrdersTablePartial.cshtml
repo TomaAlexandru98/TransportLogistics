@@ -20,7 +20,8 @@
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.PickUpAddress.PostalCode
+                        @order.PickUpAddress.PostalCode, @order.PickUpAddress.Street
+
                     </button>
                     <div class="dropdown-menu" style="padding: 0.8rem">
                         <div>Country: @order.PickUpAddress.Country</div>
@@ -35,7 +36,8 @@
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.DeliveryAddress.PostalCode
+                        @order.DeliveryAddress.PostalCode, @order.DeliveryAddress.Street
+
                     </button>
                     <div class="dropdown-menu" style="padding: 0.8rem">
                         <div>Country: @order.DeliveryAddress.Country</div>

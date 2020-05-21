@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <button class="btn-car ml-3" onclick="goToRoutes()">Define Route <i class="fa fa-box"></i></button>
+
+    <button class="btn-car ml-3" onclick="goToRoutes()">Define Route <i class="fa fa-route"></i></button>
 
     <button class="btn-car" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
 
@@ -44,8 +45,6 @@
     </div>
 </form>
 
-
-
 <form id="editOrderForm" method="post" asp-controller="Orders" asp-action="Update"
       data-ajax="true"
       data-ajax-method="POST"
@@ -54,9 +53,9 @@
       data-ajax-update="#editOrderBody">
 
     @Html.AntiForgeryToken()
-    <div class="modal" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderrModalLabel" aria-hidden="true">
+    <div class="modal" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="max-width: 60%">
                 <div class="modal-header">
                     <h5 class="modal-title font-weight-bold" id="editOrderModalLabel">Edit Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -64,6 +63,7 @@
                     </button>
                 </div>
                 <div id="editOrderBody" class="modal-body">
+                    <partial name="_Update" model="new UpdateOrderViewModel()" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
@@ -92,15 +92,10 @@
     </div>
 </form>
 
-
-
-
-
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
-
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -108,14 +103,13 @@
         });
 
         function LoadEditOrderView(Id) {
-                    loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id).done(function () { $.validator.unobtrusive.parse(document);});
-
-                }
+            loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id);
+        }
+    
         function loadTable() {
             loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
                 $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
-
         }
 
         function LoadDropdown(customerControl) {
@@ -137,7 +131,7 @@
         }
 
          function LoadRemoveOrderView(Id) {
-             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Orders")'+"/" + Id);
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Orders")' + "/" + Id);
         }
 
         @*
