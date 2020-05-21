@@ -75,10 +75,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             return OrderRepository.GetById(guid);
         }
 
-        //public IEnumerable<Order> GetAllOrders()
-        //{
-        //    return OrderRepository.GetAll();
-        //}
 
         public bool Remove(string id)
         {
