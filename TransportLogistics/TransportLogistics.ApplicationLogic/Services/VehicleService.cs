@@ -71,5 +71,20 @@ namespace TransportLogistics.ApplicationLogic.Services
             persistenceContext.SaveChanges();
             return vehicleToUpdate;
         }
+
+        public IEnumerable<VehicleDriver> GetHistory(string id)
+        {
+            var vehicleId = Guid.Parse(id);
+            return vehicleRepository?.GetHistory(vehicleId);
+        }
+
+        public IEnumerable<RouteEntry> GetDetailsRoute(string vehicleId, string routeId)
+        {
+            var guidVehicleId = Guid.Parse(vehicleId);
+            var guidRouteId = Guid.Parse(routeId);
+
+            return this.vehicleRepository.GetDetailsRoute(guidVehicleId, guidRouteId);
+
+        }
     }
 }

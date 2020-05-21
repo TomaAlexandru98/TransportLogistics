@@ -7,10 +7,11 @@
 <table id="Orders" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th>PickUpAddress</th>
-            <th>DeliveryAddress</th>
-            <th>Status</th>
-            <td>Payment</td>
+            <th style="text-align:center"><b>PickUpAddress</b></th>
+            <th style="text-align:center"><b>DeliveryAddress</b></th>
+            <th style="text-align:center"><b>Status</b></th>
+            <td style="text-align:center"><b>Troubles</b></td>
+            <td style="text-align:center"><b>Payment</b></td>
         </tr>
     </thead>
     <tbody>
@@ -42,12 +43,20 @@
            
             <td style="text-align:center;max-height:3rem;min-width:20rem"><button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
                   data-toggle="modal" data-target="#OrderStatus">  @routeEntry.Order.Status </button></td>
+            @*@ if (routeEntry.Order.Status != TransportLogistics.Model.OrderStatus.Canceled)*@
+            
+            @{ var cancelButtonId = i + Model.RouteEntries.Count; }
+            <td><button class="btn bg-menu" id="@cancelButtonId"  data-toggle="modal" data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
+            @*else
+            {
+            <td><button  disabled class="btn bg-menu">Canceled <i class='fas fa-check'></i></button></td>
+            }*@
             <td>@routeEntry.Order.Price</td>
         </tr>
                 i--; }  }
        
     </tbody>
-</table>
+</table> 
 
 <script>
   

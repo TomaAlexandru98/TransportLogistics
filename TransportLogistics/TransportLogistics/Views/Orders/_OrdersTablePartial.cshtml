@@ -19,6 +19,7 @@
             <tr>
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                         @order.PickUpAddress.PostalCode
                     </button>
                     <div class="dropdown-menu" style="padding: 0.8rem">
@@ -27,11 +28,13 @@
                         <div>Street: @order.PickUpAddress.Street</div>
                         <div>Street number: @order.PickUpAddress.StreetNumber</div>
                         <div>Postal Code: @order.PickUpAddress.PostalCode</div>
+
                     </div>
                 </td>
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                         @order.DeliveryAddress.PostalCode
                     </button>
                     <div class="dropdown-menu" style="padding: 0.8rem">
@@ -45,6 +48,7 @@
 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                         @order.Recipient.Name
                     </button>
                     <div class="dropdown-menu" style="padding: 0.8rem">
@@ -52,11 +56,13 @@
                         <div>@order.Recipient.ContactDetails.Email</div>
                         <div>Phone number:</div>
                         <div>@order.Recipient.ContactDetails.PhoneNo</div>
+
                     </div>
                 </td>
 
                 <td>@order.Status</td>
                 <td>@order.Price</td>
+
                 <td class="d-flex justify-content-around">
 
                     <button name="ID" id="@order.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
@@ -64,6 +70,7 @@
 
                     <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
                             onclick="LoadRemoveOrderView('@order.Id');" data-target="#removeModal" >
+
                         <i class="material-icons fa fa-trash"></i>
                     </button>
                 </td>

@@ -74,7 +74,9 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Dispatchers" asp-action="Index">
+
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="Index">
+
                                             <i class="fas fa-truck"></i>
                                             Drivers
                                         </a>
@@ -85,6 +87,37 @@
                                             Routes
                                         </a>
                                     </li>
+
+                                }
+                        }
+                        @{
+                            var driverId = userManager.GetUserId(User);
+                            var driver = await userManager.FindByIdAsync(driverId);
+                            if (driver != null)
+                                if (userManager.IsInRoleAsync(userManager.FindByIdAsync(userManager.GetUserId(User)).GetAwaiter().GetResult(), "Driver")
+                                 .GetAwaiter().GetResult())
+                                {
+                                    <li>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="Index">
+                                            <i class="fas fa-road"></i>
+                                            View Route
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="RoutesHistory">
+                                            <i class="fa fa-history" aria-hidden="true"></i>
+                                            Routes History
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="TrailerRequest">
+                                            <i class="fas fa-trailer"></i>
+                                             Trailer Request
+                                        </a>
+                                    </li>
+                                    
+
                                 }
                         }
                     </ul>

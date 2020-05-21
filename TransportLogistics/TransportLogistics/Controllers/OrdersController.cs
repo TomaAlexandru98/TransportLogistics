@@ -84,16 +84,19 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult NewOrder([FromForm]NewOrderViewModel orderData)
         {
+
             try
             {
                 if (ModelState.IsValid)
                 {
+
                     var recipient = customerService.GetCustomerById(orderData.RecipientId);
 
                     orderservice.CreateOrder(recipient, 
                         orderData.PickupLocationId, 
                         orderData.DeliveryLocationId,
                         orderData.Price);
+
 
                     return PartialView("_NewOrderPartial", orderData);
                 }
@@ -187,6 +190,7 @@ namespace TransportLogistics.Controllers
         {
             var locationList = customerService.GetCustomerAddresses(id);
             return Json(new { data = locationList });
+
         }
         */
     }

@@ -6,9 +6,9 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.ViewModels.Vehicles
 {
-    public class HistoryVehicleViewModel
+    public class RouteDetailsViewModel
     {
-        public Vehicle Vehicle { get; set; }
-        public IEnumerable<VehicleDriver> VehicleDriver { get; set; }
+        public string VehicleId { get; set; }
+        public IEnumerable<RouteEntry> RouteEntries { get; set; }
     }
 }

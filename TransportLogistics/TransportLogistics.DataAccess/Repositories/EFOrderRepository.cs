@@ -16,6 +16,7 @@ namespace TransportLogistics.DataAccess.Repositories
 
         }
 
+
         public new Order GetById(Guid orderId)
         {
             return dbContext.Orders
@@ -26,6 +27,7 @@ namespace TransportLogistics.DataAccess.Repositories
                         .Where(o => o.Id == orderId)
                         .FirstOrDefault();
         }
+
 
         public new IEnumerable<Order> GetAll()
         {

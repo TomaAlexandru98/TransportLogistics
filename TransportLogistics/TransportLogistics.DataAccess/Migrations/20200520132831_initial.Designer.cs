@@ -3,15 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+
+    [Migration("20200520132831_initial")]
+    partial class initial
+
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,14 +184,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("RoutesHistoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RoutesHistoryId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Routes");
                 });
@@ -296,27 +295,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("TransportLogistics.Model.VehicleDriver", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DriverId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DriverId");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleDrivers");
-                });
-
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
                 {
                     b.HasOne("TransportLogistics.Model.Contact", "ContactDetails")
@@ -362,10 +340,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.RoutesHistory", null)
                         .WithMany("Routes")
                         .HasForeignKey("RoutesHistoryId");
-
-                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.RouteEntry", b =>
@@ -383,17 +357,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     b.HasOne("TransportLogistics.Model.Vehicle", null)
                         .WithMany("CurrentTrailers")
-                        .HasForeignKey("VehicleId");
-                });
-
-            modelBuilder.Entity("TransportLogistics.Model.VehicleDriver", b =>
-                {
-                    b.HasOne("TransportLogistics.Model.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId");
-
-                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
-                        .WithMany()
                         .HasForeignKey("VehicleId");
                 });
 #pragma warning restore 612, 618

@@ -31,7 +31,7 @@ namespace TransportLogistics.Controllers
                 };
                 return View(viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError("Failed to retrieve vehicle list {@Exception}", e.Message);
                 logger.LogDebug("Failed to retrieve vehicle list {@ExceptionMessage}", e);
@@ -79,7 +79,7 @@ namespace TransportLogistics.Controllers
                                    viewModel.VIN);
                 return PartialView("_Create", new NewVehicleViewModel());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError("Failed to create a new vehicle {@Exception}", e.Message);
                 logger.LogDebug("Failed to create a new vehicle {@ExceptionMessage}", e);
@@ -94,7 +94,7 @@ namespace TransportLogistics.Controllers
                 vehicleService.Remove(id);
                 return RedirectToAction("Index");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError("Failed to remove a vehicle {@Exception}", e.Message);
                 logger.LogDebug("Failed to remove a vehicle {ExceptionMessage}", e);
@@ -119,7 +119,7 @@ namespace TransportLogistics.Controllers
                 };
                 return PartialView("_Update", viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
                 logger.LogDebug("Failed to retrieve vehicle {ExceptionMessage}", e);
@@ -145,7 +145,7 @@ namespace TransportLogistics.Controllers
                                       viewModel.VIN);
                 return PartialView("_Update", viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError("Failed to update vehicle {@Exception}", e.Message);
                 logger.LogDebug("Failed to update vehicle {ExceptionMessage}", e);
@@ -160,12 +160,33 @@ namespace TransportLogistics.Controllers
             {
                 var viewModel = new HistoryVehicleViewModel
                 {
-                    Vehicle = vehicleService.GetById(id)
+                    Vehicle = vehicleService.GetById(id),
+                    VehicleDriver = vehicleService.GetHistory(id)
                 };
 
                 return View(viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
+            {
+                logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
+                logger.LogDebug("Failed to retrieve vehicle {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult RouteDetails(string vehicleId, string routeId)
+        {
+            try
+            {
+                var viewModel = new RouteDetailsViewModel
+                {
+                    VehicleId = vehicleId,
+                    RouteEntries = vehicleService.GetDetailsRoute(vehicleId, routeId)
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception e)
             {
                 logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
                 logger.LogDebug("Failed to retrieve vehicle {@ExceptionMessage}", e);
