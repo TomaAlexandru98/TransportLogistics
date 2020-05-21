@@ -139,7 +139,7 @@ namespace TransportLogistics.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult ViewRoute(Guid id)
+        public IActionResult Route(Guid id)
         {
             var route = DriverService.GetRouteById(id);
 
