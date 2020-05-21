@@ -30,7 +30,7 @@ namespace TransportLogistics.ApplicationLogic.Services
 
         public Order CreateOrder(LocationAddress deliveryAddress, LocationAddress pickUpAddress, Customer recipient, decimal price)
         {
-            var order = Order.Create(deliveryAddress, pickUpAddress, recipient, price);
+            var order = Order.Create( recipient, pickUpAddress, deliveryAddress, price);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
@@ -75,7 +75,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             return OrderRepository.GetById(guid);
         }
 
-      
+
         public bool Remove(string id)
         {
             Guid orderId = Guid.Empty;
