@@ -138,8 +138,6 @@ namespace TransportLogistics.Controllers
                         orderData.PickupLocationId,
                         orderData.DeliveryLocationId,
                         orderData.Price);
-
-                    return PartialView("_NewOrderPartial", orderData);
                 }
 
                 return PartialView("_NewOrderPartial", orderData);
