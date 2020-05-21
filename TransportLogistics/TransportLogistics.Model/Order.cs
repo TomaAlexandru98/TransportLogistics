@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public enum OrderStatus { Created, Assigned, PickedUp, Delivering, Delivered };
+    public enum OrderStatus { Created, Assigned, PickedUp, Delivering, Delivered , Canceled};
    
     public class Order : DataEntity
     {
