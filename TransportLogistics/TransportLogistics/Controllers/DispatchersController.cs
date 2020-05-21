@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.ViewModels.Dispatchers;
@@ -22,6 +23,7 @@ namespace TransportLogistics.Controllers
         }
 
         public IActionResult Index()
+
         {
             return View();
         }
@@ -45,5 +47,6 @@ namespace TransportLogistics.Controllers
             }
 
         }
+
     }
 }

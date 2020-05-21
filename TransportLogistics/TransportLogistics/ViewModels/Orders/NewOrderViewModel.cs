@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +10,7 @@ namespace TransportLogistics.ViewModels.Orders
 {
     public class NewOrderViewModel
     {
+
         [Required(ErrorMessage = "Choosing a recipient is required.")]
         [Display(Name = "Recipient:")]
         public string RecipientId { get; set; }

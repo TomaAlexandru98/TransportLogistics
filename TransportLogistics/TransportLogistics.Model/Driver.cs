@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public enum DriverStatus {Free, Driving, TechnicalProblems }
+    public enum DriverStatus {Free, Driving }
     public class Driver: Employee
     {
         //public ICollection<Vehicle> VehicleHistory { get; protected set; }

@@ -41,12 +41,12 @@
 
             <div id="newPaymentBody" class="modal-body">
                 <div class="text-center">
-                    <h2>Are you sure?</h2>
+                    <h5>Mark route as completed</h5>
 
                 </div>
                 <div class="d-flex justify-content-around">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-success" onclick="EndRoute()">Yes</button>
+                    <button type="submit" class="btn btn-success" onclick="EndRoute()">Ok</button>
                 </div>
              </div>
           </div>
@@ -58,7 +58,7 @@
 
             <div id="newPaymentBody" class="modal-body">
                 <div class="text-center">
-                    <h2>Are you sure?</h2>
+                    <p>Are you sure you want start the route?</p>
 
                 </div>
                 <div class="d-flex justify-content-around">
@@ -69,38 +69,60 @@
         </div>
     </div>
 </div>
-<form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="tableReload()">
-    <div class="modal fade modal-delete" tabindex="-1" id="OrderStatus" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="realoadAfterCancelOrder()">
+    <div class="modal fade modal-delete" tabindex="-1" id="CancelOrder" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="max-width:60%">
 
                 <div id="newPaymentBody" class="modal-body">
                     <div class="text-center">
-                        <h2>Are you sure?</h2>
-                        <input type="hidden" id="orderStatus" name="status"/>
-                        <input type="hidden" id="orderId" name="orderId" />
-                        <input type="hidden" id="driverId" name="driverId"/>
-                        <input type="hidden" id="rowId" />
+                        <p>This order will be cancelled</p>
+                        <input type="hidden" name="status" id="statusCancel" />
+                        <input type="hidden" name="orderId" id="orderCancel" />
+
                     </div>
                     <div class="d-flex justify-content-around">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-success" >Yes</button>
+                        <button type="submit" class="btn btn-success">Yes</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
-<script>
+    </form>
+    <form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="tableReload()">
+        <div class="modal fade modal-delete" tabindex="-1" id="OrderStatus" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="max-width:60%">
+
+                    <div id="newPaymentBody" class="modal-body">
+                        <div class="text-center">
+                            <p>Order status will be modified</p>
+                            <input type="hidden" id="orderStatus" name="status" />
+                            <input type="hidden" id="orderId" name="orderId" />
+                            <input type="hidden" id="driverId" name="driverId" />
+                            <input type="hidden" id="rowId" />
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-success">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
 
     function clearDiv() {
-        
+
         setTimeout( function () {
            $('#endRouteError').html("");
             } , 7000);
             }
     function EndRoute() {
         var ordersCounter = @Model.RouteEntries.Count;
+
         if (areOrdersCompleted() == false) {
             $('#endRouteError').html("Not all the orders are completed");
             $('#RouteEnded').modal('hide');
@@ -115,7 +137,7 @@
 
     }
     function StartRoute() {
-        
+
         loadServerPartialView('#OrdersTable', "Drivers/StartRoute").done(function () {
              $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
              $('#RouteStarted').modal('hide');
@@ -128,16 +150,15 @@
         $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
         setCookies();
         EnableButtons();
-
     })
         function setCookies() {
         var ordersCounter = @Model.RouteEntries.Count;
         for (var i = 1; i <= ordersCounter; i++) {
-           
+
             var buttonContent = $('#' + i).html();
             var cookieContent = $.cookie('' + i);
             if ($.cookie('' + i) != null) {
-                
+
                 if ($.cookie('' + i).search("Pick") > -1 && $('#' + i).html().search("Pick") > -1 ||
                     ($.cookie('' + i).search("Deliver") > -1 && $('#' + i).html().search("Deliver") > -1)) {
 
@@ -150,25 +171,27 @@
                 }
             }
             }
-            
+
             $('#StartRoute').prop('disabled', $.cookie('StartRoute'));
     }
-    
+
     function StatusUpdate(id) {
         var icon = "<i class='fas fa-check'></i>";
-       
+
         if ($('#' + id).html().search("Picked") > -1) {
             $('#' + id).html("PickedUp " + icon);
             $('#' + id).prop('disabled', true);
             $.cookie(id, $('#' + id).html());
             }
         else if ($('#' + id).html().indexOf("Delivered") > -1) {
-           
+
             $('#' + id).html("Delivered " + icon);
             $('#' + id).addClass('checked');
              $('#' + id).prop('disabled', true);
              $.cookie(id, $('#' + id).html());
         }
+       
+
     }
     function EnableButtons() {
         if ($('#StartRoute').is(':disabled'))
@@ -198,12 +221,28 @@
     function areOrdersCompleted() {
          var ordersCounter = @Model.RouteEntries.Count;
         for (var i = 1; i <= ordersCounter; i++) {
-            if ($('#' + i).html().indexOf('f') == -1) {
+            var cancelButtonId = i + ordersCounter;
+            if ($('#' + i).html().indexOf('f') == -1 && $('#' +cancelButtonId).is(':disabled') == false) {
                 return false;
             }
         }
         return true;
     }
-   
-</script>
+    function setCancelOrderModal(OrderStatus , OrderId ) {
+        $('#statusCancel').val(OrderStatus);
+        $('#orderCancel').val(OrderId);
+
+        }
+        function realoadAfterCancelOrder() {
+            
+        loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
+            $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+            $('#CancelOrder').modal('hide');
+            EnableButtons();
+            setCookies();
+            
+        })
+    
+        }
+    </script>
 

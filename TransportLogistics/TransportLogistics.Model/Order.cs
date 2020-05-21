@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public enum OrderStatus { Created, Assigned, PickedUp, Delivering, Delivered };
+    public enum OrderStatus { Created, Assigned, PickedUp, Delivering, Delivered , Canceled};
    
     public class Order : DataEntity
     {
@@ -19,11 +19,14 @@ namespace TransportLogistics.Model
             Status = status;
         }
         
+
       public static Order Create(Customer recipient, LocationAddress pickup, LocationAddress delivery, decimal price)
+
         {
 
             var order = new Order()
             {
+
                 Id = Guid.NewGuid(),
                 DeliveryAddress = delivery,
                 PickUpAddress = pickup,
@@ -43,5 +46,6 @@ namespace TransportLogistics.Model
 
             return this;
         }
+
     }
 }

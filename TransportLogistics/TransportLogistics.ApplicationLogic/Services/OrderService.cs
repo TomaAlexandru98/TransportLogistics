@@ -17,25 +17,30 @@ namespace TransportLogistics.ApplicationLogic.Services
             OrderRepository = persistenceContext.OrderRepository;
             customerRepository = persistenceContext.CustomerRepository;
         }
-        public void ChangeOrderStatus(Guid orderId, string status)
+        public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
-            OrderStatus enumStatus = OrderStatus.Assigned;
 
-            switch (status)
-            {
-                case "PickedUp":
-                    enumStatus = OrderStatus.PickedUp;
-                    break;
-                case "Delivered":
-                    enumStatus = OrderStatus.Delivered;
-                    break;
-            }
+           
+            var Order =OrderRepository.GetById(orderId);
+            Order.SetStatus(status);
 
-            var Order = OrderRepository.GetById(orderId);
-            Order.SetStatus(enumStatus);
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
         }
+
+        public Order CreateOrder(LocationAddress deliveryAddress, LocationAddress pickUpAddress, Customer recipient, decimal price)
+        {
+            var order = Order.Create(deliveryAddress, pickUpAddress, recipient, price);
+            OrderRepository.Add(order);
+            PersistenceContext.SaveChanges();
+            return order;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return OrderRepository.GetAll();
+        }
+
 
         //when a driver starts up a route,all the order with status PickedUp should be changed into Delivering
         public void StartRoute(ICollection<RouteEntry> routeEntries)
