@@ -14,10 +14,10 @@ namespace TransportLogistics.Controllers
     public class RoutesController : Controller
     {
 
-        private readonly ILogger<OrderService> logger;
+        private readonly ILogger<RouteService> logger;
         private readonly RouteService routeService;
 
-        public RoutesController(ILogger<OrderService> logger, RouteService routeservice)
+        public RoutesController(RouteService routeservice, ILogger<RouteService> logger)
         {
             this.logger = logger;
             this.routeService = routeservice;
@@ -30,11 +30,12 @@ namespace TransportLogistics.Controllers
 
         public IActionResult RoutesTable()
         {
+            /*
             var routesView = new RouteViewModel()
             {
                 Routes = routeService.GetAllRoutes()
-            };
-            return PartialView("_RoutesTablePartial", routesView);
+            }; , routesView*/
+            return PartialView("_RoutesTablePartial");
 
         }
     }

@@ -117,12 +117,12 @@ namespace TransportLogistics.ApplicationLogic.Services
         public bool IsCustomer(string customerId)
         {
             Guid.TryParse(customerId, out Guid customerGuid);
-            if (customerRepository.GetById(customerGuid) == null)
+            if (customerRepository.GetById(customerGuid) != null)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
     }

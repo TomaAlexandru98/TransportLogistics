@@ -1,17 +1,18 @@
 ﻿@using TransportLogistics.ViewModels.Orders
+@using TransportLogistics.ViewModels.Customers
 @model NewOrderViewModel
 @{
     ViewData["Title"] = "Test";
 }
 
 <div class="form-group text-center">
-    <label asp-for="RecipientId"></label>
+    <label asp-for="SenderId"></label>
     <div>
-            <select style="min-width: 60%" asp-for="RecipientId" asp-items="@Model.CustomerList"
-                    onclick="LoadDropdown('#RecipientId')">
-            </select>
+        <select style="min-width: 60%" asp-for="SenderId" asp-items="@Model.CustomerList"
+                onchange="LoadDropdown('#SenderId')">
+        </select>
     </div>
-    <span asp-validation-for="RecipientId" class="text-danger"></span>
+    <span asp-validation-for="SenderId" class="text-danger"></span>
 </div>
 
 <div class="form-group text-center">
@@ -20,6 +21,7 @@
         <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation"
                 onchange="LoadDropdown('#PickupLocationId')">
         </select>
+        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
     </div>
     <span asp-validation-for="PickupLocationId" class="text-danger"></span>
 </div>
@@ -29,16 +31,93 @@
     <div>
         <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocation">
         </select>
+
+        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
     </div>
     <span asp-validation-for="DeliveryLocationId" class="text-danger"></span>
 </div>
 
+@*
+    <partial>
+        @await Html.PartialAsync("~/Views/Customers/_AddLocationPartial.cshtml",
+            Model.NewLocation)
+    </partial>
+*@
+
+@*
+    <form type="post">
+        <div id="locationTarget"></div>
+    </form>
+*@
+@*
+@using (Html.BeginForm())//"AddLocation", "Customers", FormMethod.Post))
+{
+*@
+
+@*
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewLocation.Country"></label>
+        <input asp-for="NewLocation.Country" type="text" class="form-control" />
+        <span asp-validation-for="NewLocation.Country" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewLocation.City"></label>
+        <input asp-for="NewLocation.City" type="text" class="form-control" />
+        <span asp-validation-for="NewLocation.City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewLocation.Street"></label>
+        <input asp-for="NewLocation.Street" type="text" class="form-control" />
+        <span asp-validation-for="NewLocation.Street" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewLocation.StreetNumber"></label>
+        <input asp-for="NewLocation.StreetNumber" type="number" class="form-control" />
+        <span asp-validation-for="NewLocation.StreetNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewLocation.PostalCode"></label>
+        <input asp-for="NewLocation.PostalCode" type="text" class="form-control" />
+        <span asp-validation-for="NewLocation.PostalCode" class="text-danger"></span>
+    </div>
+
+    <input type="button" id="save" value="Save" />
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#save").click(function () {
+            $("form").attr("action", "/Customers/AddLocation");
+        });
+    }
+</script>
+*@
+
+<div class="form-group">
+    <label asp-for="RecipientName"></label>
+    <input asp-for="RecipientName" type="text" class="form-control" />
+    <span asp-validation-for="RecipientName" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="RecipientEmail"></label>
+    <input asp-for="RecipientEmail" type="email" class="form-control" />
+    <span asp-validation-for="RecipientEmail" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="RecipientPhoneNo"></label>
+    <input asp-for="RecipientPhoneNo" type="tel" class="form-control" />
+    <span asp-validation-for="RecipientPhoneNo" class="text-danger"></span>
+</div>
 
 <div class="form-group">
     <label asp-for="Price"></label>
     <input asp-for="Price" type="number" class="form-control" />
     <span asp-validation-for="Price" class="text-danger"></span>
-
 </div>
-
-

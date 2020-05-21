@@ -107,7 +107,7 @@ namespace TransportLogistics.Controllers
                     CustomerList = GetCustomerList(),
                     PickupLocation = pickupLocations,
                     DeliveryLocation = deliveryLocations,
-                    RecipientId = recipientId
+                    SenderId = recipientId
                 };
 
                 return PartialView("_NewOrderPartial", newOrderViewModel);
@@ -124,19 +124,19 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult NewOrder([FromForm]NewOrderViewModel orderData)
         {
-
             try
             {
                 if (ModelState.IsValid)
                 {
 
-                    var recipient = customerService.GetCustomerById(orderData.RecipientId);
+                    var recipient = customerService.CreateNewCustomer(orderData.RecipientName,
+                                orderData.RecipientEmail,
+                                orderData.RecipientPhoneNo);
 
                     orderService.CreateOrder(recipient, 
                         orderData.PickupLocationId, 
                         orderData.DeliveryLocationId,
                         orderData.Price);
-
 
                     return PartialView("_NewOrderPartial", orderData);
                 }
