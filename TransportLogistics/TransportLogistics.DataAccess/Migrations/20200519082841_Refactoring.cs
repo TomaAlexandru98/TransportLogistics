@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Refactoring : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,18 +35,14 @@ namespace TransportLogistics.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drivers",
+                name: "RoutesHistories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.PrimaryKey("PK_RoutesHistories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,19 +82,19 @@ namespace TransportLogistics.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Route",
+                name: "Routes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: true)
+                    RoutesHistoryId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Route", x => x.Id);
+                    table.PrimaryKey("PK_Routes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Route_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
+                        name: "FK_Routes_RoutesHistories_RoutesHistoryId",
+                        column: x => x.RoutesHistoryId,
+                        principalTable: "RoutesHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -139,8 +135,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     Street = table.Column<string>(nullable: true),
                     StreetNumber = table.Column<int>(nullable: false),
                     PostalCode = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<Guid>(nullable: true),
-                    RouteId = table.Column<Guid>(nullable: true)
+                    CustomerId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,10 +146,33 @@ namespace TransportLogistics.DataAccess.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    RoutesHistoricId = table.Column<Guid>(nullable: true),
+                    CurrentRouteId = table.Column<Guid>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LocationAddresses_Route_RouteId",
-                        column: x => x.RouteId,
-                        principalTable: "Route",
+                        name: "FK_Drivers_Routes_CurrentRouteId",
+                        column: x => x.CurrentRouteId,
+                        principalTable: "Routes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Drivers_RoutesHistories_RoutesHistoricId",
+                        column: x => x.RoutesHistoricId,
+                        principalTable: "RoutesHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -168,9 +186,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     DeliveryAddressId = table.Column<Guid>(nullable: true),
                     RecipientId = table.Column<Guid>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: true)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,12 +195,6 @@ namespace TransportLogistics.DataAccess.Migrations
                         name: "FK_Orders_LocationAddresses_DeliveryAddressId",
                         column: x => x.DeliveryAddressId,
                         principalTable: "LocationAddresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -201,10 +211,46 @@ namespace TransportLogistics.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RouteEntries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: true),
+                    OrderType = table.Column<int>(nullable: false),
+                    RouteId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteEntries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RouteEntries_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RouteEntries_Routes_RouteId",
+                        column: x => x.RouteId,
+                        principalTable: "Routes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_ContactDetailsId",
                 table: "Customers",
                 column: "ContactDetailsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_CurrentRouteId",
+                table: "Drivers",
+                column: "CurrentRouteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_RoutesHistoricId",
+                table: "Drivers",
+                column: "RoutesHistoricId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LocationAddresses_CustomerId",
@@ -212,19 +258,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocationAddresses_RouteId",
-                table: "LocationAddresses",
-                column: "RouteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_DeliveryAddressId",
                 table: "Orders",
                 column: "DeliveryAddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_DriverId",
-                table: "Orders",
-                column: "DriverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_PickUpAddressId",
@@ -237,9 +273,19 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "RecipientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Route_DriverId",
-                table: "Route",
-                column: "DriverId");
+                name: "IX_RouteEntries_OrderId",
+                table: "RouteEntries",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RouteEntries_RouteId",
+                table: "RouteEntries",
+                column: "RouteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Routes_RoutesHistoryId",
+                table: "Routes",
+                column: "RoutesHistoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trailers_VehicleId",
@@ -253,28 +299,34 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Dispatchers");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Drivers");
+
+            migrationBuilder.DropTable(
+                name: "RouteEntries");
 
             migrationBuilder.DropTable(
                 name: "Trailers");
 
             migrationBuilder.DropTable(
-                name: "LocationAddresses");
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Routes");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
+                name: "LocationAddresses");
+
+            migrationBuilder.DropTable(
+                name: "RoutesHistories");
+
+            migrationBuilder.DropTable(
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Route");
-
-            migrationBuilder.DropTable(
                 name: "Contact");
-
-            migrationBuilder.DropTable(
-                name: "Drivers");
         }
     }
 }
