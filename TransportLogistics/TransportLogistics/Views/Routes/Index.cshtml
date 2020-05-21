@@ -46,6 +46,10 @@
          function LoadNewRouteView() {
             loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")');
         }
+
+        function LoadRemoveRouteView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
+         }
     </script>
 }
 
@@ -71,6 +75,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="modalFormComplete('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveRoutePartial" model="new RemoveRouteViewModel()" />
                 </div>
             </div>
         </div>

@@ -37,7 +37,24 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return routeRepository.GetAll();
         }
+        public Route GetById(string Id)
+        {
+            Guid.TryParse(Id, out Guid guid);
+            return routeRepository.GetById(guid);
+        }
+        public bool Remove(string id)
+        {
+            Guid routeId = Guid.Empty;
+            Guid.TryParse(id, out routeId);
 
+            var result = routeRepository?.Remove(routeId);
+            if (result == true)
+            {
+                persistenceContext.SaveChanges();
+                return true;
+            }
 
+            return false;
+        }
     }
 }

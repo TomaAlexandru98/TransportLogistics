@@ -115,6 +115,18 @@ body {
         color: white;
     }
 
+.btn-add-blue-small {
+    border-color: #06087d;
+    color: #06087d;
+    height: 2rem;
+    width: 2rem;
+}
+
+    .btn-add-blue-small:hover {
+        background-color: #06087d;
+        color: white;
+    }
+
 .page-item.active .page-link {
     z-index: 1;
     color: #fff !important;
