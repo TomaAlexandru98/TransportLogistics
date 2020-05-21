@@ -8,7 +8,7 @@
     <label asp-for="RecipientId"></label>
     <div>
             <select style="min-width: 60%" asp-for="RecipientId" asp-items="@Model.CustomerList"
-                    onchange="LoadDropdown('#RecipientId')">
+                    onclick="LoadDropdown('#RecipientId')">
             </select>
     </div>
     <span asp-validation-for="RecipientId" class="text-danger"></span>

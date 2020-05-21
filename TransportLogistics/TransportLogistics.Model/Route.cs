@@ -8,15 +8,20 @@ namespace TransportLogistics.Model
     {
         public ICollection<RouteEntry> RouteEntries { get; private set; }
         public Vehicle Vehicle { get; private set; }
-        public static Route Create()
+        public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                Vehicle = vehicle
+
             }; 
             return route;
         }
 
-
+        public void SetRouteEntries(ICollection<RouteEntry> routeEntries)
+        {
+            RouteEntries = routeEntries;
+        }
     } 
 }

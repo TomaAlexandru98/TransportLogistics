@@ -25,5 +25,10 @@ namespace TransportLogistics.Model
          };
             return routeHistoric;
         }
+
+        public void SetRoutes(ICollection<Route> routes)
+        {
+            Routes = routes;
+        }
     }
 }
