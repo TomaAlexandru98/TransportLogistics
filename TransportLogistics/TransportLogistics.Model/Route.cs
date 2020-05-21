@@ -4,12 +4,18 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public class Route:DataEntity
+    public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get; private set; }
         public Vehicle Vehicle { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime FinishTime { get; private set; }
+        public static Route Create()
+        {
+            var route = new Route()
+            {
+                Id = Guid.NewGuid()
+            };
         public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
@@ -31,7 +37,8 @@ namespace TransportLogistics.Model
         }
         public void SetFinishTime()
         {
-            StartTime = DateTime.UtcNow;
+            FinishTime = DateTime.UtcNow;
+           
         }
     } 
 }
