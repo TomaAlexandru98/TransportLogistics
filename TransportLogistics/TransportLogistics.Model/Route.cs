@@ -16,6 +16,14 @@ namespace TransportLogistics.Model
             {
                 Id = Guid.NewGuid()
             };
+        public static Route Create(Vehicle vehicle)
+        {
+            var route = new Route()
+            {
+                Id = Guid.NewGuid(),
+                Vehicle = vehicle
+
+            }; 
             return route;
         }
 
@@ -30,6 +38,7 @@ namespace TransportLogistics.Model
         public void SetFinishTime()
         {
             FinishTime = DateTime.UtcNow;
+           
         }
     } 
 }

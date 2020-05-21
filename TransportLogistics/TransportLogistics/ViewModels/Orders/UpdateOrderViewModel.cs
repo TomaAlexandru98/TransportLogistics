@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TransportLogistics.Model;
-using TransportLogistics.ViewModels.Orders;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Serialization;
+
 namespace TransportLogistics.ViewModels.Orders
 {
-    public class NewOrderViewModel
+    public class UpdateOrderViewModel : IValidatableObject
     {
-
-        [Required(ErrorMessage = "Choosing a recipient is required.")]
-        [Display(Name = "Recipient:")]
-        public string RecipientId { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]
+
         public string PickupLocationId { get; set; }
 
         [Required(ErrorMessage = "Delivery Address is required.")]
@@ -31,5 +29,16 @@ namespace TransportLogistics.ViewModels.Orders
         [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+
+
+        //TODO: Client-side validation
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (PickupLocationId == null || DeliveryLocationId == null || PickupLocationId == DeliveryLocationId)
+            {
+                yield return new ValidationResult("Pickup location can't be the same as delivery location");
+            }
+        }
+        
     }
 }

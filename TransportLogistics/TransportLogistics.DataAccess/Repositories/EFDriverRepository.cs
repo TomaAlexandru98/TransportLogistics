@@ -46,6 +46,14 @@ namespace TransportLogistics.DataAccess.Repositories
             return completeRouteEntries;
         }
 
+        public new IEnumerable<Driver> GetAll()
+        {
+            return dbContext.Drivers
+                            .Include(o => o.CurrentRoute)
+                            .ThenInclude(o => o.RouteEntries)
+                            .Include(o => o.RoutesHistoric)
+                            .AsEnumerable();
+        }
         public RoutesHistory GetRoutesHistory(Guid id)
         {
             var driver = GetById(id);

@@ -4,7 +4,6 @@ using System;
 using TransportLogistics.ApplicationLogic.Exceptions;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
-using TransportLogistics.Models.Customers;
 using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.Controllers

@@ -1,13 +1,14 @@
-﻿@using TransportLogistics.ViewModels.Customers;
+﻿
+@using TransportLogistics.ViewModels.Orders;
 
-@model RemoveCustomerViewModel;
+@model RemoveOrderViewModel;
 
 <input type="hidden" asp-for="Id" />
 
 <div class="text-center">
     <h2>Are you sure?</h2>
-</div>
 
+</div>
 <div class="d-flex justify-content-around">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
     <button type="submit" class="btn btn-success">Yes</button>
