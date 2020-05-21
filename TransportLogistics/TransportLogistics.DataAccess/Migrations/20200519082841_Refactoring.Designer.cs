@@ -9,14 +9,10 @@ using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    [DbContext(typeof(TransportLogisticsDbContext))]
-<<<<<<< HEAD:TransportLogistics/TransportLogistics.DataAccess/Migrations/20200520132831_initial.Designer.cs
-    [Migration("20200520132831_initial")]
-    partial class initial
-=======
+   
     [Migration("20200519082841_Refactoring")]
     partial class Refactoring
->>>>>>> AlexToma:TransportLogistics/TransportLogistics.DataAccess/Migrations/20200519082841_Refactoring.Designer.cs
+
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

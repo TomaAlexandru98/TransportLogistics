@@ -3,11 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-<<<<<<< HEAD:TransportLogistics/TransportLogistics.DataAccess/Migrations/20200520132831_initial.cs
+
     public partial class initial : Migration
-=======
-    public partial class Refactoring : Migration
->>>>>>> AlexToma:TransportLogistics/TransportLogistics.DataAccess/Migrations/20200519082841_Refactoring.cs
+
+   
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
