@@ -123,11 +123,27 @@ namespace TransportLogistics.Controllers
         }
         public async Task<IActionResult> RoutesHistory()
         {
-            return View();
+            var user = await UserManager.GetUserAsync(User);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                var routesHistoric = DriverService.GetRoutesHistory(driver.Id);
+                var routesHistoricViewModel = new RoutesHistoryViewModel();
+                routesHistoricViewModel.ConfigureRoutes(routesHistoric.Routes);
+                return View(routesHistoricViewModel);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve routes for current driver {@Exception}", e);
+                Logger.LogError("Failed to retrieve routes for current driver {Exception}", e.Message);
+                return BadRequest();
+            }
         }
-        public async Task<IActionResult> CancelOrder()
+        public IActionResult ViewRoute(Guid id)
         {
-            return RedirectToAction("GetOrdersPartial");
-        }
+            var route = DriverService.GetRouteById(id);
+
+            return View();
+        }      
     }
 }
