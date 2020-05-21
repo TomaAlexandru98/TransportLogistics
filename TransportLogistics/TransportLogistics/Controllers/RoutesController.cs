@@ -30,9 +30,6 @@ namespace TransportLogistics.Controllers
 
         public IActionResult RoutesTable()
         {
-
-            return PartialView("_RoutesTablePartial");
-
             var routesView = new RouteViewModel()
             {
                 Routes = routeService.GetAllRoutes()

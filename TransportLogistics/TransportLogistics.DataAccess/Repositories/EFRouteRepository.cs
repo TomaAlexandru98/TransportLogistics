@@ -10,13 +10,14 @@ namespace TransportLogistics.DataAccess.Repositories
 {
     class EFRouteRepository : EFBaseRepository<Route>, IRouteRepository
     {
-        public EFRouteRepository(TransportLogisticsDbContext context):base(context)
-        {
+        public EFRouteRepository(TransportLogisticsDbContext context) : base(context)
+        { }
 
-        }
         public IEnumerable<RouteEntry> GetAllRouteEntries()
         {
-            throw new NotImplementedException();
+            return dbContext.RouteEntries
+                        .Include(r => r.Order)
+                        .AsEnumerable();
         }
 
 
