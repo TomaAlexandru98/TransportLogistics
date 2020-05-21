@@ -13,7 +13,8 @@ namespace TransportLogistics.Model
         public Customer Recipient { get; private set; }
         public OrderStatus Status { get; private set; }
         public decimal Price { get; private set; }
-      
+        public DateTime PickUpTime { get; private set; }
+        public DateTime DeliveryTime { get; private set; }
         public void SetStatus(OrderStatus status)
         {
             Status = status;
@@ -45,6 +46,14 @@ namespace TransportLogistics.Model
           
 
             return this;
+        }
+        public void SetPickUpTime()
+        {
+            PickUpTime = DateTime.UtcNow;
+        }
+        public void SetDeliveryTime()
+        {
+            DeliveryTime = DateTime.UtcNow;
         }
 
     }
