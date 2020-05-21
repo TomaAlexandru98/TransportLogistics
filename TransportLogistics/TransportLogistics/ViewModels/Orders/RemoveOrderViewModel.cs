@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TransportLogistics.ViewModels.Customers
+namespace TransportLogistics.ViewModels.Orders
 {
-    public class RemoveCustomerViewModel
+    public class RemoveOrderViewModel
     {
         public string Id { get; set; }
+
     }
 }

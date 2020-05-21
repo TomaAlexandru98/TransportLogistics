@@ -51,6 +51,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return customerRepository.GetAll();
         }
+      
 
         public LocationAddress GetLocationAddress(string locationId)
         {

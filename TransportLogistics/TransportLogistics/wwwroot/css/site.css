@@ -98,6 +98,7 @@ body {
 .btn-blue {
     border-color: #06087d;
     color: #06087d;
+    min-width: 10rem;
 }
     .btn-blue:hover {
         background-color: #06087d;

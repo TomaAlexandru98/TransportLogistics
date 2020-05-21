@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc.Ajax;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,7 @@ namespace TransportLogistics.Controllers
             this.logger = logger;
             this.customerService = customerService;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -38,35 +40,46 @@ namespace TransportLogistics.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult NewOrder()
+        private List<SelectListItem> GetCustomerList()
         {
-            try
+            var customers = customerService.GetAllCustomers();
+            List<SelectListItem> customerNames = new List<SelectListItem>();
+
+            foreach (var customer in customers)
             {
-
-                var customers = customerService.GetAllCustomers();
-                List<SelectListItem> customerNames = new List<SelectListItem>();
-
-                foreach (var customer in customers)
+                if (customer.LocationAddresses.Count > 1)
                 {
                     customerNames.Add(new SelectListItem(customer.Name, customer.Id.ToString()));
                 }
-
-                NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
-                {
-                    //CustomerList = customerNames,
-                    Price = 200
-                };
-
-                return PartialView("_NewOrderPartial", newOrderViewModel);
             }
-            catch (Exception e)
-            {
-                logger.LogError("Failed to create a new Order {@Exception}", e.Message);
-                logger.LogDebug("Failed to create a new Order {@ExceptionMessage}", e);
-                return BadRequest(e.Message);
-            }
+            return customerNames;
         }
+
+        [HttpGet]
+        public IActionResult NewOrder(string id)
+        {
+            List<SelectListItem> customerLocations = null;
+
+            if (id != null)
+            {
+                var locations = customerService.GetCustomerAddresses(id);
+                customerLocations = new List<SelectListItem>();
+                foreach (var location in locations)
+                {
+                    customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+                }
+            }
+
+            NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+            {
+                CustomerList = GetCustomerList(),
+                PickupLocation = customerLocations,
+                DeliveryLocation = customerLocations
+            };
+
+            return PartialView("_NewOrderPartial", newOrderViewModel);
+        }
+
 
         [HttpPost]
         public IActionResult NewOrder([FromForm]NewOrderViewModel orderData)
@@ -76,8 +89,15 @@ namespace TransportLogistics.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //orderservice.CreateOrder(orderData.DeliveryAddress,orderData.PickUpAddress,orderData.Recipient,orderData.Price);
-                    //return RedirectToAction("Index");
+
+                    var recipient = customerService.GetCustomerById(orderData.RecipientId);
+
+                    orderservice.CreateOrder(recipient, 
+                        orderData.PickupLocationId, 
+                        orderData.DeliveryLocationId,
+                        orderData.Price);
+
+
                     return PartialView("_NewOrderPartial", orderData);
                 }
 
@@ -90,5 +110,88 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult Remove([FromRoute]string Id)
+        {
+
+            RemoveOrderViewModel removeViewModel = new RemoveOrderViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveOrderPartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(RemoveOrderViewModel removeData)
+        {
+
+            orderservice.Remove(removeData.Id);
+
+
+            return PartialView("_RemoveOrderPartial", removeData);
+        }
+
+        [HttpGet]
+        public IActionResult Update(string id)
+        {
+            List<SelectListItem> customerLocations = null;
+
+            var order = orderservice.GetById(id);
+            var customerId = order.Recipient.Id;
+            var locations = customerService.GetCustomerAddresses(customerId.ToString());
+            customerLocations = new List<SelectListItem>();
+            foreach (var location in locations)
+            {
+                customerLocations.Add(new SelectListItem(location.PostalCode, location.Id.ToString()));
+            }
+
+            UpdateOrderViewModel newOrderViewModel = new UpdateOrderViewModel()
+            {
+                Id = order.Id.ToString(),
+                CustomerList = GetCustomerList(),
+                PickupLocation = customerLocations,
+                DeliveryLocation = customerLocations,
+                Price = order.Price,
+                
+            };
+
+            return PartialView("_Update", newOrderViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Update([FromForm]UpdateOrderViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_Update", viewModel);
+            }
+
+            try
+            {
+                
+                orderservice.Update(viewModel.Id,
+                                      viewModel.PickupLocationId,
+                                      viewModel.DeliveryLocationId,
+                                      viewModel.Price);
+                return PartialView("_Update", viewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to update order {@Exception}", e.Message);
+                logger.LogDebug("Failed to update order {ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+        /*
+        [HttpGet]
+        public JsonResult GetCustomerLocations(string id)
+        {
+            var locationList = customerService.GetCustomerAddresses(id);
+            return Json(new { data = locationList });
+
+        }
+        */
     }
 }

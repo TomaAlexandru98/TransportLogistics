@@ -9,6 +9,8 @@ namespace TransportLogistics.DataAccess.Abstractions
     {
         //  void ChangeOrderStatus(Guid orderId,OrderStatus status);
 
+        new Order GetById(Guid orderId);
+
         new IEnumerable<Order> GetAll();
     }
 }

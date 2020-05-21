@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.Models.Customers
+namespace TransportLogistics.ViewModels.Customers
 {
     public class CustomerListViewModel
     {

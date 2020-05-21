@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TransportLogistics.Model;
-using TransportLogistics.ViewModels.Orders;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+
 namespace TransportLogistics.ViewModels.Orders
 {
-    public class NewOrderViewModel
+    public class UpdateOrderViewModel
     {
-
-        [Required(ErrorMessage = "Choosing a recipient is required.")]
-        [Display(Name = "Recipient:")]
-        public string RecipientId { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]

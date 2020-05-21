@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.ApplicationLogic.Sevices
+namespace TransportLogistics.ApplicationLogic.Services
 {
    public class DriverService
     {
@@ -44,6 +43,11 @@ namespace TransportLogistics.ApplicationLogic.Sevices
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }
-        
+
+        public IEnumerable<Driver> GetAllDrivers()
+        {
+            return DriverRepository.GetAll();
+        }
+
     }
 }
