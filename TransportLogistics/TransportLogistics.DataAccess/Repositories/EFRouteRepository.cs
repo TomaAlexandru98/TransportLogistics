@@ -37,5 +37,10 @@ namespace TransportLogistics.DataAccess.Repositories
             }
             return route;
         }
+
+        public new IEnumerable<Route> GetAll()
+        {
+            return dbContext.Routes.Include(r => r.Vehicle).Include(e => e.RouteEntries).AsEnumerable();
+        }
     }
 }
