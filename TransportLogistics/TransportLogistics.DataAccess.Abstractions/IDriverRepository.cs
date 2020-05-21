@@ -11,5 +11,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         ICollection<RouteEntry> GetRouteEntries(Guid id);
         Driver GetDriverWithRoute(Guid id);
         new IEnumerable<Driver> GetAll();
+        RoutesHistory GetRoutesHistory(Guid id);
+        
     }
 }

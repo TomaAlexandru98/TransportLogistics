@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Model;
 
@@ -10,11 +11,13 @@ namespace TransportLogistics.ApplicationLogic.Services
     {
         private readonly IDriverRepository DriverRepository;
         private readonly IPersistenceContext PersistenceContext;
+        private readonly IRouteRepository RouteRepository;
         private readonly OrderService OrderService;
-        public DriverService(IPersistenceContext persistenceContext, OrderService orderService)
+        public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
         {
             PersistenceContext = persistenceContext;
             DriverRepository = persistenceContext.DriverRepository;
+            RouteRepository = persistenceContext.RouteRepository;
             OrderService = orderService;
         }
         public Driver GetByUserId(string userId)
@@ -48,6 +51,17 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return DriverRepository.GetAll();
         }
+
+        public RoutesHistory GetRoutesHistory(Guid id)
+        {
+            return DriverRepository.GetRoutesHistory(id);
+        }
+        public Route GetRouteById(Guid id)
+        {
+
+            return RouteRepository.GetRouteById(id);
+        }
+
 
     }
 }
