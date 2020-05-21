@@ -14,6 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransportLogistics.DataAccess;
 
+using TransportLogistics.ApplicationLogic.Services;
+
+using TransportLogistics.DataAccess.Repositories;
+using TransportLogistics.DataAccess.Abstractions;
+using TransportLogistics.Data.Abstractions;
+using TransportLogistics.ApplicationLogic.Sevices;
+
 namespace TransportLogistics
 {
     public class Startup
@@ -28,18 +35,38 @@ namespace TransportLogistics
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<TransportLogisticsDbContext>(options =>
-               options.UseSqlServer(
+            options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection1")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<ITrailerRepository, EFTrailerRepository>();
+            services.AddScoped<TrailerService>();
+
+
+            
+            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            
+            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+            services.AddScoped<CustomerService>();
+
+            services.AddScoped<VehicleService>();
+
+            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+            services.AddScoped<EmployeeServices>();
+            services.AddScoped<DriverService>();
+            services.AddScoped<OrderService>();
+
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

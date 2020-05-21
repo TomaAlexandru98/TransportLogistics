@@ -1,0 +1,139 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@inject UserManager<IdentityUser> userManager;
+@{
+    ViewData["Title"] = "AdministratorController";
+}
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+}
+
+<div class="d-flex flex-column flex-md-row">
+    <div class="d-flex flex-column flex-grow-1">
+
+    </div>
+    <div class="d-flex flex-column ">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a class="btn btn-car bg-menu" role="button" data-toggle="modal" data-target="#ModalCreate">
+                    Add User <i class="fa fa-user"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div id="usersAccounts">
+    <partial name="_TablePartial.cshtml" model="@Model" />
+</div>
+<form id="deleteForm" asp-controller="Administrators" asp-action="DeleteUserAccount" data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="loadTable('#ModalRemove')"
+      data-ajax-mode="replace">
+    <div  class="modal fade modal-delete"    tabindex="-1" id="ModalRemove" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:60%">
+               
+                <div id="newPaymentBody" class="modal-body">
+                    <div class="text-center">
+                        <h2>Are you sure?</h2>
+
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success">Yes</button>
+                    </div>
+                    <input type="hidden" name="UserId" id="userToDeleteId" />
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</form>
+<form id="editForm" asp-controller="Administrators" asp-action="EditUserAccount" data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="loadTable('#ModalEdit')"
+      data-ajax-mode="replace">
+    <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" Edit>Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="editModal">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="editButton" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="createForm" asp-controller="Administrators" asp-action="CreateUserAccount" data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="loadTable('#ModalCreate')"
+      data-ajax-mode="replace">
+
+    <div class="modal fade" tabindex="-1" id="ModalCreate" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width: 80%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="newAccountBody" class="modal-body">
+                    @await Html.PartialAsync("_NewUserPartial", new TransportLogistics.ViewModels.UserAccountCreateViewModel { })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function LoadEditModal(userId) {
+        loadServerPartialView('#editModal', 'Administrators/EditUserAccount?userId=' + userId).
+            done(function () { $.validator.unobtrusive.parse(document) });
+    }
+
+    $(document).ready(function () {
+        $('#Users').DataTable({ responsive: true , "lengthMenu": [5, 10, 25, 50] });
+    });
+
+    function GetUsersPartialFromDelete() {
+        var UserId = document.getElementById("userToDeleteId").value;
+        // loadServerPartialView('#usersAccounts', "/Administrators/DeleteUserAccount?UserId=" + UserId);
+
+    }
+
+    function loadTable(modalName) {
+
+        loadServerPartialView("#usersAccounts", "/Administrators/GetUsersPartialView").done(function () {
+            $('#Users').DataTable({ responsive: true , "lengthMenu": [5, 10, 25, 50] });
+        });
+        $(modalName).modal('hide');
+
+    }
+
+</script>

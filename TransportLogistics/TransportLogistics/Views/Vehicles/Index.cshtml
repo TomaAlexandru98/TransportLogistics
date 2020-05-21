@@ -1,52 +1,202 @@
-﻿
-
+﻿@model TransportLogistics.ViewModels.Vehicles.VehiclesListViewModel
+@using TransportLogistics.ViewModels.Vehicles
+@using TransportLogistics.Model
 @{
     ViewData["Title"] = "Index";
 }
 
-<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<div class="d-flex flex-column flex-md-row">
-    <div class="d-flex flex-column flex-grow-1">
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
-    </div>
+<div class="d-flex flex-column flex-md-row">
+    <div class="d-flex flex-column flex-grow-1"></div>
     <div class="d-flex flex-column ">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <button class="btn-car">
+                <button class="btn-car" data-toggle="modal" data-target="#createVehicleModal">
                     <i class="fa fa-car"></i>Add Vehicle
                 </button>
-
             </div>
         </div>
     </div>
 </div>
-<table id="Vehicles">
-    <thead>
-        <tr>
-            <th>Vehicle Name</th>
-            <th>Vehicle Type</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Ford Tourneo Courier</td>
-            <td>Small Transport</td>
-        </tr>
-        <tr>
-            <td>VW Transporter</td>
-            <td>Medium Transport</td>
-        </tr>
-    </tbody>
-</table>
 
+<div id="vehiclesTabelContainer">
+    <partial name="_VehiclesTable" model="@Model" />
+</div>
+
+<form method="post" id="createVehicleForm" asp-controller="Vehicles" asp-action="Create">
+    @Html.AntiForgeryToken()
+    <div class="modal fade" id="createVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="createVehicleContainer">
+                        <partial name="_Create" model="new NewVehicleViewModel()" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="createVehicleButton" class="btn btn-primary">Create</button>
+                </div>  
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade modal-delete" id="deleteVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="max-width:60%">
+            
+            <div class="modal-body">
+                <div class="text-center">
+                    <h2>Are you sure?</h2>
+                   
+                </div>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button data-vehicle-id="" type="submit" id="deleteVehicleButton" data-dismiss="modal" class="btn btn-success" onclick="removeVehicle(id)">Yes</button>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<form method="post" id="updateVehicleForm">
+    @Html.AntiForgeryToken()
+    <div class="modal fade" id="updateVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="updateVehicleContainer">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="updateVehicleButton" type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @section scripts{
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         $(document).ready(function () {
-            $('#Vehicles').DataTable();
+            loadTable();
         });
+
+
+        function loadTable() {
+            loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable").done(function () {
+                $('#vehiclesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+                vehiclesStatus();
+            });
+        }
+
+        function sendVehicleIdToModal(id) {
+            document.getElementById("updateVehicleButton").setAttribute("data-vehicle-id", id);
+        }
+
+        function removeVehicle() {
+            var id = document.getElementById("updateVehicleButton").getAttribute("data-vehicle-id");
+            $.ajax({
+                url: "Vehicles/Remove?id=" + id,
+                success: function () {
+                    document.getElementById("row-to-delete-" + id).style.display = "none";
+                }
+            });
+        }
+
+        $("#createVehicleButton").on("click", function () {
+            var createVehicleForm = $("#createVehicleForm").serialize();
+            $.ajax({
+                type: "POST",
+                data: createVehicleForm,
+                url: "/Vehicles/Create",
+                success: function (htmlContent) {
+                    $("#createVehicleContainer").html(htmlContent);
+                    if (htmlContent.indexOf("field-validation-error") == -1) {
+                        $("#createVehicleModal").modal("hide");
+                        loadTable();
+                    }
+                }
+            });
+        });
+
+        function loadVehicleInModal(id) {
+            loadServerPartialView("#updateVehicleContainer", "Vehicles/Update?id=" + id).done(function () {
+                $.validator.unobtrusive.parse(document);
+            
+                $("#NameUpdate").keyup(function () {
+                    $("#updateVehicleForm").valid();
+                });
+            });
+        }
+
+        $("#updateVehicleButton").on("click", function () {
+            var updateVehicleForm = $("#updateVehicleForm").serialize();
+            $.ajax({
+                type: "POST",
+                data: updateVehicleForm,
+                url: "/Vehicles/Update",
+                success: function (htmlContent) {
+                    $("#updateVehicleContainer").html(htmlContent);
+                    if (htmlContent.indexOf("field-validation-error") == -1) {
+                        $("#updateVehicleModal").modal("hide");
+                        loadTable();
+                    }
+                }
+                
+            });
+        });
+
+        $("#updateVehicleForm").submit(function (event) {
+            event.preventDefault();
+        });
+
+        $("#createVehicleForm").submit(function (event) {
+            event.preventDefault();
+        });
+
+        function vehiclesStatus() {
+            @foreach (var vehicle in Model.Vehicles)
+            {
+                @: setColorStatus("@vehicle.Id", "@vehicle.Status");
+            }
+        }
+
+        function setColorStatus(id, status) {
+            var statusVehicle = document.getElementById("vehicle-" + id);
+
+            if (status == "@VehicleStatus.Free") {
+                statusVehicle.setAttribute("style", "color: #09872b");
+            }
+
+            if (status == "@VehicleStatus.Busy") {
+                statusVehicle.setAttribute("style", "color: #d12013");
+            }
+
+            if (status == "@VehicleStatus.UnAvailable") {
+                statusVehicle.setAttribute("style", "color: #8f0a36");
+            }
+        }
     </script>
-
-
 }

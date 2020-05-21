@@ -1,0 +1,48 @@
+﻿@model TransportLogistics.ViewModels.Vehicles.VehiclesListViewModel
+
+
+<table id="vehiclesTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="120">Vehicle name</th>
+            <th width="100">Type</th>
+            <th width="75">Registration number</th>
+            <th width="100">Maxim carry weight</th>
+            <th width="150">VIN</th>
+            <th width="50">Status</th>
+            <th width="75">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var vehicle in Model.Vehicles)
+        {
+            <tr id="row-to-delete-@vehicle.Id">
+                <td>@vehicle.Name</td>
+                <td>@vehicle.Type</td>
+                <td>@vehicle.RegistrationNumber</td>
+                <td>@vehicle.MaximCarryWeightKg</td>
+                <td>@vehicle.VIN</td>
+                <td id="vehicle-@vehicle.Id">@vehicle.Status</td>
+                <td style="width:15%">
+                    <div class="d-flex justify-content-around">
+
+                        <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                                id="@vehicle.Id" onclick="loadVehicleInModal(this.id)" data-target="#updateVehicleModal">
+                            <i class="material-icons fa fa-edit"></i>
+                        </button>
+                        <a class="btn btn-outline-info mr-1 ml-1" asp-action="History" asp-route-id="@vehicle.Id">
+                            <i class="fas fa-info"></i>
+                        </a>
+                        <button id="@vehicle.Id" class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                                onclick="sendVehicleIdToModal(this.id)" data-target="#deleteVehicleModal">
+                            <i class="material-icons fa fa-trash"></i>
+                        </button>
+                        
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

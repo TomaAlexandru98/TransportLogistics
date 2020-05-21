@@ -1,0 +1,46 @@
+﻿@using TransportLogistics.Models.Trailers
+@model NewTrailerViewModel
+@{
+    ViewData["Title"] = "Test";
+}
+
+<input type="hidden" asp-for="TrailerId" />
+@*Html.HiddenFor(model => model.TrailerId)*@
+
+<div class="form-group">
+    <label asp-for="Model"></label>
+    <input asp-for="Model" type="text" class="form-control" />
+    <span class="text-danger" asp-validation-for="Model"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="MaximWeightKg"></label>
+    <input asp-for="MaximWeightKg" type="number" class="form-control" />
+    <span asp-validation-for="MaximWeightKg" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Capacity"></label>
+    <input asp-for="Capacity" type="number" class="form-control" />
+    <span asp-validation-for="Capacity" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="NumberAxles"></label>
+    <input asp-for="NumberAxles" type="number" class="form-control" />
+    <span asp-validation-for="NumberAxles" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Height"></label>
+    <input asp-for="Height" type="number" class="form-control" />
+    <span asp-validation-for="Height" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Width"></label>
+    <input asp-for="Width" type="number" class="form-control" />
+    <span asp-validation-for="Width" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Length"></label>
+    <input asp-for="Length" type="number" class="form-control" />
+    <span asp-validation-for="Length" class="text-danger"></span>
+</div>
