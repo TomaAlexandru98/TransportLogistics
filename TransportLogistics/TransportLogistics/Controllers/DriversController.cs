@@ -141,9 +141,18 @@ namespace TransportLogistics.Controllers
         }
         public IActionResult Route(Guid id)
         {
-            var route = DriverService.GetRouteById(id);
+            try
+            {
+                var route = DriverService.GetRouteById(id);
 
-            return View();
+                return View(route);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve routes for current driver {@Exception}", e);
+                Logger.LogError("Failed to retrieve routes for current driver {Exception}", e.Message);
+                return BadRequest();
+            }
         }      
     }
 }
