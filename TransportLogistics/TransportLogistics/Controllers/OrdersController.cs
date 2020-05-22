@@ -68,7 +68,7 @@ namespace TransportLogistics.Controllers
         {
             List<SelectListItem> pickupLocations = new List<SelectListItem>();
             List<SelectListItem> deliveryLocations = new List<SelectListItem>();
-            string recipientId = null;
+            string senderId = null;
 
             try
             {
@@ -76,7 +76,7 @@ namespace TransportLogistics.Controllers
                 {
                     if (customerService.IsCustomer(id))
                     {
-                        recipientId = id;
+                        senderId = id;
                         var locations = customerService.GetCustomerAddresses(id);
                         foreach (var location in locations)
                         {
@@ -87,7 +87,7 @@ namespace TransportLogistics.Controllers
                     {
                         var pickup = customerService.GetLocationAddress(id);
                         var customer = customerService.GetCustomerByLocation(pickup);
-                        recipientId = customer.Id.ToString();
+                        senderId = customer.Id.ToString();
 
                         foreach (var location in customer.LocationAddresses)
                         {
@@ -107,7 +107,7 @@ namespace TransportLogistics.Controllers
                     CustomerList = GetCustomerList(),
                     PickupLocation = pickupLocations,
                     DeliveryLocation = deliveryLocations,
-                    RecipientId = recipientId
+                    SenderId = senderId
                 };
 
                 return PartialView("_NewOrderPartial", newOrderViewModel);
@@ -124,21 +124,20 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult NewOrder([FromForm]NewOrderViewModel orderData)
         {
-
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var sender = customerService.GetCustomerById(orderData.SenderId);
+                    var recipient = customerService.CreateNewCustomer(orderData.RecipientName,
+                                orderData.RecipientEmail,
+                                orderData.RecipientPhoneNo);
 
-                    var recipient = customerService.GetCustomerById(orderData.RecipientId);
-
-                    orderService.CreateOrder(recipient, 
-                        orderData.PickupLocationId, 
+                    orderService.CreateOrder(recipient,
+                        sender,
+                        orderData.PickupLocationId,
                         orderData.DeliveryLocationId,
                         orderData.Price);
-
-
-                    return PartialView("_NewOrderPartial", orderData);
                 }
 
                 return PartialView("_NewOrderPartial", orderData);
@@ -176,10 +175,11 @@ namespace TransportLogistics.Controllers
         public IActionResult Update(string id)
         {
             var order = orderService.GetById(id);
-            var customerId = order.Recipient.Id;
-            var locations = customerService.GetCustomerAddresses(customerId.ToString());
+            var senderId = order.Sender.Id;
+            
+            var locations = customerService.GetCustomerAddresses(senderId.ToString());
 
-            List<SelectListItem>  customerLocations = new List<SelectListItem>();
+            List<SelectListItem> customerLocations = new List<SelectListItem>();
             foreach (var location in locations)
             {
                 customerLocations.Add(CreateListItem(location));

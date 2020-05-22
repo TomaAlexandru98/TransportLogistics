@@ -28,9 +28,9 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
         }
 
-        public Order CreateOrder(LocationAddress deliveryAddress, LocationAddress pickUpAddress, Customer recipient, decimal price)
+        public Order CreateOrder(Customer recipient, Customer sender, LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price)
         {
-            var order = Order.Create( recipient, pickUpAddress, deliveryAddress, price);
+            var order = Order.Create(recipient, sender, pickUpAddress, deliveryAddress, price);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
@@ -54,7 +54,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             }
         }
 
-        public Order CreateOrder(Customer recipient, string pickupId, string deliveryId, decimal price)
+        public Order CreateOrder(Customer recipient, Customer sender, string pickupId, string deliveryId, decimal price)
         {
             Guid.TryParse(pickupId, out Guid pickupGuid);
             var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
@@ -62,7 +62,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid.TryParse(deliveryId, out Guid deliveryGuid);
             var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
 
-            var order = Order.Create(recipient, pickupLocation, deliveryLocation, price);
+            var order = Order.Create(recipient, sender, pickupLocation, deliveryLocation, price);
             
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
