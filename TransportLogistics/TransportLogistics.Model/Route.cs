@@ -16,6 +16,8 @@ namespace TransportLogistics.Model
             {
                 Id = Guid.NewGuid()
             };
+            return route;
+        }
         public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
