@@ -24,6 +24,8 @@ namespace TransportLogistics.DataAccess.Repositories
                         .Include(o => o.DeliveryAddress)
                         .Include(o => o.Recipient)
                         .Include(o => o.Recipient.ContactDetails)
+                        .Include(o => o.Sender)
+                        .ThenInclude(o => o.LocationAddresses)
                         .Where(o => o.Id == orderId)
                         .FirstOrDefault();
         }

@@ -18,6 +18,7 @@ namespace TransportLogistics.Model
             };
             return route;
         }
+       
         public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
