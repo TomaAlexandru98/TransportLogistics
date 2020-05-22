@@ -26,7 +26,7 @@
                     <div>Plate: @route.Vehicle.RegistrationNumber</div>
                 </div>
             </td>
-            <td class="dropdown text-center w-25" >
+            <td class="dropdown text-center w-20" >
                 <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @route.RouteEntries.Count()
                 </button>
@@ -40,19 +40,25 @@
                 }
             </td>
             
-            <td class="w-50 ">
+            <td class="w-55 ">
                 <div class="d-flex justify-content-sm-around">
                     <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
-                            onclick="LoadAddOrderView('@route.Id')"data-target="#addOrderModal">
+                            onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
                         <i class="material-icons fa fa-plus"></i>
                     </button>
-                    <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal" 
+                    <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
                             onclick="LoadUpdateCustomerView('');" data-target="#updateCustomerModal">
                         <i class="material-icons fa fa-edit"></i>
                     </button>
-                    <button class="btn btn-outline-danger mr-3 ml-3" title="Delete" data-toggle="modal"
+                    <button class="btn btn-outline-danger mr-3 ml-3" title="Delete Order" data-toggle="modal"
                             onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
                         <i class="material-icons fa fa-trash"></i>
+                        <i class="material-icons fa fa-box"></i>
+                    </button>
+                    <button class="btn btn-outline-danger mr-3 ml-3" title="Delete Route" data-toggle="modal"
+                            onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
+                        <i class="material-icons fa fa-trash"></i>
+                        <i class="material-icons fa fa-route"></i>
                     </button>
                 </div>
             </td>
