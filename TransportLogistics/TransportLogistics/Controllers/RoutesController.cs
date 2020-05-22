@@ -54,23 +54,23 @@ namespace TransportLogistics.Controllers
 
             foreach (var order in orders)
             {
-               orderNames.Add(new SelectListItem(order.Recipient.ToString(), order.Id.ToString()));
+               orderNames.Add(new SelectListItem(order.Price.ToString(), order.Id.ToString()));
             }
             return orderNames;
         }
-      /*
+
         [HttpGet]
-        private IActionResult AddOrder([FromRoute]string id, [FromRoute]string routeId)
+        public IActionResult AddOrder(string RouteId)
         {
             try
             {
 
-                var orderId = id;
+                //var orderId = Id;
                 AddOrderViewModel newOrderViewModel = new AddOrderViewModel()
                 {
-                    OrderId = id,
+                    //OrderId = Id,
                     OrderList = GetOrderList(),
-                    RouteId = routeId
+                    RouteId = RouteId
                 };
                 return PartialView("_AddOrderPartial", newOrderViewModel);
             }
@@ -82,7 +82,7 @@ namespace TransportLogistics.Controllers
             }
         }
         [HttpPost]
-        private IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
+        public IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace TransportLogistics.Controllers
                 {
                     var order = orderService.GetById(orderData.OrderId);
                     var route = routeService.GetById(orderData.RouteId);
-                    RouteEntry entry = new RouteEntry() { };
+                    RouteEntry entry = new RouteEntry() {Id = new Guid() };
                     entry.SetOrder(order);
                     route.RouteEntries.Add(entry);
                 }
@@ -103,7 +103,27 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
-        */
+
+        [HttpGet]
+        public IActionResult OrderList(string id)
+        {
+            var orderId = id;
+            AddOrderViewModel model = new AddOrderViewModel()
+            {
+                OrderId = orderId,
+                OrderList = GetOrderList()
+            };
+            return PartialView("_AddOrderPartial", model);
+
+        }
+
+        [HttpPost]
+        public IActionResult OrderList([FromForm]AddOrderViewModel data)
+        {
+            return AddOrder(data.RouteId);
+
+        }
+
         [HttpGet]
         public IActionResult NewRoute(string id)
         {

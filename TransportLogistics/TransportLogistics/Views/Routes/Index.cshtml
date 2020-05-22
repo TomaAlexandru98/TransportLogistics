@@ -38,8 +38,8 @@
             loadTable();
         }
         function LoadAddOrderView(RouteId) {
-            var Id = LoadDropdownOrder();
-            loadServerPartialView("#addRouteBody", '@Url.Action("AddRoute", "Routes")' + "/" + Id +"/" + RouteId).done(function () { $.validator.unobtrusive.parse(document);});
+
+            loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId);
         }
 
         function LoadDropdownVehicle(vehicleControl) {
@@ -57,7 +57,7 @@
 
         function LoadDropdownOrder(Id) {
             var orderId = $(Id).val();
-            return orderId;
+            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId);
         }
     </script>
 }
@@ -124,7 +124,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="newOrderBody">
+                <div class="modal-body" id="addOrderBody">
                     <partial name="_AddOrderPartial" model="new AddOrderViewModel()" />
                 </div>
                 <div class="modal-footer">
