@@ -11,15 +11,15 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly IEmployeeRepository EmployeeRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IDriverRepository DriverRepository;
-       // private readonly IDispatcherRepository DispatcherRepository;
-       //private readonly ISupervisorRepository SupervisorRepository;
+        private readonly IDispatcherRepository DispatcherRepository;
+       private readonly ISupervisorRepository SupervisorRepository;
         public EmployeeServices(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             EmployeeRepository = persistenceContext.EmployeeRepository;
             DriverRepository = persistenceContext.DriverRepository;
-            //DispatcherRepository = persistenceContext.DispatcherRepository
-            //SupervisorRepository = persistenceContext.SupervisorRepository
+            DispatcherRepository = persistenceContext.DispatcherRepository;
+            SupervisorRepository = persistenceContext.SupervisorRepository;
         }
         public void AddEmployee(string userId, string name, string email, string role)
         {
@@ -28,9 +28,17 @@ namespace TransportLogistics.ApplicationLogic.Services
         public void DeleteEmployee(string userId)
         {
             var employee = GetEmployee(userId);
-            DriverRepository.Remove(employee.Id);
-            //SupervisorRepository.Remove(employee.id);
-            //DispatcherRepository.Remove(employee.id);
+
+            if (DriverRepository.Remove(employee.Id) == false)
+            {
+                if(SupervisorRepository.Remove(employee.Id) == false)
+                {
+
+                    DispatcherRepository.Remove(employee.Id);
+                }
+            }
+            PersistenceContext.SaveChanges();
+
         }
         public Employee GetEmployee(string userId)
         {
@@ -38,11 +46,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             employee = DriverRepository.GetByUserId(userId);
             if (employee == null)
             {
-                //employee = SupervisorRepository.GetByUserId(userId);
+                employee = DispatcherRepository.GetByUserId(userId);
             }
             if (employee == null)
             {
-                //employee = DispatcherRepository.GetByUserId(userId);
+                employee = SupervisorRepository.GetByUserId(userId);
             }
             return employee;
         }

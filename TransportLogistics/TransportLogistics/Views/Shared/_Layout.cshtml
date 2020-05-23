@@ -13,6 +13,7 @@
     <link href="~/lib/fontawesome/css/solid.css" rel="stylesheet">
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
     <header>
@@ -105,18 +106,21 @@
                                     </li>
 
                                     <li>
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="RoutesHistory">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="RoutesHistory" >
                                             <i class="fa fa-history" aria-hidden="true"></i>
                                             Routes History
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="TrailerRequest">
+
+                                        <a data-toggle="modal" href="#request" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/Trailers" 
+                                           data-ajax-update="#requestBody">
+                                            Trailer Request
                                             <i class="fas fa-trailer"></i>
-                                             Trailer Request
                                         </a>
+                                          
                                     </li>
-                                    
+
 
                                 }
                         }
@@ -125,6 +129,23 @@
             </div>
         </nav>
     </header>
+    <div class="modal fade modal-delete" tabindex="-1" id="request" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:80%">
+
+                <div id="requestBody" class="modal-body" >
+                    <div class="text-center">
+                        
+
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success" >Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             <br />
@@ -146,3 +167,8 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<script>
+    function openRequestModal() {
+        alert("sal");
+    }
+</script>
