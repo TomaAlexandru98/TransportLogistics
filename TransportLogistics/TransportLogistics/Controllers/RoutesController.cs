@@ -48,7 +48,7 @@ namespace TransportLogistics.Controllers
 
         private SelectListItem CreateListItem(Vehicle vehicle)
         {
-            string dropdownText = $"{ vehicle.Status }, { vehicle.CurrentTrailers.Count()}";
+            string dropdownText = $"{ vehicle.Status }";
             SelectListItem selectLocation = new SelectListItem(dropdownText, vehicle.Id.ToString());
             return selectLocation;
         }
