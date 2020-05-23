@@ -11,5 +11,18 @@ namespace TransportLogistics.Model
         public Trailer Trailer { get; private set; }
         public Supervisor Supervisor { get; private set; }
         public RequestStatus Status { get; private set; }
+
+        public void SetStatus(RequestStatus status)
+        {
+            Status = status;
+        }
+        public void SetDriver(Driver driver)
+        {
+            Driver = driver;
+        }
+        public void SetTrailer(Trailer trailer)
+        {
+            Trailer = trailer;
+        }
     }
 }

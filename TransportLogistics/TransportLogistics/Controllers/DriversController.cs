@@ -170,10 +170,13 @@ namespace TransportLogistics.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult TrailerRequest()
+        public async Task<IActionResult> TrailerRequest(Guid trailerId)
         {
             try
             {
+                var user = await UserManager.GetUserAsync(User);
+                var driver = DriverService.GetByUserId(user.Id);
+                DriverService.CreateRequest(driver.Id, trailerId);
                 return RedirectToAction("Index");
             }
             catch(Exception e)
