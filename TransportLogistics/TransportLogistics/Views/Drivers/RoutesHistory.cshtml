@@ -17,10 +17,8 @@
         <tr>
             <th style="text-align:center"><b>StartAddress</b></th>
             <th style="text-align:center"><b>FinishAddress</b></th>
-            <th style="text-align:center"><b>StartTime</b></th>
-            <th style="text-align:center"><b>FinishTime</b></th>
             <th style="text-align:center"><b>Details</b></th>
-
+          
         </tr>
     </thead>
     <tbody>
@@ -58,10 +56,8 @@
                     </td>
                 }
 
-                <td>@route.StartTime</td>
-                <td>@route.FinishTime</td>
-                <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders <i class="fas fa-info-circle"></i> </a></td>
-        </tr>
+                <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders<i class="fas fa-info-circle"></i> </a></td>
+            </tr>
         }
     </tbody>
 </table>

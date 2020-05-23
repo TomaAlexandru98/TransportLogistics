@@ -14,12 +14,11 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,TrailerService trailerService)
+            ILogger<DriversController> logger)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
-            TrailerService = trailerService;
             Logger = logger;
         }
 
@@ -29,7 +28,6 @@ namespace TransportLogistics.Controllers
 
         private OrderService OrderService;
         private ILogger Logger;
-        private TrailerService TrailerService;
 
         public async Task<IActionResult> Index()
         
@@ -143,46 +141,9 @@ namespace TransportLogistics.Controllers
         }
         public IActionResult Route(Guid id)
         {
-            try
-            {
-                var route = DriverService.GetRouteById(id);
+            var route = DriverService.GetRouteById(id);
 
-                return View(route);
-            }
-            catch(Exception e)
-            {
-                Logger.LogDebug("Failed to retrieve route  {@Exception}", e);
-                Logger.LogError("Failed to retrieve route  {Exception}", e.Message);
-                return BadRequest();
-            }
-        }  
-        public IActionResult Trailers()
-        {
-            try
-            {
-                var trailers = TrailerService.GetAllFreeTrailers();
-                return View(trailers);
-            }
-            catch(Exception e)
-            {
-                Logger.LogDebug("Failed to retrieve available trailers  {@Exception}", e);
-                Logger.LogError("Failed to retrieve available trailers  {Exception}", e.Message);
-                return BadRequest();
-            }
-        }
-        public IActionResult TrailerRequest()
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch(Exception e)
-            {
-                Logger.LogDebug("Failed to make trailer request  {@Exception}", e);
-                Logger.LogError("Failed to make trailer request  {Exception}", e.Message);
-                return BadRequest();
-            }
-
-        }
+            return View();
+        }      
     }
 }

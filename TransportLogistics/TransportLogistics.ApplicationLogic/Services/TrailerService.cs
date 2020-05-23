@@ -70,9 +70,5 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return trailersRepository.GetAll();
         }
-        public IEnumerable<Trailer> GetAllFreeTrailers()
-        {
-            return trailersRepository.GetAllFreeTrailers();
-        }
     }
 }

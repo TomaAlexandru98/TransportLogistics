@@ -11,7 +11,5 @@ namespace TransportLogistics.DataAccess.Abstractions
         new IEnumerable<Route> GetAll();
 
         IEnumerable<RouteEntry> GetAllRouteEntries();
-
-       
     }
 }

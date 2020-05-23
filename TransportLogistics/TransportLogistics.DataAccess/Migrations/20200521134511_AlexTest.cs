@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class NewDb : Migration
+    public partial class AlexTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,20 +43,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RoutesHistories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Supervisor",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Supervisor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,8 +87,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     VehicleId = table.Column<Guid>(nullable: true),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    FinishTime = table.Column<DateTime>(nullable: false),
                     RoutesHistoryId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -208,11 +192,8 @@ namespace TransportLogistics.DataAccess.Migrations
                     PickUpAddressId = table.Column<Guid>(nullable: true),
                     DeliveryAddressId = table.Column<Guid>(nullable: true),
                     RecipientId = table.Column<Guid>(nullable: true),
-                    SenderId = table.Column<Guid>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    PickUpTime = table.Column<DateTime>(nullable: false),
-                    DeliveryTime = table.Column<DateTime>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -233,44 +214,6 @@ namespace TransportLogistics.DataAccess.Migrations
                         name: "FK_Orders_Customers_RecipientId",
                         column: x => x.RecipientId,
                         principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Customers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Requests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: true),
-                    TrailerId = table.Column<Guid>(nullable: true),
-                    SupervisorId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Requests_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Requests_Supervisor_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Requests_Trailers_TrailerId",
-                        column: x => x.TrailerId,
-                        principalTable: "Trailers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -362,26 +305,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "RecipientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_SenderId",
-                table: "Orders",
-                column: "SenderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_DriverId",
-                table: "Requests",
-                column: "DriverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_SupervisorId",
-                table: "Requests",
-                column: "SupervisorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_TrailerId",
-                table: "Requests",
-                column: "TrailerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RouteEntries_OrderId",
                 table: "RouteEntries",
                 column: "OrderId");
@@ -423,19 +346,13 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Dispatchers");
 
             migrationBuilder.DropTable(
-                name: "Requests");
-
-            migrationBuilder.DropTable(
                 name: "RouteEntries");
 
             migrationBuilder.DropTable(
-                name: "VehicleDrivers");
-
-            migrationBuilder.DropTable(
-                name: "Supervisor");
-
-            migrationBuilder.DropTable(
                 name: "Trailers");
+
+            migrationBuilder.DropTable(
+                name: "VehicleDrivers");
 
             migrationBuilder.DropTable(
                 name: "Orders");

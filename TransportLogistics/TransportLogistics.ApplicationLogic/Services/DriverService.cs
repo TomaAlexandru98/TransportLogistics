@@ -34,7 +34,6 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
             driver.AddRouteToHistoric(driver.CurrentRoute);
-            driver.CurrentRoute.SetFinishTime();
             driver.SetCurrentRouteNull();
             SetDriverStatus(driver, DriverStatus.Free);
             DriverRepository.Update(driver);
@@ -44,11 +43,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             driver.SetStatus(status);
             var routeEntries = GetRouteEntries(driver.Id);
             OrderService.StartRoute(routeEntries);
-            if(status == DriverStatus.Driving)
-            {
-                driver.CurrentRoute.SetStartTime();
-            }
-            
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }

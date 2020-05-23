@@ -23,14 +23,7 @@ namespace TransportLogistics.ApplicationLogic.Services
            
             var Order =OrderRepository.GetById(orderId);
             Order.SetStatus(status);
-            if(status == OrderStatus.PickedUp)
-            {
-                Order.SetPickUpTime();
-            }
-            if(status == OrderStatus.Delivered)
-            {
-                Order.SetDeliveryTime();
-            }
+
             OrderRepository.Update(Order);
             PersistenceContext.SaveChanges();
         }

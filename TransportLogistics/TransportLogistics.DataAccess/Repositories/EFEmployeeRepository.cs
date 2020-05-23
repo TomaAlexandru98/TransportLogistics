@@ -14,7 +14,7 @@ namespace TransportLogistics.DataAccess.Repositories
           
         }
 
-        private readonly TransportLogisticsDbContext DbContext;
+        public TransportLogisticsDbContext DbContext { get; }
 
         public void AddEmployee(string userId, string name, string email , string role)
         {
@@ -26,8 +26,7 @@ namespace TransportLogistics.DataAccess.Repositories
             else if(role == "Supervisor")
             {
                 var supervisor = Supervisor.Create(userId, name, email);
-                DbContext.Supervisors.Add(supervisor);
-                
+                //DbContext.Supervisors.Add(supervisor);
             }
             else if(role == "Dispatcher")
             {
