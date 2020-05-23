@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200523111713_VehicleToRequest.Designer.cs" />
     <Compile Remove="Migrations\20200523112513_UpdateRequest.cs" />
     <Compile Remove="Migrations\20200523112513_UpdateRequest.Designer.cs" />
+    <Compile Remove="Migrations\20200523115619_UpdateRequest.cs" />
+    <Compile Remove="Migrations\20200523115619_UpdateRequest.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
