@@ -54,5 +54,32 @@ namespace TransportLogistics.ApplicationLogic.Services
             }
             return employee;
         }
+
+        public void UpdateEmployee(string name, string email,  string Role , string UserId)
+        {
+            var employee = GetEmployee(UserId);
+            
+            if(Role == "Driver")
+            {
+                var driver = DriverRepository.GetById(employee.Id);
+                driver.SetName(name);
+                driver.SetEmail(email);
+                DriverRepository.Update(driver);
+            }
+            else if(Role == "Supervisor")
+            {
+                var supervisor = SupervisorRepository.GetById(employee.Id);
+                supervisor.SetEmail(email);
+                supervisor.SetName(name);
+                SupervisorRepository.Update(supervisor);
+            }
+            else if(Role == "Dispatcher")
+            {
+                var dispatcher = DispatcherRepository.GetById(employee.Id);
+                dispatcher.SetName(name);
+                dispatcher.SetEmail(email);
+                DispatcherRepository.Update(dispatcher);
+            }
+        }
     }
 }
