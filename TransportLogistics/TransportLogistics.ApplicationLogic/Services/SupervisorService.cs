@@ -14,6 +14,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly ISupervisorRepository supervisorRepository;
         private readonly IDriverRepository driverRepository;
         private readonly ITrailerRepository trailerRepository;
+        private readonly IVehicleRepository vehicleRepository;
 
         public SupervisorService(IPersistenceContext persistenceContext)
         {
@@ -22,6 +23,25 @@ namespace TransportLogistics.ApplicationLogic.Services
             this.driverRepository = persistenceContext.DriverRepository;
             this.supervisorRepository = persistenceContext.SupervisorRepository;
             this.trailerRepository = persistenceContext.TrailerRepository;
+            this.vehicleRepository = persistenceContext.VehicleRepository;
+        }
+
+        public void ConnectTrailerToVehicle(Guid id, string vehicleId, string trailerId)
+        {
+            var guidVehicleId = Guid.Parse(vehicleId);
+            var vehicleDb = this.vehicleRepository?.GetById(guidVehicleId);
+
+            var guidTraielrId = Guid.Parse(trailerId);
+            var trailerDb = this.trailerRepository?.GetById(guidTraielrId);
+
+            vehicleDb.SetTrailer(trailerDb);
+            this.vehicleRepository.Update(vehicleDb);
+            this.persistenceContext.SaveChanges();
+        }
+
+        public Supervisor GetByUserId(string userId)
+        {
+            return this.supervisorRepository?.GetByUserId(userId);
         }
 
         public Request ResponseRequest(string supervisorId, string requestId, RequestStatus status)
