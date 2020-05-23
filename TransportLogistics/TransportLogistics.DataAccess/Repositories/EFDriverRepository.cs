@@ -46,7 +46,43 @@ namespace TransportLogistics.DataAccess.Repositories
             return completeRouteEntries;
         }
 
-        
+        public new IEnumerable<Driver> GetAll()
+        {
+            return dbContext.Drivers
+                            .Include(o => o.CurrentRoute)
+                            .ThenInclude(o => o.RouteEntries)
+                            .Include(o => o.RoutesHistoric)
+                            .AsEnumerable();
+        }
+        public RoutesHistory GetRoutesHistory(Guid id)
+        {
+            var driver = GetById(id);
+            var driverRoutes = dbContext.Drivers.Include(o => o.RoutesHistoric).ThenInclude(o => o.Routes)
+                .Where(o=> o.Id == driver.Id).FirstOrDefault();
+            ICollection<Route> routes = new List<Route>();
+            if(driverRoutes.RoutesHistoric.Routes.Count > 0)
+            {
+                foreach(var route in driverRoutes.RoutesHistoric.Routes)
+                {
+                    var routeOrders = dbContext.Routes.Include(o => o.RouteEntries).Where(o => o.Id == route.Id).FirstOrDefault();
+                    ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
+                    if(routeOrders.RouteEntries != null)
+                    {
+                        foreach(var routeEntry in routeOrders.RouteEntries)
+                        {
+                            var temp = dbContext.RouteEntries.Include(o=> o.Order).ThenInclude(o=> o.PickUpAddress).Include(o=>o.Order)
+                                .ThenInclude(o=> o.DeliveryAddress).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
+                            routeEntries.Add(temp);
+                        }
+                        routeOrders.SetRouteEntries( routeEntries);
+                        routes.Add(routeOrders);
+                    }
+
+                }
+                driver.RoutesHistoric.SetRoutes(routes);
+            }
+            return driver.RoutesHistoric;
+        }
        
     }
 }

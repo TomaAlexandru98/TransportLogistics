@@ -1,0 +1,68 @@
+﻿@using TransportLogistics.ViewModels.Dispatchers
+@model DriversListViewModel
+
+<table id="driversTable" class="table table-striped table-bordered" style="width:100%">
+    <thead class="dropdown text-center">
+        <tr>
+            <th>Driver ID</th>
+            <th>Current Route</th>
+            <th>Route history</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        
+        @foreach (var driver in Model.Drivers)
+        {
+            <tr>
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @driver.UserId <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul style="list-style: none">
+                            <li>Name:</li>
+                            <li>@driver.Name</li>
+                            <li>Email:</li>
+                            <li>@driver.Email</li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td></td>
+                <td></td>
+
+                
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @driver.CurrentRoute.Id <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul style="list-style: none">
+                            @foreach (var order in driver.CurrentRoute.RouteEntries)
+                            {
+                                <li>Order @order.Order.Id :</li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+                    
+                <td>@driver.Status</td>
+
+                <td>
+                    <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
+                            onclick="LoadAddRouteView('@driver.Id');" data-target="#addRouteModal">
+                        <i class="material-icons fa fa-plus"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                            onclick="LoadRemoveRouteView('@driver.Id');" data-target="#removeRouteModal">
+                        <i class="material-icons fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

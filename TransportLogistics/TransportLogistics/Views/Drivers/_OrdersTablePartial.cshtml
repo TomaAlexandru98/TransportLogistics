@@ -2,14 +2,16 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @using TransportLogistics.ViewModels.Drivers
+@using TransportLogistics.Models
 @model CurrentRouteViewModel
 <table id="Orders" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th>PickUpAddress</th>
-            <th>DeliveryAddress</th>
-            <th>Status</th>
-            <td>Payment</td>
+            <th style="text-align:center"><b>PickUpAddress</b></th>
+            <th style="text-align:center"><b>DeliveryAddress</b></th>
+            <th style="text-align:center"><b>Status</b></th>
+            <td style="text-align:center"><b>Troubles</b></td>
+            <td style="text-align:center"><b>Payment</b></td>
         </tr>
     </thead>
     <tbody>
@@ -18,17 +20,16 @@
             var i = Model.RouteEntries.Count;
             foreach (var routeEntry in Model.RouteEntries)
             {
-                //TransportLogistics.Model.OrderStatus orderStatus = TransportLogistics.Model.OrderStatus.PickedUp;
-                //if(routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.PickedUp)
-                //{
-                //    orderStatus = TransportLogistics.Model.OrderStatus.Delivered;
-                //}
-                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering)
+
+                var initialStatus = routeEntry.Order.Status;
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering
+                    || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
                 {
+
                     routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
                 }
                 if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Created ||
-                routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned)
+                routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
                 {
                     routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
                 }
@@ -42,16 +43,24 @@
           
                 <td>@routeEntry.Order.DeliveryAddress.Country,@routeEntry.Order.DeliveryAddress.City,@routeEntry.Order.DeliveryAddress.Street,@routeEntry.Order.DeliveryAddress.StreetNumber</td>
            
-            <td style="text-align:center"><a class="btn bg-menu" id="@i" data-ajax="true"  asp-controller="Drivers" asp-action="SetOrderStatus" asp-route-driverId="@Model.DriverId" 
-                   asp-route-orderId="@routeEntry.Order.Id" asp-route-status="@routeEntry.Order.Status"  onclick="StatusUpdate(this.id)"
-                   >
-                @routeEntry.Order.Status </a></td>
+            <td style="text-align:center;max-height:3rem;min-width:20rem"><button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
+                  data-toggle="modal" data-target="#OrderStatus">  @routeEntry.Order.Status </button></td>
+            @{ var cancelButtonId = i + Model.RouteEntries.Count; }
+            @if (initialStatus != TransportLogistics.Model.OrderStatus.Canceled)
+            {
+            
+            <td><button class="btn bg-menu" id="@cancelButtonId"  data-toggle="modal" disabled data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
+           }
+            else
+            {
+            <td><button  disabled class="btn bg-menu" id="@cancelButtonId">Canceled <i class='fas fa-check'></i></button></td>
+            }
             <td>@routeEntry.Order.Price</td>
         </tr>
                 i--; }  }
        
     </tbody>
-</table>
+</table> 
 
 <script>
   

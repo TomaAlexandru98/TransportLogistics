@@ -98,8 +98,31 @@ body {
 .btn-blue {
     border-color: #06087d;
     color: #06087d;
+    min-width: 10rem;
 }
     .btn-blue:hover {
+        background-color: #06087d;
+        color: white;
+    }
+
+.btn-add-blue {
+    border-color: #06087d;
+    color: #06087d;
+}
+
+    .btn-add-blue:hover {
+        background-color: #06087d;
+        color: white;
+    }
+
+.btn-add-blue-small {
+    border-color: #06087d;
+    color: #06087d;
+    height: 2rem;
+    width: 2rem;
+}
+
+    .btn-add-blue-small:hover {
         background-color: #06087d;
         color: white;
     }

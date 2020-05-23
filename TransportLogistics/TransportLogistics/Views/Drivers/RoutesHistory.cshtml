@@ -1,0 +1,72 @@
+﻿@model TransportLogistics.ViewModels.Drivers.RoutesHistoryViewModel
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
+
+}
+<table id="Routes" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th style="text-align:center"><b>StartAddress</b></th>
+            <th style="text-align:center"><b>FinishAddress</b></th>
+            <th style="text-align:center"><b>StartTime</b></th>
+            <th style="text-align:center"><b>FinishTime</b></th>
+            <th style="text-align:center"><b>Details</b></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var route in Model.Routes)
+        {
+        <tr>
+            @if (route.RouteEntries.ElementAt(0).OrderType == TransportLogistics.Model.OrderType.Delivery)
+            {
+                <td style="text-align:center">
+                    @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Country ,@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.City,
+                    @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Street , @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.StreetNumber
+                </td>
+
+            }
+            else
+            {
+                <td style="text-align:center">
+                    @route.RouteEntries.ElementAt(0).Order.PickUpAddress.Country ,@route.RouteEntries.ElementAt(0).Order.PickUpAddress.City,
+                    @route.RouteEntries.ElementAt(0).Order.PickUpAddress.Street , @route.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber
+                </td>
+            }
+                @if (route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).OrderType == TransportLogistics.Model.OrderType.Delivery)
+                {
+                    <td style="text-align:center">
+                        @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Country ,@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.City,
+                        @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Street , @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.StreetNumber
+                    </td>
+
+                }
+                else
+                {
+                    <td style="text-align:center">
+                        @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.Country ,@route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.City,
+                        @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.Street , @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.StreetNumber
+                    </td>
+                }
+
+                <td>@route.StartTime</td>
+                <td>@route.FinishTime</td>
+                <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders <i class="fas fa-info-circle"></i> </a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>$(document).ready(function () {
+        $('#Routes').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
+})
+
+</script>

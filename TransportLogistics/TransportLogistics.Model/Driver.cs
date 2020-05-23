@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public enum DriverStatus {Busy,Free }
+    public enum DriverStatus {Free, Driving }
     public class Driver: Employee
     {
         //public ICollection<Vehicle> VehicleHistory { get; protected set; }
@@ -37,6 +37,11 @@ namespace TransportLogistics.Model
         {
            
             RoutesHistoric.AddRoute(route);
+        }
+
+        public void SetStatus(DriverStatus status)
+        {
+            Status = status;
         }
     }
 }

@@ -96,5 +96,34 @@ namespace TransportLogistics.DataAccess.Repositories
                             .Where(c => c.Id == locationId)
                             .FirstOrDefault();
         }
+
+        public Customer GetCustomerByLocation(LocationAddress location)
+        {
+
+            /*
+            var foundLocation = dbContext.LocationAddresses
+                        .Where(c => c.Id == location.Id)
+                        .FirstOrDefault();
+
+            return dbContext.Customers
+                        .Include(c=> c.LocationAddresses)
+                        .Where(c => c.LocationAddresses
+                        .Contains(foundLocation))
+                        .FirstOrDefault();
+
+            */
+
+            //Oh God no
+
+            foreach (var customer in GetAll())
+            {
+                if (customer.LocationAddresses.Contains(location))
+                    return customer;
+            }
+
+            return null;
+            //
+
+        }
     }
 }

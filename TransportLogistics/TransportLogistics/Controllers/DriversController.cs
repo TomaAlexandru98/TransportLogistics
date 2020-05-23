@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
-using TransportLogistics.ApplicationLogic.Sevices;
 using TransportLogistics.Model;
 using TransportLogistics.ViewModels.Drivers;
 
@@ -13,11 +13,13 @@ namespace TransportLogistics.Controllers
 {
     public class DriversController : Controller
     {
-        public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService)
+        public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
+            ILogger<DriversController> logger)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
+            Logger = logger;
         }
 
         private UserManager<IdentityUser> UserManager;
@@ -25,45 +27,132 @@ namespace TransportLogistics.Controllers
         private DriverService DriverService;
 
         private OrderService OrderService;
+        private ILogger Logger;
 
         public async Task<IActionResult> Index()
         
         {
-            var user = await UserManager.GetUserAsync(User);
-            var driver = DriverService.GetByUserId(user.Id);
-            var routeEntries = DriverService.GetRouteEntries(driver.Id);
            
-            var currentRoute = new CurrentRouteViewModel();
-            currentRoute.RouteEntries = routeEntries;
-            currentRoute.DriverId = driver.Id;
+            var user = await UserManager.GetUserAsync(User);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
-            return View(currentRoute);
+                var currentRoute = new CurrentRouteViewModel();
+                currentRoute.RouteEntries = routeEntries;
+                currentRoute.DriverId = driver.Id;
+
+                return View(currentRoute);
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve driver's route entries {@Exception}", e);
+                Logger.LogError("Failed to retrieve driver's route entries{Exception}", e.Message);
+                return BadRequest();
+            }
         }
-        public IActionResult SetOrderStatus(OrderStatus status , Guid orderId,Guid driverId)
+        public IActionResult SetOrderStatus(OrderStatus status , Guid orderId)
         {
 
-            OrderService.ChangeOrderStatus(orderId, status);
-            return RedirectToAction("Index");
-           
+            try
+            {
+                OrderService.ChangeOrderStatus(orderId, status);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to set order status {@Exception}", e);
+                Logger.LogError("Failed to set order status {Exception}", e.Message);
+                return BadRequest();
+            }
+
         }
         public async Task<IActionResult> GetOrdersPartial()
         {
             var user = await UserManager.GetUserAsync(User);
-            var driver = DriverService.GetByUserId(user.Id);
-            var routeEntries = DriverService.GetRouteEntries(driver.Id);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
-            var currentRoute = new CurrentRouteViewModel();
-            currentRoute.RouteEntries = routeEntries;
-            currentRoute.DriverId = driver.Id;
-            return PartialView("_OrdersTablePartial", currentRoute);
+                var currentRoute = new CurrentRouteViewModel();
+                currentRoute.RouteEntries = routeEntries;
+                currentRoute.DriverId = driver.Id;
+                return PartialView("_OrdersTablePartial", currentRoute);
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve driver's route entries {@Exception}", e);
+                Logger.LogError("Failed to retrieve driver's route entries {Exception}", e.Message);
+                return BadRequest();
+            }
 
         }
         public IActionResult EndRoute()
         {
             var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
-            var driver = DriverService.GetByUserId(user.Id);
-            DriverService.EndCurrentRoute(driver);
-            return RedirectToAction("Index");
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                DriverService.EndCurrentRoute(driver);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to end route {@Exception}", e);
+                Logger.LogError("Failed to end route {Exception}", e.Message);
+                return BadRequest();
+            }
         }
+        public async Task<IActionResult> StartRoute()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                DriverService.SetDriverStatus(driver, DriverStatus.Driving);
+                return RedirectToAction("GetOrdersPartial");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve users accounts {@Exception}", e);
+                Logger.LogError("Failed to retrieve users accounts {Exception}", e.Message);
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> RoutesHistory()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                var routesHistoric = DriverService.GetRoutesHistory(driver.Id);
+                var routesHistoricViewModel = new RoutesHistoryViewModel();
+                routesHistoricViewModel.ConfigureRoutes(routesHistoric.Routes);
+                return View(routesHistoricViewModel);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve routes for current driver {@Exception}", e);
+                Logger.LogError("Failed to retrieve routes for current driver {Exception}", e.Message);
+                return BadRequest();
+            }
+        }
+        public IActionResult Route(Guid id)
+        {
+            try
+            {
+                var route = DriverService.GetRouteById(id);
+
+                return View(route);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve routes for current driver {@Exception}", e);
+                Logger.LogError("Failed to retrieve routes for current driver {Exception}", e.Message);
+                return BadRequest();
+            }
+        }      
     }
 }

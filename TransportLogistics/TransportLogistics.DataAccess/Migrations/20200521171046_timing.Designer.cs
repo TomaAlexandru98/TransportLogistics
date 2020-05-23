@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200519085728_VehicleDriver")]
-    partial class VehicleDriver
+    [Migration("20200521171046_timing")]
+    partial class timing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,8 +150,14 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("DeliveryAddressId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("DeliveryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("PickUpAddressId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PickUpTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -179,12 +185,23 @@ namespace TransportLogistics.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("FinishTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("RoutesHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("VehicleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoutesHistoryId");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Routes");
                 });
@@ -359,6 +376,10 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.RoutesHistory", null)
                         .WithMany("Routes")
                         .HasForeignKey("RoutesHistoryId");
+
+                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.RouteEntry", b =>

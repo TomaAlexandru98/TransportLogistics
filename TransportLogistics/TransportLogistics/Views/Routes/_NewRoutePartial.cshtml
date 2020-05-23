@@ -1,0 +1,12 @@
+﻿@using TransportLogistics.ViewModels.Routes
+@model NewRouteViewModel
+
+<div class="form-group text-center">
+    <label asp-for="VehicleId"></label>
+    <div>
+        <select style="min-width: 60%" asp-for="VehicleId" asp-items="@Model.VehicleList"
+                onclick="LoadDropdownVehicle('#VehicleId')">
+        </select>
+    </div>
+    <span asp-validation-for="VehicleId" class="text-danger"></span>
+</div>
