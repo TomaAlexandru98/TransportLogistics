@@ -3,25 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class Sender : Migration
+    public partial class VehicleToRequest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<Guid>(
-                name: "SenderId",
-                table: "Orders",
+                name: "VehicleId",
+                table: "Requests",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_SenderId",
-                table: "Orders",
-                column: "SenderId");
+                name: "IX_Requests_VehicleId",
+                table: "Requests",
+                column: "VehicleId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Customers_SenderId",
-                table: "Orders",
-                column: "SenderId",
-                principalTable: "Customers",
+                name: "FK_Requests_Vehicles_VehicleId",
+                table: "Requests",
+                column: "VehicleId",
+                principalTable: "Vehicles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -29,16 +29,16 @@ namespace TransportLogistics.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Orders_Customers_SenderId",
-                table: "Orders");
+                name: "FK_Requests_Vehicles_VehicleId",
+                table: "Requests");
 
             migrationBuilder.DropIndex(
-                name: "IX_Orders_SenderId",
-                table: "Orders");
+                name: "IX_Requests_VehicleId",
+                table: "Requests");
 
             migrationBuilder.DropColumn(
-                name: "SenderId",
-                table: "Orders");
+                name: "VehicleId",
+                table: "Requests");
         }
     }
 }
