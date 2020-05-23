@@ -69,6 +69,7 @@
         </div>
     </div>
 </div>
+
 <form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="realoadAfterCancelOrder()">
     <div class="modal fade modal-delete" tabindex="-1" id="CancelOrder" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -166,6 +167,8 @@
                     if ($('#'+ i).html().indexOf('f') > -1)
                     {
                         $('#' + i).prop('disabled', true);
+                        var cancelBtn = i + ordersCounter;
+                        $('#' + cancelBtn).prop('disabled', true);
                     }
 
                 }
@@ -177,17 +180,20 @@
 
     function StatusUpdate(id) {
         var icon = "<i class='fas fa-check'></i>";
-
+        var cancelBtn = @Model.RouteEntries.Count;
+        cancelBtn = cancelBtn + parseInt(id); 
         if ($('#' + id).html().search("Picked") > -1) {
             $('#' + id).html("PickedUp " + icon);
             $('#' + id).prop('disabled', true);
+             $('#' + cancelBtn).prop('disabled', true);
             $.cookie(id, $('#' + id).html());
             }
         else if ($('#' + id).html().indexOf("Delivered") > -1) {
 
             $('#' + id).html("Delivered " + icon);
             $('#' + id).addClass('checked');
-             $('#' + id).prop('disabled', true);
+            $('#' + id).prop('disabled', true);
+            $('#' + cancelBtn).prop('disabled', true);
              $.cookie(id, $('#' + id).html());
         }
        
@@ -199,7 +205,11 @@
             var ordersCounter = @Model.RouteEntries.Count;
             for (var i = 1; i <= ordersCounter; i++) {
                 if($('#' + i).html().indexOf('f') == -1)
-                $("#" + i).prop('disabled', false);
+                    $("#" + i).prop('disabled', false);
+                var cancelBtn = ordersCounter + i;
+                if ($('#' + cancelBtn).html().indexOf('f') == -1 && $('#' + i).html().indexOf('f') == -1 ) {
+                    $('#' + cancelBtn).prop('disabled', false);
+                }
             }
         }
     }
@@ -207,8 +217,8 @@
         loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
             $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
             $('#OrderStatus').modal('hide');
-            EnableButtons();
             setCookies();
+            EnableButtons();
             StatusUpdate($('#rowId').val());
         })
     }

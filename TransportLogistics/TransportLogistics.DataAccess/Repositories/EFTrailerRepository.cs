@@ -48,5 +48,9 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             return dbContext.Trailers.AsEnumerable();
         }
+        public IEnumerable<Trailer> GetAllFreeTrailers()
+        {
+            return  dbContext.Trailers.Where(o => o.Status == Status.Free);
+        }
     }
 }

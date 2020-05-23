@@ -23,8 +23,8 @@ namespace TransportLogistics.DataAccess.Repositories
 
         public Route GetRouteById(Guid routeId)
         {
-            var route = dbContext.Routes.Where(o => o.Id == routeId).FirstOrDefault();
-            ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
+            var route = dbContext.Routes.Include(o=> o.RouteEntries).Where(o => o.Id == routeId).FirstOrDefault();
+             ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
             if (route.RouteEntries != null)
             {
                 foreach (var routeEntry in route.RouteEntries)
@@ -42,5 +42,7 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             return dbContext.Routes.Include(r => r.Vehicle).Include(e => e.RouteEntries).AsEnumerable();
         }
+
+      
     }
 }

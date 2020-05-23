@@ -128,7 +128,7 @@ namespace TransportLogistics.Controllers
             {
                 var user = await UserManager.FindByIdAsync(model.UserId);
                 await UserManager.DeleteAsync(user);
-               // EmployeeServices.DeleteEmployee(model.UserId);
+               EmployeeServices.DeleteEmployee(model.UserId);
             }
             catch (Exception e)
             {
