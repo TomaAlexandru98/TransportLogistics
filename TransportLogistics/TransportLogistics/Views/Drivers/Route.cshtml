@@ -1,4 +1,4 @@
-﻿
+﻿@model TransportLogistics.Model.Route
 @{
     ViewData["Title"] = "Route";
 }
@@ -22,10 +22,23 @@
             <th style="text-align:center"><b>PickUpAddress</b></th>
             <th style="text-align:center"><b>DeliveryAddress</b></th>
             <th style="text-align:center"><b>Payment</b></th>
+            <th style="text-align:center"><b>PickUpTime</b></th>
+            <th style="text-align:center"><b>DeliveryTime</b></th>
+
+
         </tr>
     </thead>
     <tbody>
-
+        @foreach(var routeEntry in Model.RouteEntries)
+        {
+            <tr>
+                <td>@routeEntry.Order.PickUpAddress.Country,@routeEntry.Order.PickUpAddress.City,@routeEntry.Order.PickUpAddress.Street,@routeEntry.Order.PickUpAddress.StreetNumber</td>
+                <td>@routeEntry.Order.DeliveryAddress.Country,@routeEntry.Order.DeliveryAddress.City,@routeEntry.Order.DeliveryAddress.Street,@routeEntry.Order.DeliveryAddress.StreetNumber</td>
+                <td>@routeEntry.Order.Price</td>
+                <td>@routeEntry.Order.PickUpTime</td>
+                <td>@routeEntry.Order.DeliveryTime</td>
+            </tr>
+        }
     </tbody>
 </table>
 
