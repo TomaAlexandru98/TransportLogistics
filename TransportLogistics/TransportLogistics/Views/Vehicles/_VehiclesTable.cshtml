@@ -27,7 +27,7 @@
                 <td>
                     @if (vehicle.CurrentTrailer == null)
                     {
-                    <a data-toggle="modal" data-target="#trailersListModal" onclick="loadAvailabelTrailers()"
+                    <a data-toggle="modal" data-target="#trailersListModal" onclick='loadAvailableTrailers("@vehicle.Id")'
                        style="color: #0366d6; cursor: pointer;">
                         <i class="fa fa-plus-circle"></i>
                         <span>Add</span>

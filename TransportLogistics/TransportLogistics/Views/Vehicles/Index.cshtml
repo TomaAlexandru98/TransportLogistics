@@ -218,13 +218,14 @@
             }
         }
 
-        function loadAvailabelTrailers() {
-            loadServerPartialView("#trailersListContainer", "/Trailers/AvailableTrailers")
+        function loadAvailableTrailers(vehicleId) {
+            loadServerPartialView("#trailersListContainer", "/Trailers/AvailableTrailers?vehicleId=" + vehicleId)
         }
 
-        function connectTrailerToVehicle(id) {
+        function connectTrailerToVehicle(vehicleId, trailerId) {
+
             $.ajax({
-                url: "/Supervisor/ConnectTrailerToVehicle",
+                url: "/Supervisor/ConnectTrailerToVehicle?vehicleId=" + vehicleId + "&trailerId=" + trailerId,
                 success: function () {
                     $('#trailersListModal').modal('toggle');
                 }

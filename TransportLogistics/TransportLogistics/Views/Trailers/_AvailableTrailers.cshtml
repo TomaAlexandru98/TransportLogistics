@@ -1,11 +1,11 @@
-﻿@model TransportLogistics.ViewModels.Trailers.TrailersListViewModel
+﻿@model TransportLogistics.ViewModels.Trailers.AvailableTrailersViewModel
 
 
     <div class="d-flex flex-column p-2">
-        @foreach (var trailer in Model.TrailerViews)
+        @foreach (var trailer in Model.Trailers)
         {
             <div class="d-flex" style="cursor: pointer;">
-                <a class="mr-3" onclick='connectTrailerToVehicle("@trailer.Id")'>
+                <a class="mr-3" onclick='connectTrailerToVehicle("@Model.VehicleId", "@trailer.Id")'>
                     <i class="fa fa-plus-circle"></i>
                 </a>
                 <span class="mr-2 font-italic">@trailer.Model</span>

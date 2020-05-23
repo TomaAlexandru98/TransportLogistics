@@ -59,13 +59,14 @@ namespace TransportLogistics.Controllers
             return PartialView("_TrailersTable", trailerViewModel);
         }
 
-        public IActionResult AvailableTrailers()
+        public IActionResult AvailableTrailers(string vehicleId)
         {
             try
             {
-                var viewModel = new TrailersListViewModel
+                var viewModel = new AvailableTrailersViewModel
                 {
-                    TrailerViews = trailerService.GetAllFreeTrailers()
+                    VehicleId = vehicleId,
+                    Trailers = trailerService.GetAllFreeTrailers()
                 };
 
                 return PartialView("_AvailableTrailers", viewModel);

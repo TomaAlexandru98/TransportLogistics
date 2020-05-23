@@ -56,7 +56,7 @@ namespace TransportLogistics
             
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<CustomerService>();
-
+            services.AddScoped<SupervisorService>();
             services.AddScoped<VehicleService>();
 
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();

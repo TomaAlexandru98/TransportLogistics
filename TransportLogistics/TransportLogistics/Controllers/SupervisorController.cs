@@ -14,25 +14,23 @@ namespace TransportLogistics.Controllers
         private readonly UserManager<IdentityUser> userManager;
 
         public SupervisorController(SupervisorService supervisorService,
-            UserManager<IdentityUser> userManager)
+                                    UserManager<IdentityUser> userManager)
         {
             this.supervisorService = supervisorService;
             this.userManager = userManager;
         }
 
-
-        [Route("/Supervisor/ConnectTrailerToVehicle")]
         public IActionResult ConnectTrailerToVehicle(string vehicleId, string trailerId)
         {
             var userId = userManager.GetUserId(User);
-
+            
             try
             {
                 var supervisorDb = supervisorService.GetByUserId(userId);
                 supervisorService.ConnectTrailerToVehicle(supervisorDb.Id, vehicleId, trailerId);
-                return RedirectToAction("Index", "Vehicle");
+                return RedirectToAction("Index", "Vehicles");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 return BadRequest(e.Message);
             }

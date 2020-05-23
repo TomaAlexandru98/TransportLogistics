@@ -36,6 +36,7 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             vehicleDb.SetTrailer(trailerDb);
             this.vehicleRepository.Update(vehicleDb);
+            this.persistenceContext.SaveChanges();
         }
 
         public Supervisor GetByUserId(string userId)
