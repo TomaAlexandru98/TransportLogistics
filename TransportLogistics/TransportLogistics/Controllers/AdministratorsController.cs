@@ -96,12 +96,13 @@ namespace TransportLogistics.Controllers
             {
                
                 var userSaved = await UserManager.FindByIdAsync(model.UserId);
+                var formerRole = await UserManager.GetRolesAsync(userSaved);
                 userSaved.Email = model.Email;
                 userSaved.UserName = model.Name;
                 userSaved.PhoneNumber = model.PhoneNumber;
                 await UserManager.UpdateAsync(userSaved);
                 var roles = await UserManager.GetRolesAsync(userSaved);
-                //EmployeeServices.UpdateEmployee();
+                EmployeeServices.UpdateEmployee(model.Name , model.Email , formerRole[0],model.UserId );
                 if (await UserManager.IsInRoleAsync(userSaved, model.Role) == false)
                 {
                     await UserManager.RemoveFromRoleAsync(userSaved,roles[0]);

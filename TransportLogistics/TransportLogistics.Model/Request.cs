@@ -22,6 +22,18 @@ namespace TransportLogistics.Model
         {
             this.Supervisor = supervisor;
             return this.Supervisor;
+
+        public void SetStatus(RequestStatus status)
+        {
+            Status = status;
+        }
+        public void SetDriver(Driver driver)
+        {
+            Driver = driver;
+        }
+        public void SetTrailer(Trailer trailer)
+        {
+            Trailer = trailer;
         }
     }
 }
