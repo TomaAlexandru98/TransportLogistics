@@ -1,0 +1,13 @@
+﻿@using TransportLogistics.ViewModels.Routes;
+@model AddOrderViewModel
+
+    <input type="hidden" asp-for="RouteId" />
+    <div class="form-group text-center">
+        <label asp-for="OrderId"></label>
+        <div>
+            <select style="min-width: 60%" asp-for="OrderId" asp-items="@Model.OrderList"
+                    onclick="LoadDropdownOrder('#OrderId')">
+            </select>
+        </div>
+        <span asp-validation-for="OrderId" class="text-danger"></span>
+    </div>

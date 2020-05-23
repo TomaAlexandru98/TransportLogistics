@@ -37,6 +37,10 @@
             $(modalName).modal("hide");
             loadTable();
         }
+        function LoadAddOrderView(RouteId) {
+
+            loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId);
+        }
 
         function LoadDropdownVehicle(vehicleControl) {
             var vehicleId = $(vehicleControl).val();
@@ -49,7 +53,12 @@
 
         function LoadRemoveRouteView(Id) {
              loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
-         }
+        }
+
+        function LoadDropdownOrder(Id) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId);
+        }
     </script>
 }
 
@@ -93,6 +102,34 @@
             <div class="modal-content" style="max-width: 60%">
                 <div class="modal-body" id="removeBody">
                     <partial name="_RemoveRoutePartial" model="new RemoveRouteViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="AddOrder"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#addOrderModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#addOrderBody">
+
+    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newOrderTitle">Add Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="addOrderBody">
+                    <partial name="_AddOrderPartial" model="new AddOrderViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </div>
             </div>
         </div>

@@ -19,15 +19,14 @@ namespace TransportLogistics.Controllers
 
         private readonly ILogger<RouteService> logger;
         private readonly RouteService routeService;
-        private readonly OrderService orderService;
         private readonly VehicleService vehicleService;
-        public RoutesController(ILogger<RouteService> logger, RouteService routeService, 
-            OrderService orderService, VehicleService vehicleService)
+        private readonly OrderService orderService;
+        public RoutesController(ILogger<RouteService> logger, RouteService routeservice, VehicleService vehicleService, OrderService orderService)
         {
             this.logger = logger;
-            this.routeService = routeService;
-            this.orderService = orderService;
+            routeService = routeservice;
             this.vehicleService = vehicleService;
+            this.orderService = orderService;
         }
 
         public IActionResult Index()
@@ -48,37 +47,91 @@ namespace TransportLogistics.Controllers
             }
             return vehicleNames;
         }
-
-        private List<SelectListItem> GetOrdersList()
+        private List<SelectListItem> GetOrderList()
         {
             var orders = orderService.GetAllOrders();
             List<SelectListItem> orderNames = new List<SelectListItem>();
 
             foreach (var order in orders)
             {
-                orderNames.Add(CreateOrderItem(order));
+               orderNames.Add(new SelectListItem(order.Price.ToString(), order.Id.ToString()));
             }
             return orderNames;
         }
 
-        private SelectListItem CreateOrderItem(Order order)
+        [HttpGet]
+        public IActionResult AddOrder(string RouteId)
         {
-            string dropdownText = $"{ order.PickUpAddress }, { order.DeliveryAddress }";
-            SelectListItem selectLocation = new SelectListItem(dropdownText, order.Id.ToString());
-            return selectLocation;
+            try
+            {
+
+                //var orderId = Id;
+                AddOrderViewModel newOrderViewModel = new AddOrderViewModel()
+                {
+                    //OrderId = Id,
+                    OrderList = GetOrderList(),
+                    RouteId = RouteId
+                };
+                return PartialView("_AddOrderPartial", newOrderViewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load information for Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    var order = orderService.GetById(orderData.OrderId);
+                    var route = routeService.GetById(orderData.RouteId);
+                    RouteEntry entry = new RouteEntry() {Id = new Guid() };
+                    entry.SetOrder(order);
+                    route.RouteEntries.Add(entry);
+                }
+                return PartialView("_AddOrderPartial", orderData);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to create a new Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to create a new Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult OrderList(string id)
+        {
+            var orderId = id;
+            AddOrderViewModel model = new AddOrderViewModel()
+            {
+                OrderId = orderId,
+                OrderList = GetOrderList()
+            };
+            return PartialView("_AddOrderPartial", model);
+
+        }
+
+        [HttpPost]
+        public IActionResult OrderList([FromForm]AddOrderViewModel data)
+        {
+            return AddOrder(data.RouteId);
+
         }
 
         [HttpGet]
         public IActionResult NewRoute(string id)
         {
             try {
-                   
                 var vehicleId = id;
-                
                 NewRouteViewModel newRouteViewModel = new NewRouteViewModel()
                 {
                     VehicleId = vehicleId,
-                    OrderList = GetOrdersList(),
                     VehicleList = GetVehicleList()
                 };
 
@@ -87,8 +140,8 @@ namespace TransportLogistics.Controllers
             
             catch (Exception e)
             {
-                logger.LogError("Failed to load information for Order {@Exception}", e.Message);
-                logger.LogDebug("Failed to load information for Order {@ExceptionMessage}", e);
+                logger.LogError("Failed to load information for Route {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Route {@ExceptionMessage}", e);
                 return BadRequest(e.Message);
             }
         }
@@ -105,6 +158,9 @@ namespace TransportLogistics.Controllers
                     var vehicle = vehicleService.GetById(routeData.VehicleId);
 
                     routeService.CreateRoute(vehicle);
+
+
+                    return PartialView("_NewRoutePartial", routeData);
                 }
 
                 return PartialView("_NewRoutePartial", routeData);

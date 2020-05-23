@@ -41,7 +41,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             return OrderRepository.GetAll();
         }
 
-
+        
         //when a driver starts up a route,all the order with status PickedUp should be changed into Delivering
         public void StartRoute(ICollection<RouteEntry> routeEntries)
         {
