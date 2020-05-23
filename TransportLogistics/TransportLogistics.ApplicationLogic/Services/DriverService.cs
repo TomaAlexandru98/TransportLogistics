@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TransportLogistics.ApplicationLogic.Services;
+using TransportLogistics.Data.Abstractions;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Model;
 
@@ -12,12 +13,16 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly IDriverRepository DriverRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IRouteRepository RouteRepository;
+        private readonly IRequestRepository RequestRepository;
+        private readonly ITrailerRepository TrailerRepository;
         private readonly OrderService OrderService;
         public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
         {
             PersistenceContext = persistenceContext;
             DriverRepository = persistenceContext.DriverRepository;
             RouteRepository = persistenceContext.RouteRepository;
+            RequestRepository = persistenceContext.RequestRepository;
+            TrailerRepository = persistenceContext.TrailerRepository;
             OrderService = orderService;
         }
         public Driver GetByUserId(string userId)
@@ -34,6 +39,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
             driver.AddRouteToHistoric(driver.CurrentRoute);
+            driver.CurrentRoute.SetFinishTime();
             driver.SetCurrentRouteNull();
             SetDriverStatus(driver, DriverStatus.Free);
             DriverRepository.Update(driver);
@@ -43,6 +49,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             driver.SetStatus(status);
             var routeEntries = GetRouteEntries(driver.Id);
             OrderService.StartRoute(routeEntries);
+            if(status == DriverStatus.Driving)
+            {
+                driver.CurrentRoute.SetStartTime();
+            }
+            
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }
@@ -61,7 +72,22 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return RouteRepository.GetRouteById(id);
         }
-
+        public void CreateRequest(Guid driverId , Guid trailerId)
+        {
+            Request request = new Request()
+            {
+                Id = Guid.NewGuid(),
+               
+            };
+            var driver = DriverRepository.GetById(driverId);
+            var trailer = TrailerRepository.GetById(trailerId);
+            request.SetTrailer(trailer);
+            request.SetStatus(RequestStatus.Holding);
+            request.SetDriver(driver);
+            RequestRepository.Add(request);
+            PersistenceContext.SaveChanges();
+            
+        }
 
     }
 }

@@ -10,9 +10,9 @@ namespace TransportLogistics.Data.Abstractions
     {
         
         Trailer GetTrailerById(Guid trailerId);
-        IEnumerable<Trailer> GetByVehicleId(Guid vehicleId);
 
         new IEnumerable<Trailer> GetAll();
         Trailer UpdateTrailer(Guid trailerId, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length);
+        IEnumerable<Trailer> GetAllFreeTrailers();
     }
 }

@@ -107,6 +107,7 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult OrderList(string id)
         {
+
             var orderId = id;
             AddOrderViewModel model = new AddOrderViewModel()
             {
@@ -121,6 +122,7 @@ namespace TransportLogistics.Controllers
         public IActionResult OrderList([FromForm]AddOrderViewModel data)
         {
             return AddOrder(data.RouteId);
+
 
         }
 

@@ -14,11 +14,12 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger)
+            ILogger<DriversController> logger,TrailerService trailerService)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
+            TrailerService = trailerService;
             Logger = logger;
         }
 
@@ -28,6 +29,7 @@ namespace TransportLogistics.Controllers
 
         private OrderService OrderService;
         private ILogger Logger;
+        private TrailerService TrailerService;
 
         public async Task<IActionResult> Index()
         
@@ -141,9 +143,49 @@ namespace TransportLogistics.Controllers
         }
         public IActionResult Route(Guid id)
         {
-            var route = DriverService.GetRouteById(id);
+            try
+            {
+                var route = DriverService.GetRouteById(id);
 
-            return View();
-        }      
+                return View(route);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve route  {@Exception}", e);
+                Logger.LogError("Failed to retrieve route  {Exception}", e.Message);
+                return BadRequest();
+            }
+        }  
+        public IActionResult Trailers()
+        {
+            try
+            {
+                var trailers = TrailerService.GetAllFreeTrailers();
+                return View(trailers);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve available trailers  {@Exception}", e);
+                Logger.LogError("Failed to retrieve available trailers  {Exception}", e.Message);
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> TrailerRequest(Guid trailerId)
+        {
+            try
+            {
+                var user = await UserManager.GetUserAsync(User);
+                var driver = DriverService.GetByUserId(user.Id);
+                DriverService.CreateRequest(driver.Id, trailerId);
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to make trailer request  {@Exception}", e);
+                Logger.LogError("Failed to make trailer request  {Exception}", e.Message);
+                return BadRequest();
+            }
+
+        }
     }
 }

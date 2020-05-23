@@ -44,17 +44,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             return trailer;
         }
 
-        public IEnumerable<Trailer> GetTrailerByVehicleId(string Id)
-        {
-            Guid idToSearch = Guid.Parse(Id);
-            var trailers = trailersRepository.GetByVehicleId(idToSearch);
-            if (trailers == null)
-            {
-                throw new Exception();
-            }
-            return trailers;
-        }
-
         public void RemoveTrailer(string id)
         {
             Guid idToSearch = Guid.Parse(id);
@@ -69,6 +58,10 @@ namespace TransportLogistics.ApplicationLogic.Services
         public IEnumerable<Trailer> GetAllTrailers()
         {
             return trailersRepository.GetAll();
+        }
+        public IEnumerable<Trailer> GetAllFreeTrailers()
+        {
+            return trailersRepository.GetAllFreeTrailers();
         }
     }
 }

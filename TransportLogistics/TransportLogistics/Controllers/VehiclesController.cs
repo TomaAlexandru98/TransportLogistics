@@ -174,6 +174,7 @@ namespace TransportLogistics.Controllers
             }
         }
 
+
         public IActionResult RouteDetails(string vehicleId, string routeId)
         {
             try

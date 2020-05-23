@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200521171046_timing")]
-    partial class timing
+    [Migration("20200523145646_NewDb2")]
+    partial class NewDb2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,6 +165,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("RecipientId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -176,7 +179,38 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasIndex("RecipientId");
 
+                    b.HasIndex("SenderId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Request", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("SupervisorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TrailerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.HasIndex("TrailerId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Route", b =>
@@ -241,6 +275,26 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.ToTable("RoutesHistories");
                 });
 
+            modelBuilder.Entity("TransportLogistics.Model.Supervisor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Supervisors");
+                });
+
             modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -268,15 +322,10 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Width")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Trailers");
                 });
@@ -285,6 +334,12 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentTrailerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("HistoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("MaximCarryWeightKg")
@@ -307,6 +362,10 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CurrentTrailerId");
+
+                    b.HasIndex("HistoryId");
+
                     b.ToTable("Vehicles");
                 });
 
@@ -319,6 +378,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("DriverId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("VehicleHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("VehicleId")
                         .HasColumnType("uniqueidentifier");
 
@@ -326,9 +388,22 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.HasIndex("DriverId");
 
+                    b.HasIndex("VehicleHistoryId");
+
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleDrivers");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.VehicleHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleHistories");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Customer", b =>
@@ -369,6 +444,25 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Customer", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId");
+
+                    b.HasOne("TransportLogistics.Model.Customer", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.Request", b =>
+                {
+                    b.HasOne("TransportLogistics.Model.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
+                    b.HasOne("TransportLogistics.Model.Supervisor", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId");
+
+                    b.HasOne("TransportLogistics.Model.Trailer", "Trailer")
+                        .WithMany()
+                        .HasForeignKey("TrailerId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Route", b =>
@@ -393,11 +487,15 @@ namespace TransportLogistics.DataAccess.Migrations
                         .HasForeignKey("RouteId");
                 });
 
-            modelBuilder.Entity("TransportLogistics.Model.Trailer", b =>
+            modelBuilder.Entity("TransportLogistics.Model.Vehicle", b =>
                 {
-                    b.HasOne("TransportLogistics.Model.Vehicle", null)
-                        .WithMany("CurrentTrailers")
-                        .HasForeignKey("VehicleId");
+                    b.HasOne("TransportLogistics.Model.Trailer", "CurrentTrailer")
+                        .WithMany()
+                        .HasForeignKey("CurrentTrailerId");
+
+                    b.HasOne("TransportLogistics.Model.VehicleHistory", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.VehicleDriver", b =>
@@ -405,6 +503,10 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId");
+
+                    b.HasOne("TransportLogistics.Model.VehicleHistory", null)
+                        .WithMany("VehicleDriver")
+                        .HasForeignKey("VehicleHistoryId");
 
                     b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
                         .WithMany()

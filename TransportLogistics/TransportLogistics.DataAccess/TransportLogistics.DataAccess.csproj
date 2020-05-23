@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200520134430_VehicleInRoute.cs" />
-    <Compile Remove="Migrations\20200520134430_VehicleInRoute.Designer.cs" />
-    <Compile Remove="Migrations\20200521170429_timing.cs" />
-    <Compile Remove="Migrations\20200521170429_timing.Designer.cs" />
-    <Compile Remove="Migrations\20200521165723_time.cs" />
-    <Compile Remove="Migrations\20200521165723_time.Designer.cs" />
+    <Compile Remove="Migrations\20200523162943_test.cs" />
+    <Compile Remove="Migrations\20200523162943_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

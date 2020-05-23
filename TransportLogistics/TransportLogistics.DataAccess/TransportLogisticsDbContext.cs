@@ -27,5 +27,8 @@ namespace TransportLogistics.DataAccess
         public DbSet<RouteEntry> RouteEntries { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<VehicleDriver> VehicleDrivers{ get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<Supervisor> Supervisors { get; set; }
+        public DbSet<VehicleHistory> VehicleHistories { get; set; }
     }
 }

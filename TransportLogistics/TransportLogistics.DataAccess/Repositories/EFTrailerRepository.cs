@@ -15,13 +15,6 @@ namespace TransportLogistics.DataAccess.Repositories
 
         }
 
-        public IEnumerable<Trailer> GetByVehicleId(Guid vehicleId)
-        {
-            var targetvehicle = dbContext.Vehicles.Where(vehicle => vehicle.Id == vehicleId).FirstOrDefault();
-            var trailerlist = targetvehicle.CurrentTrailers;
-            return trailerlist;
-        }
-
         public Trailer GetTrailerById(Guid trailerId)
         {
             var Trailer = dbContext.Trailers.Where(trailer => trailer.Id == trailerId).FirstOrDefault();
@@ -47,6 +40,10 @@ namespace TransportLogistics.DataAccess.Repositories
         public new IEnumerable<Trailer> GetAll()
         {
             return dbContext.Trailers.AsEnumerable();
+        }
+        public IEnumerable<Trailer> GetAllFreeTrailers()
+        {
+            return  dbContext.Trailers.Where(o => o.Status == Status.Free);
         }
     }
 }
