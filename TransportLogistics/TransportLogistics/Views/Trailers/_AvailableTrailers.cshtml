@@ -1,0 +1,27 @@
+﻿@model TransportLogistics.ViewModels.Trailers.TrailersListViewModel
+
+
+    <div class="d-flex flex-column p-2">
+        @foreach (var trailer in Model.TrailerViews)
+        {
+            <div class="d-flex" style="cursor: pointer;">
+                <a class="mr-3" onclick='connectTrailerToVehicle("@trailer.Id")'>
+                    <i class="fa fa-plus-circle"></i>
+                </a>
+                <span class="mr-2 font-italic">@trailer.Model</span>
+                <span class="font-italic">
+                    <span>@trailer.Length.ToString("0.#")</span>
+                    <span>x</span>
+                    <span>@trailer.Width.ToString("0.#")</span>
+                    <span>x</span>
+                    <span>@trailer.Height.ToString("0.#")</span>
+                    <span class="mr-1">cm,</span>
+                    <span>@trailer.Capacity</span>
+                    <span>kg</span>
+                </span>
+            </div>
+
+            <div class="mt-2 mb-2" style="border-top: 1px solid #dee2e6;">
+            </div>
+        }
+    </div>

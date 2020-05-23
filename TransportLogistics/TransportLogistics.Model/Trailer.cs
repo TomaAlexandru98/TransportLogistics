@@ -45,7 +45,8 @@ namespace TransportLogistics.Model
                 NumberAxles = numberAxles,
                 Height = height,
                 Width = width,
-                Length = length
+                Length = length/*,
+                Status = Status.Free*/
             };
             return trailer;
            
