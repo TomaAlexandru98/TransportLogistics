@@ -10,9 +10,10 @@ namespace TransportLogistics.Model
         public string Name { get; protected set; }
         public string Type { get; protected set; }
         public string RegistrationNumber { get; protected set; }
-        public ICollection<Trailer> CurrentTrailers { get; protected set; }
         public int MaximCarryWeightKg { get; protected set; }
         public string VIN { get; protected set; }
+        public Trailer CurrentTrailer { get; protected set; }
+        public VehicleHistory History { get; private set; }
         public VehicleStatus Status { get; protected set; }
 
         public static Vehicle Create(string Name, string Type, string registrationNumber, int MaximCarryWeight, string VIN)
@@ -30,7 +31,7 @@ namespace TransportLogistics.Model
                 RegistrationNumber = registrationNumber,
                 MaximCarryWeightKg = MaximCarryWeight,
                 VIN = VIN,
-                CurrentTrailers = new List<Trailer>(),
+                History = VehicleHistory.Create(),
                 Status = VehicleStatus.Free
             };
         }
