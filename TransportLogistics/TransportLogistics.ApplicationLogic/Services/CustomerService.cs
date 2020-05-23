@@ -108,16 +108,21 @@ namespace TransportLogistics.ApplicationLogic.Services
             return locationToUpdate;
         }
 
-        public Customer GetCustomerByLocation(LocationAddress location)
-        {
-            var customer = customerRepository.GetCustomerByLocation(location);
-            return customer;
-        }
-
         public bool IsCustomer(string customerId)
         {
             Guid.TryParse(customerId, out Guid customerGuid);
             if (customerRepository.GetById(customerGuid) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsLocation(string locationId)
+        {
+            Guid.TryParse(locationId, out Guid locationGuid);
+            if (customerRepository.GetLocationAddress(locationGuid) != null)
             {
                 return true;
             }
