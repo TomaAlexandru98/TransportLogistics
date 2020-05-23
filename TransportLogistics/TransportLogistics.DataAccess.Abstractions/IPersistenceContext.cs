@@ -17,6 +17,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         IRouteRepository RouteRepository { get; }
         IDispatcherRepository DispatcherRepository { get; }
         ISupervisorRepository SupervisorRepository { get; }
+        IRequestRepository RequestRepository { get; }
         TransactionScope BeginTransaction();
         void SaveChanges();
     }

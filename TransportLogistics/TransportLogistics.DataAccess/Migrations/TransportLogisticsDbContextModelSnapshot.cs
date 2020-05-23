@@ -191,6 +191,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("DriverId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("SupervisorId")
                         .HasColumnType("uniqueidentifier");
 
