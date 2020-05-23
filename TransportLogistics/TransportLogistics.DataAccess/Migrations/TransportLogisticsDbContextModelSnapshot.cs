@@ -197,9 +197,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("TrailerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
@@ -207,8 +204,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasIndex("SupervisorId");
 
                     b.HasIndex("TrailerId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Requests");
                 });
@@ -442,10 +437,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Trailer", "Trailer")
                         .WithMany()
                         .HasForeignKey("TrailerId");
-
-                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Route", b =>
