@@ -43,5 +43,6 @@ namespace TransportLogistics.Model
         {
             Status = status;
         }
+       
     }
 }
