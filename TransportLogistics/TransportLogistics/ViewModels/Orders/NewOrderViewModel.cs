@@ -9,29 +9,27 @@ using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.ViewModels.Orders
 {
-    public class NewOrderViewModel
+    public class NewOrderViewModel : IValidatableObject
     {
         public enum LocationType
         {
-            None,
             Delivery,
             Pickup
         }
-
-        public string BonusLocationType { get; set; }
 
         [Required(ErrorMessage = "Choosing a sender is required.")]
         [Display(Name = "Sender:")]
         public string SenderId { get; set; }
 
-        [Required(ErrorMessage = "Pickup Address is required.")]
+        //[Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]
         public string PickupLocationId { get; set; }
 
-        [Required(ErrorMessage = "Delivery Address is required.")]
+        //[Required(ErrorMessage = "Delivery Address is required.")]
         [Display(Name = "Delivery Address:")]
         public string DeliveryLocationId { get; set; }
 
+        [Required]
         public NewLocationViewModel NewLocation {get; set; }
 
         [Required(ErrorMessage = "A recipient is required.")]
@@ -54,5 +52,14 @@ namespace TransportLogistics.ViewModels.Orders
         [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (PickupLocationId == null && DeliveryLocationId == null)
+            {
+                yield return new ValidationResult("At least one of them must have a value");
+            }
+        }
     }
 }

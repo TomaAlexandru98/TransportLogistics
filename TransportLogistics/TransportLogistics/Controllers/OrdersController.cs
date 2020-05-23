@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.WebPages;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.ViewModels.Orders;
@@ -65,7 +64,6 @@ namespace TransportLogistics.Controllers
         {
             List<SelectListItem> locationsList = new List<SelectListItem>();
             var locations = customerService.GetCustomerAddresses(customerId);
-            locationsList.Add(new SelectListItem("-", null));
             foreach (var location in locations)
             {
                 locationsList.Add(CreateListItem(location));
@@ -83,7 +81,6 @@ namespace TransportLogistics.Controllers
             string senderId = null;
             string pickupId = null;
             string deliveryId = null;
-            string bonusType = null;
 
             try
             {
@@ -93,7 +90,6 @@ namespace TransportLogistics.Controllers
                     senderId = splitId[0];
                     string locationId = splitId[1];
                     string locationType = splitId[3];
-                    bonusType = splitId[4];
 
                     string secondLocationId = null;
                     if (locationId != splitId[2])
@@ -114,7 +110,7 @@ namespace TransportLogistics.Controllers
                             }
                         }
 
-                        if (locationType == "pickup")
+                        if (locationType.Equals(NewOrderViewModel.LocationType.Pickup.ToString()))
                         {
                             pickupId = locationId;
                             deliveryId = secondLocationId;
@@ -123,7 +119,7 @@ namespace TransportLogistics.Controllers
                             deliveryLocations.AddRange(unchosenLocations);
                         }
 
-                        if (locationType == "delivery")
+                        if (locationType.Equals(NewOrderViewModel.LocationType.Delivery.ToString()))
                         {
                             deliveryId = locationId;
                             pickupId = secondLocationId;
@@ -134,8 +130,10 @@ namespace TransportLogistics.Controllers
                     }
                     else
                     {
-                        pickupLocations.AddRange(GetLocationsList(senderId));
-                        deliveryLocations.AddRange(GetLocationsList(senderId));
+                        var locations = GetLocationsList(senderId);
+                        pickupLocations.AddRange(locations);
+                        deliveryLocations.AddRange(locations);
+                        deliveryLocations.RemoveAt(0);
                     }
                 }
 
@@ -144,6 +142,7 @@ namespace TransportLogistics.Controllers
                     senderId = GetCustomerList().ElementAt(0).Value;
                     pickupLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.AddRange(GetLocationsList(senderId));
+                    deliveryLocations.RemoveAt(0);
                 }
 
                 NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
@@ -153,8 +152,7 @@ namespace TransportLogistics.Controllers
                     DeliveryLocations = deliveryLocations,
                     SenderId = senderId,
                     DeliveryLocationId = deliveryId,
-                    PickupLocationId = pickupId,
-                    BonusLocationType = bonusType
+                    PickupLocationId = pickupId
                 };
 
                 return PartialView("_NewOrderPartial", newOrderViewModel);
@@ -173,40 +171,41 @@ namespace TransportLogistics.Controllers
             try
             {
                 var sender = customerService.GetCustomerById(orderData.SenderId);
-                
-                //if (orderData.BonusLocationType != null)
-                //{
-                    //if (!orderData.BonusLocationType.ToString().Equals("None") || !orderData.BonusLocationType.IsEmpty())
-                    if(orderData.DeliveryLocationId == null || orderData.PickupLocationId == null)    
+
+                if (orderData.PickupLocationId == null && orderData.DeliveryLocationId == null)
+                {
+                    return PartialView("_NewOrderPartial", orderData);
+                }
+
+                if (orderData.PickupLocationId == null || orderData.DeliveryLocationId == null)
+                {
+                    var bonusLocation = LocationAddress.Create(orderData.NewLocation.Country,
+                        orderData.NewLocation.City, orderData.NewLocation.Street,
+                        orderData.NewLocation.StreetNumber, orderData.NewLocation.PostalCode);
+
+                    customerService.AddLocationToCustomer(sender.Id, bonusLocation);
+
+                    if (orderData.PickupLocationId == null)
                     {
-                        var bonusLocation = LocationAddress.Create(orderData.NewLocation.Country,
-                            orderData.NewLocation.City, orderData.NewLocation.Street,
-                            orderData.NewLocation.StreetNumber, orderData.NewLocation.PostalCode);
-
-                        customerService.AddLocationToCustomer(sender.Id, bonusLocation);
-                        
-                        if (orderData.PickupLocationId == null) //.BonusLocationType.ToString().Equals("Pickup"))
-                        {
-                            orderData.PickupLocationId = bonusLocation.Id.ToString();
-                        }
-
-                        if (orderData.DeliveryLocationId == null)//BonusLocationType.ToString().Equals("Delivery"))
-                        {
-                            orderData.DeliveryLocationId = bonusLocation.Id.ToString();
-                        }
+                        orderData.PickupLocationId = bonusLocation.Id.ToString();
                     }
-                
+
+                    if (orderData.DeliveryLocationId == null)
+                    {
+                        orderData.DeliveryLocationId = bonusLocation.Id.ToString();
+                    }
+                }
 
                 var recipient = customerService.CreateNewCustomer(orderData.RecipientName,
-                            orderData.RecipientEmail,
-                            orderData.RecipientPhoneNo);
+                            orderData.RecipientPhoneNo,
+                            orderData.RecipientEmail);
 
                 orderService.CreateOrder(recipient,
                     sender,
                     orderData.PickupLocationId,
                     orderData.DeliveryLocationId,
                     orderData.Price);
-                
+
                 return PartialView("_NewOrderPartial", orderData);
             }
             catch (Exception e)

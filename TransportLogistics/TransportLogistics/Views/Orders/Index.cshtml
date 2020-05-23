@@ -112,14 +112,14 @@
             });
         }
 
-        function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType, bonusType) {
+        function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
 
             var customerId = $(customerControl).val();
             var locationId = $(locationControl).val();
             var bonusLocationId = $(bonusLocationControl).val();
-            
+
             loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/"
-                + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType + ';' + bonusType);
+                + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType);
         }
 
         function LoadNewOrderView() {
@@ -137,7 +137,36 @@
 
          function LoadRemoveOrderView(Id) {
              loadServerPartialView("#removeBody",'@Url.Action("Remove", "Orders")' + "/" + Id);
-         }
+        }
+
+        function addBonusPickupLocation() {
+            
+            $('#bonusLocation').toggle();
+
+            if ($('#pickupSelector select').val() == null) {
+                $('#pickupSelector select').children()[0].selected = true;
+            } else {
+                $('#pickupSelector select').val(null);
+            }
+
+            $('#addDeliveryButton').toggleDisabled();
+            $('#addPickupButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
+            $('#addPickupButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");            
+        }
+
+        function addBonusDeliveryLocation() {
+            $('#bonusLocation').toggle();
+
+            if ($('#deliverySelector select').val() == null) {
+                $('#deliverySelector select').children()[0].selected = true;
+            } else {
+                $('#deliverySelector select').val(null);
+            }
+
+            $('#addPickupButton').toggleDisabled();
+            $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
+            $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
+        }
 
         @*
         function loadCustomerAddreses(customerControl,dropDownId) {
