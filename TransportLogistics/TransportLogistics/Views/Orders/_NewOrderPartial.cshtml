@@ -1,5 +1,4 @@
 ﻿@using TransportLogistics.ViewModels.Orders
-@using TransportLogistics.ViewModels.Customers
 @model NewOrderViewModel
 @{
     ViewData["Title"] = "Test";
@@ -18,10 +17,13 @@
 <div class="form-group text-center">
     <label asp-for="PickupLocationId"></label>
     <div>
-        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation"
-                onchange="LoadDropdown('#PickupLocationId')">
+        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocations"
+                onchange="LoadDropdown('#SenderId', '#PickupLocationId', '#DeliveryLocationId', 'pickup', '@Model.BonusLocationType')">
         </select>
-        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
+
+        <button type="button" id="addPickupButton" class="btn btn-add-blue-small ml-3 mb-2">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
     <span asp-validation-for="PickupLocationId" class="text-danger"></span>
 </div>
@@ -29,33 +31,45 @@
 <div class="form-group text-center">
     <label asp-for="DeliveryLocationId"></label>
     <div>
-        <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocation">
+        <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocations"
+                onchange="LoadDropdown('#SenderId', '#DeliveryLocationId', '#PickupLocationId', 'delivery', '@Model.BonusLocationType')">
         </select>
 
-        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
+        <button type="button" id="addDeliveryButton" class="btn btn-add-blue-small ml-3 mb-2">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
     <span asp-validation-for="DeliveryLocationId" class="text-danger"></span>
 </div>
 
-@*
-    <partial>
-        @await Html.PartialAsync("~/Views/Customers/_AddLocationPartial.cshtml",
-            Model.NewLocation)
-    </partial>
-*@
+<script>
 
-@*
-    <form type="post">
-        <div id="locationTarget"></div>
-    </form>
-*@
-@*
-@using (Html.BeginForm())//"AddLocation", "Customers", FormMethod.Post))
-{
-*@
+    $('#addPickupButton').click(function () {
+        $('#bonusLocation').toggle();
 
-@*
-<form method="post">
+        @if (Model.BonusLocationType == null) {
+            @* || Model.BonusLocationType.Equals(NewOrderViewModel.LocationType.None.ToString())) {
+            Model.BonusLocationType = NewOrderViewModel.LocationType.Pickup.ToString();*@
+            Model.PickupLocationId = null;
+        } else
+        {
+            Model.BonusLocationType = NewOrderViewModel.LocationType.None.ToString();
+        }
+    });
+
+    $('#addDeliveryButton').click(function () {
+        $('#bonusLocation').toggle();
+        @if (Model.BonusLocationType == null || Model.BonusLocationType.Equals(NewOrderViewModel.LocationType.None.ToString())) {
+            Model.BonusLocationType = NewOrderViewModel.LocationType.Delivery.ToString();
+            Model.DeliveryLocationId = null;
+        } else
+        {
+            Model.BonusLocationType = NewOrderViewModel.LocationType.None.ToString();
+        }
+    });
+</script>
+
+<div id="bonusLocation" style="display:none">
     <div class="form-group">
         <label asp-for="NewLocation.Country"></label>
         <input asp-for="NewLocation.Country" type="text" class="form-control" />
@@ -85,18 +99,7 @@
         <input asp-for="NewLocation.PostalCode" type="text" class="form-control" />
         <span asp-validation-for="NewLocation.PostalCode" class="text-danger"></span>
     </div>
-
-    <input type="button" id="save" value="Save" />
-</form>
-
-<script>
-    $(document).ready(function () {
-        $("#save").click(function () {
-            $("form").attr("action", "/Customers/AddLocation");
-        });
-    }
-</script>
-*@
+</div>
 
 <div class="form-group">
     <label asp-for="RecipientName"></label>
@@ -121,3 +124,10 @@
     <input asp-for="Price" type="number" class="form-control" />
     <span asp-validation-for="Price" class="text-danger"></span>
 </div>
+
+@*
+    <partial>
+        @await Html.PartialAsync("~/Views/Customers/_AddLocationPartial.cshtml",
+            Model.NewLocation)
+    </partial>
+*@

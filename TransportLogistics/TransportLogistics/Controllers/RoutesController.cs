@@ -19,11 +19,14 @@ namespace TransportLogistics.Controllers
 
         private readonly ILogger<RouteService> logger;
         private readonly RouteService routeService;
+        private readonly OrderService orderService;
         private readonly VehicleService vehicleService;
-        public RoutesController(ILogger<RouteService> logger, RouteService routeservice, VehicleService vehicleService)
+        public RoutesController(ILogger<RouteService> logger, RouteService routeService, 
+            OrderService orderService, VehicleService vehicleService)
         {
             this.logger = logger;
-            routeService = routeservice;
+            this.routeService = routeService;
+            this.orderService = orderService;
             this.vehicleService = vehicleService;
         }
 
@@ -46,10 +49,22 @@ namespace TransportLogistics.Controllers
             return vehicleNames;
         }
 
-        private SelectListItem CreateListItem(Vehicle vehicle)
+        private List<SelectListItem> GetOrdersList()
         {
-            string dropdownText = $"{ vehicle.Status }, { vehicle.CurrentTrailers.Count()}";
-            SelectListItem selectLocation = new SelectListItem(dropdownText, vehicle.Id.ToString());
+            var orders = orderService.GetAllOrders();
+            List<SelectListItem> orderNames = new List<SelectListItem>();
+
+            foreach (var order in orders)
+            {
+                orderNames.Add(CreateOrderItem(order));
+            }
+            return orderNames;
+        }
+
+        private SelectListItem CreateOrderItem(Order order)
+        {
+            string dropdownText = $"{ order.PickUpAddress }, { order.DeliveryAddress }";
+            SelectListItem selectLocation = new SelectListItem(dropdownText, order.Id.ToString());
             return selectLocation;
         }
 
@@ -57,10 +72,13 @@ namespace TransportLogistics.Controllers
         public IActionResult NewRoute(string id)
         {
             try {
+                   
                 var vehicleId = id;
+                
                 NewRouteViewModel newRouteViewModel = new NewRouteViewModel()
                 {
                     VehicleId = vehicleId,
+                    OrderList = GetOrdersList(),
                     VehicleList = GetVehicleList()
                 };
 
@@ -87,9 +105,6 @@ namespace TransportLogistics.Controllers
                     var vehicle = vehicleService.GetById(routeData.VehicleId);
 
                     routeService.CreateRoute(vehicle);
-
-
-                    return PartialView("_NewRoutePartial", routeData);
                 }
 
                 return PartialView("_NewRoutePartial", routeData);

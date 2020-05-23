@@ -112,14 +112,14 @@
             });
         }
 
-        function LoadDropdown(customerControl) {
-            var customerId = $(customerControl).val();
-            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/" + customerId);
-        }
+        function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType, bonusType) {
 
-        function LoadLocation(locationControl) {
-            var customerId = $(locationControl).val();
-            loadServerPartialView("#locationTarget", '@Url.Action("AddLocation", "Customers")' + "/" + customerId);
+            var customerId = $(customerControl).val();
+            var locationId = $(locationControl).val();
+            var bonusLocationId = $(bonusLocationControl).val();
+            
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/"
+                + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType + ';' + bonusType);
         }
 
         function LoadNewOrderView() {

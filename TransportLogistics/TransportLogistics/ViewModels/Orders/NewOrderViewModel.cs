@@ -11,6 +11,14 @@ namespace TransportLogistics.ViewModels.Orders
 {
     public class NewOrderViewModel
     {
+        public enum LocationType
+        {
+            None,
+            Delivery,
+            Pickup
+        }
+
+        public string BonusLocationType { get; set; }
 
         [Required(ErrorMessage = "Choosing a sender is required.")]
         [Display(Name = "Sender:")]
@@ -26,30 +34,6 @@ namespace TransportLogistics.ViewModels.Orders
 
         public NewLocationViewModel NewLocation {get; set; }
 
-        /*
-        [Required(ErrorMessage = "Country required")]
-        [Display(Name = "Country")]
-        public string Country { get; set; }
-
-        [Required(ErrorMessage = "City required")]
-        [Display(Name = "City")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Street required")]
-        [Display(Name = "Street")]
-        public string Street { get; set; }
-
-        [Required]
-        [Display(Name = "Street number")]
-        public int StreetNumber { get; set; }
-
-        [Required(ErrorMessage = "Postal Code required")]
-        [Display(Name = "PostalCode")]
-        public string PostalCode { get; set; }
-        */
-        
-
-
         [Required(ErrorMessage = "A recipient is required.")]
         [Display(Name = "Recipient Name")]
         public string RecipientName { get; set; }
@@ -63,8 +47,8 @@ namespace TransportLogistics.ViewModels.Orders
         public string RecipientPhoneNo { get; set; }
 
         public List<SelectListItem> CustomerList { get; set; }
-        public List<SelectListItem> PickupLocation { get; set; }
-        public List<SelectListItem> DeliveryLocation { get; set; }
+        public List<SelectListItem> PickupLocations { get; set; }
+        public List<SelectListItem> DeliveryLocations { get; set; }
 
         [Range(0, 9999999, ErrorMessage = "Wrong Input.")]
         [Required]
