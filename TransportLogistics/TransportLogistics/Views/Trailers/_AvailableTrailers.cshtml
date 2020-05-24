@@ -1,11 +1,19 @@
 ﻿@model TransportLogistics.ViewModels.Trailers.AvailableTrailersViewModel
 
 
+@if (!Model.Trailers.Any())
+{
+    <span class="p-2 font-italic" style="font-size: 16px; color: red;">
+        No available trailers!
+    </span>
+}
+else
+{
     <div class="d-flex flex-column p-2">
         @foreach (var trailer in Model.Trailers)
         {
-            <div class="d-flex" style="cursor: pointer;">
-                <a class="mr-3" onclick='connectTrailerToVehicle("@Model.VehicleId", "@trailer.Id")'>
+            <div class="d-flex">
+                <a class="mr-3 add-trailer-to-vehicle" onclick='connectTrailerToVehicle("@Model.VehicleId", "@trailer.Id")'>
                     <i class="fa fa-plus-circle"></i>
                 </a>
                 <span class="mr-2 font-italic">@trailer.Model</span>
@@ -25,3 +33,4 @@
             </div>
         }
     </div>
+}

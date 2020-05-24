@@ -26,7 +26,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             
             //persistenceContext.SaveChanges();
             return trailer;
-            
         }
 
         

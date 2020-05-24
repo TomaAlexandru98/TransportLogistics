@@ -58,12 +58,12 @@ namespace TransportLogistics
             services.AddScoped<CustomerService>();
             services.AddScoped<SupervisorService>();
             services.AddScoped<VehicleService>();
-
-            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+            services.AddScoped<RequestService>();
             services.AddScoped<EmployeeServices>();
             services.AddScoped<DriverService>();
             services.AddScoped<OrderService>();
             services.AddScoped<RouteService>();
+            
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

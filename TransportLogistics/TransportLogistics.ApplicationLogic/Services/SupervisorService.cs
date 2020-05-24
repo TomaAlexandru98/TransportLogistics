@@ -35,6 +35,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             var trailerDb = this.trailerRepository?.GetById(guidTraielrId);
 
             vehicleDb.SetTrailer(trailerDb);
+            trailerDb.SetStatus(Status.Busy);
             this.vehicleRepository.Update(vehicleDb);
             this.persistenceContext.SaveChanges();
         }

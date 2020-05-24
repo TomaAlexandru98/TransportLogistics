@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class NewDb2 : Migration
+    public partial class NewDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -163,6 +163,41 @@ namespace TransportLogistics.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Requests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    SenderId = table.Column<Guid>(nullable: false),
+                    SenderType = table.Column<string>(nullable: true),
+                    VehicleId = table.Column<Guid>(nullable: true),
+                    TrailerId = table.Column<Guid>(nullable: true),
+                    SupervisorId = table.Column<Guid>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Requests_Supervisors_SupervisorId",
+                        column: x => x.SupervisorId,
+                        principalTable: "Supervisors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requests_Trailers_TrailerId",
+                        column: x => x.TrailerId,
+                        principalTable: "Trailers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requests_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Routes",
                 columns: table => new
                 {
@@ -288,39 +323,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Requests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: true),
-                    TrailerId = table.Column<Guid>(nullable: true),
-                    SupervisorId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Requests_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Requests_Supervisors_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Requests_Trailers_TrailerId",
-                        column: x => x.TrailerId,
-                        principalTable: "Trailers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VehicleDrivers",
                 columns: table => new
                 {
@@ -393,11 +395,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_DriverId",
-                table: "Requests",
-                column: "DriverId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Requests_SupervisorId",
                 table: "Requests",
                 column: "SupervisorId");
@@ -406,6 +403,11 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "IX_Requests_TrailerId",
                 table: "Requests",
                 column: "TrailerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Requests_VehicleId",
+                table: "Requests",
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RouteEntries_OrderId",

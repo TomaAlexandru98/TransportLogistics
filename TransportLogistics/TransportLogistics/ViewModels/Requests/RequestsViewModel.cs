@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TransportLogistics.Model;
 
-namespace TransportLogistics.ViewModels.Vehicles
+namespace TransportLogistics.ViewModels.Requests
 {
-    public class VehiclesListViewModel
+    public class RequestsViewModel
     {
-        public IEnumerable<Vehicle> Vehicles { get; set; }
         public IEnumerable<Request> Requests { get; set; }
     }
 }
