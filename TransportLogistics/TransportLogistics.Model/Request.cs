@@ -23,6 +23,7 @@ namespace TransportLogistics.Model
             this.Supervisor = supervisor;
             return this.Supervisor;
         }
+
         public void SetStatus(RequestStatus status)
         {
             Status = status;

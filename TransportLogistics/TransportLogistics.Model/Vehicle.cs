@@ -52,5 +52,11 @@ namespace TransportLogistics.Model
             this.Status = status;
             return this.Status;
         }
+
+        public Trailer SetTrailer(Trailer trailer)
+        {
+            this.CurrentTrailer = trailer;
+            return this.CurrentTrailer;
+        }
     }
 }

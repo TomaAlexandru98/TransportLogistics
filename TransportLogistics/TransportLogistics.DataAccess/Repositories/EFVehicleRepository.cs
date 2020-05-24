@@ -13,6 +13,13 @@ namespace TransportLogistics.DataAccess.Repositories
         public EFVehicleRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {
         }
+        
+        public override IEnumerable<Vehicle> GetAll()
+        {
+            return dbContext.Vehicles.Include(vehicle => vehicle.CurrentTrailer)
+                                     .Include(vehicle => vehicle.History)
+                                     .ThenInclude(vehicle => vehicle.VehicleDriver);
+        }
 
         public IEnumerable<RouteEntry> GetDetailsRoute(Guid vehicleId, Guid routeId)
         {
@@ -62,7 +69,6 @@ namespace TransportLogistics.DataAccess.Repositories
                 }
 
             }
-
 
             return vdList;
         }

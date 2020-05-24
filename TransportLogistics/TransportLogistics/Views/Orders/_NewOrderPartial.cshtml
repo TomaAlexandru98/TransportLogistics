@@ -1,5 +1,4 @@
 ﻿@using TransportLogistics.ViewModels.Orders
-@using TransportLogistics.ViewModels.Customers
 @model NewOrderViewModel
 @{
     ViewData["Title"] = "Test";
@@ -9,7 +8,7 @@
     <label asp-for="SenderId"></label>
     <div>
         <select style="min-width: 60%" asp-for="SenderId" asp-items="@Model.CustomerList"
-                ondblclick="LoadDropdown('#SenderId')" onchange="LoadDropdown('#SenderId')">
+                onchange="LoadDropdown('#SenderId')">
         </select>
     </div>
     <span asp-validation-for="SenderId" class="text-danger"></span>
@@ -17,45 +16,38 @@
 
 <div class="form-group text-center">
     <label asp-for="PickupLocationId"></label>
-    <div>
-        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocation"
-                onchange="LoadDropdown('#PickupLocationId')">
+    <div class="row ml-2 mr-2" id="pickupSelector">
+
+        <select style="min-width: 60%" asp-for="PickupLocationId" asp-items="@Model.PickupLocations"
+                onchange="LoadDropdown('#SenderId', '#PickupLocationId',
+                    '#DeliveryLocationId', '@NewOrderViewModel.LocationType.Pickup')">
         </select>
-        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
+
+        <button type="button" id="addPickupButton" onclick="addBonusPickupLocation()" class="btn btn-add-blue ml-4">
+            <span class="fa fa-plus"></span>
+        </button>
     </div>
     <span asp-validation-for="PickupLocationId" class="text-danger"></span>
 </div>
 
 <div class="form-group text-center">
     <label asp-for="DeliveryLocationId"></label>
-    <div>
-        <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocation">
+    <div id="deliverySelector" class="row ml-2 mr-2">
+
+        <select style="min-width: 60%" asp-for="DeliveryLocationId" asp-items="@Model.DeliveryLocations"
+                onchange="LoadDropdown('#SenderId', '#DeliveryLocationId',
+                    '#PickupLocationId', '@NewOrderViewModel.LocationType.Delivery')">
         </select>
 
-        <button class="btn btn-add-blue-small" onclick="LoadLocation('#SenderId')"><i class="fa fa-plus-square"></i></button>
+        <button type="button" id="addDeliveryButton" onclick="addBonusDeliveryLocation()" class="btn btn-add-blue ml-4">
+            <span class="fa fa-plus"></span>
+        </button>
     </div>
     <span asp-validation-for="DeliveryLocationId" class="text-danger"></span>
 </div>
 
-@*
-    <partial>
-        @await Html.PartialAsync("~/Views/Customers/_AddLocationPartial.cshtml",
-            Model.NewLocation)
-    </partial>
-*@
-
-@*
-    <form type="post">
-        <div id="locationTarget"></div>
-    </form>
-*@
-@*
-@using (Html.BeginForm())//"AddLocation", "Customers", FormMethod.Post))
-{
-*@
-
-@*
-<form method="post">
+<div id="bonusLocation" style="display:none;">
+    <hr />
     <div class="form-group">
         <label asp-for="NewLocation.Country"></label>
         <input asp-for="NewLocation.Country" type="text" class="form-control" />
@@ -85,18 +77,8 @@
         <input asp-for="NewLocation.PostalCode" type="text" class="form-control" />
         <span asp-validation-for="NewLocation.PostalCode" class="text-danger"></span>
     </div>
-
-    <input type="button" id="save" value="Save" />
-</form>
-
-<script>
-    $(document).ready(function () {
-        $("#save").click(function () {
-            $("form").attr("action", "/Customers/AddLocation");
-        });
-    }
-</script>
-*@
+    <hr />
+</div>
 
 <div class="form-group">
     <label asp-for="RecipientName"></label>
