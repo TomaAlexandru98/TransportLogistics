@@ -14,7 +14,8 @@ namespace TransportLogistics.Controllers
         private readonly VehicleService vehicleService;
         private readonly ILogger<VehicleService> logger;
 
-        public VehiclesController(VehicleService vehicleService, ILogger<VehicleService> logger)
+        public VehiclesController(VehicleService vehicleService,
+                                  ILogger<VehicleService> logger)
         {
             this.vehicleService = vehicleService;
             this.logger = logger;

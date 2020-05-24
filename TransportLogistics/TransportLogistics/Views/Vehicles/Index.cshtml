@@ -228,6 +228,7 @@
                 url: "/Supervisor/ConnectTrailerToVehicle?vehicleId=" + vehicleId + "&trailerId=" + trailerId,
                 success: function () {
                     $('#trailersListModal').modal('toggle');
+                    loadTable();
                 }
             });
         }

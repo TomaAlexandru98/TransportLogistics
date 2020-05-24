@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200523145646_NewDb2")]
-    partial class NewDb2
+    [Migration("20200524124111_RemoveSenderTypeRequest")]
+    partial class RemoveSenderTypeRequest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -190,7 +190,7 @@ namespace TransportLogistics.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DriverId")
+                    b.Property<Guid>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -202,13 +202,16 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("TrailerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("DriverId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SupervisorId");
 
                     b.HasIndex("TrailerId");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Requests");
                 });
@@ -452,10 +455,6 @@ namespace TransportLogistics.DataAccess.Migrations
 
             modelBuilder.Entity("TransportLogistics.Model.Request", b =>
                 {
-                    b.HasOne("TransportLogistics.Model.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId");
-
                     b.HasOne("TransportLogistics.Model.Supervisor", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId");
@@ -463,6 +462,10 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Trailer", "Trailer")
                         .WithMany()
                         .HasForeignKey("TrailerId");
+
+                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Route", b =>
