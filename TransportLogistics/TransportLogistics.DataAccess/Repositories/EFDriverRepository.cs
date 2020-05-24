@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace TransportLogistics.DataAccess.Repositories
     {
         public EFDriverRepository(TransportLogisticsDbContext dbContext) : base(dbContext)
         {
-            
         }
         public Driver GetByUserId(string userId)
         {

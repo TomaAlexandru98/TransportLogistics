@@ -1,0 +1,23 @@
+﻿@model TransportLogistics.ViewModels.Requests.RequestsViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <table id="vehiclesTable" class="table table-striped table-bordered" style="width: 101%;">
+        <thead>
+            <tr>
+                <th width="90">Vehicle</th>
+                <th width="75">Trailer</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var request in Model.Requests)
+            {
+                <tr>
+                    <td>@request.Vehicle.RegistrationNumber</td>
+                    <td>@request.Trailer.Model</td>
+                </tr>
+            }
+        </tbody>
+    </table>

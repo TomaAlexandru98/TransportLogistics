@@ -24,7 +24,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             trailersRepository?.Add(trailer);
             persistenceContext?.SaveChanges();
             return trailer;
-            
         }
 
         
