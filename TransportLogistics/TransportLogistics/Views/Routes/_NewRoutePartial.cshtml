@@ -5,8 +5,19 @@
     <label asp-for="VehicleId"></label>
     <div>
         <select style="min-width: 60%" asp-for="VehicleId" asp-items="@Model.VehicleList"
-                onclick="LoadDropdownVehicle('#VehicleId')">
+                ondblclick="LoadDropdownVehicle('#VehicleId')" onchange="LoadDropdownVehicle('#VehicleId')">
         </select>
     </div>
     <span asp-validation-for="VehicleId" class="text-danger"></span>
+</div>
+
+@*string separat printr-un caracter special ;*@
+
+<div class="form-group">
+
+
+
+
+
+
 </div>

@@ -36,10 +36,25 @@ namespace TransportLogistics.DataAccess.Repositories
             return dbContext.Orders
                         .Include(o => o.PickUpAddress)
                         .Include(o => o.DeliveryAddress)
+                        .Include(o => o.Sender)
+                        .Include(o => o.Sender.ContactDetails)
                         .Include(o => o.Recipient)
                         .Include(o => o.Recipient.ContactDetails)
                         .AsEnumerable();
         }
 
+        public bool RemoveOrder(Order orderToRemove)
+        {
+            if (orderToRemove != null)
+            {
+                dbContext.Remove(orderToRemove.Recipient.ContactDetails);
+                dbContext.Remove(orderToRemove.Recipient);
+                dbContext.Remove(orderToRemove);
+                dbContext.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             return OrderRepository.GetAll();
         }
 
-
+        
         //when a driver starts up a route,all the order with status PickedUp should be changed into Delivering
         public void StartRoute(ICollection<RouteEntry> routeEntries)
         {
@@ -85,22 +85,17 @@ namespace TransportLogistics.ApplicationLogic.Services
 
         public bool Remove(string id)
         {
-            Guid orderId = Guid.Empty;
-            Guid.TryParse(id, out orderId);
+            var orderToRemove = GetById(id);
 
-            var result = OrderRepository?.Remove(orderId);
-            if (result == true)
-            {
-                PersistenceContext.SaveChanges();
-                return true;
-            }
-
-            return false;
+            return OrderRepository.RemoveOrder(orderToRemove);
         }
+
         public Customer GetRecipient(string id)
         {
-            return null;
+            var order = GetById(id);
+            return order.Recipient;
         }
+
         public Order Update(string id,string pickupId,string deliveryId, decimal price)
         {
             Guid.TryParse(pickupId, out Guid pickupGuid);

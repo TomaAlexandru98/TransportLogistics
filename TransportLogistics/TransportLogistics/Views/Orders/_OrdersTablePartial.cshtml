@@ -16,67 +16,69 @@
     <tbody>
         @foreach (var order in Model.Orders)
         {
-            <tr>
-                <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <tr>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.PickUpAddress.PostalCode, @order.PickUpAddress.Street
+                    @order.PickUpAddress.PostalCode, @order.PickUpAddress.Street
 
-                    </button>
-                    <div class="dropdown-menu" style="padding: 0.8rem">
-                        <div>Country: @order.PickUpAddress.Country</div>
-                        <div>City: @order.PickUpAddress.City</div>
-                        <div>Street: @order.PickUpAddress.Street</div>
-                        <div>Street number: @order.PickUpAddress.StreetNumber</div>
-                        <div>Postal Code: @order.PickUpAddress.PostalCode</div>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>Country: @order.PickUpAddress.Country</div>
+                    <div>City: @order.PickUpAddress.City</div>
+                    <div>Street: @order.PickUpAddress.Street</div>
+                    <div>Street number: @order.PickUpAddress.StreetNumber</div>
+                    <div>Postal Code: @order.PickUpAddress.PostalCode</div>
 
-                    </div>
-                </td>
+                </div>
+            </td>
 
-                <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.DeliveryAddress.PostalCode, @order.DeliveryAddress.Street
+                    @order.DeliveryAddress.PostalCode, @order.DeliveryAddress.Street
 
-                    </button>
-                    <div class="dropdown-menu" style="padding: 0.8rem">
-                        <div>Country: @order.DeliveryAddress.Country</div>
-                        <div>City: @order.DeliveryAddress.City</div>
-                        <div>Street: @order.DeliveryAddress.Street</div>
-                        <div>Street number: @order.DeliveryAddress.StreetNumber</div>
-                        <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
-                    </div>
-                </td>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>Country: @order.DeliveryAddress.Country</div>
+                    <div>City: @order.DeliveryAddress.City</div>
+                    <div>Street: @order.DeliveryAddress.Street</div>
+                    <div>Street number: @order.DeliveryAddress.StreetNumber</div>
+                    <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
+                </div>
+            </td>
 
-                <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.Recipient.Name
-                    </button>
-                    <div class="dropdown-menu" style="padding: 0.8rem">
-                        <div>Email</div>
-                        <div>@order.Recipient.ContactDetails.Email</div>
-                        <div>Phone number:</div>
-                        <div>@order.Recipient.ContactDetails.PhoneNo</div>
+                    @order.Recipient.Name
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>Email</div>
+                    <div>@order.Recipient.ContactDetails.Email</div>
+                    <div>Phone number:</div>
+                    <div>@order.Recipient.ContactDetails.PhoneNo</div>
 
-                    </div>
-                </td>
+                </div>
+            </td>
 
-                <td>@order.Status</td>
-                <td>@order.Price</td>
+            <td>@order.Status</td>
+            <td>@order.Price</td>
 
-                <td class="d-flex justify-content-around">
+            <td class="d-flex justify-content-around">
 
-                    <button name="ID" id="@order.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
-                    data-target="#editOrderModal" onclick="LoadEditOrderView('@order.Id');"><i class="material-icons fa fa-edit"></i></button>
+                <button name="ID" id="@order.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                        data-target="#editOrderModal" onclick="LoadEditOrderView('@order.Id');">
+                    <i class="material-icons fa fa-edit"></i>
+                </button>
 
-                    <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
-                            onclick="LoadRemoveOrderView('@order.Id');" data-target="#removeModal" >
+                <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                        onclick="LoadRemoveOrderView('@order.Id');" data-target="#removeModal">
 
-                        <i class="material-icons fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
+                    <i class="material-icons fa fa-trash"></i>
+                </button>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

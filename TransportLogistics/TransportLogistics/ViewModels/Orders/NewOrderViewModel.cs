@@ -9,46 +9,28 @@ using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.ViewModels.Orders
 {
-    public class NewOrderViewModel
+    public class NewOrderViewModel : IValidatableObject
     {
+        public enum LocationType
+        {
+            Delivery,
+            Pickup
+        }
 
         [Required(ErrorMessage = "Choosing a sender is required.")]
         [Display(Name = "Sender:")]
         public string SenderId { get; set; }
 
-        [Required(ErrorMessage = "Pickup Address is required.")]
+        //[Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]
         public string PickupLocationId { get; set; }
 
-        [Required(ErrorMessage = "Delivery Address is required.")]
+        //[Required(ErrorMessage = "Delivery Address is required.")]
         [Display(Name = "Delivery Address:")]
         public string DeliveryLocationId { get; set; }
 
-        public NewLocationViewModel NewLocation {get; set; }
-
-        /*
-        [Required(ErrorMessage = "Country required")]
-        [Display(Name = "Country")]
-        public string Country { get; set; }
-
-        [Required(ErrorMessage = "City required")]
-        [Display(Name = "City")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Street required")]
-        [Display(Name = "Street")]
-        public string Street { get; set; }
-
         [Required]
-        [Display(Name = "Street number")]
-        public int StreetNumber { get; set; }
-
-        [Required(ErrorMessage = "Postal Code required")]
-        [Display(Name = "PostalCode")]
-        public string PostalCode { get; set; }
-        */
-        
-
+        public NewLocationViewModel NewLocation {get; set; }
 
         [Required(ErrorMessage = "A recipient is required.")]
         [Display(Name = "Recipient Name")]
@@ -63,12 +45,21 @@ namespace TransportLogistics.ViewModels.Orders
         public string RecipientPhoneNo { get; set; }
 
         public List<SelectListItem> CustomerList { get; set; }
-        public List<SelectListItem> PickupLocation { get; set; }
-        public List<SelectListItem> DeliveryLocation { get; set; }
+        public List<SelectListItem> PickupLocations { get; set; }
+        public List<SelectListItem> DeliveryLocations { get; set; }
 
         [Range(0, 9999999, ErrorMessage = "Wrong Input.")]
         [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (PickupLocationId == null && DeliveryLocationId == null)
+            {
+                yield return new ValidationResult("At least one of them must have a value");
+            }
+        }
     }
 }
