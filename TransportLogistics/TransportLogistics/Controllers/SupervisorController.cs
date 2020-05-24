@@ -35,5 +35,17 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        public IActionResult ManageRequests()
+        {
+            try
+            {
+                return View();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

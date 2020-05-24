@@ -63,5 +63,11 @@ namespace TransportLogistics.Model
             trailer.Length = length;
             
         }
+
+        public Status SetStatus(Status status)
+        {
+            this.Status = status;
+            return this.Status;
+        }
     }
 }

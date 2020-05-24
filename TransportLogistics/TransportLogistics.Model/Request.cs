@@ -7,10 +7,25 @@ namespace TransportLogistics.Model
     public enum RequestStatus { Accepted, Declined, Holding }
     public class Request : DataEntity
     {
-        public Driver Driver { get; private set; }
+        public Guid SenderId { get; private set; }
+        public Vehicle Vehicle { get; private set; }
         public Trailer Trailer { get; private set; }
         public Supervisor Supervisor { get; private set; }
         public RequestStatus Status { get; private set; }
+
+        public static Request Create(Guid sendeId,
+                                     Vehicle vehicle,
+                                     Trailer trailer)
+        {
+            return new Request
+            {
+                Id = Guid.NewGuid(),
+                SenderId = sendeId,
+                Vehicle = vehicle,
+                Trailer = trailer,
+                Status = RequestStatus.Holding
+            };
+        }
 
         public RequestStatus ChangeStatus(RequestStatus status)
         {
@@ -28,13 +43,18 @@ namespace TransportLogistics.Model
         {
             Status = status;
         }
-        public void SetDriver(Driver driver)
+        public void SetSender(Guid senderId)
         {
-            Driver = driver;
+            SenderId = senderId;
         }
         public void SetTrailer(Trailer trailer)
         {
             Trailer = trailer;
+        }
+
+        public void SetVehicle(Vehicle vehicle)
+        {
+            this.Vehicle = vehicle;
         }
     }
 }
