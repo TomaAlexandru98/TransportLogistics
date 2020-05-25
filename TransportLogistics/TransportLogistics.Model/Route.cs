@@ -49,6 +49,10 @@ namespace TransportLogistics.Model
             FinishTime = DateTime.UtcNow;
            
         }
+        public void DeleteRouteEntry(RouteEntry routeEntry)
+        {
+            RouteEntries.Remove(routeEntry);
+        }
         public void DeleteRouteEntries()
         {
             RouteEntries.Clear();

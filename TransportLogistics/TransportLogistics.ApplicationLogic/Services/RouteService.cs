@@ -37,6 +37,19 @@ namespace TransportLogistics.ApplicationLogic.Services
             persistenceContext.SaveChanges();
             return route;
         }
+
+        public Route RemoveEntry(string routeId, RouteEntry entry)
+        {
+            Guid.TryParse(routeId, out Guid routepGuid);
+            var route = routeRepository.GetRouteById(routepGuid);
+            routeRepository.Remove(entry, route.Id);
+
+            route.DeleteRouteEntry(entry);
+            //  route.RouteEntries.Add(entry);
+            persistenceContext.SaveChanges();
+            return route;
+        }
+
         public IEnumerable<Route> GetAllRoutes()
         {
             return routeRepository.GetAll();

@@ -52,6 +52,25 @@ namespace TransportLogistics.DataAccess.Repositories
             return entry;
             
         }
-      
+
+        public void Remove(RouteEntry entry, Guid routeId)
+        {
+            
+            var route = dbContext.Routes.Include(r => r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
+            foreach(var dbentry in route.RouteEntries)
+            {
+               
+                if(dbentry.Order.Id == entry.Order.Id)
+                {
+                    
+                    route.RouteEntries.Remove(dbentry);
+                    dbContext.RouteEntries.Remove(dbentry);
+                    dbContext.SaveChanges();
+                }
+               
+            }
+
+        }
+
     }
 }

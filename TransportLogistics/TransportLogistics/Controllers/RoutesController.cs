@@ -215,7 +215,79 @@ namespace TransportLogistics.Controllers
             return PartialView("_RemoveRoutePartial", removeData);
         }
 
+        [HttpGet]
+        public IActionResult RemoveOrderList([FromRoute]string id)
+        {
+            string[] splitId = id.Split(';');
+            var orderId = splitId[0];
+            string RouteId = splitId[1];
 
+            DeleteOrderViewModel model = new DeleteOrderViewModel()
+            {
+                OrderId = orderId,
+                OrderList = GetOrderList(),
+                RouteId = RouteId
+
+            };
+            return PartialView("_RemoveOrderPartial", model);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveOrderList([FromForm]DeleteOrderViewModel data)
+        {
+            return RemoveOrder(data.RouteId);
+
+
+        }
+
+        [HttpGet]
+        public IActionResult RemoveOrder(string RouteId)
+        {
+            try
+            {
+
+                //var orderId = Id;
+                DeleteOrderViewModel newOrderViewModel = new DeleteOrderViewModel()
+                {
+                    //OrderId = Id,
+                    OrderList = GetOrderList(),
+                    RouteId = RouteId
+                };
+                return PartialView("_RemoveOrderPartial", newOrderViewModel);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load information for Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult RemoveOrder([FromForm]DeleteOrderViewModel orderData)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var order = orderService.GetById(orderData.OrderId);
+                    var route = routeService.GetById(orderData.RouteId);
+                    RouteEntry entry = new RouteEntry() { Id = Guid.NewGuid() };
+
+                    entry.SetOrder(order);
+
+                    routeService.RemoveEntry(route.Id.ToString(), entry);
+
+
+                }
+                return PartialView("_RemoveOrderPartial", orderData);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to create a new Order {@Exception}", e.Message);
+                logger.LogDebug("Failed to create a new Order {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
 
     }
 }

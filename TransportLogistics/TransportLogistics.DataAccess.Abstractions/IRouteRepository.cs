@@ -12,6 +12,8 @@ namespace TransportLogistics.DataAccess.Abstractions
         RouteEntry Add(RouteEntry entry,Guid RouteId);
         IEnumerable<RouteEntry> GetAllRouteEntries();
 
-       
+        void Remove(RouteEntry entry, Guid RouteId);
+
+
     }
 }
