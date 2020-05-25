@@ -47,10 +47,18 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             var route = dbContext.Routes.Include(r =>r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
             route.RouteEntries.Add(entry);
+            
             dbContext.RouteEntries.Add(entry);
             dbContext.SaveChanges();
             return entry;
             
+        }
+
+        public RouteEntry GetEntry(Guid id)
+        {
+            //var Trailer = dbContext.Trailers.Where(trailer => trailer.Id == trailerId).FirstOrDefault();
+            var entry = dbContext.RouteEntries.Where(e => e.Id == id).FirstOrDefault();
+            return entry;
         }
 
         public void Remove(RouteEntry entry, Guid routeId)

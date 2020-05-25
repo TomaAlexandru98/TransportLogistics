@@ -59,6 +59,21 @@ namespace TransportLogistics.Controllers
             return orderNames;
         }
 
+        private List<SelectListItem> GetOrderListFromnRoute(string id)
+        {
+            var route = routeService.GetById(id);
+            
+            var routes = route.RouteEntries;
+           // var orders = orderService.GetAllOrders();
+            List<SelectListItem> orderNames = new List<SelectListItem>();
+
+            foreach (var order in routes)
+            {
+                orderNames.Add(new SelectListItem(order.Order.Price.ToString(), order.Id.ToString()));
+            }
+            return orderNames;
+        }
+
         [HttpGet]
         public IActionResult AddOrder(string RouteId)
         {
@@ -224,9 +239,9 @@ namespace TransportLogistics.Controllers
 
             DeleteOrderViewModel model = new DeleteOrderViewModel()
             {
-                OrderId = orderId,
-                OrderList = GetOrderList(),
-                RouteId = RouteId
+                orderId = orderId,
+                OrderList = GetOrderListFromnRoute(RouteId),
+                routeId = RouteId
 
             };
             return PartialView("_RemoveOrderPartial", model);
@@ -235,7 +250,7 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult RemoveOrderList([FromForm]DeleteOrderViewModel data)
         {
-            return RemoveOrder(data.RouteId);
+            return RemoveOrder(data.routeId);
 
 
         }
@@ -251,7 +266,7 @@ namespace TransportLogistics.Controllers
                 {
                     //OrderId = Id,
                     OrderList = GetOrderList(),
-                    RouteId = RouteId
+                    routeId = RouteId
                 };
                 return PartialView("_RemoveOrderPartial", newOrderViewModel);
             }
@@ -269,13 +284,11 @@ namespace TransportLogistics.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var order = orderService.GetById(orderData.OrderId);
-                    var route = routeService.GetById(orderData.RouteId);
-                    RouteEntry entry = new RouteEntry() { Id = Guid.NewGuid() };
 
-                    entry.SetOrder(order);
-
-                    routeService.RemoveEntry(route.Id.ToString(), entry);
+                    var routeEntry = routeService.GetEntryId(orderData.orderId);
+                    var route = routeService.GetById(orderData.routeId);
+                 
+                    routeService.RemoveEntry(route.Id.ToString(), routeEntry);
 
 
                 }
