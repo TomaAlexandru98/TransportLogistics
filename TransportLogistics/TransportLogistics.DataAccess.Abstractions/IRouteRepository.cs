@@ -9,7 +9,7 @@ namespace TransportLogistics.DataAccess.Abstractions
     {
         Route GetRouteById(Guid routeId);
         new IEnumerable<Route> GetAll();
-
+        RouteEntry Add(RouteEntry entry,Guid RouteId);
         IEnumerable<RouteEntry> GetAllRouteEntries();
 
        

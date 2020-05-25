@@ -6,7 +6,7 @@ namespace TransportLogistics.Model
 {
     public class Route : DataEntity
     {
-        public ICollection<RouteEntry> RouteEntries { get; private set; }
+        public ICollection<RouteEntry> RouteEntries { get;  set; }
         public Vehicle Vehicle { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime FinishTime { get; private set; }
@@ -34,6 +34,12 @@ namespace TransportLogistics.Model
         {
             RouteEntries = routeEntries;
         }
+
+        public void SetRouteEntry(RouteEntry routeEntrie)
+        {
+            RouteEntries.Add(routeEntrie);
+        }
+
         public void SetStartTime()
         {
             StartTime = DateTime.UtcNow;
@@ -42,6 +48,10 @@ namespace TransportLogistics.Model
         {
             FinishTime = DateTime.UtcNow;
            
+        }
+        public void DeleteRouteEntries()
+        {
+            RouteEntries.Clear();
         }
     } 
 }

@@ -5,7 +5,7 @@
     <thead class="dropdown text-center">
         <tr>
             <th>Vehicle</th>
-            <th>No.Locations</th>
+            <th>No.Orders</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,7 +16,7 @@
         @foreach (var route in Model.Routes)
         {
            
-        <tr>
+        <tr style="max-height:4rem">
             <td class="dropdown text-center w-50">
                 <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @route.Vehicle.Name   Status: @route.Vehicle.Status   Type: @route.Vehicle.Type
@@ -33,14 +33,14 @@
                 @foreach(var order in route.RouteEntries)
                 {
                 <div class="dropdown-menu" style="padding: 0.8rem">
-                    <div>Order: @order.Order</div>
+                   
                     <div>Type: @order.OrderType</div>
 
                 </div>
                 }
             </td>
             
-            <td class="w-55 ">
+           <td class="w-55 ">
                 <div class="d-flex justify-content-sm-around">
                     <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
                             onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
@@ -50,15 +50,20 @@
                             onclick="LoadUpdateCustomerView('');" data-target="#updateCustomerModal">
                         <i class="material-icons fa fa-edit"></i>
                     </button>
-                    <button class="btn btn-outline-danger mr-3 ml-3" title="Delete Order" data-toggle="modal"
+                    <button class="btn btn-outline-danger mr-3 ml-3 " style="min-width:3rem"title="Delete Order" data-toggle="modal"
                             onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
-                        <i class="material-icons fa fa-trash"></i>
-                        <i class="material-icons fa fa-box"></i>
+                        <div class="row d-flex justify-content-around" >
+                            <i class="material-icons fa fa-trash"></i>
+                            <i class="material-icons fa fa-box"></i>
+                        </div>
                     </button>
-                    <button class="btn btn-outline-danger mr-3 ml-3" title="Delete Route" data-toggle="modal"
+
+                    <button class="btn btn-outline-danger mr-3 ml-3"  style="min-width:3rem"title="Delete Route" data-toggle="modal"
                             onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
-                        <i class="material-icons fa fa-trash"></i>
-                        <i class="material-icons fa fa-route"></i>
+                        <div class="row d-flex justify-content-around">
+                            <i class="material-icons fa fa-trash"></i>
+                            <i class="material-icons fa fa-route"></i>
+                        </div>
                     </button>
                 </div>
             </td>

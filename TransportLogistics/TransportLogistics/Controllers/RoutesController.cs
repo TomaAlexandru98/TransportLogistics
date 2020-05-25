@@ -90,9 +90,13 @@ namespace TransportLogistics.Controllers
                 {
                     var order = orderService.GetById(orderData.OrderId);
                     var route = routeService.GetById(orderData.RouteId);
-                    RouteEntry entry = new RouteEntry() {Id = new Guid() };
+                    RouteEntry entry = new RouteEntry() {Id = Guid.NewGuid() };
+                    
                     entry.SetOrder(order);
-                    route.RouteEntries.Add(entry);
+                    
+                    routeService.AddEntry(route.Id.ToString(), entry);
+
+
                 }
                 return PartialView("_AddOrderPartial", orderData);
             }
@@ -107,12 +111,16 @@ namespace TransportLogistics.Controllers
         [HttpGet]
         public IActionResult OrderList(string id)
         {
-
-            var orderId = id;
+            string[] splitId = id.Split(';');
+            var orderId = splitId[0];
+            string RouteId = splitId[1];
+            
             AddOrderViewModel model = new AddOrderViewModel()
             {
                 OrderId = orderId,
-                OrderList = GetOrderList()
+                OrderList = GetOrderList(),
+               RouteId = RouteId
+
             };
             return PartialView("_AddOrderPartial", model);
 
@@ -201,8 +209,8 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult Remove(RemoveRouteViewModel removeData)
         {
-
-            routeService.Remove(removeData.Id);
+            
+            routeService.RemoveRoute(removeData.Id);
 
             return PartialView("_RemoveRoutePartial", removeData);
         }

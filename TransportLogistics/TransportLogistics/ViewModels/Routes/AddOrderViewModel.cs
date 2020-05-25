@@ -16,7 +16,5 @@ namespace TransportLogistics.ViewModels.Routes
         public string OrderId { get; set; }
         public List<SelectListItem> OrderList;
 
-
-
     }
 }

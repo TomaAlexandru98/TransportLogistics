@@ -37,8 +37,11 @@
             $(modalName).modal("hide");
             loadTable();
         }
-        function LoadAddOrderView(RouteId) {
 
+        var routeId;
+        function LoadAddOrderView(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
             loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId);
         }
 
@@ -57,7 +60,7 @@
 
         function LoadDropdownOrder(Id) {
             var orderId = $(Id).val();
-            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId);
+            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId + ';' +routeId);
         }
     </script>
 }
