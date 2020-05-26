@@ -8,7 +8,6 @@
             <th>Current Route</th>
             <th>Route history</th>
             <th>Status</th>
-            <th>Actions</th>
         </tr>
     </thead>
 
@@ -19,7 +18,7 @@
             <tr>
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @driver.UserId <i class="fa fa-plus"></i>
+                        @driver.UserId
                     </button>
                     <div class="dropdown-menu">
                         <ul style="list-style: none">
@@ -37,13 +36,17 @@
                 
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @driver.CurrentRoute.Id <i class="fa fa-plus"></i>
+                        @driver.CurrentRoute.StartTime, @driver.CurrentRoute.FinishTime
                     </button>
                     <div class="dropdown-menu">
                         <ul style="list-style: none">
                             @foreach (var order in driver.CurrentRoute.RouteEntries)
                             {
-                                <li>Order @order.Order.Id :</li>
+                                <li>Order: @order.OrderType</li>
+                                <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+                                <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+                                <li>Status @order.Order.Status</li>
+                                <li><hr /></li>
                             }
                         </ul>
                     </div>
@@ -51,6 +54,7 @@
                     
                 <td>@driver.Status</td>
 
+                @*
                 <td>
                     <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
                             onclick="LoadAddRouteView('@driver.Id');" data-target="#addRouteModal">
@@ -62,6 +66,7 @@
                         <i class="material-icons fa fa-trash"></i>
                     </button>
                 </td>
+                    *@
             </tr>
         }
     </tbody>

@@ -6,14 +6,11 @@
 
   <ItemGroup>
 
-    <Compile Remove="Migrations\20200523162943_test.cs" />
-    <Compile Remove="Migrations\20200523162943_test.Designer.cs" />
 
   </ItemGroup>
 
-  <ItemGroup>
-  
 
+  
     <PackageReference Include="AutoMapper" Version="9.0.0" />
   
 
