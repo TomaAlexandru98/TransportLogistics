@@ -38,18 +38,21 @@
             loadTable();
         }
 
-        var routeId;
+   
         function LoadAddOrderView(RouteId) {
             $('#RouteId').val(RouteId);
             routeId = RouteId;
             loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId);
         }
 
-        var routeId;
+ 
         function LoadRemoveOrder(RouteId) {
             $('#RouteId').val(RouteId);
             routeId = RouteId;
-            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId);
+            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownOrderRemove('#OrderId',routeId);
+                });
         }
 
         function LoadDropdownVehicle(vehicleControl) {
@@ -65,7 +68,7 @@
              loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
         }
 
-        function LoadDropdownOrderRemove(Id) {
+        function LoadDropdownOrderRemove(Id,routeId) {
             var orderId = $(Id).val();
             loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrderList", "Routes")' + "/" + orderId + ';' +routeId);
         }

@@ -6,8 +6,7 @@
 <div class="form-group text-center">
     <label asp-for="orderId"></label>
     <div>
-        <select style="min-width: 60%" asp-for="orderId" asp-items="@Model.OrderList"
-                onclick="LoadDropdownOrderRemove('#OrderId')">
+        <select style="min-width: 60%" asp-for="orderId" asp-items="@Model.OrderList">
         </select>
     </div>
     <span asp-validation-for="orderId" class="text-danger"></span>

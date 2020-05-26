@@ -239,7 +239,8 @@ namespace TransportLogistics.Controllers
 
             DeleteOrderViewModel model = new DeleteOrderViewModel()
             {
-                orderId = orderId,
+                //orderId = orderId,
+
                 OrderList = GetOrderListFromnRoute(RouteId),
                 routeId = RouteId
 
