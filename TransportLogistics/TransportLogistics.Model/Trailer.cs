@@ -15,6 +15,7 @@ namespace TransportLogistics.Model
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+        public string RegistrationNumber { get; private set; }
         public Status Status { get; private set; }
 
         protected Trailer()
