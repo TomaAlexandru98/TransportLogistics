@@ -208,5 +208,9 @@ namespace TransportLogistics.Controllers
                 return BadRequest();
             }
         }
+        public IActionResult RouteMap()
+        {
+            return View();
+        }
     }
 }
