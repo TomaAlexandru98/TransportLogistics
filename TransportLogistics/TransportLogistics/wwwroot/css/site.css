@@ -144,3 +144,13 @@ body {
 .button-add-trailer-to-vehicle :hover {
     color: #00BFFF;
 }
+
+@media (min-width: 768px) {
+    .modal-custom-lg {
+        max-width: 50rem;
+    }
+
+    .modal-custom {
+        max-width: 35rem;
+    }
+}
