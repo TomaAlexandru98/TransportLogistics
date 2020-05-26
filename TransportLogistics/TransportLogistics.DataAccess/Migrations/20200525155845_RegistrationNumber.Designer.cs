@@ -3,18 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200525155845_RegistrationNumber")]
+    partial class RegistrationNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-        
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -189,7 +190,7 @@ namespace TransportLogistics.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("DriverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -201,16 +202,13 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<Guid?>("TrailerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("SupervisorId");
 
                     b.HasIndex("TrailerId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Requests");
                 });
@@ -457,6 +455,10 @@ namespace TransportLogistics.DataAccess.Migrations
 
             modelBuilder.Entity("TransportLogistics.Model.Request", b =>
                 {
+                    b.HasOne("TransportLogistics.Model.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
                     b.HasOne("TransportLogistics.Model.Supervisor", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId");
@@ -464,10 +466,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasOne("TransportLogistics.Model.Trailer", "Trailer")
                         .WithMany()
                         .HasForeignKey("TrailerId");
-
-                    b.HasOne("TransportLogistics.Model.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Route", b =>
