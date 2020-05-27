@@ -22,7 +22,7 @@ namespace TransportLogistics.ViewModels.Customers
         [Display(Name = "Street")]
         public string Street { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Street number required")]
         [Display(Name = "Street number")]
         public int StreetNumber { get; set; }
 

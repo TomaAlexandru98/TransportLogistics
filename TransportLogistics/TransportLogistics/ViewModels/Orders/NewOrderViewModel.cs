@@ -9,7 +9,7 @@ using TransportLogistics.ViewModels.Customers;
 
 namespace TransportLogistics.ViewModels.Orders
 {
-    public class NewOrderViewModel : IValidatableObject
+    public class NewOrderViewModel
     {
         public enum LocationType
         {
@@ -17,30 +17,29 @@ namespace TransportLogistics.ViewModels.Orders
             Pickup
         }
 
-        [Required(ErrorMessage = "Choosing a sender is required.")]
+        [Required(ErrorMessage = "Sender required")]
         [Display(Name = "Sender:")]
         public string SenderId { get; set; }
 
-        //[Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]
         public string PickupLocationId { get; set; }
 
-        //[Required(ErrorMessage = "Delivery Address is required.")]
         [Display(Name = "Delivery Address:")]
         public string DeliveryLocationId { get; set; }
 
         [Required]
         public NewLocationViewModel NewLocation {get; set; }
 
-        [Required(ErrorMessage = "A recipient is required.")]
+        [Required(ErrorMessage = "Recipient required.")]
         [Display(Name = "Recipient Name")]
         public string RecipientName { get; set; }
 
-        [Required(ErrorMessage = "A recipient email is required.")]
+        [Required(ErrorMessage = "Email is required.")]
         [Display(Name = "Recipient Email")]
+        [EmailAddress(ErrorMessage = "Wrong email format.")]
         public string RecipientEmail { get; set; }
 
-        [Required(ErrorMessage = "A recipient phone number is required.")]
+        [Required(ErrorMessage = "Phone number required.")]
         [Display(Name = "Recipient Phone Number")]
         public string RecipientPhoneNo { get; set; }
 
@@ -52,14 +51,5 @@ namespace TransportLogistics.ViewModels.Orders
         [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
-
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (PickupLocationId == null && DeliveryLocationId == null)
-            {
-                yield return new ValidationResult("At least one of them must have a value");
-            }
-        }
     }
 }

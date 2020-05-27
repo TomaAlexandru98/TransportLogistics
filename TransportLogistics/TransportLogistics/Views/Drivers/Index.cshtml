@@ -11,9 +11,11 @@
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    @*
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    *@
     <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
 
 }
@@ -26,14 +28,17 @@
 
 
 <div>
-   
+
     <div class="d-flex bd-highlight mb-3">
         <div class="p-2 flex-grow-1 bd-highlight">
             <button type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
-    <h4 style="color:red" id="endRouteError"></h4>
+            <h4 style="color:red" id="endRouteError"></h4>
         </div>
-        <div class="p-2 bd-highlight"><button id="StartRoute" type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteStarted">
-            Start Route</button></div>
+        <div class="p-2 bd-highlight">
+            <button id="StartRoute" type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteStarted">
+                Start Route
+            </button>
+        </div>
     </div>
 </div>
 
@@ -50,8 +55,8 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-success" onclick="EndRoute()">Ok</button>
                 </div>
-             </div>
-          </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade modal-delete" tabindex="-1" id="RouteStarted" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,33 +97,33 @@
             </div>
         </div>
     </div>
-    </form>
-    <form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="tableReload()">
-        <div class="modal fade modal-delete" tabindex="-1" id="OrderStatus" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="max-width:60%">
+</form>
+<form method="post" asp-action="SetOrderStatus" asp-controller="Drivers" data-ajax="true" data-ajax-complete="tableReload()">
+    <div class="modal fade modal-delete" tabindex="-1" id="OrderStatus" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:60%">
 
-                    <div id="newPaymentBody" class="modal-body">
-                        <div class="text-center">
-                            <p>Order status will be modified</p>
-                            <input type="hidden" id="orderStatus" name="status" />
-                            <input type="hidden" id="orderId" name="orderId" />
-                            <input type="hidden" id="driverId" name="driverId" />
-                            <input type="hidden" id="rowId" />
-                        </div>
-                        <div class="d-flex justify-content-around">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            <button type="submit" class="btn btn-success">Ok</button>
-                        </div>
+                <div id="newPaymentBody" class="modal-body">
+                    <div class="text-center">
+                        <p>Order status will be modified</p>
+                        <input type="hidden" id="orderStatus" name="status" />
+                        <input type="hidden" id="orderId" name="orderId" />
+                        <input type="hidden" id="driverId" name="driverId" />
+                        <input type="hidden" id="rowId" />
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success">Ok</button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
-    <script>
+<script>
 
-      
+
     function clearDiv() {
 
         setTimeout( function () {
@@ -185,7 +190,7 @@
     function StatusUpdate(id) {
         var icon = "<i class='fas fa-check'></i>";
         var cancelBtn = @Model.RouteEntries.Count;
-        cancelBtn = cancelBtn + parseInt(id); 
+        cancelBtn = cancelBtn + parseInt(id);
         if ($('#' + id).html().search("Picked") > -1) {
             $('#' + id).html("PickedUp " + icon);
             $('#' + id).prop('disabled', true);
@@ -200,7 +205,7 @@
             $('#' + cancelBtn).prop('disabled', true);
              $.cookie(id, $('#' + id).html());
         }
-       
+
 
     }
     function EnableButtons() {
@@ -248,15 +253,15 @@
 
         }
         function realoadAfterCancelOrder() {
-            
+
         loadServerPartialView('#OrdersTable', "Drivers/GetOrdersPartial").done(function () {
             $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
             $('#CancelOrder').modal('hide');
             EnableButtons();
             setCookies();
-            
+
         })
-    
+
         }
-    </script>
+</script>
 

@@ -213,16 +213,16 @@ namespace TransportLogistics.Controllers
             {
                 var driverId = Guid.Parse(id);
 
-                var viewModel = new RoutesHistoryViewModel{};
+                var viewModel = new RoutesHistoryViewModel { };
                 viewModel.ConfigureRoutes(DriverService.GetRoutesHistory(driverId).Routes);
 
                 return View("RoutesHistory", viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
+        }
         public async Task<IActionResult> Map()
         {
             var user = await UserManager.GetUserAsync(User);

@@ -156,3 +156,16 @@ body {
         max-width: 35rem;
     }
 }
+
+.select-custom {
+    width:90%; 
+    height:2.5rem;
+}
+
+.modal-select-width {
+    width: 15rem;
+}
+
+.select-width {
+    width: 70%;
+}
