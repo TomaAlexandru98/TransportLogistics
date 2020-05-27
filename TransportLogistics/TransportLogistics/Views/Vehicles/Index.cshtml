@@ -23,7 +23,6 @@
 </div>
 
 <div id="vehiclesTabelContainer">
-    <partial name="_VehiclesTable" model="@Model" />
 </div>
 
 <form method="post" id="createVehicleForm" asp-controller="Vehicles" asp-action="Create">
@@ -225,7 +224,7 @@
         function connectTrailerToVehicle(vehicleId, trailerId) {
 
             $.ajax({
-                url: "/Supervisor/ConnectTrailerToVehicle?vehicleId=" + vehicleId + "&trailerId=" + trailerId,
+                url: "/Requests/ConnectTrailerToVehicle?vehicleId=" + vehicleId + "&trailerId=" + trailerId,
                 success: function () {
                     $('#trailersListModal').modal('toggle');
                     loadTable();

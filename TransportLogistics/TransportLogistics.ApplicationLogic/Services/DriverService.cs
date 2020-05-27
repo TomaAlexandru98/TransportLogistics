@@ -83,7 +83,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             var trailer = TrailerRepository.GetById(trailerId);
             request.SetTrailer(trailer);
             request.SetVehicle(driver.CurrentRoute.Vehicle);
-            request.SetStatus(RequestStatus.Holding);
+            request.SetStatus(RequestStatus.Active);
             request.SetSender(driver.Id);
             RequestRepository.Add(request);
             PersistenceContext.SaveChanges();

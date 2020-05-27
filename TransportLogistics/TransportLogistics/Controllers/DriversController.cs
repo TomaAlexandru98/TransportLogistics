@@ -187,5 +187,40 @@ namespace TransportLogistics.Controllers
             }
 
         }
+
+        public IActionResult DriversTable()
+        {
+            var x = DriverService.GetAllDrivers();
+            try
+            {
+                var viewModel = new DriversViewModel
+                {
+                    Drivers = DriverService.GetAllDrivers()
+                };
+
+                return View(viewModel);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult DetailsDriver(string id)
+        {
+            try
+            {
+                var driverId = Guid.Parse(id);
+
+                var viewModel = new RoutesHistoryViewModel{};
+                viewModel.ConfigureRoutes(DriverService.GetRoutesHistory(driverId).Routes);
+
+                return View("RoutesHistory", viewModel);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

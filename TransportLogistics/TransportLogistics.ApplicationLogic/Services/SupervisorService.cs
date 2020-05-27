@@ -54,7 +54,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             var requestDb = this.requestRepository?.GetById(guidRequestId);
 
             requestDb.ChangeStatus(status);
-            requestDb.AddSupervisor(supervisorDb);
+            requestDb.SetSupervisor(supervisorDb);
             return this.requestRepository?.Update(requestDb);
         }
 
