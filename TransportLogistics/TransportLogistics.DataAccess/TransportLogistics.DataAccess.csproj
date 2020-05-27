@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200527123023_sender.cs" />
+    <Compile Remove="Migrations\20200527123023_sender.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
 
     <PackageReference Include="AutoMapper" Version="9.0.0" />
 
