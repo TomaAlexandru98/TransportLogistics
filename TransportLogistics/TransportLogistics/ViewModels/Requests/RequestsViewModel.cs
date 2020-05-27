@@ -8,6 +8,7 @@ namespace TransportLogistics.ViewModels.Requests
 {
     public class RequestsViewModel
     {
+        public bool ShowMultipleRequestsModal { get; set; }
         public IEnumerable<Request> Requests { get; set; }
     }
 }
