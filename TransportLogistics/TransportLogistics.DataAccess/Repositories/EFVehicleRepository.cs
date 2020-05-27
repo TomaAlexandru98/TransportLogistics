@@ -21,6 +21,11 @@ namespace TransportLogistics.DataAccess.Repositories
                                      .ThenInclude(vehicle => vehicle.VehicleDriver);
         }
 
+        public Vehicle GetByRegistrationNumber(string registrationNumber)
+        {
+            return dbContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+        }
+
         public IEnumerable<RouteEntry> GetDetailsRoute(Guid vehicleId, Guid routeId)
         {
             var vehicleHistory = GetHistory(vehicleId);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.Extensions.Logging;
@@ -17,14 +18,19 @@ namespace TransportLogistics.Controllers
         private readonly ILogger<DriverService> logger;
         private readonly TrailerService trailerService;
         private readonly VehicleService vehicleService;
-
+        private readonly RequestService requestService;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly DispatcherService dispatcherService;
         public DispatchersController(DriverService driverService, ILogger<DriverService> logger,TrailerService trailerService
-            ,VehicleService vehicleService)
+            ,VehicleService vehicleService,RequestService requestService , UserManager<IdentityUser>userManager,DispatcherService dispatcherService)
         {
             this.driverService = driverService;
             this.logger = logger;
             this.trailerService = trailerService;
             this.vehicleService = vehicleService;
+            this.requestService = requestService;
+            this.userManager = userManager;
+            this.dispatcherService = dispatcherService;
         }
 
         public IActionResult Index()
@@ -74,8 +80,22 @@ namespace TransportLogistics.Controllers
             }
         }
         [HttpPost]
-        public IActionResult TrailerRequests(string vehicleNumber, string trailerNumber)
+        public IActionResult TrailerRequest(string vehicleNumber, string trailerNumber)
         {
+            try
+            {
+                var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+                var dispatcher = dispatcherService.GetByUserId(user.Id);
+                var vehicle = vehicleService.GetByRegistrationNumber(vehicleNumber);
+                var trailer = trailerService.GetByRegistrationNumber(trailerNumber);
+                requestService.Create(dispatcher.Id, vehicle, trailer);
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Unable to create trailer request {@Exception}", e.Message);
+                logger.LogDebug("Unable to create trailer request {@ExceptionMessage}", e);
+                return BadRequest("Unable to create trailer request");
+            }
             return RedirectToAction("Index");
         }
       

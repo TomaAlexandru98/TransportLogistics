@@ -77,14 +77,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a  data-toggle="modal" href="#trailerRequest"class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
-                   data-ajax-update="#trailerRequestBody">
+                <a  data-toggle="modal" href="#trailer"class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
+                   data-ajax-update="#trailerBody">
                     <i class="fas fa-trailer"></i>
                     TrailerRequest
                 </a>
             </li>
         }
-
+    
         @if (User.IsInRole("Driver"))
         {
             <li>
@@ -102,8 +102,8 @@
             </li>
 
             <li>
-                <a data-toggle="modal" href="#request" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/Trailers"
-                   data-ajax-update="#requestBody">
+                <a data-toggle="modal" href="#request1" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/Trailers"
+                   data-ajax-update="#requestBody1">
                     Trailer Request
                     <i class="fas fa-trailer"></i>
                 </a>

@@ -97,5 +97,9 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return true;
         }
+        public Vehicle GetByRegistrationNumber(string registrationNumber)
+        {
+            return vehicleRepository.GetByRegistrationNumber(registrationNumber);
+        }
     }
 }
