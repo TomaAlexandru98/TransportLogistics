@@ -17,7 +17,9 @@
     <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
 
 }
-
+<a class="btn bg-menu" asp-action="Map" asp-controller="Drivers">Go to map</a>
+<br />
+<br />
 <div id="OrdersTable">
     <partial name="_OrdersTablePartial.cshtml" model="@Model" />
 </div>
@@ -113,8 +115,10 @@
             </div>
         </div>
     </form>
+
     <script>
 
+      
     function clearDiv() {
 
         setTimeout( function () {

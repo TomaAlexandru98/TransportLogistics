@@ -170,13 +170,13 @@ namespace TransportLogistics.Controllers
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> TrailerRequest(Guid trailerId)
+        public async Task<IActionResult> TrailerRequest(string registrationNumber)
         {
             try
             {
                 var user = await UserManager.GetUserAsync(User);
                 var driver = DriverService.GetByUserId(user.Id);
-                DriverService.CreateRequest(driver.Id, trailerId);
+                DriverService.CreateRequest(driver.Id, registrationNumber);
                 return RedirectToAction("Index");
             }
             catch(Exception e)
@@ -185,6 +185,68 @@ namespace TransportLogistics.Controllers
                 Logger.LogError("Failed to make trailer request  {Exception}", e.Message);
                 return BadRequest();
             }
+
+        }
+
+
+        public IActionResult DriversTable()
+        {
+            var x = DriverService.GetAllDrivers();
+            try
+            {
+                var viewModel = new DriversViewModel
+                {
+                    Drivers = DriverService.GetAllDrivers()
+                };
+
+                return View(viewModel);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult DetailsDriver(string id)
+        {
+            try
+            {
+                var driverId = Guid.Parse(id);
+
+                var viewModel = new RoutesHistoryViewModel{};
+                viewModel.ConfigureRoutes(DriverService.GetRoutesHistory(driverId).Routes);
+
+                return View("RoutesHistory", viewModel);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        public async Task<IActionResult> Map()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            try
+            {
+                var driver = DriverService.GetByUserId(user.Id);
+                var routeEntries = DriverService.GetRouteEntries(driver.Id);
+
+                var currentRoute = new CurrentRouteViewModel();
+                currentRoute.RouteEntries = routeEntries;
+                currentRoute.DriverId = driver.Id;
+
+                return View(currentRoute);
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve driver's route entries {@Exception}", e);
+                Logger.LogError("Failed to retrieve driver's route entries{Exception}", e.Message);
+                return BadRequest();
+            }
+        }
+        public IActionResult RouteMap()
+        {
+            return View();
 
         }
     }

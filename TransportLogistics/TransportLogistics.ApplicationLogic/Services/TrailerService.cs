@@ -61,5 +61,10 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return trailersRepository.GetAllFreeTrailers();
         }
+
+        public Trailer GetByRegistrationNumber(string trailerNumber)
+        {
+            return trailersRepository.GetByRegistrationNumber(trailerNumber);
+        }
     }
 }

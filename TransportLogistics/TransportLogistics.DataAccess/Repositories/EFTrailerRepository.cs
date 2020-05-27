@@ -45,5 +45,10 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             return  dbContext.Trailers.Where(o => o.Status == Status.Free);
         }
+
+        public Trailer GetByRegistrationNumber(string registrationNumber)
+        {
+            return dbContext.Trailers.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+        }
     }
 }

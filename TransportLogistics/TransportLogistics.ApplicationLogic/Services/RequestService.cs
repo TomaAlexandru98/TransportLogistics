@@ -17,15 +17,44 @@ namespace TransportLogistics.ApplicationLogic.Services
             this.requestRepository = persistenceContext.RequestRepository;
         }
 
-        public IEnumerable<Request> GetAll()
+        public IEnumerable<Request> GetAllActive()
         {
-            return this.requestRepository?.GetAll();
+            return requestRepository?.GetAllActive();
         }
 
         public Request GetById(string id)
         {
             var requestId = Guid.Parse(id);
-            return this.requestRepository?.GetById(requestId);
+            return requestRepository?.GetById(requestId);
+        }
+
+        public void Decline(string id, Supervisor supervisor)
+        {
+            var requestToDecline = GetById(id);
+            requestToDecline.SetStatus(RequestStatus.Declined);
+            requestToDecline.SetSupervisor(supervisor);
+            requestRepository?.Update(requestToDecline);
+            persistenceContext.SaveChanges();
+        }
+
+        public void Accept(string id, Supervisor supervisor)
+        {
+            var requestToAccept = GetById(id);
+            requestToAccept.SetStatus(RequestStatus.Accepted);
+            requestToAccept.SetSupervisor(supervisor);
+            requestRepository?.Update(requestToAccept);
+            persistenceContext.SaveChanges();
+        }
+
+        public IEnumerable<Request> FilterByVehicleId(Guid vehicleId)
+        {
+            return requestRepository?.FilterByVehicleId(vehicleId);
+        }
+        public void Create(Guid senderId,Vehicle vehicle,Trailer trailer)
+        {
+            var request = Request.Create(senderId, vehicle, trailer);
+            requestRepository.Add(request);
+            persistenceContext.SaveChanges();
         }
     }
 }

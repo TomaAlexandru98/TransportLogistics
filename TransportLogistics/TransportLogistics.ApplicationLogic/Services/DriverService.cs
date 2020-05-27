@@ -72,7 +72,7 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return RouteRepository.GetRouteById(id);
         }
-        public void CreateRequest(Guid driverId , Guid trailerId)
+        public void CreateRequest(Guid driverId , string registrationNumber)
         {
             Request request = new Request()
             {
@@ -80,10 +80,10 @@ namespace TransportLogistics.ApplicationLogic.Services
                
             };
             var driver = DriverRepository.GetById(driverId);
-            var trailer = TrailerRepository.GetById(trailerId);
+            var trailer = TrailerRepository.GetByRegistrationNumber(registrationNumber);
             request.SetTrailer(trailer);
             request.SetVehicle(driver.CurrentRoute.Vehicle);
-            request.SetStatus(RequestStatus.Holding);
+            request.SetStatus(RequestStatus.Active);
             request.SetSender(driver.Id);
             RequestRepository.Add(request);
             PersistenceContext.SaveChanges();

@@ -6,13 +6,8 @@
 
   <ItemGroup>
 
-
-  </ItemGroup>
-
-
-  
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-  
+
 
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.1" />
@@ -31,7 +26,7 @@
     <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
   </ItemGroup>
-  
+
 
 
   <ItemGroup>

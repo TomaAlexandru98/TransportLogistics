@@ -33,14 +33,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Trailers" asp-action="Index">
-                    <i class="fas fa-trailer"></i>
-                    Trailers
+                <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="DriversTable">
+                    <i class="fas fa-google-drive"></i>
+                    Drivers
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Requests" asp-action="Index">
-                    <i class="fas fa-trailer"></i>
+                    <i class="fas fa-question"></i>
                     Requests
                 </a>
             </li>
@@ -76,8 +76,15 @@
                     Routes
                 </a>
             </li>
+            <li class="nav-item">
+                <a  data-toggle="modal" href="#trailer"class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
+                   data-ajax-update="#trailerBody">
+                    <i class="fas fa-trailer"></i>
+                    TrailerRequest
+                </a>
+            </li>
         }
-
+    
         @if (User.IsInRole("Driver"))
         {
             <li>
@@ -95,8 +102,8 @@
             </li>
 
             <li>
-                <a data-toggle="modal" href="#request" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/Trailers"
-                   data-ajax-update="#requestBody">
+                <a data-toggle="modal" href="#request1" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/Trailers"
+                   data-ajax-update="#requestBody1">
                     Trailer Request
                     <i class="fas fa-trailer"></i>
                 </a>
