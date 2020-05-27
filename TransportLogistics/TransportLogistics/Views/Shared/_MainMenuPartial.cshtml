@@ -76,6 +76,13 @@
                     Routes
                 </a>
             </li>
+            <li class="nav-item">
+                <a  data-toggle="modal" href="#trailerRequest"class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
+                   data-ajax-update="#trailerRequestBody">
+                    <i class="fas fa-trailer"></i>
+                    TrailerRequest
+                </a>
+            </li>
         }
 
         @if (User.IsInRole("Driver"))

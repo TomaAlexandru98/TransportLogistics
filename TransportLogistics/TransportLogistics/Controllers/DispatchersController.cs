@@ -15,11 +15,16 @@ namespace TransportLogistics.Controllers
 
         private readonly DriverService driverService;
         private readonly ILogger<DriverService> logger;
+        private readonly TrailerService trailerService;
+        private readonly VehicleService vehicleService;
 
-        public DispatchersController(DriverService driverService, ILogger<DriverService> logger)
+        public DispatchersController(DriverService driverService, ILogger<DriverService> logger,TrailerService trailerService
+            ,VehicleService vehicleService)
         {
             this.driverService = driverService;
             this.logger = logger;
+            this.trailerService = trailerService;
+            this.vehicleService = vehicleService;
         }
 
         public IActionResult Index()
@@ -47,6 +52,32 @@ namespace TransportLogistics.Controllers
             }
 
         }
-
+        
+        public IActionResult TrailerRequest()
+        {
+            try
+            {
+                var vehicles = vehicleService.GetAll();
+                var trailers = trailerService.GetAllFreeTrailers();
+                var model = new TrailerRequestViewModel()
+                {
+                    Trailers = trailers,
+                    Vehicles = vehicles
+                };
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Failed to retrieve trailers or vehicles {@Exception}", e.Message);
+                logger.LogDebug("Failed to retrieve trailers or vehicles {@ExceptionMessage}", e);
+                return BadRequest("Failed to retrieve trailers or vehicles");
+            }
+        }
+        [HttpPost]
+        public IActionResult TrailerRequests(string vehicleNumber, string trailerNumber)
+        {
+            return RedirectToAction("Index");
+        }
+      
     }
 }

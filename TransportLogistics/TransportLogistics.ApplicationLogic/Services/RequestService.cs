@@ -27,5 +27,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             var requestId = Guid.Parse(id);
             return this.requestRepository?.GetById(requestId);
         }
+        public void Create(Guid senderId,Vehicle vehicle,Trailer trailer)
+        {
+            var request = Request.Create(senderId, vehicle, trailer);
+            requestRepository.Add(request);
+            persistenceContext.SaveChanges();
+        }
     }
 }
