@@ -29,10 +29,27 @@ namespace TransportLogistics.ApplicationLogic.Services
         public Route AddEntry(string routeId, RouteEntry entry)
         {
             Guid.TryParse(routeId, out Guid routepGuid);
-            var route = routeRepository.GetById(routepGuid);
-            route.RouteEntries.Add(entry);
+            var route = routeRepository.GetRouteById(routepGuid);
+            routeRepository.Add(entry,route.Id);
+            
+            route.SetRouteEntry(entry);
+          //  route.RouteEntries.Add(entry);
+            persistenceContext.SaveChanges();
             return route;
         }
+
+        public Route RemoveEntry(string routeId, RouteEntry entry)
+        {
+            Guid.TryParse(routeId, out Guid routepGuid);
+            var route = routeRepository.GetRouteById(routepGuid);
+            routeRepository.Remove(entry, route.Id);
+
+            route.DeleteRouteEntry(entry);
+            //  route.RouteEntries.Add(entry);
+            persistenceContext.SaveChanges();
+            return route;
+        }
+
         public IEnumerable<Route> GetAllRoutes()
         {
             return routeRepository.GetAll();
@@ -40,13 +57,34 @@ namespace TransportLogistics.ApplicationLogic.Services
         public Route GetById(string Id)
         {
             Guid.TryParse(Id, out Guid guid);
-            return routeRepository.GetById(guid);
+            return routeRepository.GetRouteById(guid);
+        }
+        public RouteEntry GetEntryId(string id)
+        {
+            Guid.TryParse(id, out Guid guid);
+            return routeRepository.GetEntry(guid);
         }
         public bool Remove(string id)
         {
             Guid routeId = Guid.Empty;
             Guid.TryParse(id, out routeId);
 
+            var result = routeRepository?.Remove(routeId);
+            if (result == true)
+            {
+                persistenceContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool RemoveRoute(string id)
+        {
+            Guid routeId = Guid.Empty;
+            Guid.TryParse(id, out routeId);
+            var route = routeRepository.GetRouteById(routeId);
+            route.DeleteRouteEntries();
             var result = routeRepository?.Remove(routeId);
             if (result == true)
             {

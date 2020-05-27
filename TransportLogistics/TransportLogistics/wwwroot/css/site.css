@@ -99,6 +99,7 @@ body {
     border-color: #06087d;
     color: #06087d;
     min-width: 10rem;
+
 }
     .btn-blue:hover {
         background-color: #06087d;
@@ -108,6 +109,7 @@ body {
 .btn-add-blue {
     border-color: #06087d;
     color: #06087d;
+    max-height: 4rem;
 }
 
     .btn-add-blue:hover {
@@ -143,4 +145,14 @@ body {
 
 .button-add-trailer-to-vehicle :hover {
     color: #00BFFF;
+}
+
+@media (min-width: 768px) {
+    .modal-custom-lg {
+        max-width: 50rem;
+    }
+
+    .modal-custom {
+        max-width: 35rem;
+    }
 }

@@ -25,8 +25,8 @@
       data-ajax-update="#newOrderBody">
 
     <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderTitle" aria-hidden="true">
-        <div class="modal-dialog d-flex justify-content-center">
-            <div class="modal-content" style="max-width: 70%">
+        <div id="newOrderDialog" class="modal-dialog d-flex modal-custom justify-content-center">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="newOrderTitle">New Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -114,6 +114,8 @@
 
         function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
 
+            $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
+
             var customerId = $(customerControl).val();
             var locationId = $(locationControl).val();
             var bonusLocationId = $(bonusLocationControl).val();
@@ -150,6 +152,7 @@
             }
 
             $('#addDeliveryButton').toggleDisabled();
+            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
             $('#addPickupButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
             $('#addPickupButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");            
         }
@@ -164,6 +167,7 @@
             }
 
             $('#addPickupButton').toggleDisabled();
+            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
             $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
             $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
         }

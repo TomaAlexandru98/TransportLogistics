@@ -16,31 +16,50 @@
     <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
 
 }
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
 
-<table id="Trailers"  class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <th style="text-align:center"><b>Length</b></th>
-            <th style="text-align:center"><b>Height</b></th>
-            <th style="text-align:center"><b>Width</b></th>
-            <th style="text-align:center"><b>Request</b></th>
-
-            
-        </tr>
-    </thead>
-    <tbody>
+<form method="post" asp-controller="Drivers" asp-action="TrailerRequest">
+    <label>Trailer:</label>
+    <input type="text" name="registrationNumber" list="exampleList" id="regNmb" onchange="displayTrailerInfo()">
+    <datalist id="exampleList">
         @if (Model != null && Model.Count() > 0)
         {
+
             @foreach (var trailer in Model)
             {
-                <tr>
-                    <td>@trailer.Length</td>
-                    <td>@trailer.Height</td>
-                    <td>@trailer.Width</td>
-                    <td><a class="btn bg-menu" asp-controller="Drivers" asp-action="TrailerRequest" asp-route-trailerId="@trailer.Id">Choose</a></td>
-                </tr>
+
+                <option>@trailer.RegistrationNumber</option>
+
             }
         }
-    </tbody>
-    </table>
+    </datalist>
+    <br />
+    <br />
+    <b id="info"></b>
+    <br />
+    <br />
+    <div class="d-flex justify-content-around">
+        <button type="submit" id="confirm" class="btn bg-menu">Pick</button>
+        <button type="button" class="btn bg-menu" data-dismiss="modal">No</button>
 
+    </div>
+</form>
+
+<script>
+ 
+    function displayTrailerInfo() {
+
+        var registrationNr = $('#regNmb').val();
+        var model = @Html.Raw(Json.Serialize(Model));
+        for (var i = 0; i < model.length; i++) {
+            if (registrationNr == model[i].registrationNumber) {
+                $('#info').html("Length: " + model[i].length + " width:" + model[i].width + " height: " + model[i].height);
+            }
+        }
+    }
+   
+</script>

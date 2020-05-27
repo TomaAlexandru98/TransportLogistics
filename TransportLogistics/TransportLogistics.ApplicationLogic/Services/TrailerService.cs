@@ -9,22 +9,20 @@ namespace TransportLogistics.ApplicationLogic.Services
 {
     public class TrailerService
     {
-        //private readonly IPersistenceContext persistenceContext;
+        private readonly IPersistenceContext persistenceContext;
         private readonly ITrailerRepository trailersRepository;
        
-        public TrailerService(ITrailerRepository trailersRepository)
+        public TrailerService(IPersistenceContext persistenceContext)
         {
-            this.trailersRepository = trailersRepository;
-
-           // this.persistenceContext = persistenceContext;
+           this.trailersRepository = persistenceContext.TrailerRepository;
+           this.persistenceContext = persistenceContext;
         }
 
         public Trailer CreateTrailer(string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
         {
             var trailer =  Trailer.Create(model, maximumWeightKg, capacity, numberAxles, height, width, length);
-            trailersRepository.Add(trailer);
-            
-            //persistenceContext.SaveChanges();
+            trailersRepository?.Add(trailer);
+            persistenceContext?.SaveChanges();
             return trailer;
         }
 
@@ -47,6 +45,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             Guid idToSearch = Guid.Parse(id);
             trailersRepository.Remove(idToSearch);
+            persistenceContext.SaveChanges();
         }
 
         public void Update(Guid id, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
