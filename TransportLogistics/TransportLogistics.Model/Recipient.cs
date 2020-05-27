@@ -14,14 +14,14 @@ namespace TransportLogistics.Model
 
         public static Recipient Create(string name, string phoneNo, string email)
         {
-            var createdCustomer = new Recipient()
+            var createdRecipient = new Recipient()
             {
                 Id = Guid.NewGuid(),
                 Name = name,
                 ContactDetails = Contact.Create(phoneNo, email)
             };
 
-            return createdCustomer;
+            return createdRecipient;
         }
     }
 }
