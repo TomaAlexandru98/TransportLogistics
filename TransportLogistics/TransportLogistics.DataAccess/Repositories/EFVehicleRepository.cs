@@ -16,9 +16,7 @@ namespace TransportLogistics.DataAccess.Repositories
         
         public override IEnumerable<Vehicle> GetAll()
         {
-            return dbContext.Vehicles.Include(vehicle => vehicle.CurrentTrailer)
-                                     .Include(vehicle => vehicle.History)
-                                     .ThenInclude(vehicle => vehicle.VehicleDriver);
+            return dbContext.Vehicles.Include(vehicle => vehicle.CurrentTrailer);
         }
 
         public IEnumerable<RouteEntry> GetDetailsRoute(Guid vehicleId, Guid routeId)

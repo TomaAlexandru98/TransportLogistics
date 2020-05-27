@@ -29,7 +29,7 @@ namespace TransportLogistics.DataAccess.Repositories
                             .AsEnumerable();
         }
 
-        public T GetById(Guid id)
+        public virtual T GetById(Guid id)
         {
             return dbContext.Set<T>()
                             .Where(entity => entity.Id.Equals(id))

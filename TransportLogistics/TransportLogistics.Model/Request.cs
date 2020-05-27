@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
-    public enum RequestStatus { Accepted, Declined, Holding }
+    public enum RequestStatus { Accepted, Declined, Active }
     public class Request : DataEntity
     {
         public Guid SenderId { get; private set; }
@@ -23,7 +23,7 @@ namespace TransportLogistics.Model
                 SenderId = sendeId,
                 Vehicle = vehicle,
                 Trailer = trailer,
-                Status = RequestStatus.Holding
+                Status = RequestStatus.Active
             };
         }
 
@@ -33,7 +33,7 @@ namespace TransportLogistics.Model
             return this.Status;
         }
 
-        public Supervisor AddSupervisor(Supervisor supervisor)
+        public Supervisor SetSupervisor(Supervisor supervisor)
         {
             this.Supervisor = supervisor;
             return this.Supervisor;
