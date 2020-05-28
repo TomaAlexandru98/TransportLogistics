@@ -24,6 +24,8 @@ namespace TransportLogistics.DataAccess.Repositories
             return dbContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
         }
 
+   
+
         public IEnumerable<RouteEntry> GetDetailsRoute(Guid vehicleId, Guid routeId)
         {
             var vehicleHistory = GetHistory(vehicleId);
