@@ -9,22 +9,32 @@ namespace TransportLogistics.ApplicationLogic.Services
     public class RouteService
     {
         private readonly IPersistenceContext persistenceContext;
-        //private readonly IOrderRepository orderRepository;
+        private readonly IVehicleRepository vehicleRepository;
         private readonly IRouteRepository routeRepository;
             
         public RouteService(IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
-            //orderRepository = persistenceContext.OrderRepository;
+            vehicleRepository = persistenceContext.VehicleRepository;
             routeRepository = persistenceContext.RouteRepository;
         }
 
         public Route CreateRoute(Vehicle vehicle)
         {
             var route = Route.Create(vehicle);
+            vehicle.UpdateStatus(VehicleStatus.Busy);
+            route.SetVehicle(vehicle);
             routeRepository.Add(route);
             persistenceContext.SaveChanges();
             return route;
+        }
+
+        public void ChangeVehicle(Route route,Vehicle vehicle)
+        {
+            route.Vehicle.UpdateStatus(VehicleStatus.Free);
+            route.SetVehicle(vehicle);
+            route.Vehicle.UpdateStatus(VehicleStatus.Busy);
+            routeRepository.Update(route);
         }
         public Route AddEntry(string routeId, RouteEntry entry)
         {
@@ -84,6 +94,8 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid routeId = Guid.Empty;
             Guid.TryParse(id, out routeId);
             var route = routeRepository.GetRouteById(routeId);
+            
+            route.Vehicle.UpdateStatus(VehicleStatus.Free);
             route.DeleteRouteEntries();
             var result = routeRepository?.Remove(routeId);
             if (result == true)

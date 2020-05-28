@@ -39,11 +39,15 @@ namespace TransportLogistics.Controllers
         private List<SelectListItem> GetVehicleList()
         {
             var vehicles = vehicleService.GetAll();
+            
             List<SelectListItem> vehicleNames = new List<SelectListItem>();
 
             foreach (var vehicle in vehicles)
             {
-                vehicleNames.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));  
+                if(vehicle.Status == VehicleStatus.Free)
+                {
+                    vehicleNames.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));
+                }
             }
             return vehicleNames;
         }
@@ -69,7 +73,7 @@ namespace TransportLogistics.Controllers
 
             foreach (var order in routes)
             {
-                orderNames.Add(new SelectListItem(order.Order.Price.ToString(), order.Id.ToString()));
+                orderNames.Add(new SelectListItem(order.Order.DeliveryAddress.PostalCode, order.Id.ToString()));
             }
             return orderNames;
         }
@@ -183,7 +187,7 @@ namespace TransportLogistics.Controllers
                     var vehicle = vehicleService.GetById(routeData.VehicleId);
 
                     routeService.CreateRoute(vehicle);
-
+                    
 
                     return PartialView("_NewRoutePartial", routeData);
                 }
@@ -302,6 +306,43 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult ChangeVehicle([FromRoute]string id)
+        {
+
+            string RouteId = id;
+            try
+            {
+
+                ChangeVehicleViewModel newRouteViewModel = new ChangeVehicleViewModel()
+                {
+                    RouteId = RouteId,
+                    //VehicleId = vehicleId,
+                    VehicleList = GetVehicleList()
+                };
+
+                return PartialView("_ChangeVehiclePartial", newRouteViewModel);
+            }
+
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load information for Route {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Route {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ChangeVehicle([FromForm]ChangeVehicleViewModel data)
+        {
+            var route = routeService.GetById(data.RouteId);
+            var vehicle = vehicleService.GetById(data.VehicleId);
+            routeService.ChangeVehicle(route,vehicle);
+            
+            return PartialView("_ChangeVehiclePartial", data);
+        }
+
 
     }
 }

@@ -57,5 +57,10 @@ namespace TransportLogistics.Model
         {
             RouteEntries.Clear();
         }
+
+        public void SetVehicle(Vehicle vehicle)
+        {
+            Vehicle = vehicle;
+        }
     } 
 }
