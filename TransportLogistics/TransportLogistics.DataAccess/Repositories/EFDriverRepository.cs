@@ -56,12 +56,16 @@ namespace TransportLogistics.DataAccess.Repositories
 
             foreach (var driver in driversList)
             {
-                    foreach (var routeEntry in driver.CurrentRoute.RouteEntries)
+                var driverCurrentRoute = driver.CurrentRoute;
+                if (driverCurrentRoute != null)
+                {
+                    foreach (var routeEntry in driverCurrentRoute.RouteEntries)
                     {
                         var routeEntryDb = dbContext.RouteEntries.Where(r => r.Id == routeEntry.Id)
                                                       .SingleOrDefault();
-                        driver.CurrentRoute.RouteEntries.Add(routeEntryDb);
+                        driverCurrentRoute.RouteEntries.Add(routeEntryDb);
                     }
+                }
             }
 
             foreach (var driver in driversList)

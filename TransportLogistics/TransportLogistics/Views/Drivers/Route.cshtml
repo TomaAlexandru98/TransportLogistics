@@ -31,13 +31,31 @@
     <tbody>
         @foreach(var routeEntry in Model.RouteEntries)
         {
-            <tr>
-                <td>@routeEntry.Order.PickUpAddress.Country,@routeEntry.Order.PickUpAddress.City,@routeEntry.Order.PickUpAddress.Street,@routeEntry.Order.PickUpAddress.StreetNumber</td>
-                <td>@routeEntry.Order.DeliveryAddress.Country,@routeEntry.Order.DeliveryAddress.City,@routeEntry.Order.DeliveryAddress.Street,@routeEntry.Order.DeliveryAddress.StreetNumber</td>
-                <td>@routeEntry.Order.Price</td>
-                <td>@routeEntry.Order.PickUpTime</td>
-                <td>@routeEntry.Order.DeliveryTime</td>
-            </tr>
+        <tr>
+            <td>
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @routeEntry.Order.PickUpAddress.StreetNumber,@routeEntry.Order.PickUpAddress.Street
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.PickUpAddress.Country</div>
+                    <div>@routeEntry.Order.PickUpAddress.City</div>
+                </div>
+
+            </td>
+            <td>
+            <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @routeEntry.Order.DeliveryAddress.StreetNumber,@routeEntry.Order.DeliveryAddress.Street
+            </button>
+            <div class="dropdown-menu" style="padding: 0.8rem">
+                <div>@routeEntry.Order.DeliveryAddress.Country</div>
+                <div>@routeEntry.Order.DeliveryAddress.City</div>
+            </div>
+
+            </td>
+            <td>@routeEntry.Order.Price</td>
+            <td>@routeEntry.Order.PickUpTime</td>
+            <td>@routeEntry.Order.DeliveryTime</td>
+        </tr>
         }
     </tbody>
 </table>
