@@ -79,7 +79,7 @@ namespace TransportLogistics.ApplicationLogic.Services
                 Id = Guid.NewGuid(),
                
             };
-            var driver = DriverRepository.GetById(driverId);
+            var driver = DriverRepository.GetRouteWithVehicle(driverId);
             var trailer = TrailerRepository.GetByRegistrationNumber(registrationNumber);
             request.SetTrailer(trailer);
             request.SetVehicle(driver.CurrentRoute.Vehicle);
