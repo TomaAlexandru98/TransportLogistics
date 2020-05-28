@@ -22,7 +22,8 @@ namespace TransportLogistics.DataAccess.Repositories
         }
         public Driver GetDriverWithRoute(Guid id)
         {
-            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).Include(o=> o.RoutesHistoric).
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).
+                Include(o=> o.RoutesHistoric).
                 Where(o=> o.Id == id).FirstOrDefault();
         }
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
@@ -120,6 +121,10 @@ namespace TransportLogistics.DataAccess.Repositories
             }
             return driver.RoutesHistoric;
         }
-       
+
+        public Driver GetRouteWithVehicle(Guid id)
+        {
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o => o.Vehicle).Where(o => o.Id == id).FirstOrDefault();
+        }
     }
 }

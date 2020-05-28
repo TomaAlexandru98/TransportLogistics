@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class NewDb : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,22 +71,12 @@ namespace TransportLogistics.DataAccess.Migrations
                     Height = table.Column<decimal>(nullable: false),
                     Width = table.Column<decimal>(nullable: false),
                     Length = table.Column<decimal>(nullable: false),
+                    RegistrationNumber = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trailers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VehicleHistories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VehicleHistories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +109,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     MaximCarryWeightKg = table.Column<int>(nullable: false),
                     VIN = table.Column<string>(nullable: true),
                     CurrentTrailerId = table.Column<Guid>(nullable: true),
-                    HistoryId = table.Column<Guid>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -129,12 +118,6 @@ namespace TransportLogistics.DataAccess.Migrations
                         name: "FK_Vehicles_Trailers_CurrentTrailerId",
                         column: x => x.CurrentTrailerId,
                         principalTable: "Trailers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Vehicles_VehicleHistories_HistoryId",
-                        column: x => x.HistoryId,
-                        principalTable: "VehicleHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -168,7 +151,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     SenderId = table.Column<Guid>(nullable: false),
-                    SenderType = table.Column<string>(nullable: true),
                     VehicleId = table.Column<Guid>(nullable: true),
                     TrailerId = table.Column<Guid>(nullable: true),
                     SupervisorId = table.Column<Guid>(nullable: true),
@@ -328,8 +310,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     VehicleId = table.Column<Guid>(nullable: true),
-                    DriverId = table.Column<Guid>(nullable: true),
-                    VehicleHistoryId = table.Column<Guid>(nullable: true)
+                    DriverId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -338,12 +319,6 @@ namespace TransportLogistics.DataAccess.Migrations
                         name: "FK_VehicleDrivers_Drivers_DriverId",
                         column: x => x.DriverId,
                         principalTable: "Drivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_VehicleDrivers_VehicleHistories_VehicleHistoryId",
-                        column: x => x.VehicleHistoryId,
-                        principalTable: "VehicleHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -435,11 +410,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 column: "DriverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleDrivers_VehicleHistoryId",
-                table: "VehicleDrivers",
-                column: "VehicleHistoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_VehicleDrivers_VehicleId",
                 table: "VehicleDrivers",
                 column: "VehicleId");
@@ -448,11 +418,6 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "IX_Vehicles_CurrentTrailerId",
                 table: "Vehicles",
                 column: "CurrentTrailerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_HistoryId",
-                table: "Vehicles",
-                column: "HistoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -498,9 +463,6 @@ namespace TransportLogistics.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Trailers");
-
-            migrationBuilder.DropTable(
-                name: "VehicleHistories");
         }
     }
 }

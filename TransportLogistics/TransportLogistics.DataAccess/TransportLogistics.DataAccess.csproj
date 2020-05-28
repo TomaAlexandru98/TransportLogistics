@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200527123023_sender.cs" />
-    <Compile Remove="Migrations\20200527123023_sender.Designer.cs" />
+    <Compile Remove="Migrations\20200528152727_initial2.cs" />
+    <Compile Remove="Migrations\20200528152727_initial2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +37,12 @@
   <ItemGroup>
     <ProjectReference Include="..\TransportLogistics.DataAccess.Abstractions\TransportLogistics.DataAccess.Abstractions.csproj" />
     <ProjectReference Include="..\TransportLogistics.Model\TransportLogistics.Model.csproj" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

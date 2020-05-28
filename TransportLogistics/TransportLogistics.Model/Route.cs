@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
+    public enum RouteStatus { }
     public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get;  set; }
