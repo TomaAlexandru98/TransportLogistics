@@ -74,6 +74,7 @@ namespace TransportLogistics.DataAccess.Repositories
                     route.RouteEntries.Remove(dbentry);
                     dbContext.RouteEntries.Remove(dbentry);
                     dbContext.SaveChanges();
+                    break;
                 }
                
             }

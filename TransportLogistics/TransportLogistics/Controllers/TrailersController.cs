@@ -27,9 +27,9 @@ namespace TransportLogistics.Controllers
             this.trailerService = trailerService;
             
         }
-        private TrailersListViewModel LoadTrailersViews()
+        
+        public IActionResult TrailersTable()
         {
-
             TrailersListViewModel trailerViewModel = null;
             try
             {
@@ -43,17 +43,6 @@ namespace TransportLogistics.Controllers
             {
                 logger.LogError("Failed to load Trailer entities {@Exception}", e.Message);
                 logger.LogDebug("Failed to load Trailer entities {@ExceptionMessage}", e);
-            }
-
-            return trailerViewModel;
-        }
-        public IActionResult TrailersTable()
-        {
-            var trailerViewModel = LoadTrailersViews();
-
-            if (trailerViewModel == null)
-            {
-                return BadRequest("Failed to load Trailers entities");
             }
 
             return PartialView("_TrailersTable", trailerViewModel);
@@ -78,17 +67,12 @@ namespace TransportLogistics.Controllers
         }
 
 
-        [HttpGet]
+        
         public IActionResult Index()
         {
-            var trailerViewModel = LoadTrailersViews();
+            
 
-            if (trailerViewModel == null)
-            {
-                return BadRequest("Failed to load Trailers entities");
-            }
-
-            return View(trailerViewModel);
+            return View();
 
         }
 

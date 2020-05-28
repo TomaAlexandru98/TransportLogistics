@@ -54,7 +54,7 @@ namespace TransportLogistics.Controllers
 
             foreach (var order in orders)
             {
-               orderNames.Add(new SelectListItem(order.Price.ToString(), order.Id.ToString()));
+               orderNames.Add(new SelectListItem(order.DeliveryAddress.PostalCode, order.Id.ToString()));
             }
             return orderNames;
         }

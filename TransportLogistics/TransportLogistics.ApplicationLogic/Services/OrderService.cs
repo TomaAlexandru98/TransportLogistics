@@ -11,11 +11,13 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly IPersistenceContext PersistenceContext;
         private readonly IOrderRepository OrderRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IRouteRepository routeRepository;
         public OrderService(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             OrderRepository = persistenceContext.OrderRepository;
             customerRepository = persistenceContext.CustomerRepository;
+            routeRepository = persistenceContext.RouteRepository;
         }
         public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
@@ -86,7 +88,18 @@ namespace TransportLogistics.ApplicationLogic.Services
         public bool Remove(string id)
         {
             var orderToRemove = GetById(id);
-
+            var routes = routeRepository.GetAll();
+            foreach(var route in routes)
+            {
+                foreach(var entry in route.RouteEntries)
+                {
+                    if(entry.Order.Id == orderToRemove.Id)
+                    {
+                        routeRepository.Remove(entry, route.Id);
+                        break;
+                    }
+                }
+            }
             return OrderRepository.RemoveOrder(orderToRemove);
         }
 
