@@ -29,5 +29,7 @@ namespace TransportLogistics.DataAccess
         public DbSet<VehicleDriver> VehicleDrivers{ get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Supervisor> Supervisors { get; set; }
+        public DbSet<VehicleChangeRequest> VehicleChangeRequests { get; set; }
+        public DbSet<Recipient> Recipients { get; set; }
     }
 }
