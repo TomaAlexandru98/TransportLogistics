@@ -10,6 +10,5 @@ namespace TransportLogistics.DataAccess.Abstractions
         IEnumerable<VehicleDriver> GetHistory(Guid id);
         IEnumerable<RouteEntry> GetDetailsRoute(Guid guidVehicleId1, Guid guidVehicleId2);
         Vehicle GetByRegistrationNumber(string registrationNumber);
-        IEnumerable<Vehicle> GetAvailableVehicles();
     }
 }

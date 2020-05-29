@@ -196,7 +196,7 @@ namespace TransportLogistics.Controllers
                     }
                 }
 
-                var recipient = orderService.CreateNewRecipient(orderData.RecipientName,
+                var recipient = customerService.CreateNewCustomer(orderData.RecipientName,
                             orderData.RecipientPhoneNo,
                             orderData.RecipientEmail);
 

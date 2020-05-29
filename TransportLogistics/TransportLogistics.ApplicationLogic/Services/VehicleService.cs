@@ -101,10 +101,5 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             return vehicleRepository.GetByRegistrationNumber(registrationNumber);
         }
-
-        public IEnumerable<Vehicle> GetAvailableVehicles()
-        {
-            return vehicleRepository.GetAvailableVehicles();
-        }
     }
 }
