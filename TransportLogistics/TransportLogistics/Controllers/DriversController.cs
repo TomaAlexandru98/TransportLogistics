@@ -39,6 +39,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 var driver = DriverService.GetByUserId(user.Id);
+
                 var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
                 var currentRoute = new CurrentRouteViewModel();

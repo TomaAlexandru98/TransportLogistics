@@ -6,8 +6,8 @@
         <tr>
             <th>Driver ID</th>
             <th>Current Route</th>
-            <th>Route history</th>
             <th>Status</th>
+            <th>Assigned Vehicle</th>
         </tr>
     </thead>
 
@@ -28,12 +28,7 @@
                             <li>@driver.Email</li>
                         </ul>
                     </div>
-                </td>
-
-                
-                
-
-                
+                </td>                
                 <td class="dropdown text-center">
                     @if (driver.CurrentRoute != null)
                     {
@@ -59,19 +54,9 @@
                             
                     }
                     </td>
-                <td>
-                    @if (driver.RoutesHistoric != null)
-                    {
-                        driver.RoutesHistoric.Routes.Count();
-                    }
-                    else
-                    {
-                        <div>   No route history</div>
-                    }
-
-                </td>
+                
                 <td>@driver.Status</td>
-
+                <td></td>
 
                 @*
                 <td>
