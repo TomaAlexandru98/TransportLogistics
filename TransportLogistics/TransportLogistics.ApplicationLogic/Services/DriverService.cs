@@ -44,6 +44,8 @@ namespace TransportLogistics.ApplicationLogic.Services
             SetDriverStatus(driver, DriverStatus.Free);
             DriverRepository.Update(driver);
         }
+
+
         public void SetDriverStatus(Driver driver,DriverStatus status)
         {
             driver.SetStatus(status);

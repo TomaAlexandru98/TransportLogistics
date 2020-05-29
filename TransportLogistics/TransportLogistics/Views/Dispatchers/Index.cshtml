@@ -18,7 +18,26 @@
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
- 
+    
+
+@Html.AntiForgeryToken()
+    <div class="modal fade" id="routesListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select Route</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="routesListContainer">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -34,6 +53,10 @@
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
+        }
+
+        function loadAvailableRoutes(driverId) {
+            loadServerPartialView("#routesListContainer", "/Routes/RoutesTable?driverId=" + driverId)
         }
 
     </script>

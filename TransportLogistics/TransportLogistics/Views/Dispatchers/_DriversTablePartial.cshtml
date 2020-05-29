@@ -50,13 +50,27 @@
                     }
                     else
                     {
-                <div>   No current route</div>
+                    <div>   No current route</div>
                             
                     }
                     </td>
                 
                 <td>@driver.Status</td>
-                <td></td>
+                <td>
+                        @if (driver.CurrentRoute == null)
+                        {
+                            <a data-toggle="modal" data-target="#trailersListModal" onclick='loadAvailableRoutes("@driver.Id")'
+                               class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Add</span>
+                            </a>
+                        }
+                        else
+                        {
+                            @driver.CurrentRoute.Vehicle
+                        }
+
+                </td>
 
                 @*
                 <td>
