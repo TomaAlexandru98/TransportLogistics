@@ -19,6 +19,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         ISupervisorRepository SupervisorRepository { get; }
         IRequestRepository RequestRepository { get; }
         IVehicleChangeRepository VehicleChangeRepository { get; }
+        IRecipientRepository RecipientRepository { get; }
         TransactionScope BeginTransaction();
         void SaveChanges();
     }
