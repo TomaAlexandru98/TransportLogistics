@@ -26,6 +26,7 @@ namespace TransportLogistics.DataAccess.Repositories
             SupervisorRepository = new EFSupervisorRepository(context);
             RequestRepository = new EFRequestRepository(context);
             VehicleChangeRepository = new EFVehicleChangeRequestRepository(context);
+            RecipientRepository = new EFRecipientRepository(context);
         }
 
         public ICustomerRepository CustomerRepository { get ; private set; }
@@ -34,11 +35,10 @@ namespace TransportLogistics.DataAccess.Repositories
         public IVehicleRepository VehicleRepository { get; private set; }
         public IDriverRepository DriverRepository { get; private set; }
         public IOrderRepository OrderRepository { get; private set; }
-
+        public IRecipientRepository RecipientRepository { get; private set; }
         public IRouteRepository RouteRepository { get; private set; }
         public IDispatcherRepository DispatcherRepository { get; private set; }
         public ISupervisorRepository SupervisorRepository { get; private set; }
-
         public IRequestRepository RequestRepository { get; private set; }
         public IVehicleChangeRepository VehicleChangeRepository { get; private set; }
         public TransactionScope BeginTransaction()
