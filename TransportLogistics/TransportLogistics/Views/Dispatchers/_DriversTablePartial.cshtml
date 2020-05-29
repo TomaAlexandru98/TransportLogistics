@@ -7,7 +7,7 @@
             <th>Driver ID</th>
             <th>Current Route</th>
             <th>Status</th>
-            <th>Assigned Vehicle</th>
+            <th>Assign Route</th>
         </tr>
     </thead>
 
@@ -59,7 +59,7 @@
                 <td>
                         @if (driver.CurrentRoute == null)
                         {
-                            <a data-toggle="modal" data-target="#trailersListModal" onclick='loadAvailableRoutes("@driver.Id")'
+                            <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
                                class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
                                 <i class="fa fa-plus-circle"></i>
                                 <span>Add</span>
@@ -67,7 +67,7 @@
                         }
                         else
                         {
-                            @driver.CurrentRoute.Vehicle
+                        <div>Assigned</div>
                         }
 
                 </td>

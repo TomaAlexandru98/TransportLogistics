@@ -208,6 +208,8 @@ namespace TransportLogistics.Controllers
             }
         }
 
+       // public IActionResult GetDrivers()
+
         public IActionResult DetailsDriver(string id)
         {
             try
