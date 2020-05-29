@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200525100536_RefactoringVehicleHistory")]
-    partial class RefactoringVehicleHistory
+    [Migration("20200528154043_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,6 +321,9 @@ namespace TransportLogistics.DataAccess.Migrations
 
                     b.Property<int>("NumberAxles")
                         .HasColumnType("int");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

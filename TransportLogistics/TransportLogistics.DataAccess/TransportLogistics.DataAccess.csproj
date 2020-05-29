@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200527123023_sender.cs" />
-    <Compile Remove="Migrations\20200527123023_sender.Designer.cs" />
+    <Compile Remove="Migrations\20200528152727_initial2.cs" />
+    <Compile Remove="Migrations\20200528152727_initial2.Designer.cs" />
+    <Compile Remove="Migrations\20200528165722_vehiclerequest.cs" />
+    <Compile Remove="Migrations\20200528165722_vehiclerequest.Designer.cs" />
+    <Compile Remove="Migrations\20200528165852_vehiclerequest.cs" />
+    <Compile Remove="Migrations\20200528165852_vehiclerequest.Designer.cs" />
+    <Compile Remove="Migrations\20200528170301_vehiclerequest.cs" />
+    <Compile Remove="Migrations\20200528170301_vehiclerequest.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
