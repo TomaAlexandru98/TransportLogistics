@@ -11,16 +11,16 @@ namespace TransportLogistics.Model
         public Driver Driver { get; private set; }
         public Dispatcher Dispatcher { get; private set; }
 
-        public static VehicleChangeRequest Create(Vehicle oldVehicle, Vehicle newVehicle, Driver driver)
-        {
-            var request = new VehicleChangeRequest()
-            {
-                Id = Guid.NewGuid(),
-                OldVehicle = oldVehicle,
-                NewVehicle = newVehicle,
-                Driver = driver
-            };
-            return request;
-        }
+        //public VehicleChangeRequest Create(Vehicle oldVehicle,Vehicle newVehicle,Driver driver)
+        //{
+        //    var request = new VehicleChangeRequest()
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        OldVehicle = oldVehicle,
+        //        NewVehicle = newVehicle,
+        //        DriverId = driver
+        //    };
+        //    return request; 
+        //}
     }
 }

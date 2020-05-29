@@ -14,19 +14,19 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService)
+            ILogger<DriversController> logger,TrailerService trailerService)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
             TrailerService = trailerService;
-            VehicleService = vehicleService;
             Logger = logger;
         }
 
         private UserManager<IdentityUser> UserManager;
-        private VehicleService VehicleService;
+
         private DriverService DriverService;
+
         private OrderService OrderService;
         private ILogger Logger;
         private TrailerService TrailerService;
@@ -39,6 +39,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 var driver = DriverService.GetByUserId(user.Id);
+
                 var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
                 var currentRoute = new CurrentRouteViewModel();
@@ -207,6 +208,8 @@ namespace TransportLogistics.Controllers
             }
         }
 
+       // public IActionResult GetDrivers()
+
         public IActionResult DetailsDriver(string id)
         {
             try
@@ -248,37 +251,6 @@ namespace TransportLogistics.Controllers
         {
             return View();
 
-        }
-        public IActionResult AvailableVehicles()
-        {
-            try
-            {
-                var vehicles = VehicleService.GetAvailableVehicles();
-                return View(vehicles);
-            }
-            catch(Exception e)
-            {
-                Logger.LogDebug("Failed to retrieve available vehicles {@Exception}", e);
-                Logger.LogError("Failed to retrieve available vehicles {Exception}", e.Message);
-                return BadRequest("Failed to retrieve available vehicles");
-            }
-        }
-        public async Task<IActionResult> VehicleChangeRequest(string registrationNumber)
-        {
-            try
-            {
-                var user = await UserManager.GetUserAsync(User);
-                var driver = DriverService.GetByUserId(user.Id);
-                var vehicle = VehicleService.GetByRegistrationNumber(registrationNumber);
-                DriverService.VehicleSwapRequest(driver, vehicle);
-                return RedirectToAction("Index");
-            }
-            catch(Exception e)
-            {
-                Logger.LogDebug("Failed to create a new vehicle change request {@Exception}", e);
-                Logger.LogError("Failed to create a new vehicle change request{Exception}", e.Message);
-                return BadRequest("Failed to create a new vehicle change request");
-            }
         }
     }
 }

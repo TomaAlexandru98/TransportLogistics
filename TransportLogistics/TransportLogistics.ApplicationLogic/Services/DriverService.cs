@@ -15,7 +15,6 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly IRouteRepository RouteRepository;
         private readonly IRequestRepository RequestRepository;
         private readonly ITrailerRepository TrailerRepository;
-        private readonly IVehicleChangeRepository VehicleChangeRepository;
         private readonly OrderService OrderService;
         public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
         {
@@ -24,7 +23,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             RouteRepository = persistenceContext.RouteRepository;
             RequestRepository = persistenceContext.RequestRepository;
             TrailerRepository = persistenceContext.TrailerRepository;
-            VehicleChangeRepository = persistenceContext.VehicleChangeRepository;
             OrderService = orderService;
         }
         public Driver GetByUserId(string userId)
@@ -46,6 +44,8 @@ namespace TransportLogistics.ApplicationLogic.Services
             SetDriverStatus(driver, DriverStatus.Free);
             DriverRepository.Update(driver);
         }
+
+
         public void SetDriverStatus(Driver driver,DriverStatus status)
         {
             driver.SetStatus(status);
@@ -91,13 +91,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
             
         }
-       
-        public void VehicleSwapRequest(Driver driver, Vehicle vehicle)
-        {
-            var completeDriver = DriverRepository.GetRouteWithVehicle(driver.Id);
-            var request = VehicleChangeRequest.Create(completeDriver.CurrentRoute.Vehicle, vehicle, driver);
-            VehicleChangeRepository.Add(request);
-            PersistenceContext.SaveChanges();
-        }
+
     }
 }
