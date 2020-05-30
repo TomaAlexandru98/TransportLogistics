@@ -19,6 +19,7 @@ using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.DataAccess.Repositories;
 using TransportLogistics.DataAccess.Abstractions;
 using TransportLogistics.Data.Abstractions;
+using SignalR;
 
 namespace TransportLogistics
 {
@@ -46,14 +47,11 @@ namespace TransportLogistics
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSignalR();
 
             services.AddScoped<ITrailerRepository, EFTrailerRepository>();
             services.AddScoped<TrailerService>();
-
-
-            
             services.AddScoped<ICustomerRepository, EFCustomerRepository>();
-            
             services.AddScoped<IPersistenceContext, EFPersistenceContext>();
             services.AddScoped<CustomerService>();
             services.AddScoped<SupervisorService>();
@@ -96,7 +94,10 @@ namespace TransportLogistics
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                
+                endpoints.MapHub<RequestHub>("/request");
             });
+           
         }
     }
 }

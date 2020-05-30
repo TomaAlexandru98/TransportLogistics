@@ -9,6 +9,7 @@
         <tr>
             <th style="text-align:center"><b>PickUpAddress</b></th>
             <th style="text-align:center"><b>DeliveryAddress</b></th>
+            <th style="text-align:center"><b>PhoneNo.</b></th>
             <th style="text-align:center"><b>Status</b></th>
             <td style="text-align:center"><b>Troubles</b></td>
             <td style="text-align:center"><b>Payment</b></td>
@@ -58,7 +59,15 @@
                 </div>
 
             </td>
+                @if(routeEntry.OrderType == TransportLogistics.Model.OrderType.PickUp){
 
+                <td>@routeEntry.Order.Sender.ContactDetails.PhoneNo</td>
+                }
+            else{
+            <td>@routeEntry.Order.Recipient.ContactDetails.PhoneNo</td>
+            }
+
+            
 
             <td style="text-align:center;max-height:3rem;min-width:20rem">
                 <button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"

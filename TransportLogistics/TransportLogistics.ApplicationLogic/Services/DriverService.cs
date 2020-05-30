@@ -74,7 +74,7 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             return RouteRepository.GetRouteById(id);
         }
-        public void CreateRequest(Guid driverId , string registrationNumber)
+        public Request CreateRequest(Guid driverId , string registrationNumber)
         {
             Request request = new Request()
             {
@@ -89,6 +89,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             request.SetSender(driver.Id);
             RequestRepository.Add(request);
             PersistenceContext.SaveChanges();
+            return request;
             
         }
        
