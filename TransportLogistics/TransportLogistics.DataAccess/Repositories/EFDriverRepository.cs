@@ -71,23 +71,27 @@ namespace TransportLogistics.DataAccess.Repositories
 
             foreach (var driver in driversList)
             {
-                foreach (var route in driver.RoutesHistoric.Routes)
+                if(driver.RoutesHistoric != null)
                 {
-                    var routeDb = dbContext.Routes.Where(r => r.Id == route.Id)
-                                                  .Include(r => r.RouteEntries)
-                                                  .SingleOrDefault();
-
-                    foreach (var routeEntry in routeDb.RouteEntries)
+                    foreach (var route in driver.RoutesHistoric.Routes)
                     {
-                        var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.DeliveryAddress)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.PickUpAddress)
-                                                                 .SingleOrDefault();
-                        route.RouteEntries.Add(routeEntry);
+                        var routeDb = dbContext.Routes.Where(r => r.Id == route.Id)
+                                                      .Include(r => r.RouteEntries)
+                                                      .SingleOrDefault();
+
+                        foreach (var routeEntry in routeDb.RouteEntries)
+                        {
+                            var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
+                                                                     .Include(re => re.Order)
+                                                                     .ThenInclude(re => re.DeliveryAddress)
+                                                                     .Include(re => re.Order)
+                                                                     .ThenInclude(re => re.PickUpAddress)
+                                                                     .SingleOrDefault();
+                            route.RouteEntries.Add(routeEntry);
+                        }
                     }
                 }
+                   
             }
 
             return driversList;

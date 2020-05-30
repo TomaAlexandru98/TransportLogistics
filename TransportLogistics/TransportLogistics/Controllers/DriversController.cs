@@ -17,19 +17,20 @@ namespace TransportLogistics.Controllers
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
             ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub)
+            ILogger<DriversController> logger,TrailerService trailerService)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
             TrailerService = trailerService;
-            VehicleService = vehicleService;
             Logger = logger;
             RequestHub = hub;
         }
         private readonly IHubContext<RequestHub> RequestHub;
         private UserManager<IdentityUser> UserManager;
-        private VehicleService VehicleService;
+
         private DriverService DriverService;
+
         private OrderService OrderService;
         private ILogger Logger;
         private TrailerService TrailerService;
@@ -42,6 +43,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 var driver = DriverService.GetByUserId(user.Id);
+
                 var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
                 var currentRoute = new CurrentRouteViewModel();
@@ -210,6 +212,8 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+       // public IActionResult GetDrivers()
 
         public IActionResult DetailsDriver(string id)
         {

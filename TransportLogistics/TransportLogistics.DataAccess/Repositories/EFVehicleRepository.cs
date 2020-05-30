@@ -19,7 +19,6 @@ namespace TransportLogistics.DataAccess.Repositories
             return dbContext.Vehicles.Include(vehicle => vehicle.CurrentTrailer);
         }
 
-
         public Vehicle GetByRegistrationNumber(string registrationNumber)
         {
             return dbContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
@@ -77,10 +76,6 @@ namespace TransportLogistics.DataAccess.Repositories
             }
 
             return vdList;
-        }
-        public IEnumerable<Vehicle> GetAvailableVehicles()
-        {
-            return dbContext.Vehicles.Where(o => o.Status == VehicleStatus.Free).AsEnumerable();
         }
     }
 }

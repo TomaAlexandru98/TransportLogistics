@@ -1,4 +1,5 @@
-﻿@{
+﻿@using TransportLogistics.ViewModels.Dispatchers
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -7,17 +8,46 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <button class="btn-car ml-3">Connect Trailers <i class="fa fa-trailer"></i></button>
-    <button class="btn-car" data-toggle="modal" data-target="#assignRouteModal">Assign Route <i class="fa fa-truck-loading"></i></button>
+    <a class="btn-car ml-3" asp-controller="Vehicles" asp-action="Index">Connect Trailers <i class="fa fa-trailer"></i></a>
+
 </div>
 
 <div id="driversTableContainer"></div>
 
+<form method="post" asp-controller="Dispatchers" asp-action="AssignRoute"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#assignRouteModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#assignRouteBody">
+
+    <div class="modal fade" id="assignRouteModal" tabindex="-1" aria-labelledby="assignRouteTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignRouteTitle">Assign Route</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="assignRouteBody">
+                    <partial name="_AssignRoutePartial" model="new AssignRouteViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Assign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
- 
+
+
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -33,6 +63,20 @@
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
+        }
+
+        function loadAvailableRoutes(DriverId) {
+            $('#DriverId').val(DriverId);
+            driverId = DriverId;
+            loadServerPartialView("#assignRouteBody", '@Url.Action("AssignRoute", "Dispatchers")' + "/" + DriverId).
+                done(function () {
+                    LoadDropdownRoute('#RouteId', driverId);
+                });
+        }
+
+        function LoadDropdownRoute(Id, driverId) {
+            var RouteId = $(Id).val();
+            loadServerPartialView("#assignRouteBody", '@Url.Action("GetRouteList", "Dispatchers")' + "/" + RouteId + ';' + driverId);
         }
 
     </script>
