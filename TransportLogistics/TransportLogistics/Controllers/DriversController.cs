@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using SignalR;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.ViewModels.Drivers;
@@ -14,7 +16,7 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService)
+            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub)
         {
             UserManager = userManager;
             DriverService = driverService;
@@ -22,8 +24,9 @@ namespace TransportLogistics.Controllers
             TrailerService = trailerService;
             VehicleService = vehicleService;
             Logger = logger;
+            RequestHub = hub;
         }
-
+        private readonly IHubContext<RequestHub> RequestHub;
         private UserManager<IdentityUser> UserManager;
         private VehicleService VehicleService;
         private DriverService DriverService;
@@ -177,7 +180,8 @@ namespace TransportLogistics.Controllers
             {
                 var user = await UserManager.GetUserAsync(User);
                 var driver = DriverService.GetByUserId(user.Id);
-                DriverService.CreateRequest(driver.Id, registrationNumber);
+                var request = DriverService.CreateRequest(driver.Id, registrationNumber);
+                await RequestHub.Clients.All.SendAsync("AddRequest", request);
                 return RedirectToAction("Index");
             }
             catch(Exception e)
@@ -280,6 +284,20 @@ namespace TransportLogistics.Controllers
             {
                 Logger.LogDebug("Failed to create a new vehicle change request {@Exception}", e);
                 Logger.LogError("Failed to create a new vehicle change request{Exception}", e.Message);
+                return BadRequest("Failed to create a new vehicle change request");
+            }
+        }
+        public IActionResult GetPersonalInformations()
+        {
+            try
+            {
+                
+                return PartialView("DriverInfo");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to get the current logged user {@Exception}", e);
+                Logger.LogError("Failed to get the current logged user {Exception}", e.Message);
                 return BadRequest("Failed to create a new vehicle change request");
             }
         }

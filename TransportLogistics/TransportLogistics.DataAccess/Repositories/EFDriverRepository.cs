@@ -37,8 +37,8 @@ namespace TransportLogistics.DataAccess.Repositories
                foreach (var routeEntry in routeEntries)
                {
                     var tempRouteEntry = dbContext.RouteEntries.Include(o => o.Order).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
-                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).
-                        Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
+                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).Include(o=>o.Recipient).ThenInclude(o=>o.ContactDetails)
+                       .Include(o=> o.Sender).ThenInclude(o=>o.ContactDetails).Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
                     tempRouteEntry.SetOrder(order);
 
                     completeRouteEntries.Add(tempRouteEntry);
