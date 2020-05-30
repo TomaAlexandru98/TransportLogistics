@@ -17,7 +17,6 @@ namespace TransportLogistics.Controllers
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
             ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub)
-            ILogger<DriversController> logger,TrailerService trailerService)
         {
             UserManager = userManager;
             DriverService = driverService;

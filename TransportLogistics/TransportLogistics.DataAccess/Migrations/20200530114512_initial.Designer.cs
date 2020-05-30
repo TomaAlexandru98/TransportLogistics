@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200529180323_DriverRoute")]
-    partial class DriverRoute
+    [Migration("20200530114512_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -479,7 +479,7 @@ namespace TransportLogistics.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("PickUpAddressId");
 
-                    b.HasOne("TransportLogistics.Model.Customer", "Recipient")
+                    b.HasOne("TransportLogistics.Model.Recipient", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId");
 
