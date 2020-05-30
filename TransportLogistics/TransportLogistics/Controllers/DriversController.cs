@@ -23,14 +23,14 @@ namespace TransportLogistics.Controllers
             DriverService = driverService;
             OrderService = orderService;
             TrailerService = trailerService;
+            VehicleService = vehicleService;
             Logger = logger;
             RequestHub = hub;
         }
         private readonly IHubContext<RequestHub> RequestHub;
         private UserManager<IdentityUser> UserManager;
-
+        private VehicleService VehicleService;
         private DriverService DriverService;
-
         private OrderService OrderService;
         private ILogger Logger;
         private TrailerService TrailerService;
