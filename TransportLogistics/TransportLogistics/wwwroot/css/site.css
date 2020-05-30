@@ -169,3 +169,13 @@ body {
 .select-width {
     width: 70%;
 }
+
+.dropdown-menu-style {
+    padding: 0.8rem;
+}
+
+.location-column {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10.8rem;
+}

@@ -40,6 +40,7 @@ namespace TransportLogistics.DataAccess.Repositories
                         .Include(o => o.Sender.ContactDetails)
                         .Include(o => o.Recipient)
                         .Include(o => o.Recipient.ContactDetails)
+                        .OrderByDescending(o => o.CreationTime)
                         .AsEnumerable();
         }
 
