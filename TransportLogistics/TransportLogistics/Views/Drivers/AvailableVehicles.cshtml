@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TransportLogistics.Model.Vehicle>
+@{
+    ViewData["Title"] = "AvailableVehicles";
+    Layout = null;
+}
+    <form asp-controller="Drivers" asp-action="VehicleChangeRequest">
+        <label>Vehicle:</label>
+        <input name="registrationNumber" type="text" list="vehicles" class="form-control" onchange="displayVehicleInfo()" id="vehicle"/>
+        <datalist id="vehicles">
+            @if(Model != null && Model.Any())
+            @foreach(var vehicle in Model)
+            {
+                <option>@vehicle.RegistrationNumber</option>
+            }
+        </datalist>
+        <br />
+        <b id="info"></b>
+        <br />
+        <br />
+        <div class="d-flex justify-content-around">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="confirm" class="btn bg-menu">Ok</button>
+
+        </div>
+    </form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function displayVehicleInfo() {
+        var registrationNumber = $('#vehicle').val();
+        var model = @Html.Raw(Json.Serialize(Model));
+        for (var i = 0; i < model.length; i++) {
+            if (model[i].registrationNumber == registrationNumber) {
+                $('#info').html('Name: ' + model[i].name + "<br/>VIN: " + model[i].vin);
+            }
+        }
+    }
+</script>
