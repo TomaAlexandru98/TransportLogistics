@@ -477,7 +477,7 @@ namespace TransportLogistics.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("PickUpAddressId");
 
-                    b.HasOne("TransportLogistics.Model.Customer", "Recipient")
+                    b.HasOne("TransportLogistics.Model.Recipient", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId");
 
