@@ -44,6 +44,7 @@
             loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId).
                 done(function () {
                     LoadDropdownOrder('#OrderId');
+                    
                 });
         }
 
@@ -88,6 +89,7 @@
             loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId + ';' +routeId);
         }
 
+      
         function LoadDropdownVehicleEdit(Id, routeId) {
             var orderId = $(Id).val();
             loadServerPartialView("#changeVehicleBody", '@Url.Action("GetVehicleList", "Routes")' + "/" + orderId + ';' +routeId);
