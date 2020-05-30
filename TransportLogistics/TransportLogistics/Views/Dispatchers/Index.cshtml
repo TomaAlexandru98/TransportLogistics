@@ -8,8 +8,7 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
-    <a class="btn-car ml-3" asp-controller="Vehicles" asp-action="Index">Connect Trailers <i class="fa fa-trailer"></i></a>
-
+    <button class="btn-car ml-3" onclick="goToVehicles()">Connect Trailers <i class="fa fa-trailer"></i></button>
 </div>
 
 <div id="driversTableContainer"></div>
@@ -63,6 +62,10 @@
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
+        }
+
+        function goToVehicles() {
+            document.location = '@Url.Action("Index", "Vehicles")';
         }
 
         function loadAvailableRoutes(DriverId) {
