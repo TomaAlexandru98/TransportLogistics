@@ -62,6 +62,7 @@ namespace TransportLogistics
             services.AddScoped<OrderService>();
             services.AddScoped<RouteService>();
             services.AddScoped<DispatcherService>();
+            services.AddScoped<EditInfoRequestService>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
