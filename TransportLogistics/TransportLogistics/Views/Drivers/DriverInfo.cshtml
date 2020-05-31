@@ -1,29 +1,30 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> userManager
-@model TransportLogistics.ViewModels.UserAccontEditViewModel
+@model TransportLogistics.ViewModels.Drivers.EditInfoViewModel
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 
 @{
     var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
 
 }
-    <form asp-controller="Administrators" asp-action="EditInfoRequest">
-        <div class="form-group">
-            <label asp-for="Name">Name:</label>
-            <input type="text" asp-for="Name" class="form-control" value="@user.UserName" />
-            <span asp-validation-for="Name"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email">Email:</label>
-            <input type="text" asp-for="Email" class="form-control" value="@user.Email" />
-            <span asp-validation-for="Email"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PhoneNumber">PhoneNumber:</label>
-            <input type="text" asp-for="PhoneNumber" class="form-control" value="@user.PhoneNumber" />
-            <span asp-validation-for="PhoneNumber"></span>
-        </div>
-        <div class="d-flex justify-content-around">
-            <input type="button" class="btn bg-danger" value="Cancel" data-dismiss="modal" />
-            <input type="submit" class="btn bg-menu" value="Submit" />
-        </div>
-    </form>
+<form asp-controller="Drivers" asp-action="CreateEditInfoRequest" data-ajax="true">
+    <div class="form-group">
+        <label asp-for="Name">Name:</label>
+        <input type="text" asp-for="Name" class="form-control" value="@user.UserName" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email:</label>
+        <input type="text" asp-for="Email" class="form-control" value="@user.Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber">PhoneNumber:</label>
+        <input type="text" asp-for="PhoneNumber" class="form-control" value="@user.PhoneNumber" />
+        <span asp-validation-for="PhoneNumber"></span>
+    </div>
+    <div class="d-flex justify-content-around">
+        <input type="button" class="btn bg-danger" value="Cancel" data-dismiss="modal" />
+        <input type="submit" class="btn bg-menu" value="Submit" onclick="closeModal('editPersonalInfo')"/>
+    </div>
+</form>

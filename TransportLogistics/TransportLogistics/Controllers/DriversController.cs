@@ -16,7 +16,8 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub)
+            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub,
+            EditInfoRequestService editInfoRequestService)
         {
             UserManager = userManager;
             DriverService = driverService;
@@ -25,6 +26,7 @@ namespace TransportLogistics.Controllers
             VehicleService = vehicleService;
             Logger = logger;
             RequestHub = hub;
+            EditInfoRequestService = editInfoRequestService;
         }
         private readonly IHubContext<RequestHub> RequestHub;
         private UserManager<IdentityUser> UserManager;
@@ -33,6 +35,7 @@ namespace TransportLogistics.Controllers
         private OrderService OrderService;
         private ILogger Logger;
         private TrailerService TrailerService;
+        private EditInfoRequestService EditInfoRequestService;
 
         public async Task<IActionResult> Index()
         
@@ -178,10 +181,13 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var user = await UserManager.GetUserAsync(User);
-                var driver = DriverService.GetByUserId(user.Id);
-                var request = DriverService.CreateRequest(driver.Id, registrationNumber);
-                await RequestHub.Clients.All.SendAsync("AddRequest", request);
+                if (registrationNumber != null)
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    var driver = DriverService.GetByUserId(user.Id);
+                    var request = DriverService.CreateRequest(driver.Id, registrationNumber);
+                    await RequestHub.Clients.All.SendAsync("AddRequest", request);
+                }
                 return RedirectToAction("Index");
             }
             catch(Exception e)
@@ -274,10 +280,13 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var user = await UserManager.GetUserAsync(User);
-                var driver = DriverService.GetByUserId(user.Id);
-                var vehicle = VehicleService.GetByRegistrationNumber(registrationNumber);
-                DriverService.VehicleSwapRequest(driver, vehicle);
+                if (registrationNumber != null)
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    var driver = DriverService.GetByUserId(user.Id);
+                    var vehicle = VehicleService.GetByRegistrationNumber(registrationNumber);
+                    DriverService.VehicleSwapRequest(driver, vehicle);
+                }
                 return RedirectToAction("Index");
             }
             catch(Exception e)
@@ -299,6 +308,25 @@ namespace TransportLogistics.Controllers
                 Logger.LogDebug("Failed to get the current logged user {@Exception}", e);
                 Logger.LogError("Failed to get the current logged user {Exception}", e.Message);
                 return BadRequest("Failed to create a new vehicle change request");
+            }
+        }
+        public IActionResult CreateEditInfoRequest(EditInfoViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
+                    var driver = DriverService.GetByUserId(user.Id);
+                    EditInfoRequestService.CreateEditInfoRequest(driver.Id, model.Name, model.Email, model.PhoneNumber, driver.Name, driver.Email, user.PhoneNumber);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to create new edit info request {@Exception}", e);
+                Logger.LogError("Failed to create new edit info request{Exception}", e.Message);
+                return BadRequest("Failed to create new edit info request");
             }
         }
     }

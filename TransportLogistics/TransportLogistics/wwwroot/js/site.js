@@ -70,3 +70,6 @@ function DeleteUserAccount(Id) {
    
 
 }
+function closeModal(modal) {
+    $('#' + modal).modal('hide');
+}
