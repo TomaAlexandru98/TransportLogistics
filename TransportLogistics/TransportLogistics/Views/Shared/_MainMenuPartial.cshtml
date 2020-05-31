@@ -4,9 +4,10 @@
 
 
     <ul class="navbar-nav flex-grow-1">
-        <li>
+        
             @if (User.IsInRole("Administrator"))
             {
+                <li>
                 <div class="dropdown">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -20,8 +21,12 @@
                         <a asp-controller="Administrators" asp-action="Index" class="dropdown-item">Accounts</a>
                     </div>
                 </div>
-            }
+                
         </li>
+        <li>
+            <a style="margin-left:10px" class="btn btn-outline-light" asp-action="EditInfoRequests" asp-controller="Administrators">Requests <i class="fa fa-question"></i></a>
+        </li>
+            }
 
 
         @if (User.IsInRole("Supervisor"))

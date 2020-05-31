@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TransportLogistics.Model.PersonalInfoRequest>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table table-striped table-bordered" id="Requests">
+    <thead>
+        <tr>
+            <th>OldEmail</th>
+            <th>NewEmail</th>
+            <th>OldName</th>
+            <th>NewName</th>
+            <th>OldPhoneNumber</th>
+            <th>NewPhoneNumber</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach (var request in Model)
+    {
+        <tr>
+            <td>@request.OldEmail</td>
+            <td>@request.NewEmail</td>
+            <td>@request.OldName</td>
+            <td>@request.NewName</td>
+            <td>@request.OldPhoneNumber</td>
+            <td>@request.NewPhoneNumber</td>
+            <td>
+                <div>
+                    <a class="btn btn-outline-success mr-1" data-ajax="true" 
+                        onclick="approveRequest('@request.Id')">
+                        <i class="fa fa-check-circle" style="color: green;"></i>
+                    </a>
+                    <a class="btn btn-outline-danger"  onclick="cancelRequest('@request.Id')"
+                       >
+                        <i class="fa fa-ban" style="color: red;"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

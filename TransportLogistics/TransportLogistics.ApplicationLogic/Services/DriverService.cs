@@ -102,5 +102,16 @@ namespace TransportLogistics.ApplicationLogic.Services
             VehicleChangeRepository.Add(request);
             PersistenceContext.SaveChanges();
         }
+
+        public Driver GetById(Guid id)
+        {
+            return DriverRepository.GetById(id);
+        }
+
+        public void UpdateDriver(Driver driver, string newName, string newEmail)
+        {
+            driver.SetEmail(newEmail);
+            driver.SetName(newName);
+        }
     }
 }
