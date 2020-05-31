@@ -10,8 +10,8 @@ using TransportLogistics.DataAccess;
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    [Migration("20200530201732_OrderCreationTime")]
-    partial class OrderCreationTime
+    [Migration("20200531113217_statusRequest")]
+    partial class statusRequest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,6 +185,44 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TransportLogistics.Model.PersonalInfoRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Administrator")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Applicant")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NewEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EditPersonalInfoRequests");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Recipient", b =>

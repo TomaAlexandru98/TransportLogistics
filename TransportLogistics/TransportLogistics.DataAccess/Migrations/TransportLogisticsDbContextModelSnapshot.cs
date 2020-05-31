@@ -215,6 +215,9 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.Property<string>("OldPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("EditPersonalInfoRequests");
