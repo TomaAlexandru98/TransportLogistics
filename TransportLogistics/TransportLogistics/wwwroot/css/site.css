@@ -88,7 +88,17 @@ body {
 .modal-delete {
     margin-top: 9rem;
     margin-left: 8rem;
-   
+}
+
+.header {
+    border-radius: 25px;
+    width: 200px;
+    padding: 20px;
+    background: 100px;
+    background-color: #06087d;
+    text-align: left;
+    color: white;
+    font-size: 30px;
 }
 
 .maxim-width-input{
