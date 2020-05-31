@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportLogistics.DataAccess;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
     [DbContext(typeof(TransportLogisticsDbContext))]
-    partial class TransportLogisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200530201732_OrderCreationTime")]
+    partial class OrderCreationTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,41 +185,6 @@ namespace TransportLogistics.DataAccess.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("TransportLogistics.Model.PersonalInfoRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Administrator")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Applicant")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("NewEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EditPersonalInfoRequests");
                 });
 
             modelBuilder.Entity("TransportLogistics.Model.Recipient", b =>
