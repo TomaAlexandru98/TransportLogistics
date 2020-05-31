@@ -12,6 +12,7 @@ namespace TransportLogistics.Model
         public Customer Sender { get; private set; }
         public OrderStatus Status { get; private set; }
         public decimal Price { get; private set; }
+        public DateTime CreationTime { get; private set; }
         public DateTime PickUpTime { get; private set; }
         public DateTime DeliveryTime { get; private set; }
 
@@ -32,7 +33,8 @@ namespace TransportLogistics.Model
                 Price = price,
                 Recipient = recipient,
                 Sender = sender,
-                Status = OrderStatus.Created
+                Status = OrderStatus.Created,
+                CreationTime = DateTime.UtcNow
             };
             return order;
         }
