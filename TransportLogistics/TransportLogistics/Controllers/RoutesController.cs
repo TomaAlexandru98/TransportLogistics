@@ -90,7 +90,8 @@ namespace TransportLogistics.Controllers
                 {
                     //OrderId = Id,
                     OrderList = GetOrderList(),
-                    RouteId = RouteId
+                    RouteId = RouteId,
+                    OrderType = GetOrderType()
                 };
                 return PartialView("_AddOrderPartial", newOrderViewModel);
             }
@@ -101,6 +102,17 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        private List<SelectListItem> GetOrderType()
+        {
+            
+            List<SelectListItem> orderNames = new List<SelectListItem>();
+            orderNames.Add(new SelectListItem("Both", OrderType.Both.ToString()));
+            orderNames.Add(new SelectListItem("Delivery", OrderType.Delivery.ToString()));
+            orderNames.Add(new SelectListItem("PickUp", OrderType.PickUp.ToString()));
+            return orderNames;
+        }
+
         [HttpPost]
         public IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
         {
@@ -113,7 +125,7 @@ namespace TransportLogistics.Controllers
                     RouteEntry entry = new RouteEntry() {Id = Guid.NewGuid() };
                     
                     entry.SetOrder(order);
-                    
+                    entry.SetType(orderData.type);
                     routeService.AddEntry(route.Id.ToString(), entry);
 
 
@@ -345,5 +357,20 @@ namespace TransportLogistics.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Map([FromRoute]string id)
+        {
+            var route = routeService.GetById(id);
+            var entries = new RouteEntriesViewModel();
+            entries.RouteEntries = route.RouteEntries;
+
+            return View(entries);
+        }
+
+        public IActionResult RouteMap()
+        {
+            return View();
+
+        }
     }
 }
