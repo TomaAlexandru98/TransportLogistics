@@ -357,5 +357,20 @@ namespace TransportLogistics.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Map([FromRoute]string id)
+        {
+            var route = routeService.GetById(id);
+            var entries = new RouteEntriesViewModel();
+            entries.RouteEntries = route.RouteEntries;
+
+            return View(entries);
+        }
+
+        public IActionResult RouteMap()
+        {
+            return View();
+
+        }
     }
 }

@@ -41,31 +41,35 @@
             </td>
             
            <td class="w-55 ">
-                <div class="d-flex justify-content-sm-around">
-                    <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
-                            onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
-                        <i class="material-icons fa fa-plus"></i>
-                    </button>
-                    <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
-                            onclick="LoadVehicleEdit('@route.Id');" data-target="#changeVehicleModal">
-                        <i class="material-icons fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-outline-danger mr-3 ml-3 " style="min-width:3rem"title="Delete Order" data-toggle="modal"
-                            onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
-                        <div class="row d-flex justify-content-around" >
-                            <i class="material-icons fa fa-trash"></i>
-                            <i class="material-icons fa fa-box"></i>
-                        </div>
-                    </button>
+               <div class="d-flex justify-content-sm-around">
+                   <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
+                           onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
+                       <i class="material-icons fa fa-plus"></i>
+                   </button>
+                   <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
+                           onclick="LoadVehicleEdit('@route.Id');" data-target="#changeVehicleModal">
+                       <i class="material-icons fa fa-edit"></i>
+                   </button>
+                   <button class="btn btn-outline-danger mr-3 ml-3 " style="min-width:3rem" title="Delete Order" data-toggle="modal"
+                           onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
+                       <div class="row d-flex justify-content-around">
+                           <i class="material-icons fa fa-trash"></i>
+                           <i class="material-icons fa fa-box"></i>
+                       </div>
+                   </button>
 
-                    <button class="btn btn-outline-danger mr-3 ml-3"  style="min-width:3rem"title="Delete Route" data-toggle="modal"
-                            onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
-                        <div class="row d-flex justify-content-around">
-                            <i class="material-icons fa fa-trash"></i>
-                            <i class="material-icons fa fa-route"></i>
-                        </div>
-                    </button>
-                </div>
+                   <button class="btn btn-outline-danger mr-3 ml-3" style="min-width:3rem" title="Delete Route" data-toggle="modal"
+                           onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
+                       <div class="row d-flex justify-content-around">
+                           <i class="material-icons fa fa-trash"></i>
+                           <i class="material-icons fa fa-route"></i>
+                       </div>
+                   </button>
+
+
+                   <a class="btn bg-menu"  asp-route-id="@route.Id" asp-action="Map" asp-controller="Routes">Go to map</a>
+
+               </div>
             </td>
         </tr>
            
