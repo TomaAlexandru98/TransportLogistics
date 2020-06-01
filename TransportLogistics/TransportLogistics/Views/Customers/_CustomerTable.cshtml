@@ -29,8 +29,8 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         @foreach (var location in customer.LocationAddresses)
                         {
-                        <button style="padding: .25rem 0.75rem !important;" class="dropdown-item btn-blue" data-toggle="modal"
-                                onclick="LoadEditLocationView('@location.Id');" data-target="#editLocationModal">
+                        <button class="dropdown-item btn-blue edit-dropdown-item" data-toggle="modal"
+                                onclick="LoadEditLocationView('@location.Id')" data-target="#editLocationModal">
                             <i class="fa fa-edit mr-2"></i>
                             @location.Country,
                             @location.City,
@@ -47,7 +47,7 @@
                     <div class="d-flex justify-content-around">
 
                         <button class="btn btn-add-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
-                                onclick="LoadAddLocationView('@customer.Id');" data-target="#locationModal">
+                                onclick="LoadAddLocationView('@customer.Id')" data-target="#locationModal">
                             <i class="material-icons fa fa-plus"></i>
                         </button>
 
