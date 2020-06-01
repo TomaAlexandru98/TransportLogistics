@@ -40,9 +40,12 @@
                                 @foreach (var order in driver.CurrentRoute.RouteEntries)
                                 {
                                     <li>Order: @order.OrderType</li>
-                                    <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                    <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                    <li>Status @order.Order.Status</li>
+                                    @*
+            <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+            <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+
+            <li>Status @order.</li>
+                                    *@
                                     <li><hr /></li>
                                 }
                             </ul>

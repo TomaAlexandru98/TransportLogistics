@@ -239,25 +239,16 @@ namespace TransportLogistics.Controllers
         public IActionResult Update(string id)
         {
             var order = orderService.GetById(id);
-            var senderId = order.Sender.Id;
-
-            var locations = customerService.GetCustomerAddresses(senderId.ToString());
-
-            List<SelectListItem> customerLocations = new List<SelectListItem>();
-            foreach (var location in locations)
-            {
-                customerLocations.Add(CreateListItem(location));
-            }
+            var senderId = order.Sender.Id.ToString();
 
             UpdateOrderViewModel newOrderViewModel = new UpdateOrderViewModel()
             {
-                Id = order.Id.ToString(),
-                CustomerList = GetCustomerList(),
-                PickupLocation = customerLocations,
-                DeliveryLocation = customerLocations,
-                DeliveryLocationId = order.DeliveryAddress.Id.ToString(),
-                PickupLocationId = order.PickUpAddress.Id.ToString(),
-                Price = order.Price,
+                UpdateId = order.Id.ToString(),
+                PickupLocation = GetLocationsList(senderId),
+                DeliveryLocation = GetLocationsList(senderId),
+                UpDeliveryLocationId = order.DeliveryAddress.Id.ToString(),
+                UpPickupLocationId = order.PickUpAddress.Id.ToString(),
+                UpPrice = order.Price,
             };
 
             return PartialView("_Update", newOrderViewModel);
@@ -273,10 +264,10 @@ namespace TransportLogistics.Controllers
 
             try
             {
-                orderService.Update(viewModel.Id,
-                                      viewModel.PickupLocationId,
-                                      viewModel.DeliveryLocationId,
-                                      viewModel.Price);
+                orderService.Update(viewModel.UpdateId,
+                                      viewModel.UpPickupLocationId,
+                                      viewModel.UpDeliveryLocationId,
+                                      viewModel.UpPrice);
                 return PartialView("_Update", viewModel);
             }
             catch (Exception e)

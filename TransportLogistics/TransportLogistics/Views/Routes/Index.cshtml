@@ -7,95 +7,12 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
-<div class="row d-flex justify-content-end mt-3 mb-3 mr-auto">
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Routes</h1>
     <button class="btn-car" onclick="LoadNewRouteView()" data-toggle="modal" data-target="#newRouteModal">Define Route <i class="fa fa-route"></i></button>
 </div>
 
 <div id="routesTableContainer"></div>
-
-
-
-
-@section Scripts {
-    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            loadTable();
-        });
-
-        function loadTable() {
-            loadServerPartialView("#routesTableContainer", "/Routes/RoutesTable").done(function () {
-                $('#routesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
-            });
-        }
-
-        function modalFormComplete(modalName) {
-            $(modalName).modal("hide");
-            loadTable();
-        }
-
-
-        function LoadAddOrderView(RouteId) {
-            $('#RouteId').val(RouteId);
-            routeId = RouteId;
-            loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId).
-                done(function () {
-                    LoadDropdownOrder('#OrderId');
-
-                });
-        }
-
-
-        function LoadRemoveOrder(RouteId) {
-            $('#RouteId').val(RouteId);
-            routeId = RouteId;
-            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId).
-                done(function () {
-                    LoadDropdownOrderRemove('#OrderId',routeId);
-                });
-        }
-
-        function LoadVehicleEdit(RouteId) {
-            $('#RouteId').val(RouteId);
-            routeId = RouteId;
-            loadServerPartialView("#changeVehicleBody", '@Url.Action("ChangeVehicle", "Routes")' + "/" + RouteId).
-                done(function () {
-                    LoadDropdownVehicleEdit('#VehicleId',routeId);
-                });
-        }
-        function LoadDropdownVehicle(vehicleControl) {
-            var vehicleId = $(vehicleControl).val();
-            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")' + "/" + vehicleId);
-        }
-
-         function LoadNewRouteView() {
-            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")');
-        }
-
-        function LoadRemoveRouteView(Id) {
-             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
-        }
-
-        function LoadDropdownOrderRemove(Id,routeId) {
-            var orderId = $(Id).val();
-            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrderList", "Routes")' + "/" + orderId + ';' +routeId);
-        }
-
-        function LoadDropdownOrder(Id) {
-            var orderId = $(Id).val();
-            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId + ';' +routeId);
-        }
-
-
-        function LoadDropdownVehicleEdit(Id, routeId) {
-            var orderId = $(Id).val();
-            loadServerPartialView("#changeVehicleBody", '@Url.Action("GetVehicleList", "Routes")' + "/" + orderId + ';' +routeId);
-        }
-    </script>
-}
 
 <form method="post" asp-controller="Routes" asp-action="NewRoute"
       data-ajax="true"
@@ -226,3 +143,95 @@
         </div>
     </div>
 </form>
+
+<div class="modal fade" id="showEntryModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog d-flex justify-content-center" role="document">
+        <div class="modal-content" style="max-width: 80%">
+            <div class="modal-body" id="showEntryBody">
+                <partial name="_RouteEntryPartial" model="new RouteEntryViewModel()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            loadTable();
+        });
+
+        function loadTable() {
+            loadServerPartialView("#routesTableContainer", "/Routes/RoutesTable").done(function () {
+                $('#routesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+
+        function modalFormComplete(modalName) {
+            $(modalName).modal("hide");
+            loadTable();
+        }
+
+        function LoadAddOrderView(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownOrder('#OrderId');
+
+                });
+        }
+
+        function LoadRemoveOrder(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownOrderRemove('#OrderId',routeId);
+                });
+        }
+
+        function LoadVehicleEdit(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#changeVehicleBody", '@Url.Action("ChangeVehicle", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownVehicleEdit('#VehicleId',routeId);
+                });
+        }
+
+        function LoadDropdownVehicle(vehicleControl) {
+            var vehicleId = $(vehicleControl).val();
+            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")' + "/" + vehicleId);
+        }
+
+        function LoadNewRouteView() {
+            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")');
+        }
+
+        function LoadRemoveRouteView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
+        }
+
+        function LoadShowEntryView(entryId) {
+            loadServerPartialView("#showEntryBody", '@Url.Action("ShowEntry", "Routes")' + "/" + entryId);
+        }
+
+        function LoadDropdownOrderRemove(Id, routeId) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrderList", "Routes")' + "/" + orderId + ';' + routeId);
+        }
+
+        function LoadDropdownOrder(Id) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId + ';' +routeId);
+        }
+
+        function LoadDropdownVehicleEdit(Id, routeId) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#changeVehicleBody", '@Url.Action("GetVehicleList", "Routes")' + "/" + orderId + ';' +routeId);
+        }
+    </script>
+}
