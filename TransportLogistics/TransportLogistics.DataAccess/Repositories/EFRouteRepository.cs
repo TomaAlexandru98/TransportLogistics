@@ -40,7 +40,15 @@ namespace TransportLogistics.DataAccess.Repositories
 
         public new IEnumerable<Route> GetAll()
         {
-            return dbContext.Routes.Include(r => r.Vehicle).Include(e => e.RouteEntries).AsEnumerable();
+            return dbContext.Routes
+                        .Include(r => r.Vehicle)
+                        .Include(e => e.RouteEntries)
+                        .ThenInclude(e => e.Order)
+                        .ThenInclude(o => o.PickUpAddress)
+                        .Include(o => o.RouteEntries)
+                        .ThenInclude(o => o.Order)
+                        .ThenInclude(o => o.DeliveryAddress)
+                        .AsEnumerable();
         }
 
         public RouteEntry Add(RouteEntry entry,Guid routeId)
@@ -57,7 +65,14 @@ namespace TransportLogistics.DataAccess.Repositories
         public RouteEntry GetEntry(Guid id)
         {
             //var Trailer = dbContext.Trailers.Where(trailer => trailer.Id == trailerId).FirstOrDefault();
-            var entry = dbContext.RouteEntries.Where(e => e.Id == id).FirstOrDefault();
+            var entry = dbContext.RouteEntries
+                        .Where(e => e.Id == id)
+                        .Include(e => e.Order)
+                        .Include(o => o.Order.PickUpAddress)
+                        .Include(o => o.Order.DeliveryAddress)
+                        .Include(o => o.Order.Sender)
+                        .Include(o => o.Order.Recipient)
+                        .FirstOrDefault();
             return entry;
         }
 

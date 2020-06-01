@@ -88,7 +88,17 @@ body {
 .modal-delete {
     margin-top: 9rem;
     margin-left: 8rem;
-   
+}
+
+.header {
+    border-radius: 25px;
+    width: 200px;
+    padding: 20px;
+    background: 100px;
+    background-color: #06087d;
+    text-align: left;
+    color: white;
+    font-size: 30px;
 }
 
 .maxim-width-input{
@@ -98,7 +108,7 @@ body {
 .btn-blue {
     border-color: #06087d;
     color: #06087d;
-    min-width: 10rem;
+    min-width: 8rem;
 
 }
     .btn-blue:hover {
@@ -177,5 +187,21 @@ body {
 .location-column {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 10.8rem;
+    max-width: 12rem;
+}
+
+.customer-column {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 9.5rem;
+}
+
+.edit-dropdown-item {
+    padding: .25rem 0.75rem !important;
+}
+
+.remove-route-button {
+    width: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }

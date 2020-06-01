@@ -10,31 +10,28 @@ namespace TransportLogistics.ViewModels.Orders
 {
     public class UpdateOrderViewModel : IValidatableObject
     {
-        public string Id { get; set; }
+        public string UpdateId { get; set; }
 
         [Required(ErrorMessage = "Pickup Address is required.")]
         [Display(Name = "Pickup Address:")]
 
-        public string PickupLocationId { get; set; }
+        public string UpPickupLocationId { get; set; }
 
         [Required(ErrorMessage = "Delivery Address is required.")]
         [Display(Name = "Delivery Address:")]
-        public string DeliveryLocationId { get; set; }
+        public string UpDeliveryLocationId { get; set; }
 
-        public List<SelectListItem> CustomerList { get; set; }
         public List<SelectListItem> PickupLocation { get; set; }
         public List<SelectListItem> DeliveryLocation { get; set; }
 
         [Range(0, 9999999, ErrorMessage = "Wrong Input.")]
         [Required]
         [Display(Name = "Price")]
-        public decimal Price { get; set; }
+        public decimal UpPrice { get; set; }
 
-
-        //TODO: Client-side validation
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (PickupLocationId == null || DeliveryLocationId == null || PickupLocationId == DeliveryLocationId)
+            if (UpPickupLocationId == null || UpDeliveryLocationId == null || UpPickupLocationId == UpDeliveryLocationId)
             {
                 yield return new ValidationResult("Pickup location can't be the same as delivery location");
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TransportLogistics.Model;
 
 namespace TransportLogistics.ViewModels.Routes
 {
@@ -15,6 +16,11 @@ namespace TransportLogistics.ViewModels.Routes
         [Display(Name = "Order:")]
         public string OrderId { get; set; }
         public List<SelectListItem> OrderList;
+
+        [Required(ErrorMessage = "Choosing a type is required.")]
+        [Display(Name = "Type:")]
+        public OrderType type { get; set; }
+        public List<SelectListItem> OrderType;
 
     }
 }

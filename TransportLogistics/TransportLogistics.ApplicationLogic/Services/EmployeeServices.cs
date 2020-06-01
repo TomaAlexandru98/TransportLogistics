@@ -29,7 +29,7 @@ namespace TransportLogistics.ApplicationLogic.Services
         {
             var employee = GetEmployee(userId);
 
-            if (DriverRepository.Remove(employee.Id) == false)
+            if (employee.Id != null && DriverRepository.Remove(employee.Id) == false)
             {
                 if(SupervisorRepository.Remove(employee.Id) == false)
                 {

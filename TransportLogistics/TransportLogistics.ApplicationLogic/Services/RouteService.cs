@@ -69,7 +69,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid.TryParse(Id, out Guid guid);
             return routeRepository.GetRouteById(guid);
         }
-        public RouteEntry GetEntryId(string id)
+        public RouteEntry GetEntryById(string id)
         {
             Guid.TryParse(id, out Guid guid);
             return routeRepository.GetEntry(guid);
