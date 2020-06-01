@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200527123023_sender.cs" />
-    <Compile Remove="Migrations\20200527123023_sender.Designer.cs" />
+    <Compile Remove="Migrations\20200530201732_OrderCreationTime.cs" />
+    <Compile Remove="Migrations\20200530201732_OrderCreationTime.Designer.cs" />
+    <Compile Remove="Migrations\20200531112336_statusRequest.cs" />
+    <Compile Remove="Migrations\20200531112336_statusRequest.Designer.cs" />
+    <Compile Remove="Migrations\20200531112419_statusRequest.cs" />
+    <Compile Remove="Migrations\20200531112419_statusRequest.Designer.cs" />
+    <Compile Remove="Migrations\20200531112902_statusRequest.cs" />
+    <Compile Remove="Migrations\20200531112902_statusRequest.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

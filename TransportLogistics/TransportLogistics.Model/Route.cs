@@ -4,12 +4,14 @@ using System.Text;
 
 namespace TransportLogistics.Model
 {
+    public enum RouteStatus { NotAssigned, Assigned}
     public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get;  set; }
         public Vehicle Vehicle { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime FinishTime { get; private set; }
+        public RouteStatus status { get; private set; }
         public static Route Create()
         {
             var route = new Route()
@@ -24,12 +26,17 @@ namespace TransportLogistics.Model
             var route = new Route()
             {
                 Id = Guid.NewGuid(),
-                Vehicle = vehicle
-
+                Vehicle = vehicle,
+                status = RouteStatus.NotAssigned
+                
             }; 
             return route;
         }
 
+        public void SetStatus(RouteStatus status)
+        {
+            this.status = status;
+        }
         public void SetRouteEntries(ICollection<RouteEntry> routeEntries)
         {
             RouteEntries = routeEntries;
@@ -56,6 +63,11 @@ namespace TransportLogistics.Model
         public void DeleteRouteEntries()
         {
             RouteEntries.Clear();
+        }
+
+        public void SetVehicle(Vehicle vehicle)
+        {
+            Vehicle = vehicle;
         }
     } 
 }

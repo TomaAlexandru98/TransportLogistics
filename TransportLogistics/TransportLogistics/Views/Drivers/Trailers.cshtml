@@ -22,7 +22,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
 
-<form method="post" asp-controller="Drivers" asp-action="TrailerRequest">
+<form method="post" asp-controller="Drivers" asp-action="TrailerRequest" >
     <label>Trailer:</label>
     <input type="text" name="registrationNumber" list="exampleList" id="regNmb" onchange="displayTrailerInfo()">
     <datalist id="exampleList">
@@ -43,8 +43,8 @@
     <br />
     <br />
     <div class="d-flex justify-content-around">
-        <button type="submit" id="confirm" class="btn bg-menu">Pick</button>
-        <button type="button" class="btn bg-menu" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="submit" id="confirm" class="btn bg-menu">Ok</button>
 
     </div>
 </form>
