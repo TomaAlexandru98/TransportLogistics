@@ -39,11 +39,15 @@ namespace TransportLogistics.Controllers
         private List<SelectListItem> GetVehicleList()
         {
             var vehicles = vehicleService.GetAll();
+            
             List<SelectListItem> vehicleNames = new List<SelectListItem>();
 
             foreach (var vehicle in vehicles)
             {
-                vehicleNames.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));  
+                if(vehicle.Status == VehicleStatus.Free)
+                {
+                    vehicleNames.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));
+                }
             }
             return vehicleNames;
         }
@@ -54,12 +58,13 @@ namespace TransportLogistics.Controllers
 
             foreach (var order in orders)
             {
-               orderNames.Add(new SelectListItem(order.Price.ToString(), order.Id.ToString()));
+                var text = order.DeliveryAddress.PostalCode + " " + order.DeliveryAddress.City;
+                orderNames.Add(new SelectListItem(text, order.Id.ToString()));
             }
             return orderNames;
         }
 
-        private List<SelectListItem> GetOrderListFromnRoute(string id)
+        private List<SelectListItem> GetOrderListFromRoute(string id)
         {
             var route = routeService.GetById(id);
             
@@ -69,7 +74,7 @@ namespace TransportLogistics.Controllers
 
             foreach (var order in routes)
             {
-                orderNames.Add(new SelectListItem(order.Order.Price.ToString(), order.Id.ToString()));
+                orderNames.Add(new SelectListItem(order.Order.DeliveryAddress.PostalCode, order.Id.ToString()));
             }
             return orderNames;
         }
@@ -85,7 +90,8 @@ namespace TransportLogistics.Controllers
                 {
                     //OrderId = Id,
                     OrderList = GetOrderList(),
-                    RouteId = RouteId
+                    RouteId = RouteId,
+                    OrderType = GetOrderType()
                 };
                 return PartialView("_AddOrderPartial", newOrderViewModel);
             }
@@ -96,6 +102,17 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        private List<SelectListItem> GetOrderType()
+        {
+            
+            List<SelectListItem> orderNames = new List<SelectListItem>();
+            orderNames.Add(new SelectListItem("Both", OrderType.Both.ToString()));
+            orderNames.Add(new SelectListItem("Delivery", OrderType.Delivery.ToString()));
+            orderNames.Add(new SelectListItem("PickUp", OrderType.PickUp.ToString()));
+            return orderNames;
+        }
+
         [HttpPost]
         public IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
         {
@@ -108,7 +125,7 @@ namespace TransportLogistics.Controllers
                     RouteEntry entry = new RouteEntry() {Id = Guid.NewGuid() };
                     
                     entry.SetOrder(order);
-                    
+                    entry.SetType(orderData.type);
                     routeService.AddEntry(route.Id.ToString(), entry);
 
 
@@ -183,7 +200,7 @@ namespace TransportLogistics.Controllers
                     var vehicle = vehicleService.GetById(routeData.VehicleId);
 
                     routeService.CreateRoute(vehicle);
-
+                    
 
                     return PartialView("_NewRoutePartial", routeData);
                 }
@@ -241,7 +258,7 @@ namespace TransportLogistics.Controllers
             {
                 //orderId = orderId,
 
-                OrderList = GetOrderListFromnRoute(RouteId),
+                OrderList = GetOrderListFromRoute(RouteId),
                 routeId = RouteId
 
             };
@@ -286,7 +303,7 @@ namespace TransportLogistics.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var routeEntry = routeService.GetEntryId(orderData.orderId);
+                    var routeEntry = routeService.GetEntryById(orderData.orderId);
                     var route = routeService.GetById(orderData.routeId);
                  
                     routeService.RemoveEntry(route.Id.ToString(), routeEntry);
@@ -303,5 +320,71 @@ namespace TransportLogistics.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult ChangeVehicle([FromRoute]string id)
+        {
+
+            string RouteId = id;
+            try
+            {
+
+                ChangeVehicleViewModel newRouteViewModel = new ChangeVehicleViewModel()
+                {
+                    RouteId = RouteId,
+                    //VehicleId = vehicleId,
+                    VehicleList = GetVehicleList()
+                };
+
+                return PartialView("_ChangeVehiclePartial", newRouteViewModel);
+            }
+
+            catch (Exception e)
+            {
+                logger.LogError("Failed to load information for Route {@Exception}", e.Message);
+                logger.LogDebug("Failed to load information for Route {@ExceptionMessage}", e);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ChangeVehicle([FromForm]ChangeVehicleViewModel data)
+        {
+            var route = routeService.GetById(data.RouteId);
+            var vehicle = vehicleService.GetById(data.VehicleId);
+            routeService.ChangeVehicle(route,vehicle);
+            
+            return PartialView("_ChangeVehiclePartial", data);
+        }
+
+
+        [HttpGet]
+        public IActionResult Map([FromRoute]string id)
+        {
+            var route = routeService.GetById(id);
+            var entries = new RouteEntriesViewModel();
+            entries.RouteEntries = route.RouteEntries;
+
+            return View(entries);
+        }
+
+        [HttpGet]
+        public IActionResult ShowEntry([FromRoute] string id)
+        {
+
+            var routeEntry = routeService.GetEntryById(id);
+
+            var routeEntryViewModel = new RouteEntryViewModel()
+            {
+                RouteEntry = routeEntry
+            };
+
+            return PartialView("_RouteEntryPartial", routeEntryViewModel);
+        }
+
+        public IActionResult RouteMap()
+        {
+            return View();
+
+        }
     }
 }

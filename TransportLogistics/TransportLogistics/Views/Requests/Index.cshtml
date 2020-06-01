@@ -41,15 +41,17 @@
 @section scripts{
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/request.js"></script>
     <script>
+        var table;
         $(document).ready(function () {
             loadTable();
         });
 
         function loadTable() {
             loadServerPartialView("#requestTableContainer", "/Requests/RequestsTable").done(function () {
-                $('#requestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+              table =  $('#requestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
 
@@ -100,5 +102,26 @@
                 $('#requestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
+       "use strict"
+var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
+connection.start().catch(function (err) {
+    console.log(err.toString());
+});
+        connection.on("AddRequest", function (request) {
+            var id = request.senderId;
+            //format the string
+         var accept = '<a class="btn btn-outline-success mr-1" > onclick="acceptRequestButton(id)"   <i class="fa fa-check-circle" style="color: green;"></i></a>';
+    
+            table.row.add([
+                 "Sender",
+                 request.vehicle.registrationNumber,
+                request.trailer.model + " "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
+                + request.trailer.capacity + " kg",
+                 accept
+                       
+
+    ]).draw(false);
+   
+});
     </script>
 }

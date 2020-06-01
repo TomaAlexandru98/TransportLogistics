@@ -1,75 +1,93 @@
 @using TransportLogistics.ViewModels.Routes
-@model RouteViewModel;
+@model RouteViewModel
 
 <table id="routesTable" class="table table-striped table-bordered" style="width:100%">
     <thead class="dropdown text-center">
         <tr>
             <th>Vehicle</th>
-            <th>No.Orders</th>
+            <th>Orders</th>
             <th>Actions</th>
         </tr>
     </thead>
 
-    
     <tbody>
-        
+
         @foreach (var route in Model.Routes)
         {
-           
-        <tr style="max-height:4rem">
-            <td class="dropdown text-center w-50">
-                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @route.Vehicle.Name   Status: @route.Vehicle.Status   Type: @route.Vehicle.Type
-                </button>
-                <div class="dropdown-menu" style="padding: 0.8rem"> 
-                    <div>VIN: @route.Vehicle.VIN</div>
-                    <div>Plate: @route.Vehicle.RegistrationNumber</div>
-                </div>
-            </td>
-            <td class="dropdown text-center w-20" >
-                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @route.RouteEntries.Count()
-                </button>
-                @foreach(var order in route.RouteEntries)
-                {
-                <div class="dropdown-menu" style="padding: 0.8rem">
-                   
-                    <div>Type: @order.OrderType</div>
 
-                </div>
-                }
-            </td>
-            
-           <td class="w-55 ">
-                <div class="d-flex justify-content-sm-around">
-                    <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
-                            onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
-                        <i class="material-icons fa fa-plus"></i>
-                    </button>
-                    <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
-                            onclick="LoadUpdateCustomerView('');" data-target="#updateCustomerModal">
-                        <i class="material-icons fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-outline-danger mr-3 ml-3 " style="min-width:3rem"title="Delete Order" data-toggle="modal"
-                            onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
-                        <div class="row d-flex justify-content-around" >
-                            <i class="material-icons fa fa-trash"></i>
-                            <i class="material-icons fa fa-box"></i>
-                        </div>
+            <tr>
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @route.Vehicle.Name, @route.Vehicle.RegistrationNumber
                     </button>
 
-                    <button class="btn btn-outline-danger mr-3 ml-3"  style="min-width:3rem"title="Delete Route" data-toggle="modal"
-                            onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
-                        <div class="row d-flex justify-content-around">
-                            <i class="material-icons fa fa-trash"></i>
-                            <i class="material-icons fa fa-route"></i>
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Name: @route.Vehicle.Name</div>
+                        <div>Type: @route.Vehicle.Type</div>
+                        <div>Registration: @route.Vehicle.RegistrationNumber</div>
+                        <div>VIN: @route.Vehicle.VIN</div>
+                        <div>Carry Weight: @route.Vehicle.MaximCarryWeightKg</div>
+                        <div>Status: @route.Vehicle.Status</div>
+                        @if (route.Vehicle.CurrentTrailer != null)
+                        {
+                            <div>Current Trailer: @route.Vehicle.CurrentTrailer </div>
+                        }
+                    </div>
+                </td>
+                <td class="dropdown text-center" style="width: 25%">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Orders (@route.RouteEntries.Count())
                     </button>
-                </div>
-            </td>
-        </tr>
-           
+
+                    <div class="dropdown-menu">
+                        @foreach (var routeEntry in route.RouteEntries)
+                        {
+                            <button class="dropdown-item btn-blue edit-dropdown-item" data-toggle="modal"
+                                    onclick="LoadShowEntryView('@routeEntry.Id')" data-target="#showEntryModal">
+
+                                <div>
+                                    <i class="fas fa-info-circle"></i>
+                                    @routeEntry.OrderType, Status: @routeEntry.Order.Status, Route:
+                                    @routeEntry.Order.PickUpAddress.PostalCode
+                                    - @routeEntry.Order.DeliveryAddress.PostalCode
+                                </div>
+                            </button>
+                        }
+                    </div>
+                </td>
+
+                <td style="width: 35%">
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
+                                onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
+                            <i class="material-icons fa fa-plus"></i>
+                        </button>
+
+                        <a class="btn btn-add-blue" asp-route-id="@route.Id" asp-action="Map" asp-controller="Routes" title="Show orders on map"><i class="fas fa-map-marked-alt"></i></a>
+
+                        <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
+                                onclick="LoadVehicleEdit('@route.Id');" data-target="#changeVehicleModal">
+                            <i class="material-icons fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-outline-danger remove-route-button" title="Remove Order" data-toggle="modal"
+                                onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
+                            <div class="row d-flex justify-content-around">
+                                <i class="material-icons fa fa-trash"></i>
+                                <i class="material-icons fa fa-box"></i>
+                            </div>
+                        </button>
+
+                        <button class="btn btn-outline-danger remove-route-button ml-3 mr-3" title="Remove Route" data-toggle="modal"
+                                onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
+                            <div class="row d-flex justify-content-around">
+                                <i class="material-icons fa fa-trash"></i>
+                                <i class="material-icons fa fa-route"></i>
+                            </div>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
         }
-
     </tbody>
 </table>

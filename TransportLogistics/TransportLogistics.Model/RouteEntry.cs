@@ -13,5 +13,10 @@ namespace TransportLogistics.Model
         {
             Order = order;
         }
+
+        public void SetType(OrderType type)
+        {
+            OrderType = type;
+        }
     }
 }

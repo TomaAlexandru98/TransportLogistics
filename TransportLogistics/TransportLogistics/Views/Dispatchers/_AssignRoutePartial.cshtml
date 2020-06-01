@@ -1,0 +1,13 @@
+﻿@using TransportLogistics.ViewModels.Dispatchers;
+@model AssignRouteViewModel
+
+<input type="hidden" asp-for="DriverId" />
+
+<div class="form-group text-center">
+    <label asp-for="RouteId"></label>
+    <div class=" d-flex justify-content-around align-text-bottom">
+        <select style="min-width: 60%" asp-for="RouteId" asp-items="@Model.RouteList">
+        </select>
+    </div>
+    <span asp-validation-for="RouteId" class="text-danger"></span>
+</div>

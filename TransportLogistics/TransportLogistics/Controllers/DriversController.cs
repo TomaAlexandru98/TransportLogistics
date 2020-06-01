@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using SignalR;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Model;
 using TransportLogistics.ViewModels.Drivers;
@@ -14,22 +16,26 @@ namespace TransportLogistics.Controllers
     public class DriversController : Controller
     {
         public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,TrailerService trailerService)
+            ILogger<DriversController> logger,TrailerService trailerService,VehicleService vehicleService,IHubContext<RequestHub> hub,
+            EditInfoRequestService editInfoRequestService)
         {
             UserManager = userManager;
             DriverService = driverService;
             OrderService = orderService;
             TrailerService = trailerService;
+            VehicleService = vehicleService;
             Logger = logger;
+            RequestHub = hub;
+            EditInfoRequestService = editInfoRequestService;
         }
-
+        private readonly IHubContext<RequestHub> RequestHub;
         private UserManager<IdentityUser> UserManager;
-
+        private VehicleService VehicleService;
         private DriverService DriverService;
-
         private OrderService OrderService;
         private ILogger Logger;
         private TrailerService TrailerService;
+        private EditInfoRequestService EditInfoRequestService;
 
         public async Task<IActionResult> Index()
         
@@ -39,6 +45,7 @@ namespace TransportLogistics.Controllers
             try
             {
                 var driver = DriverService.GetByUserId(user.Id);
+
                 var routeEntries = DriverService.GetRouteEntries(driver.Id);
 
                 var currentRoute = new CurrentRouteViewModel();
@@ -174,9 +181,13 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var user = await UserManager.GetUserAsync(User);
-                var driver = DriverService.GetByUserId(user.Id);
-                DriverService.CreateRequest(driver.Id, registrationNumber);
+                if (registrationNumber != null)
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    var driver = DriverService.GetByUserId(user.Id);
+                    var request = DriverService.CreateRequest(driver.Id, registrationNumber);
+                    await RequestHub.Clients.All.SendAsync("AddRequest", request);
+                }
                 return RedirectToAction("Index");
             }
             catch(Exception e)
@@ -206,6 +217,8 @@ namespace TransportLogistics.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+       // public IActionResult GetDrivers()
 
         public IActionResult DetailsDriver(string id)
         {
@@ -248,6 +261,73 @@ namespace TransportLogistics.Controllers
         {
             return View();
 
+        }
+        public IActionResult AvailableVehicles()
+        {
+            try
+            {
+                var vehicles = VehicleService.GetAvailableVehicles();
+                return View(vehicles);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve available vehicles {@Exception}", e);
+                Logger.LogError("Failed to retrieve available vehicles {Exception}", e.Message);
+                return BadRequest("Failed to retrieve available vehicles");
+            }
+        }
+        public async Task<IActionResult> VehicleChangeRequest(string registrationNumber)
+        {
+            try
+            {
+                if (registrationNumber != null)
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    var driver = DriverService.GetByUserId(user.Id);
+                    var vehicle = VehicleService.GetByRegistrationNumber(registrationNumber);
+                    DriverService.VehicleSwapRequest(driver, vehicle);
+                }
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to create a new vehicle change request {@Exception}", e);
+                Logger.LogError("Failed to create a new vehicle change request{Exception}", e.Message);
+                return BadRequest("Failed to create a new vehicle change request");
+            }
+        }
+        public IActionResult GetPersonalInformations()
+        {
+            try
+            {
+                
+                return PartialView("DriverInfo");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to get the current logged user {@Exception}", e);
+                Logger.LogError("Failed to get the current logged user {Exception}", e.Message);
+                return BadRequest("Failed to create a new vehicle change request");
+            }
+        }
+        public IActionResult CreateEditInfoRequest(EditInfoViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
+                    var driver = DriverService.GetByUserId(user.Id);
+                    EditInfoRequestService.CreateEditInfoRequest(driver.Id, model.Name, model.Email, model.PhoneNumber, driver.Name, driver.Email, user.PhoneNumber);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to create new edit info request {@Exception}", e);
+                Logger.LogError("Failed to create new edit info request{Exception}", e.Message);
+                return BadRequest("Failed to create new edit info request");
+            }
         }
     }
 }

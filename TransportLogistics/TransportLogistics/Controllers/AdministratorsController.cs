@@ -19,7 +19,7 @@ namespace TransportLogistics.Controllers
     public class AdministratorsController : Controller
     {
        public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,EmployeeServices employeeServices,
-           ILogger<AdministratorsController>logger) 
+           ILogger<AdministratorsController>logger ) 
         {
             UserManager = userManager;
             RoleManager = roleManager;

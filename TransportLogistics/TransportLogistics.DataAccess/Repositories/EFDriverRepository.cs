@@ -22,7 +22,8 @@ namespace TransportLogistics.DataAccess.Repositories
         }
         public Driver GetDriverWithRoute(Guid id)
         {
-            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).Include(o=> o.RoutesHistoric).
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).
+                Include(o=> o.RoutesHistoric).
                 Where(o=> o.Id == id).FirstOrDefault();
         }
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
@@ -36,8 +37,8 @@ namespace TransportLogistics.DataAccess.Repositories
                foreach (var routeEntry in routeEntries)
                {
                     var tempRouteEntry = dbContext.RouteEntries.Include(o => o.Order).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
-                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).
-                        Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
+                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).Include(o=>o.Recipient).ThenInclude(o=>o.ContactDetails)
+                       .Include(o=> o.Sender).ThenInclude(o=>o.ContactDetails).Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
                     tempRouteEntry.SetOrder(order);
 
                     completeRouteEntries.Add(tempRouteEntry);
@@ -70,23 +71,27 @@ namespace TransportLogistics.DataAccess.Repositories
 
             foreach (var driver in driversList)
             {
-                foreach (var route in driver.RoutesHistoric.Routes)
+                if(driver.RoutesHistoric != null)
                 {
-                    var routeDb = dbContext.Routes.Where(r => r.Id == route.Id)
-                                                  .Include(r => r.RouteEntries)
-                                                  .SingleOrDefault();
-
-                    foreach (var routeEntry in routeDb.RouteEntries)
+                    foreach (var route in driver.RoutesHistoric.Routes)
                     {
-                        var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.DeliveryAddress)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.PickUpAddress)
-                                                                 .SingleOrDefault();
-                        route.RouteEntries.Add(routeEntry);
+                        var routeDb = dbContext.Routes.Where(r => r.Id == route.Id)
+                                                      .Include(r => r.RouteEntries)
+                                                      .SingleOrDefault();
+
+                        foreach (var routeEntry in routeDb.RouteEntries)
+                        {
+                            var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
+                                                                     .Include(re => re.Order)
+                                                                     .ThenInclude(re => re.DeliveryAddress)
+                                                                     .Include(re => re.Order)
+                                                                     .ThenInclude(re => re.PickUpAddress)
+                                                                     .SingleOrDefault();
+                            route.RouteEntries.Add(routeEntry);
+                        }
                     }
                 }
+                   
             }
 
             return driversList;
@@ -120,6 +125,10 @@ namespace TransportLogistics.DataAccess.Repositories
             }
             return driver.RoutesHistoric;
         }
-       
+
+        public Driver GetRouteWithVehicle(Guid id)
+        {
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o => o.Vehicle).Where(o => o.Id == id).FirstOrDefault();
+        }
     }
 }

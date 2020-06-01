@@ -1,0 +1,56 @@
+﻿@using TransportLogistics.ViewModels.Routes
+@model RouteEntryViewModel
+
+@if (Model.RouteEntry != null)
+{
+    <div>
+        <h3 class="text-center">Order</h3>
+        <br />
+        <div class="d-flex justify-content-around">
+            <h6>Type: @Model.RouteEntry.OrderType</h6>
+            <h6>Status: @Model.RouteEntry.Order.Status</h6>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+            <h6>Sender:</h6>
+            <div>@Model.RouteEntry.Order.Sender.Name</div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <h6>Recipient:</h6>
+            <div>@Model.RouteEntry.Order.Recipient.Name</div>
+        </div>
+        <hr />
+        @if (!Model.RouteEntry.OrderType.Equals(TransportLogistics.Model.OrderType.Delivery))
+        {
+            <div>
+                <h6>Pickup Address:</h6>
+                <ul style="list-style-type:none;">
+                    <li>Country: @Model.RouteEntry.Order.PickUpAddress.Country</li>
+                    <li>City: @Model.RouteEntry.Order.PickUpAddress.City</li>
+                    <li>Street: @Model.RouteEntry.Order.PickUpAddress.Street</li>
+                    <li>Street Number: @Model.RouteEntry.Order.PickUpAddress.StreetNumber</li>
+                    <li>Postal Code: @Model.RouteEntry.Order.PickUpAddress.PostalCode</li>
+                </ul>
+            </div>
+        }
+        @if (!Model.RouteEntry.OrderType.Equals(TransportLogistics.Model.OrderType.PickUp))
+        {
+            <div>
+                <h6>Delivery Address:</h6>
+                <ul style="list-style-type:none;">
+                    <li>Country: @Model.RouteEntry.Order.DeliveryAddress.Country</li>
+                    <li>City: @Model.RouteEntry.Order.DeliveryAddress.City</li>
+                    <li>Street: @Model.RouteEntry.Order.DeliveryAddress.Street</li>
+                    <li>Street Number: @Model.RouteEntry.Order.DeliveryAddress.StreetNumber</li>
+                    <li>Postal Code: @Model.RouteEntry.Order.DeliveryAddress.PostalCode</li>
+                </ul>
+            </div>
+            <hr />
+        }
+
+        <div class="d-flex justify-content-between">
+            <div>Price: $@Model.RouteEntry.Order.Price</div>
+            <button type="button" class="btn btn-add-blue" data-dismiss="modal">Dismiss</button>
+        </div>
+    </div>
+}

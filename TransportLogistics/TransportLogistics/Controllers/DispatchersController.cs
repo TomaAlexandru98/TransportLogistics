@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.ViewModels.Dispatchers;
 
 namespace TransportLogistics.Controllers
 {
-    public class DispatchersController : Controller   //Delete and use other controllers sau exclusive pentru el
+    public class DispatchersController : Controller
     {
 
         private readonly DriverService driverService;
@@ -19,10 +19,12 @@ namespace TransportLogistics.Controllers
         private readonly TrailerService trailerService;
         private readonly VehicleService vehicleService;
         private readonly RequestService requestService;
+        private readonly RouteService routeService;
         private readonly UserManager<IdentityUser> userManager;
         private readonly DispatcherService dispatcherService;
         public DispatchersController(DriverService driverService, ILogger<DriverService> logger,TrailerService trailerService
-            ,VehicleService vehicleService,RequestService requestService , UserManager<IdentityUser>userManager,DispatcherService dispatcherService)
+            ,VehicleService vehicleService,RequestService requestService , UserManager<IdentityUser>userManager,DispatcherService dispatcherService,
+            RouteService routeService)
         {
             this.driverService = driverService;
             this.logger = logger;
@@ -31,6 +33,7 @@ namespace TransportLogistics.Controllers
             this.requestService = requestService;
             this.userManager = userManager;
             this.dispatcherService = dispatcherService;
+            this.routeService = routeService;
         }
 
         public IActionResult Index()
@@ -58,7 +61,47 @@ namespace TransportLogistics.Controllers
             }
 
         }
-        
+        [HttpGet]
+        public IActionResult AssignRoute([FromRoute]string id)
+        {
+            string DriverId = id;
+            AssignRouteViewModel assignRouteViewModel = new AssignRouteViewModel
+            {
+                DriverId = DriverId,
+                RouteList = GetRouteList()
+            };
+           return PartialView("_AssignRoutePartial", assignRouteViewModel);
+
+        }
+
+        [HttpPost]
+        public IActionResult AssignRoute([FromForm]AssignRouteViewModel data)
+        {
+           
+                if (ModelState.IsValid)
+                {
+                    var driver = driverService.GetByUserId(data.DriverId);
+                    var route = routeService.GetById(data.RouteId);
+                    dispatcherService.ConnectDriverToRoute(route.Id.ToString(), driver.Id.ToString());
+
+
+                }
+                return PartialView("_AssignRoutePartial", data);
+            
+        }
+        private List<SelectListItem> GetRouteList()
+        {
+            var routes = routeService.GetAllRoutes();
+            List<SelectListItem> routesNames = new List<SelectListItem>();
+
+            foreach (var route in routes)
+            {
+                var text = route.Vehicle.Name + " " + route.StartTime;
+                routesNames.Add(new SelectListItem(text, route.Id.ToString()));
+            }
+            return routesNames;
+        }
+
         public IActionResult TrailerRequest()
         {
             try

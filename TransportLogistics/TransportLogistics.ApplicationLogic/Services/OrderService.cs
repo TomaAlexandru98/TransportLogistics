@@ -11,16 +11,21 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly IPersistenceContext PersistenceContext;
         private readonly IOrderRepository OrderRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IRouteRepository routeRepository;
+        private readonly IRecipientRepository recipientRepository;
+
         public OrderService(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             OrderRepository = persistenceContext.OrderRepository;
             customerRepository = persistenceContext.CustomerRepository;
+            routeRepository = persistenceContext.RouteRepository;
+            recipientRepository = persistenceContext.RecipientRepository;
         }
+
         public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
 
-           
             var Order =OrderRepository.GetById(orderId);
             Order.SetStatus(status);
             if(status == OrderStatus.PickedUp)
@@ -35,12 +40,21 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
         }
 
-        public Order CreateOrder(Customer recipient, Customer sender, LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price)
+        public Order CreateOrder(Recipient recipient, Customer sender, 
+            LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price)
         {
             var order = Order.Create(recipient, sender, pickUpAddress, deliveryAddress, price);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
+        }
+
+        public Recipient CreateNewRecipient(string name, string phoneNo, string email)
+        {
+            var recipient = Recipient.Create(name, phoneNo, email);
+            recipient = recipientRepository.Add(recipient);
+            PersistenceContext.SaveChanges();
+            return recipient;
         }
 
         public IEnumerable<Order> GetAllOrders()
@@ -61,7 +75,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             }
         }
 
-        public Order CreateOrder(Customer recipient, Customer sender, string pickupId, string deliveryId, decimal price)
+        public Order CreateOrder(Recipient recipient, Customer sender, string pickupId, string deliveryId, decimal price)
         {
             Guid.TryParse(pickupId, out Guid pickupGuid);
             var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
@@ -86,11 +100,22 @@ namespace TransportLogistics.ApplicationLogic.Services
         public bool Remove(string id)
         {
             var orderToRemove = GetById(id);
-
+            var routes = routeRepository.GetAll();
+            foreach(var route in routes)
+            {
+                foreach(var entry in route.RouteEntries)
+                {
+                    if(entry.Order.Id == orderToRemove.Id)
+                    {
+                        routeRepository.Remove(entry, route.Id);
+                        break;
+                    }
+                }
+            }
             return OrderRepository.RemoveOrder(orderToRemove);
         }
 
-        public Customer GetRecipient(string id)
+        public Recipient GetRecipient(string id)
         {
             var order = GetById(id);
             return order.Recipient;

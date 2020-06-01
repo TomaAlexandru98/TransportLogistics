@@ -6,8 +6,8 @@
         <tr>
             <th>Driver ID</th>
             <th>Current Route</th>
-            <th>Route history</th>
             <th>Status</th>
+            <th>Assign Route</th>
         </tr>
     </thead>
 
@@ -28,31 +28,52 @@
                             <li>@driver.Email</li>
                         </ul>
                     </div>
-                </td>
-
-                <td></td>
-                <td></td>
-
-                
+                </td>                
                 <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @driver.CurrentRoute.StartTime, @driver.CurrentRoute.FinishTime
-                    </button>
-                    <div class="dropdown-menu">
-                        <ul style="list-style: none">
-                            @foreach (var order in driver.CurrentRoute.RouteEntries)
-                            {
-                                <li>Order: @order.OrderType</li>
-                                <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                <li>Status @order.Order.Status</li>
-                                <li><hr /></li>
-                            }
-                        </ul>
-                    </div>
-                </td>
-                    
+                    @if (driver.CurrentRoute != null)
+                    {
+                        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @driver.CurrentRoute.StartTime, @driver.CurrentRoute.FinishTime
+                        </button>
+                        <div class="dropdown-menu">
+                            <ul style="list-style: none">
+                                @foreach (var order in driver.CurrentRoute.RouteEntries)
+                                {
+                                    <li>Order: @order.OrderType</li>
+                                    @*
+            <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+            <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
+
+            <li>Status @order.</li>
+                                    *@
+                                    <li><hr /></li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                    <div>   No current route</div>
+                            
+                    }
+                    </td>
+                
                 <td>@driver.Status</td>
+                <td>
+                        @if (driver.CurrentRoute == null)
+                        {
+                            <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
+                               class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Add</span>
+                            </a>
+                        }
+                        else
+                        {
+                        <div>Assigned</div>
+                        }
+
+                </td>
 
                 @*
                 <td>
