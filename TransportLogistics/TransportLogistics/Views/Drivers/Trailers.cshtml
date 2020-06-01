@@ -24,7 +24,7 @@
 
 <form method="post" asp-controller="Drivers" asp-action="TrailerRequest" >
     <label>Trailer:</label>
-    <input type="text" name="registrationNumber" list="exampleList" id="regNmb" onchange="displayTrailerInfo()">
+    <input type="text" name="registrationNumber" list="exampleList" id="regNmb" onchange="displayTrailerInfo()" class="form-control">
     <datalist id="exampleList">
         @if (Model != null && Model.Count() > 0)
         {
