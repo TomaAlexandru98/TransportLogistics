@@ -62,10 +62,10 @@
             });
         }
 
-        function checkForMultipleRequests(requestId, vehicleId) {
+        function checkForMultipleRequests(requestId, trailerId) {
             @foreach (var request in Model.Requests)
             {
-                @: if (vehicleId == "@request.Vehicle.Id" && requestId != "@request.Id") {
+                @: if (trailerId == "@request.Trailer.Id" && requestId != "@request.Id") {
                     @: $("#multipleRequestsModal").modal();
                     @: $('#requestId').val(requestId);
                     @: return true;

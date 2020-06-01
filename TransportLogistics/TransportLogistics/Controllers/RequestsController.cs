@@ -71,7 +71,6 @@ namespace TransportLogistics.Controllers
                 requestService.Decline(id, supervisorDb);
 
                 return RedirectToAction("Index");
-                //return PartialView("_RequestsTable");
             }
             catch(Exception e)
             {
@@ -89,7 +88,6 @@ namespace TransportLogistics.Controllers
                 requestService.Accept(id, supervisorDb);
 
                 return RedirectToAction("Index");
-                //return PartialView("_RequestsTable");
             }
             catch(Exception e)
             {
@@ -102,11 +100,10 @@ namespace TransportLogistics.Controllers
             try
             {
                 var requestDb = requestService.GetById(id);
-                var x = requestService.FilterByVehicleId(requestDb.Vehicle.Id);
                 var viewModel = new RequestsViewModel
                 {
                     ShowMultipleRequestsModal = false,
-                    Requests = requestService.FilterByVehicleId(requestDb.Vehicle.Id)
+                    Requests = requestService.FilterByTrailerId(requestDb.Trailer.Id)
                 };
 
                 return PartialView("_RequestsTable", viewModel);

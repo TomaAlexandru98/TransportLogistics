@@ -46,10 +46,11 @@ namespace TransportLogistics.ApplicationLogic.Services
             persistenceContext.SaveChanges();
         }
 
-        public IEnumerable<Request> FilterByVehicleId(Guid vehicleId)
+        public IEnumerable<Request> FilterByTrailerId(Guid trailerId)
         {
-            return requestRepository?.FilterByVehicleId(vehicleId);
+            return requestRepository?.FilterByTrailerId(trailerId);
         }
+
         public void Create(Guid senderId,Vehicle vehicle,Trailer trailer)
         {
             var request = Request.Create(senderId, vehicle, trailer);

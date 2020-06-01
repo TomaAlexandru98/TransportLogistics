@@ -21,7 +21,8 @@
             <th style="width: 150px;">Driver</th>
             <th>Start address</th>
             <th>Finish address</th>
-            <th style="width: 120px;">Date</th>
+            <th style="width: 115px;">Start time</th>
+            <th style="width: 115px;">Finish time</th>
             <th style="width: 25px;"></th>
         </tr>
     </thead>
@@ -31,36 +32,51 @@
         {
             foreach (var route in vehicleDriver.Driver.RoutesHistoric.Routes)
             {
-                <tr>
-                    <td>@vehicleDriver.Driver.Name</td>
-                    <td>
-                        <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.Street</span>
-                        <span>,</span>
-                        <span>Nr.</span>
-                        <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber</span>
-                        <span>,</span>
-                        <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.City</span>
-                        <span>,</span>
-                        <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.Country</span>
-                    </td>
-                    <td>
-                        <span>@route.RouteEntries.ElementAt(route.RouteEntries.Count() - 1).Order.DeliveryAddress.Street</span>
-                        <span>,</span>
-                        <span>Nr.</span>
-                        <span>@route.RouteEntries.ElementAt(route.RouteEntries.Count() - 1).Order.DeliveryAddress.StreetNumber</span>
-                        <span>,</span>
-                        <span>@route.RouteEntries.ElementAt(route.RouteEntries.Count() - 1).Order.DeliveryAddress.City</span>
-                        <span>,</span>
-                        <span>@route.RouteEntries.ElementAt(route.RouteEntries.Count() - 1).Order.DeliveryAddress.Country</span>
-                    </td>
-                    <td>12.03.2020</td>
-                    <td>
-                        <a class="btn btn-outline-info mr-1 ml-1" asp-action="RouteDetails"
-                           asp-route-vehicleId="@Model.Vehicle.Id" asp-route-routeId="@route.Id">
-                            <i class="fas fa-info"></i>
-                        </a>
-                    </td>
-                </tr>
+        <tr>
+            <td>@vehicleDriver.Driver.Name</td>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.Street</span>
+                    <span>,</span>
+                    <span>Nr.</span>
+                    <span>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber</span>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.City</div>
+                    <div>@route.RouteEntries.ElementAt(0).Order.PickUpAddress.Country</div>
+
+                </div>
+            </td>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span>@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Street</span>
+                    <span>,</span>
+                    <span>Nr.</span>
+                    <span>@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.StreetNumber</span>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.City</div>
+                    <div>@route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Country</div>
+
+                </div>
+            </td>
+            <td>
+                <span>@route.StartTime.ToShortDateString()</span>
+                <span>@route.StartTime.ToString("HH:mm")</span>
+            </td>
+            <td>
+                <span>@route.FinishTime.ToShortDateString()</span>
+                <span>@route.FinishTime.ToString("HH:mm")</span>
+            </td>
+            <td>
+                <a class="btn btn-outline-info mr-1 ml-1" asp-action="RouteDetails"
+                   asp-route-vehicleId="@Model.Vehicle.Id" asp-route-routeId="@route.Id">
+                    <i class="fas fa-info"></i>
+                </a>
+            </td>
+        </tr>
             }
         }
     </tbody>

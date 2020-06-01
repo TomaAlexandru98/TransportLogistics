@@ -25,48 +25,41 @@
             <tr>
                 <td>@driver.Name</td>
                 <td>@driver.Email</td>
-                <td>
-                    @if (driver.CurrentRoute != null)
-                    {
-                    <span>
-                        @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.Country
-                    </span>
-                    <span>,</span>
-                    <span>
-                        @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.City
-                    </span>
-                    <span>,</span>
-                    <span>
-                        @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.Street
-                    </span>
-                    <span>,</span>
-                    <span>
-                        @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber
-                    </span>
-                    <span>-</span>
-                    <div class="ml-3">
-                        <span>-</span>
-                        <span>
-                            @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.Country
-                        </span>
-                        <span>,</span>
-                        <span>
-                            @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.City
-                        </span>
-                        <span>,</span>
-                        <span>
-                            @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.Street
-                        </span>
-                        <span>,</span>
-                        <span>
-                            @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.StreetNumber
-                        </span>
+                <td class="d-flex" style="align-items: center;">
+                    <div class="dropdown text-center">
+                        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                            <span> @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.Street</span>
+                            <span>,</span>
+                            <span>Nr.</span>
+                            <span>@driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber</span>
+                        </button>
+                        <div class="dropdown-menu" style="padding: 0.8rem">
+                            <div> @driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.City</div>
+                            <div>@driver.CurrentRoute.RouteEntries.ElementAt(0).Order.PickUpAddress.Country</div>
+                        </div>
                     </div>
-                    }
-                    else
-                    {
-                       <span>No current route</span>
-                    }
+                    <div class="ml-2 mr-2">-</div>
+                    <div class="dropdown text-center">
+                        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.Street
+                            </span>
+                            <span>,</span>
+                            <span>Nr.</span>
+                            <span>
+                                @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.StreetNumber
+                            </span>
+                        </button>
+                        <div class="dropdown-menu" style="padding: 0.8rem">
+                            <div>
+                                @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.City
+                            </div>
+                            <div>
+                                @driver.CurrentRoute.RouteEntries.ElementAt(driver.CurrentRoute.RouteEntries.Count - 1).Order.DeliveryAddress.Country
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <td>@driver.Status</td>
                 <td>

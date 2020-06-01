@@ -8,6 +8,6 @@ namespace TransportLogistics.DataAccess.Abstractions
     public interface IRequestRepository : IBaseRepository<Request>
     {
         IEnumerable<Request> GetAllActive();
-        IEnumerable<Request> FilterByVehicleId(Guid vehicleId);
+        IEnumerable<Request> FilterByTrailerId(Guid requestId);
     }
 }

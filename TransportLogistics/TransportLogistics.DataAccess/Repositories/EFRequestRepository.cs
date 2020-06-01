@@ -23,9 +23,9 @@ namespace TransportLogistics.DataAccess.Repositories
                 .SingleOrDefault();
         }
 
-        public IEnumerable<Request> FilterByVehicleId(Guid vehicleId)
+        public IEnumerable<Request> FilterByTrailerId(Guid trailerId)
         {
-            return dbContext.Requests.Where(request => request.Vehicle.Id == vehicleId)
+            return dbContext.Requests.Where(request => request.Trailer.Id == trailerId)
                 .Include(request => request.Vehicle)
                 .Include(request => request.Trailer)
                 .Include(request => request.Supervisor);

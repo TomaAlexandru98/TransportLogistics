@@ -27,15 +27,21 @@
         @if (User.IsInRole("Supervisor"))
         {
             <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="DriversTable">
+                    <i class="fas fa-google-drive"></i>
+                    Drivers
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Vehicles" asp-action="Index">
                     <i class="fas fa-car"></i>
                     Vehicles
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="DriversTable">
-                    <i class="fas fa-google-drive"></i>
-                    Drivers
+                <a class="nav-link text-light" asp-area="" asp-controller="Trailers" asp-action="Index">
+                    <i class="fa fa-trailer"></i>
+                    Trailers
                 </a>
             </li>
             <li class="nav-item">
@@ -77,14 +83,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a  data-toggle="modal" href="#trailer"class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
+                <a data-toggle="modal" href="#trailer" class="nav-link text-light" data-ajax="true" data-ajax-url="/Dispatchers/TrailerRequest"
                    data-ajax-update="#trailerBody">
                     <i class="fas fa-trailer"></i>
                     TrailerRequest
                 </a>
             </li>
         }
-    
+
         @if (User.IsInRole("Driver"))
         {
             <li>
