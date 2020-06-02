@@ -29,7 +29,7 @@
         <tr>
             @if (route.RouteEntries.ElementAt(0).OrderType == TransportLogistics.Model.OrderType.Delivery)
             {
-                <td>
+            <td style="text-align:center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.Street , @route.RouteEntries.ElementAt(0).Order.DeliveryAddress.StreetNumber
                     </button>
@@ -44,7 +44,7 @@
             }
             else
             {
-                <td>
+        <td style="text-align:center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @route.RouteEntries.ElementAt(0).Order.PickUpAddress.Street , @route.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber
                     </button>
@@ -57,7 +57,7 @@
             }
             @if (route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).OrderType == TransportLogistics.Model.OrderType.Delivery)
             {
-                <td>
+        <td style="text-align:center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.DeliveryAddress.Street ,
                         @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.DeliveryAddress.StreetNumber
@@ -72,7 +72,7 @@
             }
             else
             {
-                <td>
+        <td style="text-align:center">
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.Street ,
                         @route.RouteEntries.ElementAt(route.RouteEntries.Count - 1).Order.PickUpAddress.StreetNumber
@@ -85,8 +85,8 @@
                 </td>
             }
 
-            <td>@route.StartTime</td>
-            <td>@route.FinishTime</td>
+            <td style="text-align:center">@route.StartTime.ToShortDateString() @route.StartTime.ToString("HH:mm")</td>
+            <td style="text-align:center">@route.FinishTime.ToShortDateString() @route.FinishTime.ToString("HH:mm")</td>
             <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders <i class="fas fa-info-circle"></i> </a></td>
         </tr>
         }

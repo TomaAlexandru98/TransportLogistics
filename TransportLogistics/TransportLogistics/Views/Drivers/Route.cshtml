@@ -32,7 +32,7 @@
         @foreach(var routeEntry in Model.RouteEntries)
         {
         <tr>
-            <td>
+            <td style="text-align:center">
                 <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @routeEntry.Order.PickUpAddress.StreetNumber,@routeEntry.Order.PickUpAddress.Street
                 </button>
@@ -42,7 +42,7 @@
                 </div>
 
             </td>
-            <td>
+            <td style="text-align:center">
             <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @routeEntry.Order.DeliveryAddress.StreetNumber,@routeEntry.Order.DeliveryAddress.Street
             </button>
@@ -52,9 +52,9 @@
             </div>
 
             </td>
-            <td>@routeEntry.Order.Price</td>
-            <td>@routeEntry.Order.PickUpTime</td>
-            <td>@routeEntry.Order.DeliveryTime</td>
+            <td style="text-align:center">@routeEntry.Order.Price</td>
+            <td style="text-align:center"> @routeEntry.Order.PickUpTime.ToShortDateString() @routeEntry.Order.PickUpTime.ToString("HH:mm")</td>
+            <td style="text-align:center" >@routeEntry.Order.DeliveryTime.ToShortDateString() @routeEntry.Order.DeliveryTime.ToString("HH:mm")</td>
         </tr>
         }
     </tbody>
