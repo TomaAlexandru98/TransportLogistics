@@ -205,3 +205,9 @@ body {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.message-current-table{
+    background: linear-gradient(to right, #06087d, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+}
