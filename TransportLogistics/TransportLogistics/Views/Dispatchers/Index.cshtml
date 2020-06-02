@@ -46,9 +46,6 @@
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
-
-
-
     <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
@@ -67,6 +64,10 @@
 
         function goToVehicles() {
             document.location = '@Url.Action("Index", "Vehicles")';
+        }
+
+        function LoadShowEntryView(entryId) {
+            loadServerPartialView("#showEntryBody", '@Url.Action("ShowEntry", "Routes")' + "/" + entryId);
         }
 
         function loadAvailableRoutes(DriverId) {
