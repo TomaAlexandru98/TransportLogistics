@@ -11,7 +11,7 @@ using TransportLogistics.ViewModels.Dispatchers;
 
 namespace TransportLogistics.Controllers
 {
-    public class DispatchersController : Controller   //Delete and use other controllers sau exclusive pentru el
+    public class DispatchersController : Controller
     {
 
         private readonly DriverService driverService;
@@ -77,14 +77,14 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public IActionResult AssignRoute([FromForm]AssignRouteViewModel data)
         {
-           
+                var userId = userManager.GetUserId(User);
+                var dispatcherDb = dispatcherService.GetByUserId(userId);
+
                 if (ModelState.IsValid)
                 {
                     var driver = driverService.GetByUserId(data.DriverId);
                     var route = routeService.GetById(data.RouteId);
-                    dispatcherService.ConnectDriverToRoute(route.Id.ToString(), driver.Id.ToString());
-
-
+                    dispatcherService.ConnectDriverToRoute(route, driver, dispatcherDb);
                 }
                 return PartialView("_AssignRoutePartial", data);
             

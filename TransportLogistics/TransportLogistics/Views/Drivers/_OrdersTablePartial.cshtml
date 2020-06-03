@@ -38,7 +38,7 @@
         <tr>
 
 
-            <td>
+            <td style="text-align:center">
                 <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @routeEntry.Order.PickUpAddress.StreetNumber,@routeEntry.Order.PickUpAddress.Street
                 </button>
@@ -49,7 +49,7 @@
 
             </td>
 
-            <td>
+            <td style="text-align:center">
                 <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @routeEntry.Order.DeliveryAddress.StreetNumber,@routeEntry.Order.DeliveryAddress.Street
                 </button>
@@ -61,15 +61,15 @@
             </td>
                 @if(routeEntry.OrderType == TransportLogistics.Model.OrderType.PickUp){
 
-                <td>@routeEntry.Order.Sender.ContactDetails.PhoneNo</td>
+                <td style="text-align:center">@routeEntry.Order.Sender.ContactDetails.PhoneNo</td>
                 }
             else{
-            <td>@routeEntry.Order.Recipient.ContactDetails.PhoneNo</td>
+            <td style="text-align:center">@routeEntry.Order.Recipient.ContactDetails.PhoneNo</td>
             }
 
             
 
-            <td style="text-align:center;max-height:3rem;min-width:20rem">
+            <td style="text-align:center;max-height:3rem">
                 <button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
                         data-toggle="modal" data-target="#OrderStatus">
                     @routeEntry.Order.Status
@@ -79,13 +79,13 @@
             @if (initialStatus != TransportLogistics.Model.OrderStatus.Canceled)
             {
 
-                <td><button class="btn bg-menu" id="@cancelButtonId" data-toggle="modal" disabled data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
+                <td style="text-align:center"><button class="btn bg-menu" id="@cancelButtonId" data-toggle="modal" disabled data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
             }
             else
             {
-                <td><button disabled class="btn bg-menu" id="@cancelButtonId">Canceled <i class='fas fa-check'></i></button></td>
+                <td style="text-align:center"><button disabled class="btn bg-menu" id="@cancelButtonId">Canceled <i class='fas fa-check'></i></button></td>
             }
-            <td>@routeEntry.Order.Price</td>
+            <td style="text-align:center">@routeEntry.Order.Price</td>
         </tr>
                 i--; }  }
        

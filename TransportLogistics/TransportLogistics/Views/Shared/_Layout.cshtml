@@ -85,6 +85,19 @@
             </div>
         </div>
     </div>
+
+    @*Route Entry modal*@
+    <div class="modal fade" id="showEntryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 80%">
+                <div class="modal-body" id="showEntryBody">
+                    @await Html.PartialAsync("~/Views/Routes/_RouteEntryPartial.cshtml", new TransportLogistics.ViewModels.Routes.RouteEntryViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             <br />
@@ -94,15 +107,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="background-color:#1e1e8a">
+    <footer class="border-top footer text-light" style="background-color:#1e1e8a">
         <div class="container">
-            &copy; 2020 - Transport Logistics - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Transport Logistics - <a style="color:white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
- 
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

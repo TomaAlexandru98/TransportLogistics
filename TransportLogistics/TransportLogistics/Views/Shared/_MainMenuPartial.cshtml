@@ -27,15 +27,21 @@
         @if (User.IsInRole("Supervisor"))
         {
             <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="DriversTable">
+                    <i class="fas fa-google-drive"></i>
+                    Drivers
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Vehicles" asp-action="Index">
                     <i class="fas fa-car"></i>
                     Vehicles
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Drivers" asp-action="DriversTable">
-                    <i class="fas fa-google-drive"></i>
-                    Drivers
+                <a class="nav-link text-light" asp-area="" asp-controller="Trailers" asp-action="Index">
+                    <i class="fa fa-trailer"></i>
+                    Trailers
                 </a>
             </li>
             <li class="nav-item">
@@ -110,15 +116,14 @@
             </li>
             <li>
                 <a data-toggle="modal" href="#requestVehicleSwap" class="nav-link text-light" data-ajax="true" data-ajax-url="/Drivers/AvailableVehicles"
-                   data-ajax-update="#requestVehicleSwapBody" >
-                   Change Vehicle
+                   data-ajax-update="#requestVehicleSwapBody">
+                    Change Vehicle
                     <i class="fas fa-car"></i>
                 </a>
             </li>
             <li>
-               
-                   <a data-toggle="modal" href="#editPersonalInfo" data-ajax="true" data-ajax-url="/Drivers/GetPersonalInformations" data-ajax-update="#personalBody" class="nav-link text-light">EditPersonalInfo <i class="fas fa-info-circle"></i></a>
-               
+
+                <a data-toggle="modal" href="#editPersonalInfo" data-ajax="true" data-ajax-url="/Drivers/GetPersonalInformations" data-ajax-update="#personalBody" class="nav-link text-light">EditPersonalInfo <i class="fas fa-info-circle"></i></a>
             </li>
         }
     </ul>

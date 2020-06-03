@@ -22,10 +22,22 @@ namespace TransportLogistics.DataAccess.Repositories
         }
         public Driver GetDriverWithRoute(Guid id)
         {
-            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o=> o.RouteEntries).
-                Include(o=> o.RoutesHistoric).
-                Where(o=> o.Id == id).FirstOrDefault();
+            return dbContext.Drivers
+                .Include(o => o.CurrentRoute)
+                .ThenInclude(o=> o.RouteEntries)
+                .Include(o=> o.RoutesHistoric)
+                .Where(o=> o.Id == id).FirstOrDefault();
         }
+
+        public IEnumerable<Driver> GetAllDriversWithRoute(Guid id)
+        {
+            return dbContext.Drivers
+                .Include(o => o.CurrentRoute)
+                .ThenInclude(o => o.RouteEntries)
+                .Include(o => o.RoutesHistoric)
+                .Where(o => o.Id == id).AsEnumerable();
+        }
+
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
             var driver = GetDriverWithRoute(id);
@@ -52,8 +64,14 @@ namespace TransportLogistics.DataAccess.Repositories
             var driversList = dbContext.Drivers
                                 .Include(driver => driver.CurrentRoute)
                                 .ThenInclude(driver => driver.RouteEntries)
+                                .ThenInclude(driver => driver.Order)
+                                .ThenInclude(driver => driver.PickUpAddress)
+                                .Include (driver => driver.CurrentRoute.RouteEntries)
+                                .ThenInclude(driver => driver.Order.DeliveryAddress)
                                 .Include(driver => driver.RoutesHistoric)
-                                .ThenInclude(driver => driver.Routes);
+                                .ThenInclude(driver => driver.Routes)
+                                .ThenInclude(d => d.Vehicle)
+                                .AsEnumerable();
 
             foreach (var driver in driversList)
             {

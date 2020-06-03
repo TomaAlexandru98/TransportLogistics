@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TransportLogistics.DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Contact",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -17,7 +17,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,6 +32,26 @@ namespace TransportLogistics.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dispatchers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EditPersonalInfoRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Applicant = table.Column<Guid>(nullable: false),
+                    Administrator = table.Column<Guid>(nullable: false),
+                    NewName = table.Column<string>(nullable: true),
+                    NewEmail = table.Column<string>(nullable: true),
+                    NewPhoneNumber = table.Column<string>(nullable: true),
+                    OldName = table.Column<string>(nullable: true),
+                    OldEmail = table.Column<string>(nullable: true),
+                    OldPhoneNumber = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditPersonalInfoRequests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,9 +111,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Contact_ContactDetailsId",
+                        name: "FK_Customers_Contacts_ContactDetailsId",
                         column: x => x.ContactDetailsId,
-                        principalTable: "Contact",
+                        principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -110,9 +130,9 @@ namespace TransportLogistics.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Recipients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipients_Contact_ContactDetailsId",
+                        name: "FK_Recipients_Contacts_ContactDetailsId",
                         column: x => x.ContactDetailsId,
-                        principalTable: "Contact",
+                        principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -237,6 +257,7 @@ namespace TransportLogistics.DataAccess.Migrations
                     SenderId = table.Column<Guid>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
                     PickUpTime = table.Column<DateTime>(nullable: false),
                     DeliveryTime = table.Column<DateTime>(nullable: false)
                 },
@@ -507,6 +528,9 @@ namespace TransportLogistics.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "EditPersonalInfoRequests");
+
+            migrationBuilder.DropTable(
                 name: "Requests");
 
             migrationBuilder.DropTable(
@@ -549,7 +573,7 @@ namespace TransportLogistics.DataAccess.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Contact");
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Trailers");

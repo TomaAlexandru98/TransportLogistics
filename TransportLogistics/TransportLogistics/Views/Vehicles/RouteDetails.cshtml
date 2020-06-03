@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
-<h4 class="mt-2 mb-3">
+<h4 class="mt-2 mb-3 message-current-table">
     <span>Route details:</span>
     <span>@Model.RouteEntries.ElementAt(0).Order.PickUpAddress.Street</span>
     <span>,</span>
@@ -34,7 +34,8 @@
             <th>Pick-up address</th>
             <th>Delivery address</th>
             <th>Status</th>
-            <th style="width: 120px;">Date</th>
+            <th style="width: 120px;">Start time</th>
+            <th style="width: 120px;">Finish time</th>
             <th style="width: 25px;">Payment</th>
         </tr>
     </thead>
@@ -42,29 +43,44 @@
     <tbody>
         @foreach (var routeEntry in Model.RouteEntries)
         {
-            <tr>
-                <td>
+        <tr>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                     <span>@routeEntry.Order.PickUpAddress.Street</span>
                     <span>,</span>
+                    <span>Nr.</span>
                     <span>@routeEntry.Order.PickUpAddress.StreetNumber</span>
-                    <span>,</span>
-                    <span>@routeEntry.Order.PickUpAddress.City</span>
-                    <span>,</span>
-                    <span>@routeEntry.Order.PickUpAddress.Country</span>
-                </td>
-                <td>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.PickUpAddress.City</div>
+                    <div>@routeEntry.Order.PickUpAddress.Country</div>
+                </div>
+            </td>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                     <span>@routeEntry.Order.DeliveryAddress.Street</span>
                     <span>,</span>
+                    <span>Nr.</span>
                     <span>@routeEntry.Order.DeliveryAddress.StreetNumber</span>
-                    <span>,</span>
-                    <span>@routeEntry.Order.DeliveryAddress.City</span>
-                    <span>,</span>
-                    <span>@routeEntry.Order.DeliveryAddress.Country</span>
-                </td>
-                <td>@routeEntry.Order.Status</td>
-                <td>12.03.2020</td>
-                <td>@routeEntry.Order.Price</td>
-            </tr>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.DeliveryAddress.City</div>
+                    <div>@routeEntry.Order.DeliveryAddress.Country</div>
+                </div>
+            </td>
+            <td>
+                <span>@routeEntry.Order.PickUpTime.ToShortDateString()</span>
+                <span>@routeEntry.Order.PickUpTime.ToString("HH:mm")</span>
+            </td>
+            <td>
+                <span>@routeEntry.Order.DeliveryTime.ToShortDateString()</span>
+                <span>@routeEntry.Order.DeliveryTime.ToString("HH:mm")</span>
+            </td>
+            <td>@routeEntry.Order.Status</td>
+            <td>@routeEntry.Order.Price</td>
+        </tr>
         }
     </tbody>
 </table>

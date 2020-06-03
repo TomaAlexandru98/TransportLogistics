@@ -12,7 +12,7 @@
     </thead>
 
     <tbody>
-        
+
         @foreach (var driver in Model.Drivers)
         {
             <tr>
@@ -20,71 +20,75 @@
                     <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @driver.UserId
                     </button>
-                    <div class="dropdown-menu">
-                        <ul style="list-style: none">
-                            <li>Name:</li>
-                            <li>@driver.Name</li>
-                            <li>Email:</li>
-                            <li>@driver.Email</li>
-                        </ul>
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Name:</div>
+                        <h6>@driver.Name</h6>
+                        <div>Email:</div>
+                        <h6>@driver.Email</h6>
+                        @if (driver.RoutesHistoric.Routes.Count > 0)
+                        {
+                            @driver.RoutesHistoric.Routes.ElementAt(0)
+                        }
                     </div>
-                </td>                
-                <td class="dropdown text-center">
+                </td>
+                <td class="dropdown text-center" style="width: 25%">
                     @if (driver.CurrentRoute != null)
                     {
                         <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @driver.CurrentRoute.StartTime, @driver.CurrentRoute.FinishTime
+                            Orders on route - @driver.CurrentRoute.RouteEntries.Count()
                         </button>
+
                         <div class="dropdown-menu">
-                            <ul style="list-style: none">
-                                @foreach (var order in driver.CurrentRoute.RouteEntries)
-                                {
-                                    <li>Order: @order.OrderType</li>
-                                    <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                    <li>@order.Order.PickUpAddress.PostalCode, @order.Order.PickUpAddress.Street</li>
-                                    <li>Status @order.Order.Status</li>
-                                    <li><hr /></li>
-                                }
-                            </ul>
+                            @foreach (var routeEntry in driver.CurrentRoute.RouteEntries)
+                            {
+                                <button class="dropdown-item btn-blue edit-dropdown-item" data-toggle="modal"
+                                        onclick="LoadShowEntryView('@routeEntry.Id')" data-target="#showEntryModal">
+
+                                    <div>
+                                        <i class="fas fa-info-circle"></i>
+                                        @routeEntry.OrderType, Status: @routeEntry.Order.Status, Route:
+                                        @routeEntry.Order.PickUpAddress.PostalCode
+                                        - @routeEntry.Order.DeliveryAddress.PostalCode
+                                    </div>
+                                </button>
+                            }
                         </div>
                     }
                     else
                     {
-                    <div>   No current route</div>
-                            
+                        <div class="text-center">No current route</div>
                     }
-                    </td>
-                
-                <td>@driver.Status</td>
-                <td>
-                        @if (driver.CurrentRoute == null)
-                        {
-                            <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
-                               class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
-                                <i class="fa fa-plus-circle"></i>
-                                <span>Add</span>
-                            </a>
-                        }
-                        else
-                        {
-                        <div>Assigned</div>
-                        }
+                </td>
 
+                <td class="text-center">@driver.Status</td>
+                <td class="text-center">
+                    @if (driver.CurrentRoute == null)
+                    {
+                        <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
+                           class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
+                            <i class="fa fa-plus-circle"></i>
+                            <span>Add</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="text-center">Assigned</div>
+                    }
                 </td>
 
                 @*
-                <td>
-                    <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
-                            onclick="LoadAddRouteView('@driver.Id');" data-target="#addRouteModal">
-                        <i class="material-icons fa fa-plus"></i>
-                    </button>
+                    <td>
+                        <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
+                                onclick="LoadAddRouteView('@driver.Id');" data-target="#addRouteModal">
+                            <i class="material-icons fa fa-plus"></i>
+                        </button>
 
-                    <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
-                            onclick="LoadRemoveRouteView('@driver.Id');" data-target="#removeRouteModal">
-                        <i class="material-icons fa fa-trash"></i>
-                    </button>
-                </td>
-                    *@
+                        <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                                onclick="LoadRemoveRouteView('@driver.Id');" data-target="#removeRouteModal">
+                            <i class="material-icons fa fa-trash"></i>
+                        </button>
+                    </td>
+                *@
             </tr>
         }
     </tbody>

@@ -28,6 +28,7 @@ namespace TransportLogistics.DataAccess.Repositories
             VehicleChangeRepository = new EFVehicleChangeRequestRepository(context);
             RecipientRepository = new EFRecipientRepository(context);
             PersonalInfoRepository = new EFPersonalInfoRepository(context);
+            DepartureRequestRepository = new EFDepartureRequestRepository(context);
         }
 
         public ICustomerRepository CustomerRepository { get ; private set; }
@@ -43,6 +44,8 @@ namespace TransportLogistics.DataAccess.Repositories
         public IRequestRepository RequestRepository { get; private set; }
         public IVehicleChangeRepository VehicleChangeRepository { get; private set; }
         public IPersonalInfoRepository PersonalInfoRepository { get; private set; }
+        public IDepartureRequestRepository DepartureRequestRepository { get; private set; }
+
         public TransactionScope BeginTransaction()
         {
             if (currentTransactionScope != null)

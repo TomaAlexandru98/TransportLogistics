@@ -9,12 +9,13 @@ namespace TransportLogistics.ApplicationLogic.Services
 {
     public class DispatcherService
     {
-       private readonly IDispatcherRepository DispatcherRepository;
+        private readonly IDispatcherRepository DispatcherRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IDriverRepository driverRepository;
         private readonly ITrailerRepository trailerRepository;
         private readonly IVehicleRepository vehicleRepository;
         private readonly IRouteRepository routeRepository;
+        private readonly IDepartureRequestRepository departureRequestRepository;
 
         public DispatcherService(IPersistenceContext persistenceContext)
         {
@@ -24,25 +25,23 @@ namespace TransportLogistics.ApplicationLogic.Services
             driverRepository = persistenceContext.DriverRepository;
             vehicleRepository = persistenceContext.VehicleRepository;
             routeRepository = persistenceContext.RouteRepository;
+            departureRequestRepository = persistenceContext.DepartureRequestRepository;
         }
         public Dispatcher GetByUserId(string userId)
         {
             return DispatcherRepository.GetByUserId(userId);
         }
 
-        public void ConnectDriverToRoute(string routeId, string driverId)
+        public void ConnectDriverToRoute(Route route, Driver driver, Dispatcher dispatcher)
         {
-            var guidRouteId = Guid.Parse(routeId);
-            var RouteDb = this.routeRepository?.GetRouteById(guidRouteId);
+            driver.SetCurrentRoute(route);
+            route.SetStatus(RouteStatus.Assigned);
 
-            var guidDriverId = Guid.Parse(driverId);
-            var driverDb = this.driverRepository?.GetById(guidDriverId);
+            var departureRequest = DepartureRequest.Create(dispatcher, driver);
 
-
-            driverDb.SetCurrentRoute(RouteDb);
-            RouteDb.SetStatus(RouteStatus.Assigned);
-            this.routeRepository.Update(RouteDb);
-            this.driverRepository.Update(driverDb);
+            this.departureRequestRepository.Add(departureRequest);
+            this.routeRepository.Update(route);
+            this.driverRepository.Update(driver);
             this.PersistenceContext.SaveChanges();
         }
     }
