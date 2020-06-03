@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
+@*
 <div class="d-flex flex-column flex-md-row">
     <div class="d-flex flex-column flex-grow-1">
         <h1 class="message-current-table">Trailers</h1>
@@ -23,13 +24,21 @@
         </div>
     </div>
 </div>
+*@
+
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Trailers</h1>
+    <button class="btn-car" data-toggle="modal" data-target="#newTrailerModal">
+        <i class="fa fa-trailer"></i>Add Trailer
+    </button>
+</div>
 
 <div id="trailerTableContainer"></div>
 
 @section scripts{
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
@@ -47,7 +56,7 @@
 
                 function LoadEditTrailerView(Id) {
                     loadServerPartialView("#editTrailerBody", '@Url.Action("EditTrailer", "Trailers")' + "/" + Id).done(function () { $.validator.unobtrusive.parse(document);});
-                    
+
                 }
 
                 function CloseModal(modalName) {
@@ -58,7 +67,7 @@
         }
         function reloadData() {
             window.location.reload();
-            
+
         }
         function ConfirmDelete() {
             var x = confirm("Are you sure you want to delete?");
@@ -110,8 +119,7 @@
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
-      data-ajax-complete="loadTable('#newTrailerModal')"
-      >
+      data-ajax-complete="loadTable('#newTrailerModal')">
     @Html.AntiForgeryToken()
     <div class="modal" id="newTrailerModal" tabindex="-1" role="dialog" aria-labelledby="newTrailerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -129,7 +137,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary shadow-button" data-dismiss="modal">Close</button>
-                    <button id="btnSave" class="btn btn-success" type="submit"  onclick="CloseModal('#newTrailerModal')"> Confirm </button>
+                    <button id="btnSave" class="btn btn-success" type="submit" onclick="CloseModal('#newTrailerModal')"> Confirm </button>
                 </div>
             </div>
         </div>
