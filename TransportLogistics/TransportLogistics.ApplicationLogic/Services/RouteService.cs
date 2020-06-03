@@ -8,15 +8,12 @@ namespace TransportLogistics.ApplicationLogic.Services
     public class RouteService
     {
         private readonly IPersistenceContext persistenceContext;
-        private readonly IVehicleRepository vehicleRepository;
         private readonly IRouteRepository routeRepository;
         private readonly IDriverRepository driverRepository;
-        private readonly DriverService driverService;
 
         public RouteService(IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
-            vehicleRepository = persistenceContext.VehicleRepository;
             routeRepository = persistenceContext.RouteRepository;
             driverRepository = persistenceContext.DriverRepository;
         }
@@ -46,7 +43,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             routeRepository.Add(entry, route.Id);
 
             route.SetRouteEntry(entry);
-            //  route.RouteEntries.Add(entry);
             persistenceContext.SaveChanges();
             return route;
         }
@@ -58,7 +54,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             routeRepository.Remove(entry, route.Id);
 
             route.DeleteRouteEntry(entry);
-            //  route.RouteEntries.Add(entry);
             persistenceContext.SaveChanges();
             return route;
         }
@@ -100,13 +95,15 @@ namespace TransportLogistics.ApplicationLogic.Services
             Guid.TryParse(id, out Guid routeId);
             var route = routeRepository.GetRouteById(routeId);
 
-            var drivers = driverRepository.GetAllDriversWithRoute(route.Id);
+            var drivers = driverRepository.GetDriversOnRoute(route.Id);
 
             foreach (var driver in drivers)
             {
-                driverService.EndCurrentRoute(driver);
+                driver.AddRouteToHistoric(driver.CurrentRoute);
+                driver.CurrentRoute.SetFinishTime();
+                driver.SetCurrentRouteNull();
+                driver.SetStatus(DriverStatus.Free);
             }
-            persistenceContext.SaveChanges();
 
             route.Vehicle.UpdateStatus(VehicleStatus.Free);
             route.DeleteRouteEntries();
