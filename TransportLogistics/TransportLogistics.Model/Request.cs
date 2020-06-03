@@ -12,18 +12,20 @@ namespace TransportLogistics.Model
         public Trailer Trailer { get; private set; }
         public Supervisor Supervisor { get; private set; }
         public RequestStatus Status { get; private set; }
+        public DateTime Date { get; private set; }
 
-        public static Request Create(Guid sendeId,
+        public static Request Create(Guid senderId,
                                      Vehicle vehicle,
                                      Trailer trailer)
         {
             return new Request
             {
                 Id = Guid.NewGuid(),
-                SenderId = sendeId,
+                SenderId = senderId,
                 Vehicle = vehicle,
                 Trailer = trailer,
-                Status = RequestStatus.Active
+                Status = RequestStatus.Active,
+                Date = DateTime.UtcNow
             };
         }
 

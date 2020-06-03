@@ -17,9 +17,14 @@ namespace TransportLogistics.ApplicationLogic.Services
             this.requestRepository = persistenceContext.RequestRepository;
         }
 
-        public IEnumerable<Request> GetAllActive()
+        public IEnumerable<Request> GetAllConnectActive()
         {
-            return requestRepository?.GetAllActive();
+            return requestRepository?.GetAllConnectActive();
+        }
+
+        public IEnumerable<DepartureRequest> GetAllDepartureActive()
+        {
+            return requestRepository?.GetAllDepartureActive();
         }
 
         public Request GetById(string id)
@@ -28,33 +33,68 @@ namespace TransportLogistics.ApplicationLogic.Services
             return requestRepository?.GetById(requestId);
         }
 
-        public void Decline(string id, Supervisor supervisor)
+        public void DeclineConnect(string id, Supervisor supervisor)
         {
-            var requestToDecline = GetById(id);
+            var requestId = Guid.Parse(id);
+            var requestToDecline = requestRepository?.GetConnectById(requestId);
             requestToDecline.SetStatus(RequestStatus.Declined);
             requestToDecline.SetSupervisor(supervisor);
             requestRepository?.Update(requestToDecline);
             persistenceContext.SaveChanges();
         }
 
-        public void Accept(string id, Supervisor supervisor)
+        public void DeclineDeparture(string id, Supervisor supervisor)
         {
-            var requestToAccept = GetById(id);
+            var requestId = Guid.Parse(id);
+            var requestToDecline = requestRepository?.GetDepartureById(requestId);
+            requestToDecline.SetStatus(RequestStatus.Declined);
+            requestToDecline.SetSupervisor(supervisor);
+            requestRepository?.UpdateDeparture(requestToDecline);
+            persistenceContext.SaveChanges();
+        }
+
+        
+
+        public void AcceptConnect(string id, Supervisor supervisor)
+        {
+            var requestId = Guid.Parse(id);
+            var requestToAccept = requestRepository?.GetConnectById(requestId);
             requestToAccept.SetStatus(RequestStatus.Accepted);
             requestToAccept.SetSupervisor(supervisor);
             requestRepository?.Update(requestToAccept);
             persistenceContext.SaveChanges();
         }
 
-        public IEnumerable<Request> FilterByVehicleId(Guid vehicleId)
+        public void AcceptDeparture(string id, Supervisor supervisor)
         {
-            return requestRepository?.FilterByVehicleId(vehicleId);
+            var requestId = Guid.Parse(id);
+            var requestToAccept = requestRepository?.GetDepartureById(requestId);
+            requestToAccept.SetStatus(RequestStatus.Accepted);
+            requestToAccept.SetSupervisor(supervisor);
+            requestRepository?.UpdateDeparture(requestToAccept);
+            persistenceContext.SaveChanges();
         }
+
+        public IEnumerable<Request> FilterByTrailerId(Guid trailerId)
+        {
+            return requestRepository?.FilterByTrailerId(trailerId);
+        }
+
         public void Create(Guid senderId,Vehicle vehicle,Trailer trailer)
         {
             var request = Request.Create(senderId, vehicle, trailer);
             requestRepository.Add(request);
             persistenceContext.SaveChanges();
+        }
+
+        public IEnumerable<Request> GetConnectHistory()
+        {
+            return requestRepository?.GetConnectHistory();
+        }
+
+        public IEnumerable<DepartureRequest> GetDepartureHistory()
+        {
+            return requestRepository?.GetDepartureHistory();
         }
     }
 }

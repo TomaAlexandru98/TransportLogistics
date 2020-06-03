@@ -17,6 +17,7 @@ namespace TransportLogistics.DataAccess
 
 
         public DbSet<LocationAddress> LocationAddresses { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
@@ -32,5 +33,6 @@ namespace TransportLogistics.DataAccess
         public DbSet<VehicleChangeRequest> VehicleChangeRequests { get; set; }
         public DbSet<Recipient> Recipients { get; set; }
         public DbSet<PersonalInfoRequest> EditPersonalInfoRequests { get; set; }
+        public DbSet<DepartureRequest> DepartureRequests { get; set; }
     }
 }
