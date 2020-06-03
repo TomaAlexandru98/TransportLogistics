@@ -112,7 +112,7 @@ namespace TransportLogistics.ApplicationLogic.Services
                     }
                 }
             }
-            return OrderRepository.RemoveOrder(orderToRemove);
+            return OrderRepository.RemoveOrder(orderToRemove.Id);
         }
 
         public Recipient GetRecipient(string id)
