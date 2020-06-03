@@ -13,11 +13,14 @@ namespace TransportLogistics.ApplicationLogic.Services
     {
         private readonly IPersistenceContext persistenceContext;
         private readonly ICustomerRepository customerRepository;
+        private readonly IOrderRepository orderRepository;
 
-        public CustomerService(ICustomerRepository customerRepository, IPersistenceContext persistenceContext)
+        public CustomerService(ICustomerRepository customerRepository, 
+                IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
             this.customerRepository = customerRepository;
+            orderRepository = persistenceContext.OrderRepository;
         }
 
         public Customer GetCustomerById(string customerId)
@@ -79,7 +82,8 @@ namespace TransportLogistics.ApplicationLogic.Services
             if (customer == null)
                 return false;
 
-            customerRepository.RemoveCustomerWithLocations(customer.Id);
+            orderRepository.RemoveOrdersFromCustomer(customer.Id);   //not Dan yet
+            customerRepository.RemoveCustomer(customer.Id);
             persistenceContext.SaveChanges();
 
             return true;

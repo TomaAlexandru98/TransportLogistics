@@ -37,7 +37,7 @@ namespace TransportLogistics.ApplicationLogic.Services
           
         }
 
-        public void EndCurrentRoute(Driver driver)
+        public Driver EndCurrentRoute(Driver driver)
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
             driver.AddRouteToHistoric(driver.CurrentRoute);
@@ -45,6 +45,7 @@ namespace TransportLogistics.ApplicationLogic.Services
             driver.SetCurrentRouteNull();
             SetDriverStatus(driver, DriverStatus.Free);
             DriverRepository.Update(driver);
+            return driver;
         }
 
 

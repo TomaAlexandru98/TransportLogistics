@@ -9,7 +9,9 @@ namespace TransportLogistics.DataAccess.Abstractions
     {
         Driver GetByUserId(string userId);
         ICollection<RouteEntry> GetRouteEntries(Guid id);
+        IEnumerable<Driver> GetDriversOnRoute(Guid routeId);
         Driver GetDriverWithRoute(Guid id);
+        IEnumerable<Driver> GetAllDriversWithRoute(Guid id);
         new IEnumerable<Driver> GetAll();
         RoutesHistory GetRoutesHistory(Guid id);
         Driver GetRouteWithVehicle(Guid id);

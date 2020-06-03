@@ -7,9 +7,11 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
-<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto" style="width: 60%">
-    <button class="btn-car ml-3" onclick="goToVehicles()">Connect Trailers <i class="fa fa-trailer"></i></button>
-    <h1>Drivers</h1>
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Drivers</h1>
+    <button class="btn-car ml-3" onclick="goToVehicles()">
+        Connect Trailers <i class="fa fa-trailer"></i>
+    </button>
 </div>
 
 <div id="driversTableContainer"></div>
@@ -46,9 +48,6 @@
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
-
-
-
     <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
@@ -67,6 +66,10 @@
 
         function goToVehicles() {
             document.location = '@Url.Action("Index", "Vehicles")';
+        }
+
+        function LoadShowEntryView(entryId) {
+            loadServerPartialView("#showEntryBody", '@Url.Action("ShowEntry", "Routes")' + "/" + entryId);
         }
 
         function loadAvailableRoutes(DriverId) {

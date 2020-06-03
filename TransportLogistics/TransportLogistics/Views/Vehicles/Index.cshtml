@@ -9,17 +9,24 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
+@*
 <div class="d-flex flex-column flex-md-row">
-    <div class="d-flex flex-column flex-grow-1"></div>
+    <div class="d-flex flex-column flex-grow-1"><h1 class="message-current-table">Vehicles</h1></div>
     <div class="d-flex flex-column ">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <button class="btn-car" data-toggle="modal" data-target="#createVehicleModal">
-                    <i class="fa fa-car"></i>Add Vehicle
-                </button>
+                
             </div>
         </div>
     </div>
+</div>
+*@
+
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Vehicles</h1>
+    <button class="btn-car" data-toggle="modal" data-target="#createVehicleModal">
+        <i class="fa fa-car"></i>Add Vehicle
+    </button>
 </div>
 
 <div id="vehiclesTabelContainer">
@@ -44,7 +51,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" id="createVehicleButton" class="btn btn-primary">Create</button>
-                </div>  
+                </div>
             </div>
         </div>
     </div>
@@ -52,19 +59,17 @@
 
 <div class="modal fade modal-delete" id="deleteVehicleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content"  style="max-width:60%">
-            
+        <div class="modal-content" style="max-width:60%">
+
             <div class="modal-body">
                 <div class="text-center">
                     <h2>Are you sure?</h2>
-                   
                 </div>
                 <div class="d-flex justify-content-around">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button data-vehicle-id="" type="submit" id="deleteVehicleButton" data-dismiss="modal" class="btn btn-success" onclick="removeVehicle(id)">Yes</button>
                 </div>
             </div>
-           
         </div>
     </div>
 </div>
@@ -91,24 +96,24 @@
     </div>
 </form>
 
-    @Html.AntiForgeryToken()
-    <div class="modal fade" id="trailersListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Select trailer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="trailersListContainer">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+@Html.AntiForgeryToken()
+<div class="modal fade" id="trailersListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select trailer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="trailersListContainer">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 @section scripts{
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
@@ -118,7 +123,6 @@
         $(document).ready(function () {
             loadTable();
         });
-
 
         function loadTable() {
             loadServerPartialView("#vehiclesTabelContainer", "/Vehicles/VehiclesTable").done(function () {
@@ -160,7 +164,7 @@
         function loadVehicleInModal(id) {
             loadServerPartialView("#updateVehicleContainer", "Vehicles/Update?id=" + id).done(function () {
                 $.validator.unobtrusive.parse(document);
-            
+
                 $("#NameUpdate").keyup(function () {
                     $("#updateVehicleForm").valid();
                 });
@@ -180,7 +184,7 @@
                         loadTable();
                     }
                 }
-                
+
             });
         });
 

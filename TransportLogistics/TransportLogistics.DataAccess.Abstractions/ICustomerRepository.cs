@@ -12,7 +12,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         Customer FindByPhoneNo(string phoneNo);
         new Customer GetById(Guid customerId);
         new IEnumerable<Customer> GetAll();
-        bool RemoveCustomerWithLocations(Guid customerId);
+        bool RemoveCustomer(Guid customerId);
         void AddLocationToCustomer(Guid customerId, LocationAddress address);
         LocationAddress GetLocationAddress(Guid locationId);
     }

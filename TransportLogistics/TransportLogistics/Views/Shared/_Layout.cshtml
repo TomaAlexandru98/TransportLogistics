@@ -73,6 +73,19 @@
             </div>
         </div>
     </div>
+
+    @*Route Entry modal*@
+    <div class="modal fade" id="showEntryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 80%">
+                <div class="modal-body" id="showEntryBody">
+                    @await Html.PartialAsync("~/Views/Routes/_RouteEntryPartial.cshtml", new TransportLogistics.ViewModels.Routes.RouteEntryViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             <br />
@@ -90,7 +103,7 @@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
- 
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
