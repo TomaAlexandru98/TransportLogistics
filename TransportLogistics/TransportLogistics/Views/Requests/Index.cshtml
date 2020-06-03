@@ -144,28 +144,28 @@
         
 
 
-//       "use strict"
-//var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
-//connection.start().catch(function (err) {
-//    console.log(err.toString());
-//});
-//        connection.on("AddRequest", function (request) {
-//            var id = request.senderId;
+       "use strict"
+var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
+connection.start().catch(function (err) {
+    console.log(err.toString());
+});
+        connection.on("AddRequest", function (request) {
+            var id = request.id;
             
-//         var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptConnectRequest(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
-    
-//            table.row.add([
-//                 "Sender",
-//                 request.vehicle.registrationNumber,
-//                request.trailer.registrationNumber + "  "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
-//                + request.trailer.capacity + " kg",
-//                request.date,
-//                 accept
+         var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptConnectRequest(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
+        var decline = '<a class="btn btn-outline-danger"   onclick="declineConnectRequest(\'' + id +'\')" ><i class="fa fa-ban" style="color: red;"></i>  </a>';
+            table.row.add([
+                 "Sender",
+                 request.vehicle.registrationNumber,
+                request.trailer.registrationNumber + "  "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
+                + request.trailer.capacity + " kg",
+                request.date.toShortDateString(),
+                 accept + " " +decline
                        
 
-//    ]).draw(false);
+    ]).draw(false);
    
-//});
+});
 
     </script>
 }
