@@ -3,7 +3,8 @@
     ViewData["Title"] = "AvailableVehicles";
     Layout = null;
 }
-<form asp-controller="Drivers" asp-action="VehicleChangeRequest" >
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<form asp-controller="Drivers" asp-action="VehicleChangeRequest">
     <label>Vehicle:</label>
     <input name="registrationNumber" type="text" list="vehicles" class="form-control" onchange="displayVehicleInfo()" id="vehicle" />
     <datalist id="vehicles">
@@ -34,5 +35,5 @@
             }
         }
     }
-  
+
 </script>
