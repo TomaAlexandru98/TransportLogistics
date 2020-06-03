@@ -110,7 +110,7 @@ connection.start().catch(function (err) {
         connection.on("AddRequest", function (request) {
             var id = request.senderId;
             //format the string
-         var accept = '<a class="btn btn-outline-success mr-1" > onclick="acceptRequestButton(id)"   <i class="fa fa-check-circle" style="color: green;"></i></a>';
+         var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptRequestButton(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
     
             table.row.add([
                  "Sender",

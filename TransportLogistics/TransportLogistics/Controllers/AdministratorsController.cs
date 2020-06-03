@@ -36,7 +36,7 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var users = UserManager.Users;
+                var users = UserManager.Users.ToList();
                 Logger.LogInformation("Users were retrieved successfully");
                 return View(users);
             }
