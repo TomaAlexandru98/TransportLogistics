@@ -7,7 +7,13 @@ namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IRequestRepository : IBaseRepository<Request>
     {
-        IEnumerable<Request> GetAllActive();
-        IEnumerable<Request> FilterByTrailerId(Guid requestId);
+        IEnumerable<Request> GetAllConnectActive();
+        IEnumerable<DepartureRequest> GetAllDepartureActive();
+        IEnumerable<Request> FilterByTrailerId(Guid trailerId);
+        Request GetConnectById(Guid id);
+        DepartureRequest GetDepartureById(Guid id);
+        DepartureRequest UpdateDeparture(DepartureRequest requestToDecline);
+        IEnumerable<Request> GetConnectHistory();
+        IEnumerable<DepartureRequest> GetDepartureHistory();
     }
 }

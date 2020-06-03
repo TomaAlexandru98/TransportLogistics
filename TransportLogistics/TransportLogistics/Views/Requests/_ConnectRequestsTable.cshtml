@@ -1,0 +1,85 @@
+﻿@model TransportLogistics.ViewModels.Requests.ConnectRequestsViewModel
+@using TransportLogistics.Model
+
+<div class="mb-4" style="display: flex;">
+    <div style="flex: 1;"><h2 class="message-current-table">Connect requests</h2></div>
+    <button class="btn-car" onclick="viewConnectHistory()">View history</button>
+</div>
+
+<table id="connectRequestsTable" class="table table-striped table-bordered" style="width: 101%;">
+    <thead>
+        <tr>
+            <th width="150">Sender</th>
+            <th width="100">Vehicle</th>
+            <th width="300">Trailer</th>
+            <th width="75">Date</th>
+            @if (Model.AreRequestsActive == true)
+            {
+                <th width="50"></th>
+            }
+            else
+            {
+                <th width="75">Status</th>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var request in Model.Requests)
+        {
+        <tr>
+            <td>Sender</td>
+            <td>@request.Vehicle.RegistrationNumber</td>
+            <td class="">
+                <span class="mr-2">@request.Trailer.RegistrationNumber</span>
+                <span>
+                    <span>@request.Trailer.Length.ToString("0.#")</span>
+                    <span>x</span>
+                    <span>@request.Trailer.Width.ToString("0.#")</span>
+                    <span>x</span>
+                    <span>@request.Trailer.Height.ToString("0.#")</span>
+                    <span class="mr-1">cm,</span>
+                    <span>@request.Trailer.Capacity</span>
+                    <span>kg</span>
+                </span>
+            </td>
+            <td>@request.Date.ToShortDateString()</td>
+
+            @if (Model.AreRequestsActive == true)
+            {
+                <td class="ml-2">
+                    @if (Model.ShowMultipleRequestsModal == false)
+                    {
+                        <a class="btn btn-outline-success mr-1"
+                           onclick='acceptConnectRequest("@request.Id")'>
+                            <i class="fa fa-check-circle" style="color: green;"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success mr-1"
+                           onclick='checkForMultipleRequests("@request.Id", "@request.Trailer.Id")'>
+                            <i class="fa fa-check-circle" style="color: green;"></i>
+                        </a>
+                    }
+                      <a class="btn btn-outline-danger"
+                           onclick='declineConnectRequest("@request.Id")'>
+                            <i class="fa fa-ban" style="color: red;"></i>
+                      </a>
+                </td>
+            }
+            else
+            {
+                if (request.Status == RequestStatus.Accepted)
+                {
+                    <td style="color: green;">@request.Status</td>
+                }
+                else
+                {
+                    <td style="color: red;">@request.Status</td>
+                }
+            }
+        </tr>
+        }
+    </tbody>
+</table>

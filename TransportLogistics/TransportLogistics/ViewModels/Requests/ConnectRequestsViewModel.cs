@@ -6,9 +6,11 @@ using TransportLogistics.Model;
 
 namespace TransportLogistics.ViewModels.Requests
 {
-    public class RequestsViewModel
+    public class ConnectRequestsViewModel
     {
         public bool ShowMultipleRequestsModal { get; set; }
+        public bool AreRequestsActive { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
         public IEnumerable<Request> Requests { get; set; }
     }
 }

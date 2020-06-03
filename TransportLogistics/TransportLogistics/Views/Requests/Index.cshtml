@@ -1,4 +1,4 @@
-﻿@model TransportLogistics.ViewModels.Requests.RequestsViewModel
+﻿@model TransportLogistics.ViewModels.Requests.ConnectRequestsViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,7 +13,7 @@
     <a class="btn btn-outline-primary" id="changeVehicleButton">Change vehicle requests</a>
 </div>
 
-<div class="mb-4"><h2 class="message-current-table" id="messageCurrentTable">Connect requests</h2></div>
+
 
 <div id="requestTableContainer"></div>
 
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="acceptRequestAnywayButton()" type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button onclick="acceptConnectRequestAnyway()" type="button" class="btn btn-secondary" data-dismiss="modal">
                     Accept anyway
                 </button>
                 <button onclick="showAllRequestsButton()" type="submit" data-dismiss="modal" class="btn btn-primary">
@@ -53,33 +53,47 @@
     <script src="~/js/request.js"></script>
     <script>
         var table;
+
         $(document).ready(function () {
-            loadTable();
+            loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
         });
 
-        function loadTable() {
-            loadServerPartialView("#requestTableContainer", "/Requests/RequestsTable").done(function () {
-              table =  $('#requestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+        function loadTable(container, url, idTable) {
+            loadServerPartialView(container, url).done(function () {
+                table = $(idTable).DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
 
         $("#connectButton").on("click", function () {
-            $("#messageCurrentTable").html("Connect requests");
+            loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
         });
 
         $("#departureButton").on("click", function () {
-            $("#messageCurrentTable").html("Departure requests");
+            loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
         });
 
-        $("#changeVehicleButton").on("click", function () {
-            $("#messageCurrentTable").html("Change vehicle requests");
-        });
+        function viewConnectHistory() {
+            loadTable("#requestTableContainer", "/Requests/ConnectHistory", '#connectRequestsTable');
+        }
 
-        function declineRequest(requestId) {
+        function viewDepartureHistory() {
+            loadTable("#requestTableContainer", "/Requests/DepartureHistory", '#departureRequestsTable');
+        }
+
+        function declineConnectRequest(requestId) {
             $.ajax({
-                url: "/Requests/Decline?id=" + requestId,
-                success: function (response) {
-                    loadTable();
+                url: "/Requests/DeclineConnect?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
+                }
+            });
+        }
+
+        function declineDepartureRequest(requestId) {
+            $.ajax({
+                url: "/Requests/DeclineDeparture?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
                 }
             });
         }
@@ -94,34 +108,42 @@
                 @: }
             }
 
-            acceptRequestButton(requestId);
+            acceptConnectRequest(requestId);
         }
 
-        function acceptRequestButton(requestId) {
+        function acceptConnectRequest(requestId) {
             $.ajax({
-                url: "/Requests/Accept?id=" + requestId,
+                url: "/Requests/AcceptConnect?id=" + requestId,
                 success: function () {
-                    loadTable();
+                    loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
                 }
             });
         }
 
-        function acceptRequestAnywayButton() {
+        function acceptDepartureRequest(requestId) {
+            $.ajax({
+                url: "/Requests/AcceptDeparture?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
+                }
+            });
+        }
+
+        function acceptConnectRequestAnyway() {
             var requestId = $("#requestId").val();
-            $.ajax({
-                url: "/Requests/Accept?id=" + requestId,
-                success: function () {
-                    loadTable();
-                }
-            });
+            acceptConnectRequest(requestId);
         }
 
         function showAllRequestsButton() {
             var requestId = $("#requestId").val();
             loadServerPartialView("#requestTableContainer", "/Requests/Filter?id=" + requestId).done(function () {
-                $('#requestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+                $('#connectRequestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
+
+        
+/*
+
        "use strict"
 var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
 connection.start().catch(function (err) {
@@ -143,5 +165,6 @@ connection.start().catch(function (err) {
     ]).draw(false);
    
 });
+*/
     </script>
 }

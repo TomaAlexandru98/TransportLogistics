@@ -29,10 +29,10 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var viewModel = new RequestsViewModel
+                var viewModel = new ConnectRequestsViewModel
                 {
                     ShowMultipleRequestsModal = true,
-                    Requests = requestService.GetAllActive()
+                    Requests = requestService.GetAllConnectActive()
                 };
 
                 return View(viewModel);
@@ -43,17 +43,21 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult RequestsTable()
+        [HttpGet]
+        public IActionResult ConnectRequestsTable()
         {
             try
             {
-                var viewModel = new RequestsViewModel
+                var requestsList = requestService.GetAllConnectActive();
+
+                var viewModel = new ConnectRequestsViewModel
                 {
+                    AreRequestsActive = true,
                     ShowMultipleRequestsModal = true,
-                    Requests = requestService.GetAllActive()
+                    Requests = requestsList.OrderBy(request => request.Date)
                 };
 
-                return PartialView("_RequestsTable", viewModel);
+                return PartialView("_ConnectRequestsTable", viewModel);
             }
             catch(Exception e)
             {
@@ -61,14 +65,33 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult Decline(string id)
+        [HttpGet]
+        public IActionResult DepartureRequestsTable()
+        {
+            try
+            {
+                var viewModel = new DepartureRequestsViewModel
+                {
+                    AreRequestsActive = true,
+                    DepartureRequests = requestService.GetAllDepartureActive()
+                };
+
+                return PartialView("_DepartureRequestsTable", viewModel);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult DeclineConnect(string id)
         {
             var supervisorId = userManager.GetUserId(User);
 
             try
             {
                 var supervisorDb = supervisorService.GetByUserId(supervisorId);
-                requestService.Decline(id, supervisorDb);
+                requestService.DeclineConnect(id, supervisorDb);
 
                 return RedirectToAction("Index");
             }
@@ -78,18 +101,52 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult Accept(string id)
+        public IActionResult DeclineDeparture(string id)
         {
             var supervisorId = userManager.GetUserId(User);
 
             try
             {
                 var supervisorDb = supervisorService.GetByUserId(supervisorId);
-                requestService.Accept(id, supervisorDb);
+                requestService.DeclineDeparture(id, supervisorDb);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult AcceptConnect(string id)
+        {
+            var supervisorId = userManager.GetUserId(User);
+
+            try
+            {
+                var supervisorDb = supervisorService.GetByUserId(supervisorId);
+                requestService.AcceptConnect(id, supervisorDb);
 
                 return RedirectToAction("Index");
             }
             catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult AcceptDeparture(string id)
+        {
+            var supervisorId = userManager.GetUserId(User);
+
+            try
+            {
+                var supervisorDb = supervisorService.GetByUserId(supervisorId);
+                requestService.AcceptDeparture(id, supervisorDb);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
@@ -100,13 +157,13 @@ namespace TransportLogistics.Controllers
             try
             {
                 var requestDb = requestService.GetById(id);
-                var viewModel = new RequestsViewModel
+                var viewModel = new ConnectRequestsViewModel
                 {
                     ShowMultipleRequestsModal = false,
                     Requests = requestService.FilterByTrailerId(requestDb.Trailer.Id)
                 };
 
-                return PartialView("_RequestsTable", viewModel);
+                return PartialView("_ConnectRequestsTable", viewModel);
             }
             catch(Exception e)
             {
@@ -123,6 +180,42 @@ namespace TransportLogistics.Controllers
                 var supervisorDb = supervisorService.GetByUserId(userId);
                 supervisorService.ConnectTrailerToVehicle(supervisorDb.Id, vehicleId, trailerId);
                 return RedirectToAction("Index", "Vehicles");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult ConnectHistory()
+        {
+            try
+            {
+                var viewModel = new ConnectRequestsViewModel
+                {
+                    AreRequestsActive = false,
+                    Requests = requestService.GetConnectHistory().OrderBy(request => request.Date)
+                };
+
+                return PartialView("_ConnectRequestsTable", viewModel);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        public IActionResult DepartureHistory()
+        {
+            try
+            {
+                var viewModel = new DepartureRequestsViewModel
+                {
+                    AreRequestsActive = false,
+                    DepartureRequests = requestService.GetDepartureHistory().OrderBy(request => request.Date)
+                };
+
+                return PartialView("_DepartureRequestsTable", viewModel);
             }
             catch (Exception e)
             {
