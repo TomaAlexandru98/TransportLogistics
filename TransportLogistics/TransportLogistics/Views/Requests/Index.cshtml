@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
 
 <div class="mt-3 mb-4">
-    <a class="btn btn-outline-primary mr-2" id="connectButton">Connect requests</a>
-    <a class="btn btn-outline-primary mr-2" id="departureButton">Departure requests</a>
+    <button class="btn btn-outline-primary mr-2" id="connectButton">Connect requests</button>
+    <button class="btn btn-outline-primary mr-2" id="departureButton">Departure requests</button>
 </div>
 
 <div id="requestTableContainer"></div>
@@ -41,7 +41,6 @@
         </div>
     </div>
 </div>
-
 
 @section scripts{
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
@@ -138,9 +137,6 @@
             });
         }
 
-        
-
-
        "use strict"
 var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
 connection.start().catch(function (err) {
@@ -148,7 +144,7 @@ connection.start().catch(function (err) {
 });
         connection.on("AddRequest", function (request) {
             var id = request.id;
-            
+
          var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptConnectRequest(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
         var decline = '<a class="btn btn-outline-danger"   onclick="declineConnectRequest(\'' + id +'\')" ><i class="fa fa-ban" style="color: red;"></i>  </a>';
             table.row.add([
@@ -158,11 +154,9 @@ connection.start().catch(function (err) {
                 + request.trailer.capacity + " kg",
                 request.date.toShortDateString(),
                  accept + " " +decline
-                       
 
     ]).draw(false);
-   
-});
 
+});
     </script>
 }
