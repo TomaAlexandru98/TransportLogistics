@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> userManager
 @model TransportLogistics.ViewModels.Drivers.EditInfoViewModel
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
 
 @{
     var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
@@ -28,3 +28,10 @@
         <input type="submit" class="btn bg-menu" value="Submit" onclick="closeModal('editPersonalInfo')"/>
     </div>
 </form>
+
+<script>
+    function closeModal(id) {
+        $('#' + id).modal('hide');
+    }
+
+</script>

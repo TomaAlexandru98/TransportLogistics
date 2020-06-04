@@ -25,10 +25,12 @@
     </thead>
 
     <tbody>
+        @{ var indexEmployee = 0;}
         @foreach (var request in Model.Requests)
         {
         <tr>
-            <td>Sender</td>
+            <td>@Model.Employees.ElementAt(indexEmployee).Name</td>
+            @{ indexEmployee++; }
             <td>@request.Vehicle.RegistrationNumber</td>
             <td class="">
                 <span class="mr-2">@request.Trailer.RegistrationNumber</span>

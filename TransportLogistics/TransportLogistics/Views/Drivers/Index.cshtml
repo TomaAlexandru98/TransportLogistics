@@ -21,7 +21,7 @@
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
     <h1 class="ml-3">Your orders</h1>
-    <a class="btn bg-menu" asp-action="RouteMap" asp-controller="Drivers">Go to map</a>
+    <a class="btn bg-menu" asp-action="RouteMap" asp-controller="Drivers" style="max-height:45px;text-align:center">Go to map</a>
 </div>
 <br />
 <br />
@@ -33,7 +33,7 @@
 
     <div class="d-flex bd-highlight mb-3">
         <div class="p-2 flex-grow-1 bd-highlight">
-            <button type="button" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
+            <button type="button" id="EndRoute" class="btn bg-menu btn-lg pull-right" data-toggle="modal" data-target="#RouteEnded">End Route</button>
             <h4 style="color:red" id="endRouteError"></h4>
         </div>
         <div class="p-2 bd-highlight">
@@ -152,12 +152,19 @@
             $('#StartRoute').prop('disabled', true);
              EnableButtons();
             $.cookie('StartRoute', true);
+            $('#EndRoute').prop('disabled', false);
          })
     }
     $(document).ready(function () {
         $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
         setCookies();
         EnableButtons();
+        if ($('#StartRoute').is(":disabled") == false) {
+            $('#EndRoute').prop('disabled', true);
+        }
+        else {
+            $('$EndRoute').prop('disabled', false);
+        }
     })
         function setCookies() {
         var ordersCounter = @Model.RouteEntries.Count;

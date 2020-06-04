@@ -54,6 +54,7 @@ namespace TransportLogistics.Controllers
                 {
                     AreRequestsActive = true,
                     ShowMultipleRequestsModal = true,
+                    Employees = requestService.GetAllSenders(requestsList),
                     Requests = requestsList.OrderBy(request => request.Date)
                 };
 
@@ -101,7 +102,7 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult DeclineDeparture(string id)
+        public IActionResult Accept([FromQuery] string id)
         {
             var supervisorId = userManager.GetUserId(User);
 
@@ -191,10 +192,12 @@ namespace TransportLogistics.Controllers
         {
             try
             {
+                var requestsList = requestService.GetConnectHistory().OrderBy(request => request.Date);
                 var viewModel = new ConnectRequestsViewModel
                 {
                     AreRequestsActive = false,
-                    Requests = requestService.GetConnectHistory().OrderBy(request => request.Date)
+                    Employees = requestService.GetAllSenders(requestsList),
+                    Requests = requestsList
                 };
 
                 return PartialView("_ConnectRequestsTable", viewModel);

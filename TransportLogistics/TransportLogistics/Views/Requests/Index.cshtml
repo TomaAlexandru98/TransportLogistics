@@ -10,10 +10,7 @@
 <div class="mt-3 mb-4">
     <a class="btn btn-outline-primary mr-2" id="connectButton">Connect requests</a>
     <a class="btn btn-outline-primary mr-2" id="departureButton">Departure requests</a>
-    <a class="btn btn-outline-primary" id="changeVehicleButton">Change vehicle requests</a>
 </div>
-
-
 
 <div id="requestTableContainer"></div>
 
@@ -29,7 +26,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    Multiple requests were found for this vehicle
+                    Multiple requests were found for this trailer
                     <input id="requestId" type="hidden" />
                 </div>
             </div>
@@ -142,7 +139,7 @@
         }
 
         
-/*
+
 
        "use strict"
 var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
@@ -150,21 +147,22 @@ connection.start().catch(function (err) {
     console.log(err.toString());
 });
         connection.on("AddRequest", function (request) {
-            var id = request.senderId;
-            //format the string
-         var accept = '<a class="btn btn-outline-success mr-1" > onclick="acceptRequestButton(id)"   <i class="fa fa-check-circle" style="color: green;"></i></a>';
-    
+            var id = request.id;
+            
+         var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptConnectRequest(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
+        var decline = '<a class="btn btn-outline-danger"   onclick="declineConnectRequest(\'' + id +'\')" ><i class="fa fa-ban" style="color: red;"></i>  </a>';
             table.row.add([
                  "Sender",
-                 request.vehicle.registrationNumber,
-                request.trailer.model + " "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
+                request.vehicle.registrationNumber,
+                request.trailer.registrationNumber + "  "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
                 + request.trailer.capacity + " kg",
-                 accept
+                request.date.toShortDateString(),
+                 accept + " " +decline
                        
 
     ]).draw(false);
    
 });
-*/
+
     </script>
 }
