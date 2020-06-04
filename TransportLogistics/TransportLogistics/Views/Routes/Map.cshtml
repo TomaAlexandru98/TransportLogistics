@@ -52,7 +52,6 @@
                 };
                 addresses.push(address);
             }
-
             else {
                 var address = {
                     Country: model.routeEntries[i].order.pickUpAddress.country,
@@ -93,7 +92,6 @@
                 center: { lat: 41.85, lng: -87.65 }
             });
             directionsDisplay.setMap(map);
-
             directionsService.route({
                 origin: startAddress.Street + " " + startAddress.StreetNumber+ "," + startAddress.City,
                 destination: finishAddress.Street + " " + finishAddress.StreetNumber+ "," + finishAddress.City,
