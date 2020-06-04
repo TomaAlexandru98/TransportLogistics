@@ -79,19 +79,24 @@ namespace TransportLogistics.ApplicationLogic.Services
         }
         public Request CreateRequest(Guid driverId , string registrationNumber)
         {
+            
             Request request = new Request()
             {
                 Id = Guid.NewGuid(),
                
             };
             var driver = DriverRepository.GetRouteWithVehicle(driverId);
-            var trailer = TrailerRepository.GetByRegistrationNumber(registrationNumber);
-            request.SetTrailer(trailer);
-            request.SetVehicle(driver.CurrentRoute.Vehicle);
-            request.SetStatus(RequestStatus.Active);
-            request.SetSender(driver.Id);
-            RequestRepository.Add(request);
-            PersistenceContext.SaveChanges();
+            if (driver.CurrentRoute != null)
+            {
+                var trailer = TrailerRepository.GetByRegistrationNumber(registrationNumber);
+                request.SetTrailer(trailer);
+
+                request.SetVehicle(driver.CurrentRoute.Vehicle);
+                request.SetStatus(RequestStatus.Active);
+                request.SetSender(driver.Id);
+                RequestRepository.Add(request);
+                PersistenceContext.SaveChanges();
+            }
             return request;
             
         }

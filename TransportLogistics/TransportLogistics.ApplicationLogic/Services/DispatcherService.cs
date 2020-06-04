@@ -15,7 +15,6 @@ namespace TransportLogistics.ApplicationLogic.Services
         private readonly ITrailerRepository trailerRepository;
         private readonly IVehicleRepository vehicleRepository;
         private readonly IRouteRepository routeRepository;
-        private readonly IDepartureRequestRepository departureRequestRepository;
 
         public DispatcherService(IPersistenceContext persistenceContext)
         {
@@ -25,7 +24,6 @@ namespace TransportLogistics.ApplicationLogic.Services
             driverRepository = persistenceContext.DriverRepository;
             vehicleRepository = persistenceContext.VehicleRepository;
             routeRepository = persistenceContext.RouteRepository;
-            departureRequestRepository = persistenceContext.DepartureRequestRepository;
         }
         public Dispatcher GetByUserId(string userId)
         {
@@ -39,7 +37,7 @@ namespace TransportLogistics.ApplicationLogic.Services
 
             var departureRequest = DepartureRequest.Create(dispatcher, driver);
 
-            this.departureRequestRepository.Add(departureRequest);
+            //this.departureRequestRepository.Add(departureRequest);
             this.routeRepository.Update(route);
             this.driverRepository.Update(driver);
             this.PersistenceContext.SaveChanges();

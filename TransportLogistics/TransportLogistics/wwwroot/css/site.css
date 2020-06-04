@@ -211,3 +211,8 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;   
 }
+.message-current-title {
+    background: linear-gradient(to right, #1e2f8f, #414e96);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

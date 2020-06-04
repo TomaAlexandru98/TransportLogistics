@@ -197,6 +197,7 @@ namespace TransportLogistics.Controllers
                 var request = EditInfoRequestService.GetById(requestId);
                 var driver = DriverService.GetById(request.Applicant);
                 DriverService.UpdateDriver(driver , request.NewName , request.NewEmail);
+
                 var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
                 EditInfoRequestService.ApproveRequest(request,user.Id);
                 var driverAccount = UserManager.FindByEmailAsync(request.OldEmail).GetAwaiter().GetResult();
@@ -204,6 +205,7 @@ namespace TransportLogistics.Controllers
                 driverAccount.Email = request.NewEmail;
                 driverAccount.PhoneNumber = request.NewPhoneNumber;
                 UserManager.UpdateAsync(driverAccount).GetAwaiter().GetResult();
+
                 return RedirectToAction("EditInfoRequestsPartial");
             }
             catch (Exception e)
