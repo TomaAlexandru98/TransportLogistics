@@ -12,7 +12,7 @@ namespace TransportLogistics.DataAccess.Abstractions
         new Order GetById(Guid orderId);
 
         new IEnumerable<Order> GetAll();
-
-        bool RemoveOrder(Order orderToRemove);
+        bool RemoveOrder(Guid orderId);
+        bool RemoveOrdersFromCustomer(Guid customerId);
     }
 }

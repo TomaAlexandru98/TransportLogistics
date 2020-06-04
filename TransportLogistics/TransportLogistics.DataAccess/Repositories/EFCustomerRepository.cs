@@ -67,7 +67,7 @@ namespace TransportLogistics.DataAccess.Repositories
             dbContext.SaveChanges();
         }
 
-        public bool RemoveCustomerWithLocations(Guid customerId)
+        public bool RemoveCustomer(Guid customerId)
         {
             var entityToRemove = GetById(customerId);
             

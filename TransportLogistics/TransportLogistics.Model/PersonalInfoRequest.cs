@@ -33,5 +33,15 @@ namespace TransportLogistics.Model
             };
             return request;
         }
-   }
+
+        public void SetStatus(EditStatusRequest status)
+        {
+            Status = status;
+        }
+
+        public void SetAdministrator(Guid id)
+        {
+            Administrator = id;
+        }
+    }
 }

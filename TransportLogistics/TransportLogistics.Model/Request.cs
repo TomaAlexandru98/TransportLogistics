@@ -58,5 +58,7 @@ namespace TransportLogistics.Model
         {
             this.Vehicle = vehicle;
         }
+
+      
     }
 }
