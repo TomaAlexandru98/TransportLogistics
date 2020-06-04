@@ -15,6 +15,7 @@
     *@
 }
 
+@*
 <div class="d-flex flex-column flex-md-row">
     <div class="d-flex flex-column flex-grow-1">
 
@@ -31,6 +32,15 @@
 
     </div>
 </div>
+*@
+
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Accounts</h1>
+    <a class="btn btn-car bg-menu" role="button" data-toggle="modal" data-target="#ModalCreate">
+        Add User <i class="fa fa-user"></i>
+    </a>
+</div>
+
 <div id="usersAccounts">
     <partial name="_TablePartial.cshtml" model="@Model" />
 </div>

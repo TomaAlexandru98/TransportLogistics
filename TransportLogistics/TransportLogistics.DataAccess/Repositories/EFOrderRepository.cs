@@ -44,8 +44,30 @@ namespace TransportLogistics.DataAccess.Repositories
                         .AsEnumerable();
         }
 
-        public bool RemoveOrder(Order orderToRemove)
+        public bool RemoveOrdersFromCustomer(Guid customerId)
         {
+            var orders = dbContext.Orders
+                .Where(o => o.Sender.Id == customerId)
+                .AsEnumerable();
+
+            if (orders.Count() == 0)
+            {
+                return false;
+            }
+
+            foreach (var order in orders)
+            {
+                RemoveOrder(order.Id);
+            }
+
+            dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool RemoveOrder(Guid orderId)
+        {
+            var orderToRemove = GetById(orderId);
+
             if (orderToRemove != null)
             {
                 dbContext.Remove(orderToRemove.Recipient.ContactDetails);

@@ -7,6 +7,6 @@ namespace TransportLogistics.DataAccess.Abstractions
 {
     public interface IPersonalInfoRepository:IBaseRepository<PersonalInfoRequest>
     {
-
+        IEnumerable<PersonalInfoRequest> GetAllCreatedRequests();
     }
 }

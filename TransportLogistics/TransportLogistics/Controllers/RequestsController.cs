@@ -102,7 +102,7 @@ namespace TransportLogistics.Controllers
             }
         }
 
-        public IActionResult DeclineDeparture(string id)
+        public IActionResult Accept([FromQuery] string id)
         {
             var supervisorId = userManager.GetUserId(User);
 

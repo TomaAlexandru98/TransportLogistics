@@ -29,6 +29,19 @@ namespace TransportLogistics.DataAccess.Repositories
                 .Where(o=> o.Id == id).FirstOrDefault();
         }
 
+        public IEnumerable<Driver> GetDriversOnRoute(Guid routeId)
+        {
+            return dbContext.Drivers
+                .Include(o => o.CurrentRoute)
+                .ThenInclude(o => o.RouteEntries)
+                .Include(o => o.RoutesHistoric)
+                .ThenInclude(o => o.Routes)
+                .ThenInclude(o => o.RouteEntries)
+                .Where(o => o.CurrentRoute.Id == routeId)
+                .AsEnumerable();
+                
+        }
+
         public IEnumerable<Driver> GetAllDriversWithRoute(Guid id)
         {
             return dbContext.Drivers

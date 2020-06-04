@@ -27,5 +27,28 @@ namespace TransportLogistics.ApplicationLogic.Services
             PersonalInfoRepository.Add(request);
             PersistenceContext.SaveChanges();
         }
+
+        public IEnumerable<PersonalInfoRequest> GetAllCreatedRequests()
+        {
+            return PersonalInfoRepository.GetAllCreatedRequests();
+        }
+
+        public PersonalInfoRequest GetById(Guid requestId)
+        {
+            return PersonalInfoRepository.GetById(requestId);
+        }
+
+        public void SetStatus(Guid requestId, EditStatusRequest refused)
+        {
+            var request = GetById(requestId);
+            request.SetStatus(refused);
+            PersonalInfoRepository.Update(request);
+        }
+
+        public void ApproveRequest(PersonalInfoRequest request, string id)
+        {
+            request.SetAdministrator(Guid.Parse(id));
+            SetStatus(request.Id, EditStatusRequest.Accepted);
+        }
     }
 }

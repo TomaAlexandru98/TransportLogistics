@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using TransportLogistics.ApplicationLogic.Services;
 using TransportLogistics.Data;
 using TransportLogistics.DataAccess.Abstractions;
+using TransportLogistics.Model;
 using TransportLogistics.ViewModels;
 using TransportLogistics.ViewModels.Administrator;
 
@@ -19,24 +20,29 @@ namespace TransportLogistics.Controllers
     public class AdministratorsController : Controller
     {
        public AdministratorsController(UserManager<IdentityUser> userManager,RoleManager<IdentityRole>roleManager,EmployeeServices employeeServices,
-           ILogger<AdministratorsController>logger ) 
+           ILogger<AdministratorsController>logger,EditInfoRequestService requestService,DriverService driverService ) 
         {
             UserManager = userManager;
             RoleManager = roleManager;
             EmployeeServices = employeeServices;
             Logger = logger;
+            EditInfoRequestService = requestService;
+            DriverService = driverService;
         }
 
         private UserManager<IdentityUser> UserManager;
         private RoleManager<IdentityRole> RoleManager;
         private EmployeeServices EmployeeServices;
         private ILogger<AdministratorsController> Logger;
+        private EditInfoRequestService EditInfoRequestService;
+        private DriverService DriverService;
+
 
         public IActionResult Index()
         {
             try
             {
-                var users = UserManager.Users;
+                var users = UserManager.Users.ToList();
                 Logger.LogInformation("Users were retrieved successfully");
                 return View(users);
             }
@@ -140,6 +146,74 @@ namespace TransportLogistics.Controllers
             var users = UserManager.Users;
             return PartialView("_TablePartial", users);
         }
-     
+        [HttpGet]
+        public IActionResult EditInfoRequests()
+        {
+            try
+            {
+                var model = EditInfoRequestService.GetAllCreatedRequests();
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve the requests for editing personal informations {@Exception}", e);
+                Logger.LogError("Failed to retrieve the requests for editing personal informations {Exception}", e.Message);
+                return BadRequest("Failed to retrieve the requests for editing personal informations");
+            }
+        }
+        public IActionResult EditInfoRequestsPartial()
+        {
+            try
+            {
+                var model = EditInfoRequestService.GetAllCreatedRequests();
+                return PartialView("_RequestsTable",model);
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to retrieve the requests for editing personal informations {@Exception}", e);
+                Logger.LogError("Failed to retrieve the requests for editing personal informations {Exception}", e.Message);
+                return BadRequest("Failed to retrieve the requests for editing personal informations");
+            }
+        }
+        public IActionResult RejectEditInfoRequest(Guid requestId)
+        {
+            try
+            {
+                
+                EditInfoRequestService.SetStatus(requestId,EditStatusRequest.Refused);
+                return RedirectToAction("EditInfoRequestsPartial");
+            }
+            catch(Exception e)
+            {
+                Logger.LogDebug("Failed to reject reqest {@Exception}", e);
+                Logger.LogError("Failed to reject request {Exception}", e.Message);
+                return BadRequest("Failed to reject request");
+            }
+        }
+        public IActionResult ApproveEditInfoRequest(Guid requestId)
+        {
+            try
+            {
+                var request = EditInfoRequestService.GetById(requestId);
+                var driver = DriverService.GetById(request.Applicant);
+                DriverService.UpdateDriver(driver , request.NewName , request.NewEmail);
+                var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
+                EditInfoRequestService.ApproveRequest(request,user.Id);
+                var driverAccount = UserManager.FindByEmailAsync(request.OldEmail).GetAwaiter().GetResult();
+                driverAccount.UserName = request.NewName;
+                driverAccount.Email = request.NewEmail;
+                driverAccount.PhoneNumber = request.NewPhoneNumber;
+                UserManager.UpdateAsync(driverAccount).GetAwaiter().GetResult();
+                return RedirectToAction("EditInfoRequestsPartial");
+            }
+            catch (Exception e)
+            {
+                Logger.LogDebug("Failed to approve request {@Exception}", e);
+                Logger.LogError("Failed to approve request {Exception}", e.Message);
+                return BadRequest("Failed to approve request ");
+            }
+        }
+
+
         }
     }
