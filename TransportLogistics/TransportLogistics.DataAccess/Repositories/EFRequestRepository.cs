@@ -105,5 +105,11 @@ namespace TransportLogistics.DataAccess.Repositories
         {
             return GetAllDeparture().Where(request => request.Status != RequestStatus.Active);
         }
+
+        public DepartureRequest AddDeparture(DepartureRequest departureRequest)
+        {
+            dbContext.DepartureRequests.Add(departureRequest);
+            return departureRequest;
+        }
     }
 }
