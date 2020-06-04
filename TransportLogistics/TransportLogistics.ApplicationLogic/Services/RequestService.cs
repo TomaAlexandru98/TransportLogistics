@@ -10,11 +10,15 @@ namespace TransportLogistics.ApplicationLogic.Services
     {
         private readonly IPersistenceContext persistenceContext;
         private readonly IRequestRepository requestRepository;
+        private readonly IDriverRepository driverRepository;
+        private readonly IDispatcherRepository dispatcherRepository;
 
         public RequestService(IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
             this.requestRepository = persistenceContext.RequestRepository;
+            this.driverRepository = persistenceContext.DriverRepository;
+            this.dispatcherRepository = persistenceContext.DispatcherRepository;
         }
 
         public IEnumerable<Request> GetAllConnectActive()
@@ -53,7 +57,27 @@ namespace TransportLogistics.ApplicationLogic.Services
             persistenceContext.SaveChanges();
         }
 
-        
+        public IEnumerable<Employee> GetAllSenders(IEnumerable<Request> requestsList)
+        {
+            var employeesList = new List<Employee>();
+
+            foreach (var request in requestsList)
+            {
+                var driverDb = driverRepository.GetById(request.SenderId);
+
+                if (driverDb != null)
+                {
+                    employeesList.Add(driverDb);
+                }
+                else
+                {
+                    var dispatcherDb = dispatcherRepository?.GetById(request.SenderId);
+                    employeesList.Add(dispatcherDb);
+                }
+            }
+
+            return employeesList;
+        }
 
         public void AcceptConnect(string id, Supervisor supervisor)
         {
