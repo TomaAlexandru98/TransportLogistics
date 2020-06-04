@@ -15,5 +15,6 @@ namespace TransportLogistics.DataAccess.Abstractions
         DepartureRequest UpdateDeparture(DepartureRequest requestToDecline);
         IEnumerable<Request> GetConnectHistory();
         IEnumerable<DepartureRequest> GetDepartureHistory();
+        DepartureRequest AddDeparture(DepartureRequest departureRequest);
     }
 }
