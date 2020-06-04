@@ -10,10 +10,7 @@
 <div class="mt-3 mb-4">
     <a class="btn btn-outline-primary mr-2" id="connectButton">Connect requests</a>
     <a class="btn btn-outline-primary mr-2" id="departureButton">Departure requests</a>
-    <a class="btn btn-outline-primary" id="changeVehicleButton">Change vehicle requests</a>
 </div>
-
-
 
 <div id="requestTableContainer"></div>
 
@@ -29,7 +26,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    Multiple requests were found for this vehicle
+                    Multiple requests were found for this trailer
                     <input id="requestId" type="hidden" />
                 </div>
             </div>
@@ -156,7 +153,7 @@ connection.start().catch(function (err) {
     
             table.row.add([
                  "Sender",
-                 request.vehicle.registrationNumber,
+                request.vehicle.registrationNumber,
                 request.trailer.model + " "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
                 + request.trailer.capacity + " kg",
                  accept
