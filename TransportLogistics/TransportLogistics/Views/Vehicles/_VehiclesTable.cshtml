@@ -27,7 +27,7 @@
                 <td>
                     @if (vehicle.CurrentTrailer == null)
                     {
-                        @if (User.IsInRole("Supervisor" ))
+                        @if (User.IsInRole("Supervisor" )|| User.IsInRole("Dispatcher"))
                         {
                             <a data-toggle="modal" data-target="#trailersListModal" onclick='loadAvailableTrailers("@vehicle.Id")'
                                class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
