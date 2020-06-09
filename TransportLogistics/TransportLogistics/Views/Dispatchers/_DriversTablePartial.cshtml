@@ -1,0 +1,77 @@
+﻿@using TransportLogistics.ViewModels.Dispatchers
+@model DriversListViewModel
+
+<table id="driversTable" class="table table-striped table-bordered" style="width:100%">
+    <thead class="dropdown text-center">
+        <tr>
+            <th>Driver ID</th>
+            <th>Current Route</th>
+            <th>Status</th>
+            <th>Assign Route</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var driver in Model.Drivers)
+        {
+            <tr>
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @driver.UserId
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Name:</div>
+                        <h6>@driver.Name</h6>
+                        <div>Email:</div>
+                        <h6>@driver.Email</h6>
+                    </div>
+                </td>
+                <td class="dropdown text-center" style="width: 25%">
+                    @if (driver.CurrentRoute != null)
+                    {
+                        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Orders on route: @driver.CurrentRoute.RouteEntries.Count()
+                        </button>
+
+                        <div class="dropdown-menu">
+                            @foreach (var routeEntry in driver.CurrentRoute.RouteEntries)
+                            {
+                                <button class="dropdown-item btn-blue edit-dropdown-item" data-toggle="modal"
+                                        onclick="LoadShowEntryView('@routeEntry.Id')" data-target="#showEntryModal">
+
+                                    <div>
+                                        <i class="fas fa-info-circle"></i>
+                                        @routeEntry.OrderType, Status: @routeEntry.Order.Status, Route:
+                                        @routeEntry.Order.PickUpAddress.PostalCode
+                                        - @routeEntry.Order.DeliveryAddress.PostalCode
+                                    </div>
+                                </button>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center">No current route</div>
+                    }
+                </td>
+
+                <td class="text-center">@driver.Status</td>
+                <td class="text-center">
+                    @if (driver.CurrentRoute == null)
+                    {
+                        <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
+                           class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
+                            <i class="fa fa-plus-circle"></i>
+                            <span>Add</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="text-center">Assigned</div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -4,7 +4,8 @@ using System.Text;
 
 
 namespace TransportLogistics.Model
-{
+{ public enum Status {Busy,Free }
+   
     public class Trailer : DataEntity
     {
         public int MaximWeightKg { get; protected set; }
@@ -14,8 +15,9 @@ namespace TransportLogistics.Model
         public decimal Height { get; protected set; }
         public decimal Width { get; protected set; }
         public decimal Length { get; protected set; }
+        public string RegistrationNumber { get; private set; }
+        public Status Status { get; private set; }
 
-        public virtual Vehicle Vehicle { get; protected set; }
         protected Trailer()
         {
         }
@@ -44,14 +46,29 @@ namespace TransportLogistics.Model
                 NumberAxles = numberAxles,
                 Height = height,
                 Width = width,
-                Length = length
+                Length = length/*,
+                Status = Status.Free*/
             };
             return trailer;
+           
         }
-       
-       
 
+        public void Modify(Trailer trailer, string model, int maximumWeightKg, int capacity, int numberAxles, decimal height, decimal width, decimal length)
+        {
+            trailer.Model = model;
+            trailer.MaximWeightKg = maximumWeightKg;
+            trailer.Capacity = capacity;
+            trailer.NumberAxles = numberAxles;
+            trailer.Height = height;
+            trailer.Width = width;
+            trailer.Length = length;
+            
+        }
 
-
+        public Status SetStatus(Status status)
+        {
+            this.Status = status;
+            return this.Status;
+        }
     }
 }

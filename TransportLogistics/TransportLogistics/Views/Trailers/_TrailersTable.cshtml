@@ -1,0 +1,63 @@
+﻿@using TransportLogistics.ViewModels.Trailers
+@model TrailersListViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<table id="Trailer" class="table table-striped table-bordered" width="100%">
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>MaximWeightKg</th>
+            <th>Capacity</th>
+            <th>NumberAxles</th>
+            <th>Height</th>
+            <th>Width</th>
+            <th>Length</th>
+            <th>Edit / Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var trailer in Model.TrailerViews)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.MaximWeightKg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.NumberAxles)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.Height)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => trailer.Length)
+                </td>
+                <td style="max-width:20%">
+                    <div class="d-flex justify-content-around">
+                      
+                            <a name="ID" id="@trailer.Id" class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal" data-target="#editTrailerModal" onclick="LoadEditTrailerView('@trailer.Id');"><i class="material-icons fa fa-edit"></i></a>
+                       
+                        <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                                onclick="LoadRemoveTrailerView('@trailer.Id');" data-target="#removeModal">
+                            <i class="material-icons fa fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

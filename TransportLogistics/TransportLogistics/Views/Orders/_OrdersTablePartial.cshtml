@@ -1,0 +1,101 @@
+﻿@using TransportLogistics.ViewModels.Orders
+@model OrderViewModel
+
+<table id="ordersTable" class="table table-striped table-bordered" style="width:100%">
+    <thead class="dropdown text-center">
+        <tr>
+            <th>Sender</th>
+            <th>Pickup Address</th>
+            <th>Delivery Address</th>
+            <th>Recipient</th>
+            <th>Status</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+
+                <td class="dropdown text-center">
+
+                    <button class="btn btn-blue dropdown-toggle customer-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.Sender.Name
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Name:</div>
+                        <div>@order.Sender.Name</div>
+                        <div>Email:</div>
+                        <div>@order.Sender.ContactDetails.Email</div>
+                        <div>Phone number:</div>
+                        <div>@order.Sender.ContactDetails.PhoneNo</div>
+                    </div>
+                </td>
+
+                <td class="dropdown text-center">
+
+                    <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.PickUpAddress.City, @order.PickUpAddress.Street
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Country: @order.PickUpAddress.Country</div>
+                        <div>City: @order.PickUpAddress.City</div>
+                        <div>Street: @order.PickUpAddress.Street</div>
+                        <div>Street number: @order.PickUpAddress.StreetNumber</div>
+                        <div>Postal Code: @order.PickUpAddress.PostalCode</div>
+                    </div>
+                </td>
+
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        @order.DeliveryAddress.City, @order.DeliveryAddress.Street
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Country: @order.DeliveryAddress.Country</div>
+                        <div>City: @order.DeliveryAddress.City</div>
+                        <div>Street: @order.DeliveryAddress.Street</div>
+                        <div>Street number: @order.DeliveryAddress.StreetNumber</div>
+                        <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
+                    </div>
+                </td>
+
+                <td class="dropdown text-center">
+                    <button class="btn btn-blue dropdown-toggle customer-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @order.Recipient.Name
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-style">
+                        <div>Name:</div>
+                        <div>@order.Recipient.Name</div>
+                        <div>Email:</div>
+                        <div>@order.Recipient.ContactDetails.Email</div>
+                        <div>Phone number:</div>
+                        <div>@order.Recipient.ContactDetails.PhoneNo</div>
+                    </div>
+                </td>
+
+                <td>@order.Status</td>
+                <td>@order.Price</td>
+
+                <td class="d-flex justify-content-around">
+
+                    <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                            data-target="#editOrderModal" onclick="LoadEditOrderView('@order.Id')">
+
+                        <i class="material-icons fa fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
+                            onclick="LoadRemoveOrderView('@order.Id')" data-target="#removeOrderModal">
+
+                        <i class="material-icons fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

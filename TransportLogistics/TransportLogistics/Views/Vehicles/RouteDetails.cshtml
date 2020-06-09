@@ -1,0 +1,102 @@
+﻿@model TransportLogistics.ViewModels.Vehicles.RouteDetailsViewModel
+@{
+    ViewData["Title"] = "RouteHistory";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+<h4 class="mt-2 mb-3 message-current-table">
+    <span>Route details:</span>
+    <span>@Model.RouteEntries.ElementAt(0).Order.PickUpAddress.Street</span>
+    <span>,</span>
+    <span>Nr.</span>
+    <span>@Model.RouteEntries.ElementAt(0).Order.PickUpAddress.StreetNumber</span>
+    <span>,</span>
+    <span>@Model.RouteEntries.ElementAt(0).Order.PickUpAddress.City</span>
+    <span>,</span>
+    <span>@Model.RouteEntries.ElementAt(0).Order.PickUpAddress.Country</span>
+    <span>-</span>    
+    <span>@Model.RouteEntries.ElementAt(Model.RouteEntries.Count() - 1).Order.DeliveryAddress.Street</span>
+        <span>,</span>
+        <span>Nr.</span>
+        <span>@Model.RouteEntries.ElementAt(Model.RouteEntries.Count() - 1).Order.DeliveryAddress.StreetNumber</span>
+        <span>,</span>
+        <span>@Model.RouteEntries.ElementAt(Model.RouteEntries.Count() - 1).Order.DeliveryAddress.City</span>
+        <span>,</span>
+        <span>@Model.RouteEntries.ElementAt(Model.RouteEntries.Count() - 1).Order.DeliveryAddress.Country</span>
+</h4>
+
+<table id="routeDetailsTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Pick-up address</th>
+            <th>Delivery address</th>
+            <th>Status</th>
+            <th style="width: 120px;">Start time</th>
+            <th style="width: 120px;">Finish time</th>
+            <th style="width: 25px;">Payment</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var routeEntry in Model.RouteEntries)
+        {
+        <tr>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span>@routeEntry.Order.PickUpAddress.Street</span>
+                    <span>,</span>
+                    <span>Nr.</span>
+                    <span>@routeEntry.Order.PickUpAddress.StreetNumber</span>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.PickUpAddress.City</div>
+                    <div>@routeEntry.Order.PickUpAddress.Country</div>
+                </div>
+            </td>
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span>@routeEntry.Order.DeliveryAddress.Street</span>
+                    <span>,</span>
+                    <span>Nr.</span>
+                    <span>@routeEntry.Order.DeliveryAddress.StreetNumber</span>
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.DeliveryAddress.City</div>
+                    <div>@routeEntry.Order.DeliveryAddress.Country</div>
+                </div>
+            </td>
+            <td>
+                <span>@routeEntry.Order.PickUpTime.ToShortDateString()</span>
+                <span>@routeEntry.Order.PickUpTime.ToString("HH:mm")</span>
+            </td>
+            <td>
+                <span>@routeEntry.Order.DeliveryTime.ToShortDateString()</span>
+                <span>@routeEntry.Order.DeliveryTime.ToString("HH:mm")</span>
+            </td>
+            <td>@routeEntry.Order.Status</td>
+            <td>@routeEntry.Order.Price</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary" style="color: white;" asp-action="History" asp-route-id="@Model.VehicleId">
+    Back to history
+</a>
+
+
+@section scripts{
+
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#routeDetailsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+        });
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿@model TransportLogistics.ViewModels.Orders.UpdateOrderViewModel
+
+<input type="hidden" asp-for="UpdateId" />
+
+<div class="form-group text-center">
+    <label asp-for="UpPickupLocationId"></label>
+    <div>
+        <select class="form-control" asp-for="UpPickupLocationId" asp-items="@Model.PickupLocation">
+        </select>
+    </div>
+    <span asp-validation-for="UpPickupLocationId" class="text-danger"></span>
+</div>
+
+<div class="form-group text-center">
+    <label asp-for="UpDeliveryLocationId"></label>
+    <div>
+        <select class="form-control" asp-for="UpDeliveryLocationId" asp-items="@Model.DeliveryLocation">
+        </select>
+    </div>
+    <span asp-validation-for="UpDeliveryLocationId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="UpPrice"></label>
+    <input asp-for="UpPrice" type="number" class="form-control" />
+    <span asp-validation-for="UpPrice" class="text-danger"></span>
+</div>

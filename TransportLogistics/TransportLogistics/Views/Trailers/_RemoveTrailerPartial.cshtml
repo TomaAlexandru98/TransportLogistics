@@ -1,0 +1,15 @@
+﻿
+@using TransportLogistics.Models.Trailers;
+
+@model RemoveTrailerViewModel;
+
+<input type="hidden" asp-for="Id" />
+
+<div class="text-center">
+    <h2>Are you sure?</h2>
+    
+</div>
+<div class="d-flex justify-content-around">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+    <button type="submit" class="btn btn-success" >Yes</button>
+</div>

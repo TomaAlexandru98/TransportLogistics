@@ -1,0 +1,228 @@
+﻿@using TransportLogistics.ViewModels.Routes
+@{
+    ViewData["Title"] = "Routes";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+<div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1 class="ml-3">Routes</h1>
+    <button class="btn-car" onclick="LoadNewRouteView()" data-toggle="modal" data-target="#newRouteModal">Define Route <i class="fa fa-route"></i></button>
+</div>
+
+<div id="routesTableContainer"></div>
+
+<form method="post" asp-controller="Routes" asp-action="NewRoute"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#newRouteModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#newRouteBody">
+
+    <div class="modal fade" id="newRouteModal" tabindex="-1" aria-labelledby="newRouteTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newRouteTitle">New Route</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="newRouteBody">
+                    <partial name="_NewRoutePartial" model="new NewRouteViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="modalFormComplete('#removeModal')"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveRoutePartial" model="new RemoveRouteViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="AddOrder"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#addOrderModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#addOrderBody">
+
+    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newOrderTitle">Add Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="addOrderBody">
+                    <partial name="_AddOrderPartial" model="new AddOrderViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="RemoveOrder"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#removeOrderModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#removeOrderBody">
+
+    <div class="modal fade" id="removeOrderModal" tabindex="-1" aria-labelledby="removeOrderTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeOrderTitle">Remove Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="removeOrderBody">
+                    <partial name="_RemoveOrderPartial" model="new DeleteOrderViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-controller="Routes" asp-action="ChangeVehicle"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#changeVehicleModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#changeVehicleBody">
+
+    <div class="modal fade" id="changeVehicleModal" tabindex="-1" aria-labelledby="changeVehicleTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeVehicleTitle">Change Vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="changeVehicleBody">
+                    <partial name="_ChangeVehiclePartial" model="new ChangeVehicleViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            loadTable();
+        });
+
+        function loadTable() {
+            loadServerPartialView("#routesTableContainer", "/Routes/RoutesTable").done(function () {
+                $('#routesTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+
+        function modalFormComplete(modalName) {
+            $(modalName).modal("hide");
+            loadTable();
+        }
+
+        function LoadAddOrderView(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownOrder('#OrderId');
+
+                });
+        }
+
+        function LoadRemoveOrder(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownOrderRemove('#OrderId',routeId);
+                });
+        }
+
+        function LoadVehicleEdit(RouteId) {
+            $('#RouteId').val(RouteId);
+            routeId = RouteId;
+            loadServerPartialView("#changeVehicleBody", '@Url.Action("ChangeVehicle", "Routes")' + "/" + RouteId).
+                done(function () {
+                    LoadDropdownVehicleEdit('#VehicleId',routeId);
+                });
+        }
+
+        function LoadDropdownVehicle(vehicleControl) {
+            var vehicleId = $(vehicleControl).val();
+            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")' + "/" + vehicleId);
+        }
+
+        function LoadNewRouteView() {
+            loadServerPartialView("#newRouteBody", '@Url.Action("NewRoute", "Routes")');
+        }
+
+        function LoadRemoveRouteView(Id) {
+             loadServerPartialView("#removeBody",'@Url.Action("Remove", "Routes")' + "/" + Id);
+        }
+
+        function LoadShowEntryView(entryId) {
+            loadServerPartialView("#showEntryBody", '@Url.Action("ShowEntry", "Routes")' + "/" + entryId);
+        }
+
+        function LoadDropdownOrderRemove(Id, routeId) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrderList", "Routes")' + "/" + orderId + ';' + routeId);
+        }
+
+        function LoadDropdownOrder(Id) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#addOrderBody", '@Url.Action("OrderList", "Routes")' + "/" + orderId + ';' +routeId);
+        }
+
+        function LoadDropdownVehicleEdit(Id, routeId) {
+            var orderId = $(Id).val();
+            loadServerPartialView("#changeVehicleBody", '@Url.Action("GetVehicleList", "Routes")' + "/" + orderId + ';' +routeId);
+        }
+    </script>
+}

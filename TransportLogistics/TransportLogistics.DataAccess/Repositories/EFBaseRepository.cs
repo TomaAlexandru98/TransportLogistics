@@ -23,13 +23,13 @@ namespace TransportLogistics.DataAccess.Repositories
             return entity.Entity;
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return dbContext.Set<T>()
                             .AsEnumerable();
         }
 
-        public T GetById(Guid id)
+        public virtual T GetById(Guid id)
         {
             return dbContext.Set<T>()
                             .Where(entity => entity.Id.Equals(id))
@@ -51,7 +51,7 @@ namespace TransportLogistics.DataAccess.Repositories
         public T Update(T itemToUpdate)
         {
             var entity = dbContext.Update<T>(itemToUpdate);
-            dbContext.SaveChanges();
+           dbContext.SaveChanges();
             return entity.Entity;
         }
     }

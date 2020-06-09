@@ -1,0 +1,41 @@
+﻿@model TransportLogistics.ViewModels.Dispatchers.TrailerRequestViewModel
+@{
+    ViewData["Title"] = "TrailerRequest";
+    Layout = null;
+}
+
+    <form method="post" asp-controller="Dispatchers" asp-action="TrailerRequest">
+        <div class="form-group">
+            <label>Trailer:</label>
+            <input type="text" name="trailerNumber" class="form-control" list="trailerList" id="trailerNr">
+            <datalist id="trailerList">
+                @if (Model.Trailers.Count() > 0 && Model.Trailers != null)
+                {
+                    @foreach (var trailer in Model.Trailers)
+                    {
+                        <option>@trailer.RegistrationNumber</option>
+                    }
+                }
+            </datalist>
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Vehicle:</label>
+            <input type="text" name="vehicleNumber" class="form-control" list="vehicleList" id="vehicleNr" />
+            <datalist id="vehicleList">
+                @if (Model.Vehicles.Count() > 0 && Model.Vehicles != null)
+                {
+                    foreach (var vehicle in Model.Vehicles)
+                    {
+                        <option>@vehicle.RegistrationNumber</option>
+                    }
+                }
+            </datalist>
+        </div>
+        <div class="d-flex justify-content-around">
+            <button type="submit" id="confirm" class="btn bg-menu">Ok</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </form>
+

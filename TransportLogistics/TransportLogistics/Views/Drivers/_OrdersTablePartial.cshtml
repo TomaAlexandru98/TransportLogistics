@@ -1,0 +1,99 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using TransportLogistics.ViewModels.Drivers
+@using TransportLogistics.Models
+@model CurrentRouteViewModel
+<table id="Orders" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th style="text-align:center"><b>PickUpAddress</b></th>
+            <th style="text-align:center"><b>DeliveryAddress</b></th>
+            <th style="text-align:center"><b>PhoneNo.</b></th>
+            <th style="text-align:center"><b>Status</b></th>
+            <td style="text-align:center"><b>Troubles</b></td>
+            <td style="text-align:center"><b>Payment</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.RouteEntries != null)
+        {
+            var i = Model.RouteEntries.Count;
+            foreach (var routeEntry in Model.RouteEntries)
+            {
+
+                var initialStatus = routeEntry.Order.Status;
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Delivering
+                    || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
+                {
+
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.Delivered);
+                }
+                if (routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Created ||
+                routeEntry.Order.Status == TransportLogistics.Model.OrderStatus.Assigned || routeEntry.Order.Status== TransportLogistics.Model.OrderStatus.Canceled)
+                {
+                    routeEntry.Order.SetStatus(TransportLogistics.Model.OrderStatus.PickedUp);
+                }
+
+        <tr>
+
+
+            <td style="text-align:center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @routeEntry.Order.PickUpAddress.StreetNumber,@routeEntry.Order.PickUpAddress.Street
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.PickUpAddress.Country</div>
+                    <div>@routeEntry.Order.PickUpAddress.City</div>
+                </div>
+
+            </td>
+
+            <td style="text-align:center">
+                <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @routeEntry.Order.DeliveryAddress.StreetNumber,@routeEntry.Order.DeliveryAddress.Street
+                </button>
+                <div class="dropdown-menu" style="padding: 0.8rem">
+                    <div>@routeEntry.Order.DeliveryAddress.Country</div>
+                    <div>@routeEntry.Order.DeliveryAddress.City</div>
+                </div>
+
+            </td>
+                @if(routeEntry.OrderType == TransportLogistics.Model.OrderType.PickUp){
+
+                <td style="text-align:center">@routeEntry.Order.Sender.ContactDetails.PhoneNo</td>
+                }
+            else{
+            <td style="text-align:center">@routeEntry.Order.Recipient.ContactDetails.PhoneNo</td>
+            }
+
+            
+
+            <td style="text-align:center;max-height:3rem">
+                <button class="btn bg-menu" id="@i" disabled onclick="setOrderStatusModal('@Model.DriverId', '@routeEntry.Order.Status','@routeEntry.Order.Id',this.id)"
+                        data-toggle="modal" data-target="#OrderStatus">
+                    @routeEntry.Order.Status
+                </button>
+            </td>
+            @{ var cancelButtonId = i + Model.RouteEntries.Count; }
+            @if (initialStatus != TransportLogistics.Model.OrderStatus.Canceled)
+            {
+
+                <td style="text-align:center"><button class="btn bg-menu" id="@cancelButtonId" data-toggle="modal" disabled data-target="#CancelOrder" onclick="setCancelOrderModal('Canceled' , '@routeEntry.Order.Id' )">Cancel</button></td>
+            }
+            else
+            {
+                <td style="text-align:center"><button disabled class="btn bg-menu" id="@cancelButtonId">Canceled <i class='fas fa-check'></i></button></td>
+            }
+            <td style="text-align:center">@routeEntry.Order.Price</td>
+        </tr>
+                i--; }  }
+       
+    </tbody>
+</table> 
+
+<script>
+  
+   
+
+</script>

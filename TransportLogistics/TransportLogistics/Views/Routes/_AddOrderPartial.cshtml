@@ -1,0 +1,21 @@
+﻿@using TransportLogistics.ViewModels.Routes;
+@model AddOrderViewModel
+
+    <input type="hidden" asp-for="RouteId" />
+
+    <div class="form-group text-center">
+        <label asp-for="OrderId"></label>
+        <div class=" d-flex justify-content-around align-text-bottom">
+            <select style="min-width: 60%" asp-for="OrderId" asp-items="@Model.OrderList">
+            </select>
+        </div>
+        <span asp-validation-for="OrderId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group text-center">
+        <label asp-for="type"></label>
+        <div class=" d-flex justify-content-around align-text-bottom">
+           @Html.DropDownListFor( t => t.type, new SelectList(Enum.GetValues(typeof(TransportLogistics.Model.OrderType))))
+        </div>
+        <span asp-validation-for="type" class="text-danger"></span>
+    </div>

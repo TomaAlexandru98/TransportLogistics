@@ -1,4 +1,6 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> userManager
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,8 +11,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="~/lib/fontawesome/css/solid.css" rel="stylesheet">
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 </head>
 <body>
     <header>
@@ -25,24 +27,65 @@
                 <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
                     <partial name="_LoginPartial" />
                     <partial name="_MainMenuPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
-                                        aria-haspopup="true" aria-expanded="false">
-                                    Manage
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a asp-controller="Trailers" asp-action="Index" class="dropdown-item">Trailers</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-
             </div>
         </nav>
     </header>
+    <div class="modal fade modal-delete" tabindex="-1" id="request1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:80%">
+
+                <div id="requestBody1" class="modal-body">
+                    <div class="text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-delete" tabindex="-1" id="requestVehicleSwap" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:80%">
+                <div id="requestVehicleSwapBody" class="modal-body">
+                    <div class="text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-delete" tabindex="-1" id="editPersonalInfo" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:80%">
+                <div id="personalBody" class="modal-body">
+                    <div class="text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-delete" tabindex="-1" id="trailer" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-width:80%">
+                <div id="trailerBody" class="modal-body">
+                    <div class="text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Route Entry modal*@
+    <div class="modal fade" id="showEntryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center" role="document">
+            <div class="modal-content" style="max-width: 80%">
+                <div class="modal-body" id="showEntryBody">
+                    @await Html.PartialAsync("~/Views/Routes/_RouteEntryPartial.cshtml", new TransportLogistics.ViewModels.Routes.RouteEntryViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             <br />
@@ -52,14 +95,14 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-light" style="background-color:#1e1e8a">
         <div class="container">
-            &copy; 2020 - Transport Logistics - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Transport Logistics - <a style="color:white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

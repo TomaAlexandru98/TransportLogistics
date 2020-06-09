@@ -1,0 +1,162 @@
+﻿@model TransportLogistics.ViewModels.Requests.ConnectRequestsViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.bootstrap4.css" />
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/Responsive-2.2.3/css/responsive.dataTables.min.css" />
+
+<div class="mt-3 mb-4">
+    <button class="btn btn-outline-primary mr-2" id="connectButton">Connect requests</button>
+    <button class="btn btn-outline-primary mr-2" id="departureButton">Departure requests</button>
+</div>
+
+<div id="requestTableContainer"></div>
+
+@Html.AntiForgeryToken()
+<div class="modal fade" id="multipleRequestsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Multiple requests</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    Multiple requests were found for this trailer
+                    <input id="requestId" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="acceptConnectRequestAnyway()" type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Accept anyway
+                </button>
+                <button onclick="showAllRequestsButton()" type="submit" data-dismiss="modal" class="btn btn-primary">
+                    Show all
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/request.js"></script>
+    <script>
+        var table;
+
+        $(document).ready(function () {
+            loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
+        });
+
+        function loadTable(container, url, idTable) {
+            loadServerPartialView(container, url).done(function () {
+                table = $(idTable).DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+
+        $("#connectButton").on("click", function () {
+            loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
+        });
+
+        $("#departureButton").on("click", function () {
+            loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
+        });
+
+        function viewConnectHistory() {
+            loadTable("#requestTableContainer", "/Requests/ConnectHistory", '#connectRequestsTable');
+        }
+
+        function viewDepartureHistory() {
+            loadTable("#requestTableContainer", "/Requests/DepartureHistory", '#departureRequestsTable');
+        }
+
+        function declineConnectRequest(requestId) {
+            $.ajax({
+                url: "/Requests/DeclineConnect?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
+                }
+            });
+        }
+
+        function declineDepartureRequest(requestId) {
+            $.ajax({
+                url: "/Requests/DeclineDeparture?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
+                }
+            });
+        }
+
+        function checkForMultipleRequests(requestId, trailerId) {
+            @foreach (var request in Model.Requests)
+            {
+                @: if (trailerId == "@request.Trailer.Id" && requestId != "@request.Id") {
+                    @: $("#multipleRequestsModal").modal();
+                    @: $('#requestId').val(requestId);
+                    @: return true;
+                @: }
+            }
+
+            acceptConnectRequest(requestId);
+        }
+
+        function acceptConnectRequest(requestId) {
+            $.ajax({
+                url: "/Requests/AcceptConnect?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/ConnectRequestsTable", '#connectRequestsTable');
+                }
+            });
+        }
+
+        function acceptDepartureRequest(requestId) {
+            $.ajax({
+                url: "/Requests/AcceptDeparture?id=" + requestId,
+                success: function () {
+                    loadTable("#requestTableContainer", "/Requests/DepartureRequestsTable", '#departureRequestsTable');
+                }
+            });
+        }
+
+        function acceptConnectRequestAnyway() {
+            var requestId = $("#requestId").val();
+            acceptConnectRequest(requestId);
+        }
+
+        function showAllRequestsButton() {
+            var requestId = $("#requestId").val();
+            loadServerPartialView("#requestTableContainer", "/Requests/Filter?id=" + requestId).done(function () {
+                $('#connectRequestsTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
+
+       "use strict"
+var connection = new signalR.HubConnectionBuilder().withUrl("/request").build();
+connection.start().catch(function (err) {
+    console.log(err.toString());
+});
+        connection.on("AddRequest", function (request) {
+            var id = request.id;
+
+         var accept = '<a class="btn btn-outline-success mr-1" onclick="acceptConnectRequest(\''+ id +'\')" >    <i class="fa fa-check-circle" style="color: green;"></i></a>';
+        var decline = '<a class="btn btn-outline-danger"   onclick="declineConnectRequest(\'' + id +'\')" ><i class="fa fa-ban" style="color: red;"></i>  </a>';
+            table.row.add([
+                 "Sender",
+                request.vehicle.registrationNumber,
+                request.trailer.registrationNumber + "  "+ request.trailer.length + " x " + request.trailer.width + " x " + request.trailer.height + " cm,  "
+                + request.trailer.capacity + " kg",
+                request.date.toShortDateString(),
+                 accept + " " +decline
+
+    ]).draw(false);
+
+});
+    </script>
+}
