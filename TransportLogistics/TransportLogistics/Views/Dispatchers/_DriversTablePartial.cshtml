@@ -25,17 +25,13 @@
                         <h6>@driver.Name</h6>
                         <div>Email:</div>
                         <h6>@driver.Email</h6>
-                        @if (driver.RoutesHistoric.Routes.Count > 0)
-                        {
-                            @driver.RoutesHistoric.Routes.ElementAt(0)
-                        }
                     </div>
                 </td>
                 <td class="dropdown text-center" style="width: 25%">
                     @if (driver.CurrentRoute != null)
                     {
                         <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Orders on route - @driver.CurrentRoute.RouteEntries.Count()
+                            Orders on route: @driver.CurrentRoute.RouteEntries.Count()
                         </button>
 
                         <div class="dropdown-menu">
@@ -75,20 +71,6 @@
                         <div class="text-center">Assigned</div>
                     }
                 </td>
-
-                @*
-                    <td>
-                        <button class="btn btn-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
-                                onclick="LoadAddRouteView('@driver.Id');" data-target="#addRouteModal">
-                            <i class="material-icons fa fa-plus"></i>
-                        </button>
-
-                        <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
-                                onclick="LoadRemoveRouteView('@driver.Id');" data-target="#removeRouteModal">
-                            <i class="material-icons fa fa-trash"></i>
-                        </button>
-                    </td>
-                *@
             </tr>
         }
     </tbody>

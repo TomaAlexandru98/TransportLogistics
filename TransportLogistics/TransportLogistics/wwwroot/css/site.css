@@ -216,3 +216,10 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.btn-outline-dark:hover {
+    color: #fff !important;
+    background-color: #343a40;
+    border-color: #343a40;
+    cursor: pointer;
+}

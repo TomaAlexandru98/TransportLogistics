@@ -52,22 +52,22 @@
                 <td class="ml-2">
                     @if (Model.ShowMultipleRequestsModal == false)
                     {
-                        <a class="btn btn-outline-success mr-1"
+                        <button class="btn btn-outline-success mr-1"
                            onclick='acceptConnectRequest("@request.Id")'>
                             <i class="fa fa-check-circle" style="color: green;"></i>
-                        </a>
+                        </button>
                     }
                     else
                     {
-                        <a class="btn btn-outline-success mr-1"
+                        <button class="btn btn-outline-success mr-1"
                            onclick='checkForMultipleRequests("@request.Id", "@request.Trailer.Id")'>
-                            <i class="fa fa-check-circle" style="color: green;"></i>
-                        </a>
+                            <i class="fa fa-check-circle"></i>
+                        </button>
                     }
-                      <a class="btn btn-outline-danger"
+                      <button class="btn btn-outline-danger"
                            onclick='declineConnectRequest("@request.Id")'>
-                            <i class="fa fa-ban" style="color: red;"></i>
-                      </a>
+                            <i class="fa fa-ban"></i>
+                      </button>
                 </td>
             }
             else
