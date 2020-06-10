@@ -84,7 +84,7 @@ namespace TransportLogistics.DataAccess.Repositories
                                 .Include(driver => driver.RoutesHistoric)
                                 .ThenInclude(driver => driver.Routes)
                                 .ThenInclude(d => d.Vehicle)
-                                .AsEnumerable();
+                                .ToList();
 
             foreach (var driver in driversList)
             {

@@ -48,7 +48,7 @@ namespace TransportLogistics.Controllers
         {
             try
             {
-                var requestsList = requestService.GetAllConnectActive();
+                var requestsList = requestService.GetAllConnectActive().ToList();
 
                 var viewModel = new ConnectRequestsViewModel
                 {
