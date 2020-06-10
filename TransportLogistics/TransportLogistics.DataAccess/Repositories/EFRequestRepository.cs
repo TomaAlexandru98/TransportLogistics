@@ -54,7 +54,7 @@ namespace TransportLogistics.DataAccess.Repositories
                                         .Include(request => request.Driver)
                                         .ThenInclude(request => request.CurrentRoute)
                                         .ThenInclude(request => request.RouteEntries)
-                                        .Include(request => request.Supervisor);
+                                        .Include(request => request.Supervisor).ToList();
 
             foreach (var request in requestsList)
             {
@@ -98,7 +98,7 @@ namespace TransportLogistics.DataAccess.Repositories
             return dbContext.Requests.Where(request => request.Status != RequestStatus.Active)
                                      .Include(request => request.Supervisor)
                                      .Include(request => request.Vehicle)
-                                     .Include(request => request.Trailer);
+                                     .Include(request => request.Trailer).ToList();
         }
 
         public IEnumerable<DepartureRequest> GetDepartureHistory()
