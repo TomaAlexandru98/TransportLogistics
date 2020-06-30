@@ -202,7 +202,7 @@ namespace TransportLogistics.Controllers
 
         public IActionResult DriversTable()
         {
-            var x = DriverService.GetAllDrivers();
+            //var x = DriverService.GetAllDrivers();
             try
             {
                 var viewModel = new DriversViewModel

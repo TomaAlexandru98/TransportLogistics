@@ -56,7 +56,7 @@ namespace TransportLogistics.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserAccount([FromForm]UserAccountCreateViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 IdentityUser user = new IdentityUser
                 {
@@ -64,23 +64,27 @@ namespace TransportLogistics.Controllers
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber
                 };
-                await UserManager.CreateAsync(user, model.Password);
-                var createdUser = await UserManager.FindByEmailAsync(model.Email);
-                EmployeeServices.AddEmployee(createdUser.Id , model.Name , model.Email , model.Role);
-                if (await RoleManager.FindByNameAsync(model.Role) == null)
+
+                var createResult = await UserManager.CreateAsync(user, model.Password);
+                if (createResult.Succeeded)
                 {
-                    var role = new IdentityRole(model.Role);
-                    await RoleManager.CreateAsync(role);
-                    await UserManager.AddToRoleAsync(user, role.Name);
+                    var createdUser = await UserManager.FindByEmailAsync(model.Email);
+                    EmployeeServices.AddEmployee(createdUser.Id, model.Name, model.Email, model.Role);
+                    if (await RoleManager.FindByNameAsync(model.Role) == null)
+                    {
+                        var role = new IdentityRole(model.Role);
+                        await RoleManager.CreateAsync(role);
+                        await UserManager.AddToRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        await UserManager.AddToRoleAsync(user, model.Role);
+                    }
                 }
-                else
-                {
-                    await UserManager.AddToRoleAsync(user, model.Role);
-                }
-           
-        }
-            var users = UserManager.Users;
-            return PartialView("_TablePartial", users);
+            }
+                var users = UserManager.Users.ToList();
+                return PartialView("_TablePartial", users);
+            
         }
         [HttpGet]
         public async Task<IActionResult> EditUserAccount(string userId)
@@ -126,7 +130,7 @@ namespace TransportLogistics.Controllers
            }
         public IActionResult GetUsersPartialView()
         {
-            var users = UserManager.Users;
+            var users = UserManager.Users.ToList();
             return PartialView("_TablePartial", users);
         }
         public async Task<IActionResult> DeleteUserAccount(UserDeleteViewModel model)
@@ -143,7 +147,7 @@ namespace TransportLogistics.Controllers
                 Logger.LogError("Failed to delete user account,most likely model was not correct {Exception}", e.Message);
                 return BadRequest();
             }
-            var users = UserManager.Users;
+            var users = UserManager.Users.ToList();
             return PartialView("_TablePartial", users);
         }
         [HttpGet]
